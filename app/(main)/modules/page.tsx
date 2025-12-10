@@ -130,19 +130,20 @@ export default async function ModulesPage() {
                 const attemptedQs = questions.filter((q: any) => bestAnswerMap.has(q.id)).length;
                 const isModuleCompleted = totalQs > 0 && attemptedQs === totalQs;
                 
-                const prevTopic = index > 0 ? topics[index - 1] : null;
-                const prevQuestions = prevTopic?.Question || [];
-                const prevAttempted = prevQuestions.filter((q: any) => bestAnswerMap.has(q.id)).length;
-                const isPrevCompleted = prevQuestions.length === 0 || prevAttempted === prevQuestions.length;
+                // --- CHANGED LOGIC START ---
+                // OLD: Checks previous topic completion to unlock current one.
+                // NEW: Defaults to "active" so everything is unlocked. Only "completed" changes state.
                 
-                let uiStatus: "active" | "completed" | "locked" = "locked";
-                if (isModuleCompleted) uiStatus = "completed";
-                else if (index === 0 || isPrevCompleted) uiStatus = "active";
+                let uiStatus: "active" | "completed" | "locked" = "active"; 
+                if (isModuleCompleted) {
+                    uiStatus = "completed";
+                }
+                // --- CHANGED LOGIC END ---
 
                 return (
                   <ModuleNode
                     key={topic.id}
-                    moduleId={topic.id} // <--- Added this to ensure accurate linking
+                    moduleId={topic.id}
                     missionId={topic.week_number}
                     title={topic.name}
                     description={topic.description}

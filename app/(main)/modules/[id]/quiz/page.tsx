@@ -37,7 +37,7 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
   // State
   const [studentDbId, setStudentDbId] = useState<string | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
-  const [answersMap, setAnswersMap] = useState<Record<string, AnswerRecord>>({}); // <--- NEW: Store answers
+  const [answersMap, setAnswersMap] = useState<Record<string, AnswerRecord>>({});
   
   const [currentQIndex, setCurrentQIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -48,7 +48,7 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
   
   const [showFeedback, setShowFeedback] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isLocked, setIsLocked] = useState(false); // <--- NEW: Is current Q locked?
+  const [isLocked, setIsLocked] = useState(false);
 
   // 1. Initialization
   useEffect(() => {
@@ -56,19 +56,11 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push("/login"); return; }
 
-      // Get Student ID
-      const { data: studentData } = await supabase
-        .from("Student")
-        .select("id")
-        .eq("auth_id", user.id)
-        .single();
-
+      const { data: studentData } = await supabase.from("Student").select("id").eq("auth_id", user.id).single();
       if (!studentData) return;
       setStudentDbId(studentData.id);
 
-      // Fetch Questions
-      const { data: quizData } = await supabase
-        .from("Question")
+      const { data: quizData } = await supabase.from("Question")
         .select(`id, text, points, QuestionOption (id, text, is_correct, justification)`)
         .eq("topic_id", id);
 
@@ -77,28 +69,24 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
       setQuestions(typedQuestions);
       setTotalPoints(typedQuestions.reduce((acc, curr) => acc + curr.points, 0));
 
-      // --- NEW: FETCH PREVIOUS ANSWERS ---
-      const { data: existingAnswers } = await supabase
-        .from("StudentAnswer")
+      // Fetch Previous Answers
+      const { data: existingAnswers } = await supabase.from("StudentAnswer")
         .select("question_id, selected_option_id, is_correct")
         .eq("student_id", studentData.id)
         .in("question_id", typedQuestions.map(q => q.id));
 
-      // Map answers for easy lookup
       const loadedAnswers: Record<string, AnswerRecord> = {};
       let initialScore = 0;
       
       existingAnswers?.forEach((ans: any) => {
           loadedAnswers[ans.question_id] = ans;
-          // Recalculate score based on new rules (2 for correct, 1 for wrong)
-          if (ans.is_correct) initialScore += 2;
-          else initialScore += 1;
+          if (ans.is_correct) initialScore += 2; else initialScore += 1;
       });
 
       setAnswersMap(loadedAnswers);
       setScore(initialScore);
 
-      // Check if FIRST question is already answered
+      // Restore state for first question
       if (typedQuestions.length > 0) {
           const firstQ = typedQuestions[0];
           if (loadedAnswers[firstQ.id]) {
@@ -114,45 +102,44 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
     initPage();
   }, [id, supabase, router]);
 
-  // 2. Navigation Handler (Next Question)
-  const handleNext = () => {
-    const nextIndex = currentQIndex + 1;
-    
-    if (nextIndex < questions.length) {
-        const nextQ = questions[nextIndex];
-        const existingAns = answersMap[nextQ.id];
+  // --- NEW: NAVIGATION FUNCTION ---
+  const jumpToQuestion = (index: number) => {
+    if (index < 0 || index >= questions.length) return;
 
-        if (existingAns) {
-            // If next question is already answered -> Lock it and show result
-            setSelectedOption(existingAns.selected_option_id);
-            setShowFeedback(true);
-            setIsLocked(true);
-        } else {
-            // If next question is new -> Reset state
-            setSelectedOption(null);
-            setShowFeedback(false);
-            setIsLocked(false);
-        }
-        setCurrentQIndex(nextIndex);
+    const targetQ = questions[index];
+    const existingAns = answersMap[targetQ.id];
+
+    // Restore state based on whether the target question is answered
+    if (existingAns) {
+        setSelectedOption(existingAns.selected_option_id);
+        setShowFeedback(true);
+        setIsLocked(true);
+    } else {
+        setSelectedOption(null);
+        setShowFeedback(false);
+        setIsLocked(false);
+    }
+    setCurrentQIndex(index);
+  };
+
+  const handleNext = () => {
+    if (currentQIndex < questions.length - 1) {
+        jumpToQuestion(currentQIndex + 1);
     } else {
         setQuizState("finished");
     }
   };
 
-  // 3. Submission Handler (New Answers Only)
   const handleSubmit = async () => {
-    if (!selectedOption || !studentDbId || isLocked) return; // Prevent submitting if locked
+    if (!selectedOption || !studentDbId || isLocked) return;
     setIsSubmitting(true);
 
     const currentQ = questions[currentQIndex];
     const chosenOption = currentQ.QuestionOption.find(o => o.id === selectedOption);
     const isCorrect = chosenOption?.is_correct || false;
 
-    // Optimistic Score Update
-    // Rule: 2 XP if Correct, 1 XP if Wrong
     setScore((prev) => prev + (isCorrect ? 2 : 1));
 
-    // Save to DB
     await supabase.from("StudentAnswer").upsert({
         student_id: studentDbId,
         question_id: currentQ.id,
@@ -161,7 +148,6 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
         attempted_at: new Date().toISOString()
     }, { onConflict: 'student_id, question_id' });
 
-    // Update Local Map so it stays locked if they come back
     setAnswersMap(prev => ({
         ...prev,
         [currentQ.id]: { question_id: currentQ.id, selected_option_id: selectedOption, is_correct: isCorrect }
@@ -169,9 +155,8 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
 
     setIsSubmitting(false);
     setShowFeedback(true);
-    setIsLocked(true); // Lock immediately after submitting
+    setIsLocked(true);
   };
-
 
   if (quizState === "loading") return <div className="flex h-[50vh] items-center justify-center text-primary"><Loader2 className="animate-spin w-10 h-10" /></div>;
   
@@ -183,7 +168,6 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
         </div>
         <h2 className="text-3xl font-bold text-foreground mb-2">Mission Complete</h2>
         <p className="text-muted mb-8">Performance Data Uploaded.</p>
-        
         <div className="grid grid-cols-2 gap-4 mb-8">
             <div className="p-4 bg-surface rounded-xl border border-border">
                 <div className="text-muted text-xs uppercase tracking-wider mb-1">Questions</div>
@@ -206,7 +190,6 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
   return (
     <div className="w-full max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4">
       
-      {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div><h1 className="text-2xl font-bold text-foreground flex items-center gap-3"><span className="px-3 py-1 rounded bg-primary/10 text-primary text-xs font-mono border border-primary/20">M-{id}</span> Active Mission</h1></div>
         <div className="hidden md:flex items-center gap-2 text-muted text-sm"><AlertCircle size={16} /> <span>MCQ Protocol</span></div>
@@ -222,41 +205,26 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
                 <div className="mt-4 mb-8">
                     <div className="flex justify-between items-start mb-4">
                         <span className="text-muted text-sm font-mono">QUERY_ID_{currentQIndex + 1}</span>
-                        {/* Updated to show the new potential points (2 XP) */}
                         <span className="text-primary text-sm font-bold">2 XP</span>
                     </div>
-                    
-                    {/* Question Content */}
                     {isCodeQuestion ? (<div className="mb-6"><div className="text-muted mb-2 text-sm uppercase tracking-wider font-bold">Analyze Syntax:</div><PythonCodeBlock code={currentQ.text} /></div>) : (<h2 className="text-xl md:text-2xl font-medium text-foreground mb-8 leading-relaxed">{currentQ.text}</h2>)}
                     {isCodeQuestion && (<div className="mt-8 pt-6 border-t border-border/50"><div className="flex items-center justify-between mb-3"><span className="text-xs font-bold text-primary uppercase tracking-widest flex items-center gap-2"><Terminal size={12} /> Live Verification</span><span className="text-[10px] text-muted">Pyodide Environment</span></div><PythonPlayground initialCode="# Use this space to test the code above..." /></div>)}
                 </div>
 
-                {/* Options */}
                 <div className="space-y-3">
                     {currentQ.QuestionOption.map((opt) => {
                         let borderClass = "border-border hover:border-surface-light", bgClass = "bg-surface/30", textClass = "text-muted", Icon = null;
-                        
                         if (showFeedback) {
-                            // FEEDBACK MODE (Visuals)
-                            if (opt.is_correct) { 
-                                borderClass = "border-success/50"; bgClass = "bg-success/10"; textClass = "text-success"; Icon = <CheckCircle className="text-success" size={20} />; 
-                            } else if (selectedOption === opt.id && !opt.is_correct) { 
-                                borderClass = "border-danger/50"; bgClass = "bg-danger/10"; textClass = "text-danger"; Icon = <XCircle className="text-danger" size={20} />; 
-                            } else { 
-                                bgClass = "opacity-50"; 
-                            }
+                            if (opt.is_correct) { borderClass = "border-success/50"; bgClass = "bg-success/10"; textClass = "text-success"; Icon = <CheckCircle className="text-success" size={20} />; } 
+                            else if (selectedOption === opt.id && !opt.is_correct) { borderClass = "border-danger/50"; bgClass = "bg-danger/10"; textClass = "text-danger"; Icon = <XCircle className="text-danger" size={20} />; } 
+                            else { bgClass = "opacity-50"; }
                         } else if (selectedOption === opt.id) { 
-                            // SELECTION MODE
                             borderClass = "border-primary"; bgClass = "bg-primary/10"; textClass = "text-foreground"; Icon = <CheckCircle className="text-primary" size={20} />; 
                         }
 
                         return (
                             <div key={opt.id} className={`rounded-xl border transition-all duration-300 overflow-hidden ${borderClass} ${bgClass}`}>
-                                <button 
-                                    onClick={() => !isLocked && setSelectedOption(opt.id)} 
-                                    disabled={isLocked || isSubmitting} 
-                                    className={clsx("w-full text-left p-4 flex justify-between items-center", isLocked ? "cursor-default" : "cursor-pointer")}
-                                >
+                                <button onClick={() => !isLocked && setSelectedOption(opt.id)} disabled={isLocked || isSubmitting} className={clsx("w-full text-left p-4 flex justify-between items-center", isLocked ? "cursor-default" : "cursor-pointer")}>
                                     <span className={`font-medium ${textClass}`}>{opt.text}</span>{Icon}
                                 </button>
                                 {showFeedback && opt.justification && (<div className={clsx("px-4 pb-4 text-sm animate-in slide-in-from-top-2", opt.is_correct ? "text-success/80" : "text-muted")}><div className="h-px w-full bg-current opacity-10 mb-2" /><p className="flex gap-2"><HelpCircle size={14} className="mt-0.5 shrink-0" />{opt.justification}</p></div>)}
@@ -265,10 +233,8 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
                     })}
                 </div>
 
-                {/* Footer Actions */}
                 <div className="mt-8 flex justify-between items-center pt-4 border-t border-border/50">
                     <ReportButton questionId={currentQ.id} studentId={studentDbId!} />
-
                     {!isLocked ? (
                         <button onClick={handleSubmit} disabled={!selectedOption || isSubmitting} className={clsx("px-8 py-3 rounded-xl font-bold flex items-center transition-all", !selectedOption || isSubmitting ? "bg-surface-light text-muted cursor-not-allowed" : "bg-primary hover:bg-primary-dim text-background shadow-lg shadow-primary/20")}>
                             {isSubmitting ? "Processing..." : <>CONFIRM ENTRY <ArrowRight className="ml-2 w-4 h-4" /></>}
@@ -296,27 +262,29 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
                 </div>
             </div>
 
-            {/* Question Map (Visual History) */}
             <div className="bg-surface/50 border border-border rounded-2xl p-6 hidden lg:block">
                 <h3 className="text-muted text-xs font-bold uppercase tracking-widest mb-4">Question Map</h3>
                 <div className="grid grid-cols-5 gap-2">
                     {questions.map((q, idx) => {
-                        // Determine Color based on Answer Status
-                        let mapClass = "bg-surface border-border text-muted"; // Default: Unanswered
+                        let mapClass = "bg-surface border-border text-muted hover:bg-surface-light hover:text-foreground cursor-pointer"; 
                         const ans = answersMap[q.id];
                         
                         if (idx === currentQIndex) {
-                            mapClass = "bg-primary/20 border-primary text-primary animate-pulse"; // Current
+                            mapClass = "bg-primary/20 border-primary text-primary animate-pulse cursor-default";
                         } else if (ans) {
                             mapClass = ans.is_correct 
-                                ? "bg-success/20 border-success text-success" // Correct (Green)
-                                : "bg-danger/20 border-danger text-danger";   // Wrong (Red)
+                                ? "bg-success/20 border-success text-success" 
+                                : "bg-danger/20 border-danger text-danger";
                         }
 
                         return (
-                            <div key={idx} className={clsx("h-10 rounded-lg flex items-center justify-center text-xs font-bold border transition-all", mapClass)}>
+                            <button 
+                                key={idx} 
+                                onClick={() => jumpToQuestion(idx)}
+                                className={clsx("h-10 rounded-lg flex items-center justify-center text-xs font-bold border transition-all", mapClass)}
+                            >
                                 {idx + 1}
-                            </div>
+                            </button>
                         );
                     })}
                 </div>

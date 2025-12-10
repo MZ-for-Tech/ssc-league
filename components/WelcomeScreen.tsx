@@ -10,10 +10,9 @@ export default function WelcomeScreen({ name }: { name: string }) {
   const [decryptedName, setDecryptedName] = useState("");
   const [mounted, setMounted] = useState(false);
 
-  // 1. Handle Mounting (Required for Portals in Next.js)
+  // 1. Handle Mounting
   useEffect(() => {
     setMounted(true);
-    
     const hasSeenWelcome = sessionStorage.getItem("has_seen_welcome");
     if (!hasSeenWelcome) {
       setShow(true);
@@ -25,7 +24,7 @@ export default function WelcomeScreen({ name }: { name: string }) {
   useEffect(() => {
     if (!show) return;
 
-    // --- DECRYPTION (Faster Speed: 1/4 per frame) ---
+    // --- DECRYPTION (2x Faster) ---
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%";
     let iteration = 0;
     
@@ -43,14 +42,13 @@ export default function WelcomeScreen({ name }: { name: string }) {
       if (iteration >= name.length) {
         clearInterval(interval);
       }
-      iteration += 1 / 4; 
+      iteration += 1 / 2; // Increased from 1/4 to 1/2 for faster reveal
     }, 30);
 
-    // --- TIMER (Total Duration: 2.5s) ---
-    // 2.5 seconds gives enough time to read but doesn't bore the user
+    // --- TIMER (Reduced to 1.5s) ---
     const timer = setTimeout(() => {
       setShow(false);
-    }, 2500);
+    }, 1500); // Reduced from 2500ms
 
     return () => {
       clearInterval(interval);
@@ -58,7 +56,6 @@ export default function WelcomeScreen({ name }: { name: string }) {
     };
   }, [show, name]);
 
-  // 3. Render via Portal (Teleports to <body>)
   if (!mounted) return null;
 
   return createPortal(
@@ -66,12 +63,11 @@ export default function WelcomeScreen({ name }: { name: string }) {
       {show && (
         <motion.div
           key="welcome-screen"
-          // Z-Index 99999 ensures it sits on top of EVERYTHING (including Sidebars/Modals)
           className="fixed inset-0 z-[99999] flex items-center justify-center bg-background/95 backdrop-blur-2xl cursor-wait"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, filter: "blur(20px)" }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          transition={{ duration: 0.5, ease: "easeInOut" }} // Faster fade in/out
         >
           <div className="text-center space-y-6 scale-110">
             
@@ -79,7 +75,7 @@ export default function WelcomeScreen({ name }: { name: string }) {
             <motion.div 
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.3 }}
               className="flex justify-center"
             >
                 <div className="p-5 rounded-full bg-primary/10 border border-primary/20 shadow-[0_0_40px_rgba(34,211,238,0.2)] animate-pulse">
@@ -100,12 +96,12 @@ export default function WelcomeScreen({ name }: { name: string }) {
                 </h1>
             </div>
 
-            {/* Loading Bar (Synchronized to 3s) */}
+            {/* Loading Bar (Synced to 1.5s) */}
             <div className="w-64 h-1.5 bg-surface rounded-full mx-auto overflow-hidden mt-10 border border-border">
                 <motion.div 
                     initial={{ width: "0%" }}
                     animate={{ width: "100%" }}
-                    transition={{ duration: 3, ease: "linear" }} 
+                    transition={{ duration: 1.5, ease: "linear" }} // Matches timeout
                 className="h-full bg-primary-dim shadow-[0_0_15px_#22d3ee]" 
                 />
             </div>
@@ -114,6 +110,6 @@ export default function WelcomeScreen({ name }: { name: string }) {
         </motion.div>
       )}
     </AnimatePresence>,
-    document.body // <--- The Target: Render directly into the Body
+    document.body
   );
 }

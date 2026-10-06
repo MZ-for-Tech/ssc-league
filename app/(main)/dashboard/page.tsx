@@ -5,9 +5,11 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getImpersonatedStudentId } from "@/lib/auth/impersonation";
 import { getActiveSeasonId, getSelectedSeasonId } from "@/lib/seasons";
 import { redirect } from "next/navigation";
+import { createPageMetadata } from "@/lib/site-metadata";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
+export const metadata = createPageMetadata("Dashboard", "See your SSC2 League progress, current objectives, and recent activity.");
 
 type RankedStudent = DashboardStudent & { WeeklyRankHistory: DashboardRankHistory[] };
 

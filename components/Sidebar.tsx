@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard, Trophy, BookOpen, User, Info,
   X, LogOut, Loader2, ChevronLeft, ChevronRight, Bell,
-  Terminal, Users, FileText, ClipboardCheck
+  Terminal, Users, FileText, ClipboardCheck, BookOpenCheck
 } from "lucide-react";
 import clsx from "clsx";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
@@ -60,6 +60,7 @@ const adminNavGroups = [
       { name: "Students", href: "/admin/users", icon: Users },
       { name: "Question bank", href: "/admin/questions", icon: FileText },
       { name: "Operations", href: "/admin/operations", icon: ClipboardCheck },
+      { name: "Admin guide", href: "/admin/guide", icon: BookOpenCheck },
     ],
   },
   {

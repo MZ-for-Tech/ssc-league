@@ -6,8 +6,16 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getActiveSeasonId, getSelectedSeasonId } from "@/lib/seasons";
 import { getImpersonatedStudentId } from "@/lib/auth/impersonation";
 import { COURSE_MATERIALS } from "@/lib/course-materials";
+import { createPageMetadata } from "@/lib/site-metadata";
+import { getTopicNameForMetadata } from "@/lib/topic-metadata";
 
 export const revalidate = 0;
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const topicName = await getTopicNameForMetadata(id);
+  return createPageMetadata(`${topicName} Lesson`, `Lesson materials and course resources for ${topicName}.`);
+}
 
 export default async function ModuleDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

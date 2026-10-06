@@ -9,9 +9,11 @@ import { getImpersonatedStudentId } from "@/lib/auth/impersonation";
 import { redirect } from "next/navigation";
 import { getActiveSeasonId, getSelectedSeasonId } from "@/lib/seasons";
 import Image from "next/image";
+import { createPageMetadata } from "@/lib/site-metadata";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
+export const metadata = createPageMetadata("Student Profile", "Review your season record, activity, achievements, and league progress.");
 
 type AttendanceRecord = { date: string; status: string };
 type QuizAnswer = {

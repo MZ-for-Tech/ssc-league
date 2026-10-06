@@ -4,9 +4,17 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getActiveSeasonId, getSelectedSeasonId } from "@/lib/seasons";
 import { getImpersonatedStudentId } from "@/lib/auth/impersonation";
 import EssayResponsesView from "@/components/modules/EssayResponsesView";
+import { createPageMetadata } from "@/lib/site-metadata";
+import { getTopicNameForMetadata } from "@/lib/topic-metadata";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const topicName = await getTopicNameForMetadata(id);
+  return createPageMetadata(`${topicName} Written Practice`, `Written response practice for ${topicName}.`);
+}
 
 export default async function LessonEssaysPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

@@ -1,11 +1,12 @@
 import PythonPlayground from "@/components/PythonPlayground";
 import { Cpu } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
+import { createPageMetadata } from "@/lib/site-metadata";
 
-export const metadata = {
-  title: "Training Ground | SSC2 League",
-  description: "Run Python in your browser with scientific libraries loaded when imported.",
-};
+export const metadata = createPageMetadata(
+  "Training Ground",
+  "Write and run Python in your browser with scientific libraries ready to use.",
+);
 
 const starterCode = `# Mission report
 def mission_report(agent_name):

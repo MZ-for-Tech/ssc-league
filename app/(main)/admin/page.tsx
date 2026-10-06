@@ -1,6 +1,9 @@
 import AdminDashboardView from "@/components/admin/AdminDashboardView";
 import { getAdminPageContext } from "@/lib/auth/admin-page-context";
 import { getImpersonatedStudentId } from "@/lib/auth/impersonation";
+import { createPageMetadata } from "@/lib/site-metadata";
+
+export const metadata = createPageMetadata("Admin Dashboard", "League overview and administration tools for SSC2 League staff.");
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";

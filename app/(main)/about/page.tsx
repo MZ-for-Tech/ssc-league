@@ -14,6 +14,12 @@ import {
 import CombatManual from "@/components/about/CombatManual";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { mergeRewardProtocol, type RewardProtocolValue } from "@/lib/reward-protocol";
+import { createPageMetadata } from "@/lib/site-metadata";
+
+export const metadata = createPageMetadata(
+  "About",
+  "Discover the SSC2 League learning arena: programming lessons, Python practice, data science, and student progress.",
+);
 
 const systems = [
   {

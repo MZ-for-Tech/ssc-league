@@ -9,9 +9,11 @@ import { getImpersonatedStudentId } from "@/lib/auth/impersonation";
 import { getActiveSeasonId, getSelectedSeasonId } from "@/lib/seasons";
 import PageHeader from "@/components/PageHeader";
 import { COURSE_MATERIALS } from "@/lib/course-materials";
+import { createPageMetadata } from "@/lib/site-metadata";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
+export const metadata = createPageMetadata("Course Map", "Explore SSC2 League modules, lessons, course files, and Python practice.");
 
 type TopicQuestion = { id: string };
 type ModuleTopic = {

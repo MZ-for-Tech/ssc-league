@@ -7,9 +7,11 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getImpersonatedStudentId } from "@/lib/auth/impersonation";
 import { getActiveSeasonId, getSelectedSeasonId } from "@/lib/seasons";
 import PageHeader from "@/components/PageHeader";
+import { createPageMetadata } from "@/lib/site-metadata";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
+export const metadata = createPageMetadata("Global Rankings", "View student standings and weekly progress across the SSC2 League.");
 
 type RankEntry = { student_id: string; week_number: number; rank: number; total_xp: number };
 type LeaderboardStudent = {

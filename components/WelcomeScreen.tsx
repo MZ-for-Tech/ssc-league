@@ -13,7 +13,10 @@ export default function WelcomeScreen({ name, storageKey = "has_seen_welcome" }:
   // 1. Handle Mounting
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      if (!sessionStorage.getItem(storageKey)) {
+      const loginWelcome = sessionStorage.getItem("ssc_show_welcome_after_login") === "true";
+      if (loginWelcome) sessionStorage.removeItem("ssc_show_welcome_after_login");
+
+      if (loginWelcome || !sessionStorage.getItem(storageKey)) {
         sessionStorage.setItem(storageKey, "true");
         setShow(true);
       }

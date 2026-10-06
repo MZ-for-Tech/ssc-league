@@ -6,8 +6,10 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getActiveSeasonId, getSelectedSeasonId } from "@/lib/seasons";
 import { getImpersonatedStudentId } from "@/lib/auth/impersonation";
 import PageHeader from "@/components/PageHeader";
+import { createPageMetadata } from "@/lib/site-metadata";
 
 export const revalidate = 0;
+export const metadata = createPageMetadata("Comms Relay", "League announcements, messages, and student notifications.");
 
 type Ping = { id: string; created_at: string; is_read: boolean; message: string | null;
   sender: { full_name: string; avatar_url: string | null; current_level: number } | null;

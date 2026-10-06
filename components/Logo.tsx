@@ -17,15 +17,22 @@ export default function Logo({ compact = false }: { compact?: boolean }) {
           fill="none" 
           className="w-full h-full relative z-10 drop-shadow-logo-symbol"
         >
-          <path 
-            d="M12 2L2 22H22L12 2Z" 
+          <path
+            d="M12 2 22 22H2L12 2Z"
             stroke={`url(#${gradientId})`} // Reference the unique ID
             strokeWidth="2.5" 
             strokeLinecap="round" 
             strokeLinejoin="round"
           />
-          <path 
-            d="M12 6L7 16H17L12 6Z" 
+          <path
+            d="M12 6 18 18H6L12 6Z"
+            stroke={`url(#${gradientId})`}
+            strokeOpacity=".48"
+            strokeWidth="1"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M12 9 15.5 16H8.5L12 9Z"
             fill={`url(#${gradientId})`} // Reference the unique ID
             className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           />

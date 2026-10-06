@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Download, HeartHandshake, Plus, Trash2, Users } from "lucide-react";
-import { deleteSeasonRecognition, recordSeasonRecognition } from "@/app/actions/admin-actions";
+import { deleteSeasonRecognition, recordSeasonRecognition } from "@/app/actions/admin-season-recognition";
 import DropdownSelect from "@/components/ui/DropdownSelect";
 import OperationsCardHeader from "@/components/admin/OperationsCardHeader";
 

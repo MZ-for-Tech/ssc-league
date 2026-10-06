@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { ClipboardCheck } from "lucide-react";
-import { markGroupAttendance } from "@/app/actions/admin-actions";
+import { markGroupAttendance } from "@/app/actions/admin-attendance";
 import { formatAttendanceDate } from "@/lib/attendance-date";
 import clsx from "clsx";
 import OperationsCardHeader from "@/components/admin/OperationsCardHeader";

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { EyeOff, ShieldAlert, Users } from "lucide-react";
-import { stopImpersonation } from "@/app/actions/admin-actions";
+import { stopImpersonation } from "@/app/actions/admin-impersonation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 

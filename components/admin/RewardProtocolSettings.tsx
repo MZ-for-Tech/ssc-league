@@ -3,7 +3,7 @@
 import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Check, Save, SlidersHorizontal } from "lucide-react";
-import { saveRewardProtocolValues } from "@/app/actions/admin-actions";
+import { saveRewardProtocolValues } from "@/app/actions/admin-rewards";
 import type { RewardCategory, RewardProtocolData } from "@/lib/reward-protocol";
 import OperationsCardHeader from "@/components/admin/OperationsCardHeader";
 

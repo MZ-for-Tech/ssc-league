@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Zap, Send, Users, AlertCircle, CheckCircle, Loader2 } from "lucide-react";
-import { awardBulkXP } from "@/app/actions/admin-actions";
+import { awardBulkXP } from "@/app/actions/admin-bulk-xp";
 import clsx from "clsx";
 import DropdownSelect from "@/components/ui/DropdownSelect";
 import OperationsCardHeader from "@/components/admin/OperationsCardHeader";

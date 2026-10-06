@@ -1,47 +1,27 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
+import { useState } from "react";
 import {
   ArrowLeft,
-  ArrowRight,
   AlertCircle,
   Check,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
   FileQuestion,
-  HelpCircle,
-  Loader2,
   Plus,
-  Search,
   Upload,
   X,
 } from "lucide-react";
 import clsx from "clsx";
-import SelectDropdown from "@/components/ui/SelectDropdown";
-import {
-  createQuestionWithOptions,
-  createQuestionsBulk,
-  loadAdminQuestionBank,
-  type QuestionDraft,
-} from "@/app/actions/question-actions";
+import { QuestionBankSkeleton } from "@/components/admin/QuestionBankParts";
+import { LessonQuestionBrowser, QuestionBankLibrary } from "@/components/admin/QuestionBankViews";
+import { QuestionEditorForm, BulkQuestionImportForm } from "@/components/admin/QuestionAuthoringForms";
 import AdminSeasonToolbar from "@/components/admin/AdminSeasonToolbar";
 import PageHeader from "@/components/PageHeader";
 import type { SeasonRecord } from "@/lib/seasons";
-
-type BankData = Awaited<ReturnType<typeof loadAdminQuestionBank>>;
-type BankQuestion = BankData["questions"][number];
-type QuestionOptionDraft = { text: string; is_correct: boolean; justification: string };
+import { useQuestionAuthoring } from "@/components/admin/useQuestionAuthoring";
+import { useQuestionBankView } from "@/components/admin/useQuestionBankView";
+import { useAdminQuestionBank } from "@/components/admin/useAdminQuestionBank";
 
 const pageSize = 20;
-const emptyOptions = (): QuestionOptionDraft[] => Array.from({ length: 4 }, (_, index) => ({
-  text: "",
-  is_correct: index === 0,
-  justification: "",
-}));
-
 const fieldClass = "w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted/70 focus:border-primary";
 
 export default function AdminQuestionsView({
@@ -53,192 +33,61 @@ export default function AdminQuestionsView({
   activeSeasonId: string;
   seasons: SeasonRecord[];
 }) {
-  const router = useRouter();
   const readOnly = seasonId !== activeSeasonId;
-  const [bank, setBank] = useState<BankData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadError, setLoadError] = useState<string | null>(null);
+  const { bank, isLoading, loadError, refreshBank } = useAdminQuestionBank(seasonId);
   const [view, setView] = useState<"library" | "lesson" | "add" | "import">("library");
   const [lessonSearch, setLessonSearch] = useState("");
   const [search, setSearch] = useState("");
   const [selectedTopicId, setSelectedTopicId] = useState("");
   const [page, setPage] = useState(1);
-  const [questionText, setQuestionText] = useState("");
-  const [explanation, setExplanation] = useState("");
-  const [points, setPoints] = useState(10);
-  const [draftTopicId, setDraftTopicId] = useState("");
-  const [options, setOptions] = useState<QuestionOptionDraft[]>(emptyOptions);
-  const [bulkData, setBulkData] = useState("");
-  const [formError, setFormError] = useState<string | null>(null);
-  const [notice, setNotice] = useState<{ text: string; kind: "success" | "error" } | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const refreshBank = useCallback(async () => {
-    try {
-      setBank(await loadAdminQuestionBank(seasonId));
-      setLoadError(null);
-    } catch (error) {
-      setLoadError(error instanceof Error ? error.message : "The question bank could not be loaded.");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [seasonId]);
-
-  useEffect(() => {
-    let active = true;
-    void loadAdminQuestionBank(seasonId).then((nextBank) => {
-      if (active) { setBank(nextBank); setLoadError(null); setIsLoading(false); }
-    }).catch((error: unknown) => {
-      if (active) { setLoadError(error instanceof Error ? error.message : "The question bank could not be loaded."); setIsLoading(false); }
-    });
-    return () => { active = false; };
-  }, [seasonId]);
-
-  const topics = useMemo(() => bank?.topics ?? [], [bank]);
-  const questions = useMemo(() => bank?.questions ?? [], [bank]);
-  const essays = useMemo(() => bank?.essays ?? [], [bank]);
-  const activeDraftTopicId = draftTopicId || topics[0]?.id || "";
-  const selectedTopic = topics.find((topic) => topic.id === selectedTopicId) || null;
-  const selectedEssayCount = selectedTopic ? essays.filter((essay) => essay.topic_id === selectedTopic.id).length : 0;
-  const lessonSummaries = useMemo(() => topics.map((topic) => ({
-    ...topic,
-    questionCount: questions.filter((question) => question.topic_id === topic.id).length,
-    essayCount: essays.filter((essay) => essay.topic_id === topic.id).length,
-  })), [topics, questions, essays]);
-  const curriculumGroups = useMemo(() => {
-    const groups = (bank?.modules || []).map((module) => ({
-      id: module.id,
-      number: module.module_number as number | null,
-      name: module.name,
-      lessons: lessonSummaries.filter((topic) => topic.module_id === module.id),
-    }));
-    const unassignedLessons = lessonSummaries.filter((topic) => !topic.module_id);
-    if (unassignedLessons.length) groups.push({
-      id: "archive",
-      number: null,
-      name: "Archived lessons",
-      lessons: unassignedLessons,
-    });
-    return groups;
-  }, [bank, lessonSummaries]);
-  const visibleLessonGroups = useMemo(() => curriculumGroups.map((group) => ({
-    ...group,
-    lessons: group.lessons.filter((topic) => `${topic.name} ${topic.description || ""} ${group.name}`.toLocaleLowerCase().includes(lessonSearch.trim().toLocaleLowerCase())),
-  })).filter((group) => group.lessons.length), [curriculumGroups, lessonSearch]);
-  const filteredQuestions = useMemo(() => {
-    const normalizedSearch = search.trim().toLocaleLowerCase();
-    return questions.filter((question) => {
-      if (question.topic_id !== selectedTopicId) return false;
-      if (!normalizedSearch) return true;
-      return [question.text, question.bank_item_id || "", question.topic_label]
-        .some((value) => value.toLocaleLowerCase().includes(normalizedSearch));
-    }).sort((left, right) => (left.display_order ?? Number.MAX_SAFE_INTEGER) - (right.display_order ?? Number.MAX_SAFE_INTEGER) ||
-      left.created_at.localeCompare(right.created_at));
-  }, [questions, search, selectedTopicId]);
-  const pageCount = Math.max(1, Math.ceil(filteredQuestions.length / pageSize));
-  const visibleQuestions = filteredQuestions.slice((page - 1) * pageSize, page * pageSize);
-
-  function updateOption(index: number, changes: Partial<QuestionOptionDraft>) {
-    setOptions((current) => current.map((option, optionIndex) => optionIndex === index ? { ...option, ...changes } : option));
-  }
-
-  async function handleAddQuestion(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setFormError(null);
-    if (!activeDraftTopicId) {
-      setFormError("Choose a lesson for this question.");
-      return;
-    }
-    setIsSubmitting(true);
-    try {
-      await createQuestionWithOptions({
-        topic_id: activeDraftTopicId,
-        text: questionText,
-        points,
-        explanation,
-        options,
-      });
-      setNotice({ text: "Question added to the bank.", kind: "success" });
-      setSearch(questionText.trim().slice(0, 80));
-      setSelectedTopicId(activeDraftTopicId);
+  const {
+    topics,
+    questions,
+    essays,
+    selectedTopic,
+    selectedEssayCount,
+    visibleLessonGroups,
+    filteredQuestions,
+    pageCount,
+    visibleQuestions,
+  } = useQuestionBankView({ bank, lessonSearch, search, selectedTopicId, page, pageSize });
+  const {
+    activeDraftTopicId,
+    questionText,
+    explanation,
+    points,
+    options,
+    bulkData,
+    formError,
+    notice,
+    isSubmitting,
+    handleAddQuestion,
+    handleBulkImport,
+    openAddQuestion,
+    updateOption,
+    setQuestionText,
+    setExplanation,
+    setPoints,
+    setDraftTopicId,
+    setBulkData,
+    setOptions,
+    setNotice,
+  } = useQuestionAuthoring({
+    topics,
+    selectedTopicId,
+    refreshBank,
+    onQuestionAdded: (topicId, text) => {
+      setSearch(text.trim().slice(0, 80));
+      setSelectedTopicId(topicId);
       setPage(1);
-      setQuestionText("");
-      setExplanation("");
-      setPoints(10);
-      setOptions(emptyOptions());
       setView("lesson");
-      await refreshBank();
-      router.refresh();
-    } catch (error) {
-      setFormError(error instanceof Error ? error.message : "The question could not be saved.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
-
-  async function handleBulkImport() {
-    setNotice(null);
-    const lines = bulkData.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
-    const drafts: QuestionDraft[] = [];
-    const skipped: string[] = [];
-    for (const [index, line] of lines.entries()) {
-      const columns = line.split("|").map((column) => column.trim());
-      if (columns.length < 7) {
-        skipped.push(`Line ${index + 1}: expected at least 7 pipe-separated fields.`);
-        continue;
-      }
-      const [topicName, text, ...rest] = columns;
-      const [optionA, optionB, optionC, optionD, correctIndex, pointValue] = rest;
-      const topic = topics.find((candidate) => candidate.name.toLocaleLowerCase() === topicName.toLocaleLowerCase());
-      const correctNumber = Number(correctIndex);
-      if (!topic) {
-        skipped.push(`Line ${index + 1}: lesson “${topicName}” was not found.`);
-        continue;
-      }
-      if (!text || [optionA, optionB, optionC, optionD].some((option) => !option) || ![1, 2, 3, 4].includes(correctNumber)) {
-        skipped.push(`Line ${index + 1}: question, four choices, and a correct choice from 1–4 are required.`);
-        continue;
-      }
-      drafts.push({
-        topic_id: topic.id,
-        text,
-        points: pointValue ? Number(pointValue) : 10,
-        options: [optionA, optionB, optionC, optionD].map((option, optionIndex) => ({ text: option, is_correct: optionIndex + 1 === correctNumber })),
-      });
-    }
-
-    if (!drafts.length) {
-      setNotice({ text: skipped.join(" ") || "Paste at least one question to import.", kind: "error" });
-      return;
-    }
-
-    setIsSubmitting(true);
-    try {
-      const result = await createQuestionsBulk(drafts);
-      const messages = [`Added ${result.success} question${result.success === 1 ? "" : "s"}.`];
-      if (result.failed) messages.push(`${result.failed} failed: ${result.errors.slice(0, 3).join(" ")}`);
-      if (skipped.length) messages.push(`${skipped.length} line${skipped.length === 1 ? "" : "s"} skipped: ${skipped.slice(0, 2).join(" ")}`);
-      setNotice({ text: messages.join(" "), kind: result.failed || skipped.length ? "error" : "success" });
-      if (result.success) {
-        setBulkData("");
-        setSelectedTopicId("");
-        setView("library");
-        await refreshBank();
-        router.refresh();
-      }
-    } catch (error) {
-      setNotice({ text: error instanceof Error ? error.message : "The import failed.", kind: "error" });
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
-
-  function openAddQuestion() {
-    setDraftTopicId(selectedTopicId || topics[0]?.id || "");
-    setFormError(null);
-    setView("add");
-  }
-
+    },
+    onImportComplete: () => {
+      setSelectedTopicId("");
+      setView("library");
+    },
+  });
   const pageTitle = view === "lesson" && selectedTopic
     ? selectedTopic.name
     : view === "add" ? "Add question" : view === "import" ? "Import questions" : "Question Bank";
@@ -269,250 +118,57 @@ export default function AdminQuestionsView({
         <p>{notice.text}</p>
       </div>}
 
-      {view === "add" && !readOnly && <section className="instrument-panel relative isolate overflow-hidden rounded-2xl border border-border bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] p-5 shadow-lg shadow-black/20 sm:p-7">
-        <div className="mb-6 flex items-start justify-between gap-4">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">New multiple-choice question</p>
-            <h2 className="mt-1 text-xl font-bold text-foreground">Add to the question bank</h2>
-            <p className="mt-1 text-sm text-muted">Choose a lesson, write the prompt, and mark one correct answer.</p>
-          </div>
-          <button type="button" onClick={() => setView("library")} aria-label="Close question form" className="rounded-lg p-2 text-muted transition hover:bg-background hover:text-foreground"><X size={18} /></button>
-        </div>
-        <form onSubmit={handleAddQuestion} className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_300px]">
-          <div className="space-y-5">
-            <label className="block space-y-2">
-              <span className="text-sm font-semibold text-foreground">Question</span>
-              <textarea required rows={4} value={questionText} onChange={(event) => setQuestionText(event.target.value)} className={fieldClass} placeholder="Write a clear question or scenario…" />
-            </label>
-            <div className="space-y-3">
-              <div>
-                <h3 className="text-sm font-semibold text-foreground">Answer choices</h3>
-                <p className="mt-1 text-xs text-muted">Select the circle beside the correct answer.</p>
-              </div>
-              <div className="grid gap-3 md:grid-cols-2">
-                {options.map((option, index) => <div key={index} className={clsx("rounded-xl border p-4 transition", option.is_correct ? "border-success/40 bg-success/5" : "border-border bg-background/50")}>
-                  <div className="mb-3 flex items-center justify-between">
-                    <span className={clsx("text-xs font-bold uppercase tracking-wider", option.is_correct ? "text-success" : "text-muted")}>Option {String.fromCharCode(65 + index)}</span>
-                    <button type="button" onClick={() => setOptions((current) => current.map((item, itemIndex) => ({ ...item, is_correct: itemIndex === index })))} aria-label={`Mark option ${String.fromCharCode(65 + index)} correct`} aria-pressed={option.is_correct} className={clsx("grid h-6 w-6 place-items-center rounded-full border transition", option.is_correct ? "border-success bg-success text-background" : "border-border text-transparent hover:border-success")}><Check size={13} /></button>
-                  </div>
-                  <input required value={option.text} onChange={(event) => updateOption(index, { text: event.target.value })} className={fieldClass} placeholder={`Answer choice ${index + 1}`} />
-                  <textarea required rows={2} value={option.justification} onChange={(event) => updateOption(index, { justification: event.target.value })} className={`${fieldClass} mt-2`} placeholder={option.is_correct ? "Why this answer is correct…" : "Why this answer choice is incorrect…"} />
-                </div>)}
-              </div>
-            </div>
-            <label className="block space-y-2">
-              <span className="text-sm font-semibold text-foreground">Explanation <span className="font-normal text-muted">(optional)</span></span>
-              <textarea rows={3} value={explanation} onChange={(event) => setExplanation(event.target.value)} className={fieldClass} placeholder="Explain why the correct answer is right…" />
-            </label>
-          </div>
-          <aside className="h-fit space-y-5 rounded-xl border border-border bg-background/50 p-4 sm:p-5">
-            <label className="block space-y-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-muted">Lesson</span>
-              <SelectDropdown required value={activeDraftTopicId} onChange={(event) => setDraftTopicId(event.target.value)} className={fieldClass}>
-                <option value="">Select a lesson</option>
-                {topics.map((topic) => <option key={topic.id} value={topic.id}>{topic.name}</option>)}
-              </SelectDropdown>
-            </label>
-            <label className="block space-y-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-muted">Points</span>
-              <input required type="number" min={0} step={1} value={points} onChange={(event) => setPoints(Number(event.target.value))} className={fieldClass} />
-            </label>
-            {formError && <p role="alert" className="flex gap-2 rounded-lg border border-danger/20 bg-danger/5 p-3 text-xs text-danger"><AlertCircle size={15} className="shrink-0" />{formError}</p>}
-            <button type="submit" disabled={isSubmitting || !topics.length} className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 font-bold text-background transition hover:bg-primary-dim disabled:cursor-wait disabled:opacity-60">
-              {isSubmitting ? <Loader2 size={17} className="animate-spin" /> : <Plus size={17} />}
-              {isSubmitting ? "Saving question…" : "Add to bank"}
-            </button>
-          </aside>
-        </form>
-      </section>}
+      {view === "add" && !readOnly && <QuestionEditorForm
+        activeDraftTopicId={activeDraftTopicId}
+        topics={topics}
+        questionText={questionText}
+        explanation={explanation}
+        points={points}
+        options={options}
+        formError={formError}
+        isSubmitting={isSubmitting}
+        fieldClass={fieldClass}
+        onClose={() => setView("library")}
+        onSubmit={handleAddQuestion}
+        onQuestionTextChange={setQuestionText}
+        onExplanationChange={setExplanation}
+        onPointsChange={setPoints}
+        onTopicChange={setDraftTopicId}
+        onCorrectOption={(index) => setOptions((current) => current.map((item, itemIndex) => ({ ...item, is_correct: itemIndex === index })))}
+        onOptionChange={updateOption}
+      />}
 
-      {view === "import" && !readOnly && <section className="instrument-panel relative isolate overflow-hidden rounded-2xl border border-border bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] p-5 shadow-lg shadow-black/20 sm:p-7">
-        <div className="mb-5 flex items-start gap-3">
-          <div className="rounded-lg bg-primary/10 p-2 text-primary"><Upload size={18} /></div>
-          <div>
-            <h2 className="font-semibold text-foreground">Import multiple-choice questions</h2>
-            <p className="mt-1 text-sm text-muted">One question per line. Separate fields with a pipe character.</p>
-          </div>
-        </div>
-        <div className="mb-4 rounded-lg border border-border bg-background/60 p-3">
-          <code className="block overflow-x-auto text-xs text-muted">Lesson | Question | Option A | Option B | Option C | Option D | Correct choice (1–4) | Points</code>
-        </div>
-        <textarea value={bulkData} onChange={(event) => setBulkData(event.target.value)} rows={10} className={`${fieldClass} resize-y font-mono text-xs leading-6`} placeholder="Loops | What does range(3) produce? | 0, 1, 2 | 1, 2, 3 | 0, 1, 2, 3 | 3 | 1 | 10" />
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-          <p className="flex items-center gap-2 text-xs text-muted"><HelpCircle size={14} /> Lesson names must match the curriculum.</p>
-          <button type="button" onClick={handleBulkImport} disabled={isSubmitting || !bulkData.trim()} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-background transition hover:bg-primary-dim disabled:opacity-50">
-            {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />} Import questions
-          </button>
-        </div>
-      </section>}
+      {view === "import" && !readOnly && <BulkQuestionImportForm
+        bulkData={bulkData}
+        isSubmitting={isSubmitting}
+        fieldClass={fieldClass}
+        onBulkDataChange={setBulkData}
+        onImport={handleBulkImport}
+      />}
 
       {isLoading ? <QuestionBankSkeleton />
         : loadError ? <div role="alert" className="flex items-center gap-3 rounded-xl border border-danger/20 bg-danger/5 p-4 text-sm text-danger"><AlertCircle size={18} />{loadError}</div>
-        : view === "library" ? <section className="space-y-7">
-          <div className="instrument-panel relative isolate overflow-hidden rounded-xl border border-border bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] p-4 shadow-lg shadow-black/15 sm:p-5">
-            <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 -z-10 w-1/3 bg-dot-grid opacity-[0.06]" />
-            <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex flex-wrap gap-2.5">
-                <div className="rounded-lg border border-primary/15 bg-background/45 px-3 py-2"><span className="font-mono text-base font-bold text-foreground">{questions.length}</span><span className="ml-2 text-xs text-muted">questions</span></div>
-                <div className="rounded-lg border border-border/80 bg-background/35 px-3 py-2"><span className="font-mono text-base font-bold text-foreground">{topics.length}</span><span className="ml-2 text-xs text-muted">lessons</span></div>
-                <div className="rounded-lg border border-border/80 bg-background/35 px-3 py-2"><span className="font-mono text-base font-bold text-foreground">{essays.length}</span><span className="ml-2 text-xs text-muted">written prompts</span></div>
-              </div>
-              <label className="relative block w-full sm:w-72">
-                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-                <input value={lessonSearch} onChange={(event) => setLessonSearch(event.target.value)} className={`${fieldClass} bg-background/65 py-2.5 pl-9 focus:ring-2 focus:ring-primary/10`} placeholder="Find a lesson" />
-              </label>
-            </div>
-          </div>
-          {visibleLessonGroups.length ? visibleLessonGroups.map((group) => <section key={group.id} className="space-y-3">
-            <header className="flex items-end justify-between gap-4 border-b border-border/70 px-1 pb-3">
-              <div>
-                <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-primary">{group.number ? `Module ${group.number}` : "Archive"}</p>
-                <h2 className="mt-1 text-lg font-bold text-foreground">{group.name}</h2>
-              </div>
-              <span className="shrink-0 font-mono text-xs text-muted">{group.lessons.length} lessons</span>
-            </header>
-            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-              {group.lessons.map((topic) => <button
-                type="button"
-                key={topic.id}
-                onClick={() => { setSelectedTopicId(topic.id); setSearch(""); setPage(1); setNotice(null); setView("lesson"); }}
-                className="instrument-panel group/card relative isolate overflow-hidden rounded-xl border border-border bg-[linear-gradient(135deg,rgb(var(--surface-hero)),rgb(var(--surface))_62%,rgb(var(--surface-node)))] p-5 text-left shadow-lg shadow-black/10 transition duration-200 hover:-translate-y-0.5 hover:border-primary/45 hover:shadow-[0_0_28px_rgb(var(--primary)/0.1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-              >
-                <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent opacity-0 transition group-hover/card:opacity-100" />
-                <div className="relative z-10 flex items-start justify-between gap-4">
-                  <div className="flex min-w-0 items-start gap-3">
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-primary/25 bg-primary/10 font-mono text-xs font-bold text-primary shadow-[0_0_18px_rgb(var(--primary)/0.08)]">
-                      {group.number && topic.lesson_number ? `${group.number}.${topic.lesson_number}` : `W${topic.week_number}`}
-                    </span>
-                    <div className="min-w-0">
-                      <h3 className="font-semibold leading-5 text-foreground">{topic.name}</h3>
-                      <p className="mt-2 line-clamp-2 text-sm leading-5 text-muted">{topic.description || "Open this lesson to review its questions."}</p>
-                    </div>
-                  </div>
-                  <ArrowRight size={17} className="mt-1 shrink-0 text-muted transition group-hover/card:translate-x-0.5 group-hover/card:text-primary" />
-                </div>
-                <div className="relative z-10 mt-5 flex flex-wrap gap-x-4 gap-y-1 border-t border-border/70 pt-3 font-mono text-xs text-muted">
-                  <span>{topic.questionCount} questions</span>
-                  <span>{topic.essayCount} written prompts</span>
-                </div>
-              </button>)}
-            </div>
-          </section>) : <div className="instrument-panel rounded-2xl border border-dashed border-border bg-surface/35 p-10 text-center">
-            <Search size={22} className="mx-auto text-primary" />
-            <h2 className="mt-3 font-semibold text-foreground">No lessons found</h2>
-            <p className="mt-1 text-sm text-muted">Try another search.</p>
-          </div>}
-        </section>
-        : view === "lesson" && selectedTopic ? <section className="space-y-5">
-          <section className="instrument-panel relative isolate overflow-hidden rounded-2xl border border-border bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] shadow-lg shadow-black/20">
-            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border p-4">
-              <div>
-                <h3 className="font-semibold text-foreground">Multiple-choice questions</h3>
-                <p className="mt-1 text-xs text-muted">{questions.filter((question) => question.topic_id === selectedTopic.id).length} questions · {selectedEssayCount} written prompts</p>
-              </div>
-              <label className="relative block w-full sm:w-72">
-                <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-                <input value={search} onChange={(event) => { setSearch(event.target.value); setPage(1); }} className={`${fieldClass} py-2.5 pl-9`} placeholder="Search this lesson" />
-              </label>
-            </div>
-            {!visibleQuestions.length ? <div className="p-10 text-center text-sm text-muted">No questions match this search.</div> : <div className="divide-y divide-border/70">
-              {visibleQuestions.map((question) => <QuestionRow key={question.id} question={question} />)}
-            </div>}
-            {filteredQuestions.length > pageSize && <footer className="flex items-center justify-between border-t border-border px-4 py-3">
-              <p className="text-xs text-muted">Page {page} of {pageCount}</p>
-              <div className="flex gap-2">
-                <button type="button" onClick={() => setPage((current) => Math.max(1, current - 1))} disabled={page === 1} className="inline-flex items-center gap-1 rounded-lg border border-border px-3 py-2 text-xs font-semibold text-foreground disabled:opacity-40"><ChevronLeft size={15} /> Previous</button>
-                <button type="button" onClick={() => setPage((current) => Math.min(pageCount, current + 1))} disabled={page === pageCount} className="inline-flex items-center gap-1 rounded-lg border border-border px-3 py-2 text-xs font-semibold text-foreground disabled:opacity-40">Next <ChevronRight size={15} /></button>
-              </div>
-            </footer>}
-          </section>
-        </section> : null}
+         : view === "library" ? <QuestionBankLibrary
+          questionCount={questions.length}
+          lessonCount={topics.length}
+          essayCount={essays.length}
+          lessonSearch={lessonSearch}
+          groups={visibleLessonGroups}
+          onSearchChange={setLessonSearch}
+          onOpenLesson={(topic) => { setSelectedTopicId(topic.id); setSearch(""); setPage(1); setNotice(null); setView("lesson"); }}
+        />
+        : view === "lesson" && selectedTopic ? <LessonQuestionBrowser
+          topicQuestionCount={questions.filter((question) => question.topic_id === selectedTopic.id).length}
+          essayCount={selectedEssayCount}
+          questions={visibleQuestions}
+          filteredCount={filteredQuestions.length}
+          search={search}
+          page={page}
+          pageCount={pageCount}
+          pageSize={pageSize}
+          onSearchChange={(value) => { setSearch(value); setPage(1); }}
+          onPageChange={setPage}
+        /> : null}
     </div>
   );
-}
-
-function QuestionBankSkeleton() {
-  return (
-    <section className="animate-pulse space-y-7" aria-busy="true" aria-label="Loading question bank">
-      <div className="instrument-panel relative isolate overflow-hidden rounded-xl border border-border bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] p-4 shadow-lg shadow-black/15 sm:p-5">
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex flex-wrap gap-2.5">
-            {["w-24", "w-20", "w-32"].map((width, index) => (
-              <div key={index} className="flex h-10 items-center gap-2 rounded-lg border border-border bg-background/40 px-3">
-                <div className={`h-4 rounded bg-surface-light/35 ${width}`} />
-                <div className="h-3 w-12 rounded bg-surface-light/20" />
-              </div>
-            ))}
-          </div>
-          <div className="h-11 w-full rounded-xl border border-border bg-background/50 sm:w-72" />
-        </div>
-      </div>
-
-      {[0, 1, 2].map((group) => (
-        <section key={group} className="space-y-3">
-          <header className="flex items-end justify-between gap-4 border-b border-border/70 px-1 pb-3">
-            <div className="space-y-2">
-              <div className="h-3 w-20 rounded bg-primary/20" />
-              <div className="h-5 w-44 rounded bg-surface-light/35" />
-            </div>
-            <div className="h-3 w-16 rounded bg-surface-light/20" />
-          </header>
-          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-            {[0, 1, 2].map((lesson) => (
-              <article key={lesson} className="min-h-44 rounded-xl border border-border bg-surface/55 p-5">
-                <div className="flex items-start gap-3">
-                  <div className="h-10 w-10 shrink-0 rounded-lg border border-primary/15 bg-primary/10" />
-                  <div className="min-w-0 flex-1 space-y-3">
-                    <div className="h-4 w-4/5 rounded bg-surface-light/35" />
-                    <div className="space-y-2">
-                      <div className="h-3 w-full rounded bg-surface-light/20" />
-                      <div className="h-3 w-2/3 rounded bg-surface-light/20" />
-                    </div>
-                  </div>
-                  <div className="h-4 w-4 shrink-0 rounded bg-surface-light/20" />
-                </div>
-                <div className="mt-5 flex gap-4 border-t border-border/70 pt-3">
-                  <div className="h-3 w-24 rounded bg-surface-light/20" />
-                  <div className="h-3 w-28 rounded bg-surface-light/20" />
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-      ))}
-    </section>
-  );
-}
-
-function QuestionRow({ question }: { question: BankQuestion }) {
-  return <details className="group px-4 py-4 transition hover:bg-primary/[0.035] sm:px-5">
-    <summary className="flex cursor-pointer list-none items-start gap-3 [&::-webkit-details-marker]:hidden">
-      <span className="min-w-0 flex-1">
-        <span className="block whitespace-pre-wrap text-sm font-medium leading-6 text-foreground">{question.text}</span>
-      </span>
-      <span className="flex shrink-0 items-center gap-2 pt-1 text-xs text-muted">
-        <span className="hidden whitespace-nowrap sm:inline">{question.options.length} options · {question.points} pts</span>
-        <ChevronDown size={16} className="transition group-open:rotate-180" />
-      </span>
-    </summary>
-    <div className="mt-4 space-y-4 pl-1 sm:pl-0">
-      <div className="grid gap-2 sm:grid-cols-2">
-        {question.options.map((option, index) => <div key={option.id} className={clsx("flex items-start gap-2 rounded-lg border px-3 py-2.5 text-sm", option.is_correct ? "border-success/25 bg-success/5 text-foreground" : "border-border bg-background/40 text-muted")}>
-          <span className={clsx("mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full text-xs font-bold", option.is_correct ? "bg-success text-background" : "bg-surface text-muted")}>{String.fromCharCode(65 + index)}</span>
-          <span className="min-w-0 flex-1 whitespace-pre-wrap">{option.text}{option.justification && <span className="mt-1 block text-xs leading-5 text-muted">{option.justification}</span>}</span>
-          {option.is_correct && <span className="shrink-0 text-xs font-bold uppercase tracking-wider text-success">Correct</span>}
-        </div>)}
-      </div>
-      {question.explanation && <div className="rounded-lg border border-primary/15 bg-primary/5 px-3 py-2.5 text-sm leading-6 text-muted"><span className="mr-2 text-xs font-bold uppercase tracking-wider text-primary">Explanation</span>{question.explanation}</div>}
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
-        {question.bank_item_id && <span className="font-mono">{question.bank_item_id}</span>}
-        {question.bloom_level && <span>{question.bloom_level}</span>}
-        {question.attempts > 0 && <span>{question.attempts} student {question.attempts === 1 ? "response" : "responses"}</span>}
-      </div>
-      {question.stimulus_asset_url && <figure className="max-w-md rounded-xl border border-border bg-background p-3">
-        <Image unoptimized width={640} height={360} src={question.stimulus_asset_url} alt={question.stimulus_asset_alt || question.text} className="max-h-56 w-full object-contain" />
-        {question.stimulus_asset_alt && question.stimulus_asset_alt !== question.text && <figcaption className="mt-2 text-xs text-muted">{question.stimulus_asset_alt}</figcaption>}
-      </figure>}
-    </div>
-  </details>;
 }

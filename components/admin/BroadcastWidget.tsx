@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Radio, Send, Users, CheckCircle } from "lucide-react";
-import { sendBroadcast } from "@/app/actions/admin-actions";
+import { sendBroadcast } from "@/app/actions/admin-broadcast";
 import DropdownSelect from "@/components/ui/DropdownSelect";
 import OperationsCardHeader from "@/components/admin/OperationsCardHeader";
 

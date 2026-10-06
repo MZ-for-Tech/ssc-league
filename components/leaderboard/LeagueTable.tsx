@@ -1,24 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
-import { ChevronUp, ChevronDown, Minus, ChevronsUp, ChevronsDown, Trophy, Medal, Crown, Zap } from "lucide-react";
-import clsx from "clsx";
-
-interface StudentData {
-  id: string;
-  student_id: string;
-  full_name: string;
-  preferred_name: string;
-  avatar_url: string | null;
-  current_xp: number;
-  current_streak: number;
-  rank: number;
-  prevRank: number;
-  group_id: string;
-  current_level: number;
-  isMe?: boolean;
-}
+import { ChevronsUp, ChevronsDown } from "lucide-react";
+import LeagueTableRow from "@/components/leaderboard/LeagueTableRow";
+import type { StudentData } from "@/components/leaderboard/league-types";
 
 // "Gap" Row visual - A subtle tactical break
 const GapRow = () => (
@@ -62,27 +47,6 @@ export default function LeagueTable({ students }: { students: StudentData[] }) {
       }
   }
 
-  // Visual Styles per Rank
-  const getRankStyle = (rank: number, isMe: boolean | undefined) => {
-    if (isMe) return "bg-cyan-950/30 border-cyan-500/50 shadow-[0_0_20px_rgb(var(--primary)/0.1)] z-10 scale-[1.01]";
-    
-    switch (rank) {
-      case 1: return "bg-gradient-to-r from-yellow-500/10 to-transparent border-yellow-500/30 hover:border-yellow-500/50";
-      case 2: return "bg-gradient-to-r from-slate-300/10 to-transparent border-slate-300/30 hover:border-slate-300/50";
-      case 3: return "bg-gradient-to-r from-amber-700/10 to-transparent border-amber-700/30 hover:border-amber-700/50";
-      default: return "bg-slate-900/40 border-slate-800/60 hover:bg-slate-800/80 hover:border-slate-700";
-    }
-  };
-
-  // Rank Badge (The number on the left)
-  const renderRankBadge = (rank: number) => {
-    if (rank === 1) return <div className="w-8 h-8 rounded-lg bg-yellow-500 text-slate-950 flex items-center justify-center font-black shadow-lg shadow-yellow-500/20"><Trophy size={16} /></div>;
-    if (rank === 2) return <div className="w-8 h-8 rounded-lg bg-slate-300 text-slate-900 flex items-center justify-center font-black shadow-lg shadow-slate-300/20"><Medal size={16} /></div>;
-    if (rank === 3) return <div className="w-8 h-8 rounded-lg bg-amber-600 text-white flex items-center justify-center font-black shadow-lg shadow-amber-600/20"><Medal size={16} /></div>;
-    
-    return <span className="text-lg font-mono font-bold text-slate-500">#{rank}</span>;
-  };
-
   return (
     <div className="w-full space-y-3">
       
@@ -94,108 +58,9 @@ export default function LeagueTable({ students }: { students: StudentData[] }) {
       </div>
 
       <div className="flex flex-col gap-2">
-        {visibleRows.map((item, idx) => {
-            if (item === "GAP") return <GapRow key={`gap-${idx}`} />;
-            const student = item as StudentData;
-            
-            return (
-            <div 
-                key={student.id}
-                className={clsx(
-                    "grid grid-cols-12 items-center p-3 sm:p-4 rounded-xl border backdrop-blur-sm transition-all duration-200 group",
-                    getRankStyle(student.rank, student.isMe)
-                )}
-            >
-                {/* 1. RANK & TREND */}
-                <div className="col-span-2 md:col-span-1 flex flex-col items-center justify-center gap-2">
-                    {renderRankBadge(student.rank)}
-                    
-                    {/* Trend Pill */}
-                    {(() => {
-                        const diff = student.prevRank - student.rank;
-                        if (diff > 0) return (
-                            <div className="flex items-center gap-1 text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-                                <ChevronUp size={10} strokeWidth={4} /> {diff}
-                            </div>
-                        );
-                        if (diff < 0) return (
-                            <div className="flex items-center gap-1 text-xs font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-full border border-rose-500/20">
-                                <ChevronDown size={10} strokeWidth={4} /> {Math.abs(diff)}
-                            </div>
-                        );
-                        return <div className="text-slate-600 text-xs"><Minus size={12} /></div>;
-                    })()}
-                </div>
-
-                {/* 2. PROFILE */}
-                <div className="col-span-7 md:col-span-8 pl-2 sm:pl-6 flex items-center gap-4">
-                    <div className="relative shrink-0">
-                        <Image unoptimized width={48} height={48}
-                            src={student.avatar_url || `https://api.dicebear.com/9.x/avataaars/svg?seed=${student.preferred_name || 'Agent'}`} 
-                            alt="Avatar"
-                            className={clsx(
-                                "w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 shadow-md bg-slate-800",
-                                student.isMe ? "border-cyan-400" : "border-slate-700 group-hover:border-slate-600"
-                            )}
-                        />
-                        {/* Crown for #1 */}
-                        {student.rank === 1 && (
-                            <div className="absolute -top-3 -right-1 text-yellow-400 drop-shadow-lg animate-bounce">
-                                <Crown size={16} fill="currentColor" />
-                            </div>
-                        )}
-                        {/* Level Badge (Tiny) */}
-                        <div className="absolute left-1/2 top-full z-10 mt-1 -translate-x-1/2 whitespace-nowrap rounded border border-slate-700 bg-slate-900 px-1.5 py-0.5 text-2xs font-bold text-slate-300 shadow-sm">
-                            Level {student.current_level}
-                        </div>
-                    </div>
-
-                    <div className="min-w-0 flex flex-col justify-center">
-                        <div className="flex items-center gap-2">
-                            <span className={clsx("font-bold text-sm sm:text-base truncate", student.isMe ? "text-cyan-400" : "text-slate-200")}>
-                                {student.preferred_name}
-                            </span>
-                            {/* Group Tag */}
-                            {student.group_id && (
-                                <span className="hidden sm:inline-flex text-xs bg-slate-800/80 text-slate-400 px-1.5 py-0.5 rounded border border-slate-700/50 font-mono tracking-wide">
-                                    {student.group_id}
-                                </span>
-                            )}
-                        </div>
-                        {/* Sub Name (Arabic) */}
-                        <div className="text-xs text-slate-500 truncate font-medium">
-                            {student.full_name}
-                        </div>
-                    </div>
-                </div>
-
-                {/* 3. XP & STATS */}
-                <div className="col-span-3 md:col-span-3 text-right flex flex-col justify-center items-end">
-                    <div className="font-mono text-lg sm:text-xl font-black text-white tabular-nums tracking-tight leading-none">
-                        {student.current_xp.toLocaleString()}
-                    </div>
-                    
-                    {/* Streak Indicator */}
-                    <div className="flex items-center gap-2 mt-1.5">
-                        {student.current_streak > 0 ? (
-                            <div className={clsx(
-                                "flex items-center gap-1 text-xs font-bold px-1.5 py-0.5 rounded border",
-                                student.current_streak >= 3 
-                                    ? "bg-amber-500/10 text-amber-500 border-amber-500/20" 
-                                    : "bg-slate-800 text-slate-500 border-slate-700"
-                            )}>
-                                <Zap size={8} fill="currentColor" /> 
-                                <span className="hidden sm:inline">Streak</span> {student.current_streak}
-                            </div>
-                        ) : (
-                            <div className="text-xs text-slate-600 font-medium">No Streak</div>
-                        )}
-                    </div>
-                </div>
-
-            </div>
-            );
-        })}
+        {visibleRows.map((item, idx) => item === "GAP"
+          ? <GapRow key={`gap-${idx}`} />
+          : <LeagueTableRow key={item.id} student={item} />)}
       </div>
 
       {/* FOOTER TOGGLE */}

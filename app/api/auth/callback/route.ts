@@ -7,7 +7,15 @@ import type { CookieOptions } from "@supabase/ssr";
  * This route handles Supabase authentication callbacks and session refresh.
  * Replaces the deprecated middleware.ts pattern.
  */
-export async function GET() {
+export async function GET(request: Request) {
+  const requestUrl = new URL(request.url);
+  const code = requestUrl.searchParams.get("code");
+  const tokenHash = requestUrl.searchParams.get("token_hash");
+  const type = requestUrl.searchParams.get("type");
+  const requestedNext = requestUrl.searchParams.get("next") || "/dashboard";
+  const next = requestedNext.startsWith("/") && !requestedNext.startsWith("//")
+    ? requestedNext
+    : "/dashboard";
   const cookieStore = await cookies();
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -26,9 +34,25 @@ export async function GET() {
     }
   );
 
-  // Refresh the session to ensure it's up-to-date
-  await supabase.auth.getUser();
+  if (code) {
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (error) {
+      const errorUrl = new URL("/forgot-password", requestUrl.origin);
+      errorUrl.searchParams.set("error", "invalid_link");
+      return NextResponse.redirect(errorUrl);
+    }
+  } else if (tokenHash && type === "recovery") {
+    const { error } = await supabase.auth.verifyOtp({ token_hash: tokenHash, type: "recovery" });
+    if (error) {
+      const errorUrl = new URL("/forgot-password", requestUrl.origin);
+      errorUrl.searchParams.set("error", "invalid_link");
+      return NextResponse.redirect(errorUrl);
+    }
+  } else {
+    const errorUrl = new URL("/forgot-password", requestUrl.origin);
+    errorUrl.searchParams.set("error", "invalid_link");
+    return NextResponse.redirect(errorUrl);
+  }
 
-  // Return the response
-  return NextResponse.next();
+  return NextResponse.redirect(new URL(next, requestUrl.origin));
 }

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { User, Lock, ArrowRight, ShieldCheck, Loader2, Radio, ScanLine, Terminal } from "lucide-react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
@@ -122,6 +123,7 @@ function CourseCodeTerminal() {
   }, [script]);
 
   const visibleCode = prefersReducedMotion ? initialCourseScript : script || initialCourseScript.slice(0, 1);
+  const visibleLines = visibleCode.split("\n");
 
   return (
     <div aria-hidden="true" className="instrument-panel relative isolate mt-5 max-w-3xl overflow-hidden border border-primary/20 bg-[linear-gradient(115deg,rgb(var(--surface-deep)/0.88),rgb(var(--surface)/0.72)_58%,rgb(var(--surface-node)/0.82))] shadow-2xl shadow-black/25">
@@ -133,7 +135,7 @@ function CourseCodeTerminal() {
         </div>
         <span className="shrink-0 font-mono text-[10px] text-muted/70">league_analysis.py</span>
       </div>
-      <pre ref={viewportRef} className="h-44 overflow-y-auto whitespace-pre-wrap break-words px-4 py-3 font-mono text-xs leading-6 text-slate-200 sm:h-48 sm:px-5 sm:py-4 sm:text-sm sm:leading-7"><code>{visibleCode.split("\n").map((line, index) => <span key={index} className="block"><span className="mr-4 inline-block w-5 select-none text-right text-muted/45">{index + 1}</span>{highlightPython(line) || " "}</span>)}<span className="ml-1 inline-block h-4 w-1 animate-pulse bg-primary align-middle" /></code></pre>
+      <pre ref={viewportRef} className="h-44 overflow-y-auto whitespace-pre-wrap break-words px-4 py-3 font-mono text-xs leading-6 text-slate-200 sm:h-48 sm:px-5 sm:py-4 sm:text-sm sm:leading-7"><code>{visibleLines.map((line, index) => <span key={index} className="block"><span className="mr-4 inline-block w-5 select-none text-right text-muted/45">{index + 1}</span>{highlightPython(line) || " "}{index === visibleLines.length - 1 && <span aria-hidden="true" className="ml-1 inline-block h-4 w-1 animate-pulse bg-primary align-middle" />}</span>)}</code></pre>
       <div className="flex items-center justify-between border-t border-border/70 px-4 py-2.5 font-mono text-[9px] font-bold uppercase tracking-[0.15em] text-muted/65 sm:px-5 sm:text-[10px]">
         <span>One script · live scrollback</span>
         <span className="flex items-center gap-2 text-success"><i className="h-1.5 w-1.5 bg-success shadow-[0_0_8px_rgb(var(--success)/0.8)]" /> Ready</span>
@@ -205,12 +207,7 @@ const handleLogin = async (e: React.FormEvent) => {
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(ellipse_at_18%_15%,rgb(var(--primary)/0.15),transparent_34%),radial-gradient(ellipse_at_90%_85%,rgb(124_58_237/0.12),transparent_34%),linear-gradient(135deg,rgb(var(--surface-deep)),rgb(var(--background))_55%,rgb(var(--surface-deep)))]" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-dot-grid opacity-[0.13] [mask-image:linear-gradient(120deg,black,transparent_90%)]" />
 
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, ease: "easeOut" }}
-        className="grid min-h-screen w-full grid-cols-1 xl:grid-cols-[3fr_2fr]"
-      >
+      <div className="grid min-h-screen w-full grid-cols-1 xl:grid-cols-[3fr_2fr]">
         <section className="relative hidden min-h-screen flex-col justify-between overflow-hidden border-r border-primary/20 bg-[linear-gradient(145deg,rgb(var(--surface-hero)/0.88),rgb(var(--surface-deep)/0.84)_62%,rgb(var(--surface-node)/0.8))] px-10 py-6 xl:flex 2xl:px-14 2xl:py-8">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.13] [mask-image:linear-gradient(135deg,black,transparent_75%)]" />
           <svg aria-hidden="true" viewBox="0 0 1000 900" fill="none" className="pointer-events-none absolute right-[-18%] top-[12%] z-0 h-[76%] w-[72%] opacity-55">
@@ -299,6 +296,11 @@ const handleLogin = async (e: React.FormEvent) => {
                   required
                 />
               </div>
+              <div className="flex justify-end px-1">
+                <Link href="/forgot-password" className="text-xs font-semibold text-primary transition hover:text-cyan-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                  Forgot password?
+                </Link>
+              </div>
             </div>
 
             {error && (
@@ -328,7 +330,7 @@ const handleLogin = async (e: React.FormEvent) => {
           </div>
           </div>
         </section>
-      </motion.div>
+      </div>
     </main>
   );
 }

@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Radio, Send, Users, ShieldAlert, CheckCircle } from "lucide-react";
+import { Radio, Send, Users, CheckCircle } from "lucide-react";
 import { sendBroadcast } from "@/app/actions/admin-actions";
-import clsx from "clsx";
 
 export default function BroadcastWidget() {
   const [message, setMessage] = useState(""); // Note: Requires DB schema support for message text
@@ -17,7 +16,7 @@ export default function BroadcastWidget() {
     
     setLoading(true);
     // Passing 'info' as default type
-    const res = await sendBroadcast(message, group, 'info'); 
+    const res = await sendBroadcast(message, group);
     setLoading(false);
 
     if (res.success) {

@@ -1,0 +1,29 @@
+{
+  "mcq_count": 40,
+  "essay_count": 8,
+  "four_distinct_options_each": true,
+  "keys_valid": true,
+  "answer_positions_A_to_D": [
+    10,
+    10,
+    10,
+    10
+  ],
+  "unique_chart_assets": 10,
+  "mcqs_with_visuals": 23,
+  "essays_with_visuals": 6,
+  "essay_justifications": 8,
+  "essay_rubric_totals": {
+    "M3L5-E01": 5,
+    "M3L5-E02": 5,
+    "M3L5-E03": 5,
+    "M3L5-E04": 5,
+    "M3L5-E05": 5,
+    "M3L5-E06": 5,
+    "M3L5-E07": 5,
+    "M3L5-E08": 5
+  },
+  "preview_image_count": 34,
+  "review_status": "Authoring review completed and mechanical checks passed; no independent blind review performed.",
+  "duplicate_stems": []
+}

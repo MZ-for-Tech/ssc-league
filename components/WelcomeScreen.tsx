@@ -1,24 +1,25 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Terminal } from "lucide-react";
 
-export default function WelcomeScreen({ name }: { name: string }) {
+export default function WelcomeScreen({ name, storageKey = "has_seen_welcome" }: { name: string; storageKey?: string }) {
   const [show, setShow] = useState(false);
   const [decryptedName, setDecryptedName] = useState("");
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
 
   // 1. Handle Mounting
   useEffect(() => {
-    setMounted(true);
-    const hasSeenWelcome = sessionStorage.getItem("has_seen_welcome");
-    if (!hasSeenWelcome) {
-      setShow(true);
-      sessionStorage.setItem("has_seen_welcome", "true");
-    }
-  }, []);
+    const timer = window.setTimeout(() => {
+      if (!sessionStorage.getItem(storageKey)) {
+        sessionStorage.setItem(storageKey, "true");
+        setShow(true);
+      }
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [storageKey]);
 
   // 2. Decryption & Timer Logic
   useEffect(() => {
@@ -27,7 +28,7 @@ export default function WelcomeScreen({ name }: { name: string }) {
     // --- DECRYPTION (2x Faster) ---
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%";
     let iteration = 0;
-    
+
     const interval = setInterval(() => {
       setDecryptedName(
         name
@@ -70,15 +71,15 @@ export default function WelcomeScreen({ name }: { name: string }) {
           transition={{ duration: 0.5, ease: "easeInOut" }} // Faster fade in/out
         >
           <div className="text-center space-y-6 scale-110">
-            
+
             {/* Icon Pulse */}
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.3 }}
               className="flex justify-center"
             >
-                <div className="p-5 rounded-full bg-primary/10 border border-primary/20 shadow-[0_0_40px_rgba(34,211,238,0.2)] animate-pulse">
+                <div className="p-5 rounded-full bg-primary/10 border border-primary/20 shadow-glow-primary-soft animate-pulse">
                   <Terminal size={40} className="text-primary" />
                 </div>
             </motion.div>
@@ -98,11 +99,11 @@ export default function WelcomeScreen({ name }: { name: string }) {
 
             {/* Loading Bar (Synced to 1.5s) */}
             <div className="w-64 h-1.5 bg-surface rounded-full mx-auto overflow-hidden mt-10 border border-border">
-                <motion.div 
+                <motion.div
                     initial={{ width: "0%" }}
                     animate={{ width: "100%" }}
                     transition={{ duration: 1.5, ease: "linear" }} // Matches timeout
-                className="h-full bg-primary-dim shadow-[0_0_15px_#22d3ee]" 
+                className="h-full bg-primary-dim shadow-glow-primary"
                 />
             </div>
 

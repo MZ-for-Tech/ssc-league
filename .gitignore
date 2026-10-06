@@ -38,6 +38,7 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 .env*
+student_credentials.csv
 
 # vercel
 .vercel
@@ -58,3 +59,5 @@ __pycache__/
 # --- IDEs (Recommended) ---
 .vscode
 .idea
+
+supabase/.temp/

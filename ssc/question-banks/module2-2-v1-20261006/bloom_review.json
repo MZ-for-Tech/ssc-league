@@ -1,0 +1,50 @@
+{
+  "note": "Provisional labels describe the operation required; advisory only and not quota-driven. Same-session AI review is not independent validation.",
+  "anchors": [
+    {
+      "id": "M2L2-007",
+      "label": "Apply",
+      "reason": "trace a conditional block and unindented statement"
+    },
+    {
+      "id": "M2L2-016",
+      "label": "Analyze",
+      "reason": "identify branch shadowing"
+    },
+    {
+      "id": "M2L2-023",
+      "label": "Apply",
+      "reason": "evaluate a compound divisibility rule"
+    },
+    {
+      "id": "M2L2-029",
+      "label": "Apply",
+      "reason": "calculate an amount selected by a tariff chain"
+    },
+    {
+      "id": "M2L2-037",
+      "label": "Analyze",
+      "reason": "trace a broad first condition"
+    },
+    {
+      "id": "M2L2-E03",
+      "label": "Apply",
+      "reason": "classify cases using a rule"
+    },
+    {
+      "id": "M2L2-E04",
+      "label": "Analyze",
+      "reason": "diagnose and repair an unreachable branch"
+    },
+    {
+      "id": "M2L2-E06",
+      "label": "Apply",
+      "reason": "compute results across ordered ranges"
+    },
+    {
+      "id": "M2L2-E08",
+      "label": "Create",
+      "reason": "refactor nested decisions"
+    }
+  ]
+}

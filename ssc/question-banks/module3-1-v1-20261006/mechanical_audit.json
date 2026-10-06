@@ -1,0 +1,39 @@
+{
+  "mcq_count": 40,
+  "essay_count": 8,
+  "four_choices_each": true,
+  "options_unique_each": true,
+  "keys_valid": true,
+  "answer_positions_A_to_D": [
+    10,
+    10,
+    10,
+    10
+  ],
+  "mcq_code_stimuli": 2,
+  "essay_code_stimuli": 8,
+  "preview_code_blocks": 10,
+  "essays_with_explicit_justification": 8,
+  "rubric_totals": {
+    "M3L1-E01": 5,
+    "M3L1-E02": 5,
+    "M3L1-E03": 5,
+    "M3L1-E04": 5,
+    "M3L1-E05": 5,
+    "M3L1-E06": 5,
+    "M3L1-E07": 5,
+    "M3L1-E08": 5
+  },
+  "key_length_cues": [],
+  "duplicate_stems": [],
+  "blind_review_count": 48,
+  "source_pair": "1_what's_ds.md and Module 3 Lecture 3_1 PDF, selected introductory pages",
+  "review_limit": "Same-session metadata-hidden review; earlier exposure to answer-bearing drafts means this is not independent or fully blind review.",
+  "source_caveats": [
+    "Lecture 3_1 PDF runs for 68 pages and includes later pandas basics, filtering, visualization, and Titanic material. Lesson 1 uses only the shared introductory scope: PDF pp. 4–9 and 11–13.",
+    "PDF p. 10 contains its own six-question quiz. This batch does not reproduce those items verbatim; questions use new applied stems while assessing the same lesson objectives.",
+    "PDF p. 11 lists six libraries, then refers to 'these four'; the Markdown lists five. The batch assesses the named libraries' stated roles and avoids a keyed count of libraries.",
+    "PDF p. 8 labels the neural-network ring 'Neutal Nets'. The batch uses the standard term, supported by the surrounding source and Markdown, and does not assess the typo.",
+    "The statistics-versus-data-science table is a useful teaching contrast in typical goals and starting points, not a strict boundary. The batch includes an item and essay that explicitly recognize overlap."
+  ]
+}

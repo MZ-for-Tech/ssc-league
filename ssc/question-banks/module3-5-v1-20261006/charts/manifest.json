@@ -1,0 +1,15 @@
+{
+  "note": "Figures plot the Seaborn Titanic sample after the lesson's selected-column, missing-age, and duplicate-removal steps unless stated otherwise. SVGs are rendered by the named course libraries.",
+  "renderers": {
+    "cleaning_flow.svg": "pandas.Series.plot.bar / Matplotlib",
+    "age_histogram.svg": "pandas.Series.plot.hist / Matplotlib",
+    "age_fare_scatter.svg": "pandas.DataFrame.plot.scatter / Matplotlib",
+    "passenger_counts_by_class.svg": "pandas.Series.plot.bar / Matplotlib",
+    "survival_by_sex.svg": "pandas.DataFrame.plot.bar(stacked=True) / Matplotlib",
+    "survival_by_class.svg": "pandas.DataFrame.plot.bar(stacked=True) / Matplotlib",
+    "fare_boxplot_by_survival.svg": "pandas.DataFrame.boxplot / Matplotlib",
+    "survival_by_sex_and_class.svg": "pandas.DataFrame.plot.bar / Matplotlib",
+    "missing_age_by_class.svg": "pandas.Series.plot.bar / Matplotlib",
+    "group_sizes_by_sex_class.svg": "pandas.DataFrame.plot.bar / Matplotlib"
+  }
+}

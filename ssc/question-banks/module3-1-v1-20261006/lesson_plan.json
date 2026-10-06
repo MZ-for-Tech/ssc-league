@@ -1,0 +1,32 @@
+{
+  "lesson": "Module 3, Lesson 1: What is data science?",
+  "sources": {
+    "primary_markdown": "ssc/Module 3/1_what's_ds.md",
+    "primary_pdf": "ssc/Module 3/10. Module 3_1_pandas.pdf (relevant introductory pages 4–9 and 11–13 of 68)",
+    "scope": "Lesson 1: data science foundations, its objectives, machine learning, the AI/ML hierarchy, typical contrasts with statistics, the introductory Python library roles, pandas, and DataFrame structure.",
+    "source_caveats": [
+      "Lecture 3_1 PDF runs for 68 pages and includes later pandas basics, filtering, visualization, and Titanic material. Lesson 1 uses only the shared introductory scope: PDF pp. 4–9 and 11–13.",
+      "PDF p. 10 contains its own six-question quiz. This batch does not reproduce those items verbatim; questions use new applied stems while assessing the same lesson objectives.",
+      "PDF p. 11 lists six libraries, then refers to 'these four'; the Markdown lists five. The batch assesses the named libraries' stated roles and avoids a keyed count of libraries.",
+      "PDF p. 8 labels the neural-network ring 'Neutal Nets'. The batch uses the standard term, supported by the surrounding source and Markdown, and does not assess the typo.",
+      "The statistics-versus-data-science table is a useful teaching contrast in typical goals and starting points, not a strict boundary. The batch includes an item and essay that explicitly recognize overlap."
+    ]
+  },
+  "batch": {
+    "mcqs": 40,
+    "structured_responses": 8,
+    "marks_each": 5
+  },
+  "coverage": [
+    "data science as an interdisciplinary practice and its goal",
+    "structured and unstructured data",
+    "data preparation, communication, advanced analytics, and ethics",
+    "machine learning, patterns, historical examples, and generalization",
+    "AI, rule-based expert systems, ML, neural networks, and deep learning",
+    "typical statistics and data science goals and starting points, including overlap",
+    "NumPy, pandas, Matplotlib, Seaborn, and scikit-learn roles",
+    "pandas purpose, name, history, aliases, and supported formats",
+    "DataFrame rows, columns, cells, and added capabilities"
+  ],
+  "method": "Paired-source question drafting; answer-bearing review; metadata-hidden question review; rendered code preview; mechanical audit."
+}

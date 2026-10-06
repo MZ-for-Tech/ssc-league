@@ -1,0 +1,39 @@
+{
+  "mcq_count": 40,
+  "essay_count": 8,
+  "four_choices_each": true,
+  "options_unique_each": true,
+  "keys_valid": true,
+  "answer_positions_A_to_D": [
+    10,
+    10,
+    10,
+    10
+  ],
+  "mcq_code_stimuli": 30,
+  "essay_code_stimuli": 8,
+  "preview_code_blocks": 38,
+  "essays_with_explicit_justification": 8,
+  "rubric_totals": {
+    "M2L6-E01": 5,
+    "M2L6-E02": 5,
+    "M2L6-E03": 5,
+    "M2L6-E04": 5,
+    "M2L6-E05": 5,
+    "M2L6-E06": 5,
+    "M2L6-E07": 5,
+    "M2L6-E08": 5
+  },
+  "key_length_cues": [],
+  "duplicate_stems": [],
+  "blind_review_count": 48,
+  "source_pair": "6_tuples_and_dictionaries.md and Collection Data Types Part 2 PDF",
+  "review_limit": "Same-session metadata-hidden review; earlier exposure to answer-bearing drafts means this is not independent or fully blind review.",
+  "source_caveats": [
+    "The PDF character-frequency example iterates over set(txt.upper()) but counts with txt.count(i), mixing uppercase characters with the unchanged case-sensitive source string. The corrected Markdown normalizes consistently; questions ask students to diagnose and repair the PDF version.",
+    "The PDF survey exercise uses range(L) without defining L. The paired Markdown correctly iterates directly over the record list; no keyed item relies on the undefined name.",
+    "The elasticity exercise compares signed values directly with 1, which classifies negative elasticities as inelastic regardless of magnitude. The final essay explicitly identifies this code behavior and contrasts it with the magnitude-based criterion.",
+    "The PDF converts rates through tuple(set(rates)); set iteration order is not specified. No item requires a particular order for the unique rates.",
+    "A tuple is hashable as a dictionary key only when its contents are hashable. The key question uses a tuple of integers, not a tuple containing a mutable list."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "lesson": "Module 2, Lesson 5: Lists and strings",
+  "sources": {
+    "primary_markdown": "ssc/Module 2/5_lists_and_strings.md",
+    "primary_pdf": "ssc/Module 2/8. Module 2_4_Collection Data Types_Prat1.pdf (Part 1, 37 pages)",
+    "scope": "The batch uses the Lesson 5 Markdown and the matching Part 1 PDF. Together they cover lists, slicing, aliasing and copies, list operations, sorting, medians, GDP growth, comprehensions, string operations and applied data-cleaning examples including email domains and Gini calculations.",
+    "source_caveats": [
+      "The Part 1 PDF's method table gives remove(x, value); the valid list method is remove(value). No item uses the incorrect signature.",
+      "The Part 1 PDF contains a malformed odd-number comprehension written with range(1:n). The batch uses valid Python syntax and does not present that typo as valid code.",
+      "The PDF has extraction/quotation defects in a string example; no item depends on the defective snippet.",
+      "copy() creates a shallow copy. The batch only makes claims about top-level list behavior and does not imply a deep copy.",
+      "Part 2 of the collection-types lecture covers tuples and dictionaries and is reserved for Lesson 6; it is not used for this batch."
+    ]
+  },
+  "batch": {
+    "mcqs": 40,
+    "structured_responses": 8,
+    "marks_each": 5
+  },
+  "coverage": [
+    "list properties, mixed values, indexing, negative indices and nested lists",
+    "slicing, omitted endpoints, negative steps, aliasing, shallow copies",
+    "append, extend, concatenation, removal, count, reverse, sort and sorted",
+    "key functions, medians for odd and even lengths",
+    "GDP growth rates and adjacent observations",
+    "list comprehensions and compound filters",
+    "string case conversion, splitting, searching, joining, stripping and digit checks",
+    "word density, email-provider extraction, uniqueness and case normalization",
+    "Gini coefficient calculation and interpretation"
+  ],
+  "method": "Paired-source question drafting; answer-bearing review; metadata-hidden question review; rendered code preview; mechanical audit."
+}

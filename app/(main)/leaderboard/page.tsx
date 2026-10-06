@@ -1,56 +1,73 @@
 import React from "react";
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
 import StandingsGraph from "@/components/leaderboard/StandingsGraph";
 import LeagueTable from "@/components/leaderboard/LeagueTable";
 import WeekSelector from "@/components/leaderboard/WeekSelector"; 
-import SkeletonCard from "@/components/SkeletonCard";
 import { Trophy, Activity } from "lucide-react";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getImpersonatedStudentId } from "@/lib/auth/impersonation";
+import { getActiveSeasonId, getSelectedSeasonId } from "@/lib/seasons";
+import PageHeader from "@/components/PageHeader";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
+
+type RankEntry = { student_id: string; week_number: number; rank: number; total_xp: number };
+type LeaderboardStudent = {
+  id: string; full_name: string; preferred_name: string; student_id: string; avatar_url: string | null;
+  current_xp: number; current_streak: number; group_id: string; current_level: number;
+  WeeklyRankHistory: RankEntry[];
+};
+type RankedStudent = LeaderboardStudent & { rank: number; prevRank: number; isMe: boolean };
 
 export default async function LeaderboardPage({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const cookieStore = await cookies();
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-     {
-       cookies: {
-        getAll() { return cookieStore.getAll(); },
-        setAll(cookiesToSet: any) {
-          cookiesToSet.forEach(({ name, value, options }: any) => {
-            cookieStore.set(name, value, options);
-          });
-        },
-       },
-     }
-  );
+  const supabase = await createSupabaseServerClient();
+  const activeSeasonId = await getActiveSeasonId(supabase);
+  const impersonateId = await getImpersonatedStudentId();
 
   const { data: { user } } = await supabase.auth.getUser();
+  const { data: adminProfile } = user
+    ? await supabase.from("Admin").select("id").eq("auth_id", user.id).maybeSingle()
+    : { data: null };
+  const isAdmin = Boolean(adminProfile);
+  const seasonId = await getSelectedSeasonId(supabase, activeSeasonId, isAdmin);
   let myStudentId = null;
 
   if (user) {
-      const impersonateId = cookieStore.get("impersonate_id")?.value;
-      if (impersonateId) {
-          const { data: adminCheck } = await supabase.from("Admin").select("id").eq("auth_id", user.id).single();
-          if (adminCheck) myStudentId = impersonateId;
+      if (impersonateId && isAdmin) {
+          myStudentId = impersonateId;
       } 
-      if (!myStudentId) {
-          const { data: student } = await supabase.from("Student").select("id").eq("auth_id", user.id).single();
+      if (!myStudentId && !isAdmin) {
+          const { data: student } = await supabase.from("Student").select("id").eq("auth_id", user.id).eq("season_id", seasonId).single();
           myStudentId = student?.id;
       }
   }
 
   // 3. FETCH DATA
-  const { data: students } = await supabase
-    .from("Student")
-    .select("*, WeeklyRankHistory(week_number, rank, total_xp)")
-    .order("current_xp", { ascending: false });
+  const [{ data: studentRows }, { data: rankHistory }] = await Promise.all([
+    supabase.from("Student").select("*").eq("season_id", seasonId).order("current_xp", { ascending: false }),
+    supabase.from("WeeklyRankHistory").select("student_id, week_number, rank, total_xp").eq("season_id", seasonId).order("week_number"),
+  ]);
+  const historyByStudent = new Map<string, RankEntry[]>();
+  for (const entry of (rankHistory || []) as RankEntry[]) {
+    const history = historyByStudent.get(entry.student_id) || [];
+    history.push(entry);
+    historyByStudent.set(entry.student_id, history);
+  }
+  const students: LeaderboardStudent[] = ((studentRows || []) as Omit<LeaderboardStudent, "WeeklyRankHistory">[]).map((student) => ({
+    ...student,
+    preferred_name: student.preferred_name || "",
+    current_xp: student.current_xp || 0,
+    current_streak: student.current_streak || 0,
+    current_level: student.current_level || 1,
+    group_id: student.group_id || "",
+    student_id: student.student_id || "",
+    avatar_url: student.avatar_url || null,
+    WeeklyRankHistory: historyByStudent.get(student.id) || [],
+  }));
 
   // 4. DETERMINE CONTEXT
   const params = await searchParams;
@@ -59,7 +76,7 @@ export default async function LeaderboardPage({
 
   let globalMaxWeek = 0;
   students?.forEach(s => {
-      s.WeeklyRankHistory?.forEach((h: any) => {
+      s.WeeklyRankHistory.forEach((h) => {
           if (h.week_number > globalMaxWeek) globalMaxWeek = h.week_number;
       });
   });
@@ -67,32 +84,27 @@ export default async function LeaderboardPage({
   if (selectedWeek && selectedWeek > globalMaxWeek) selectedWeek = globalMaxWeek;
 
   // 5. PROCESS LEADERBOARD DATA
-  let leaderboard = [];
-  let displayWeekCurrent = globalMaxWeek;
+  let leaderboard: RankedStudent[] = [];
   let displayWeekPrev = globalMaxWeek > 1 ? globalMaxWeek - 1 : 1;
 
   if (selectedWeek) {
       // --- TIME TRAVEL MODE ---
-      displayWeekCurrent = selectedWeek;
       displayWeekPrev = selectedWeek > 1 ? selectedWeek - 1 : 1;
 
-      leaderboard = (students || [])
-        .map(student => {
-            const currentEntry = student.WeeklyRankHistory?.find((h: any) => h.week_number === selectedWeek);
-            const prevEntry = student.WeeklyRankHistory?.find((h: any) => h.week_number === displayWeekPrev);
+      leaderboard = (students || []).flatMap((student): RankedStudent[] => {
+            const currentEntry = student.WeeklyRankHistory.find((h) => h.week_number === selectedWeek);
+            const prevEntry = student.WeeklyRankHistory.find((h) => h.week_number === displayWeekPrev);
 
-            if (!currentEntry) return null;
+            if (!currentEntry) return [];
 
-            return {
+            return [{
                 ...student,
                 current_xp: currentEntry.total_xp,
                 rank: currentEntry.rank,
                 prevRank: prevEntry ? prevEntry.rank : currentEntry.rank,
                 isMe: student.id === myStudentId
-            };
-        })
-        .filter(Boolean)
-        .sort((a: any, b: any) => a.rank - b.rank); 
+            }];
+        }).sort((a, b) => a.rank - b.rank);
 
   } else {
       // --- LIVE MODE (With Tie Logic) ---
@@ -105,7 +117,7 @@ export default async function LeaderboardPage({
           }
           
           const liveRank = currentRank;
-          const prevEntry = student.WeeklyRankHistory?.find((h: any) => h.week_number === globalMaxWeek);
+          const prevEntry = student.WeeklyRankHistory.find((h) => h.week_number === globalMaxWeek);
           
           return {
               ...student,
@@ -121,38 +133,28 @@ export default async function LeaderboardPage({
       id: s.id,
       full_name: s.full_name,
       preferred_name: s.preferred_name,
-      history: s.WeeklyRankHistory?.map((h: any) => ({
+      history: s.WeeklyRankHistory.map((h) => ({
           week: h.week_number,
           rank: h.rank
-      })).sort((a: any, b: any) => a.week - b.week) || []
+      })).sort((a, b) => a.week - b.week)
   }));
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-6 animate-in fade-in slide-in-from-bottom-4">
+    <div className="w-full animate-in fade-in slide-in-from-bottom-4">
       
       {/* --- HEADER (MATCHING MODULES PAGE) --- */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 border-b border-slate-800 pb-6">
-        <div>
-            <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-                <Trophy className="text-yellow-400" size={32} />
-                Global Rankings
-            </h1>
-            <p className="text-slate-400 text-sm mt-1">
-               Live operative performance and tactical standings.
-            </p>
-        </div>
-        
-        <div className="flex items-center gap-4">
+      <div className="mb-8">
+      <PageHeader
+        title="Global Rankings"
+        description="Live operative performance and tactical standings."
+        icon={<Trophy size={28} />}
+        actions={<div className="flex flex-wrap items-center gap-4">
              {/* Archive Indicator */}
              {selectedWeek ? (
                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-950/30 border border-cyan-500/30 text-cyan-400 text-xs font-bold uppercase tracking-wider animate-pulse">
                     <Activity size={14} /> Archive Mode
                  </div>
-             ) : (
-                 <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider">
-                    <Activity size={14} /> Live Feed
-                 </div>
-             )}
+             ) : null}
 
              {/* Trend & Selector */}
              <div className="flex items-center gap-3 pl-4 border-l border-slate-800">
@@ -162,7 +164,8 @@ export default async function LeaderboardPage({
                 </div>
                 <WeekSelector maxWeek={globalMaxWeek} />
              </div>
-        </div>
+        </div>}
+      />
       </div>
 
       {/* 1. Leaderboard Table */}

@@ -1,0 +1,18 @@
+{
+  "status": "nonproduction structured-response pilot",
+  "questionCount": 8,
+  "marksPerQuestion": 5,
+  "totalMarks": 40,
+  "responseForms": {
+    "algorithm_design_or_pseudocode": 3,
+    "trace": 2,
+    "debug_or_edge_case": 2,
+    "algorithm_comparison_with_justification": 1
+  },
+  "principles": [
+    "Essay means a structured response, pseudocode, trace, or debugging explanation; long prose is not required.",
+    "Use only concepts and programming constructs supported by the PDF and algo.md.",
+    "Score method and reasoning as well as the final output; accept equivalent correct pseudocode.",
+    "Do not treat this small assessment set as an exhaustive exam or a teacher-approved rubric."
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "lessonId": "algo-1-1",
+  "title": "Algorithms: introductory lesson",
+  "status": "nonproduction AI-reviewed pilot",
+  "sources": [
+    {
+      "file": "Module 1-20251002T083148Z-1-001/Module 1/Module 1_1 Algorithms.pdf",
+      "coverage": "Slides 2–35; lecture material on problem types, algorithms, program-development life cycle, properties, input/process/output, constructs, and worked examples."
+    },
+    {
+      "file": "Module 1-20251002T083148Z-1-001/Module 1/algo.md",
+      "coverage": "Lesson 1 of 3; includes explanatory material, runnable Python examples, and practice on sequencing, selection, loops, tracing, sentinel input, digit reversal, and algorithm quality."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "problem_types_and_algorithm_concepts",
+      "count": 5,
+      "source": "PDF slides 2–4, 10–12; algo.md sections ‘Two kinds of problems’, ‘Where the word comes from’, and ‘You already write algorithms every day’.",
+      "operations": ["classify an algorithmic versus heuristic problem", "interpret an algorithm as ordered instructions", "infer why order or exact instructions matter"]
+    },
+    {
+      "id": "development_lifecycle_and_io",
+      "count": 6,
+      "source": "PDF slides 5–9 and 16–17; algo.md ‘The three questions every algorithm answers’.",
+      "operations": ["distinguish analysis, design, coding, testing, and debugging", "identify input, processing, and output from a scenario", "choose the next development step"]
+    },
+    {
+      "id": "algorithm_properties_and_quality",
+      "count": 6,
+      "source": "PDF slides 12–15; algo.md ‘What makes an algorithm a good algorithm’.",
+      "operations": ["diagnose finiteness, definiteness, effectiveness, input/output, and generality", "compare supported algorithm-choice criteria", "distinguish correctness from efficiency"]
+    },
+    {
+      "id": "sequence_and_numeric_algorithms",
+      "count": 5,
+      "source": "PDF slides 17–21; algo.md ‘Construct 1 — Sequence’ and its average, interest, and rectangle examples.",
+      "operations": ["classify straight-line sequence", "trace or correct arithmetic steps", "map a formula task to inputs, processing, and outputs"]
+    },
+    {
+      "id": "selection_and_maximum",
+      "count": 5,
+      "source": "PDF slides 17, 22–27; algo.md ‘Construct 2 — Selection’.",
+      "operations": ["trace conditional branches", "maintain a largest-so-far value", "reason about ties and comparison coverage"]
+    },
+    {
+      "id": "iteration_and_loop_design",
+      "count": 11,
+      "source": "PDF slides 28–35; algo.md ‘Construct 3 — Iteration’, ‘The four parts of every loop’, and examples 6–9.",
+      "operations": ["select for versus while based on known repetition count", "identify initialization, condition, body, and update", "trace factorial and sentinel loops", "interpret modulus and floor division in digit reversal"]
+    },
+    {
+      "id": "algorithm_comparison_and_generalization",
+      "count": 2,
+      "source": "PDF slides 12–15 and 27; algo.md ‘The three-student scenario from the lecture’.",
+      "operations": ["compare alternative algorithms by stated criteria", "judge efficiency as input size grows", "identify hard-coded solutions that fail generality"]
+    }
+  ],
+  "excluded": [
+    "Flowchart symbol memorization and detailed flowchart drawing; covered in the separate flowcharts lecture, not this requested source pair.",
+    "Python topics beyond the examples in algo.md, including lists, functions, data structures, asymptotic notation, and sorting implementations.",
+    "Historical claims about al-Khwarizmi beyond the modest attribution printed in the PDF; the web lesson makes additional claims that are not independently supported by the lecture source."
+  ],
+  "questionCount": 40,
+  "bloomPolicy": "Bloom classification is descriptive review evidence, not a quota. Create is not assigned to single-select MCQs."
+}

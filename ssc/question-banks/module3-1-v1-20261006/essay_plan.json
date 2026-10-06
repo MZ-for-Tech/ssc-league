@@ -1,0 +1,15 @@
+{
+  "recommendation": "8 structured-response prompts, 5 marks each",
+  "rationale": "Prompts assess interdisciplinary project planning, ML generalization, AI hierarchy, data science objectives, library selection, DataFrame interpretation, disciplinary comparison, and ethical evaluation.",
+  "total_marks": 40,
+  "coverage": {
+    "M3L1-E01": "apply the interdisciplinary model to a social-science project",
+    "M3L1-E02": "explain a supervised prediction scenario and its limits",
+    "M3L1-E03": "classify AI systems and explain their hierarchy",
+    "M3L1-E04": "map a project workflow to data science objectives",
+    "M3L1-E05": "select tools for a data workflow",
+    "M3L1-E06": "read and explain a DataFrame structure",
+    "M3L1-E07": "critically interpret the statistics/data science distinction",
+    "M3L1-E08": "evaluate ethical risks in a predictive social-science application"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "lesson": "Module 2, Lecture 2_1: Variables, operators, expressions, and conditionals",
+  "sources": {
+    "primary_pdf": "ssc/Module 2/5. Module 2_1_Conditioning.pdf; 39-page Lecture 2_1, titled Variables, Operators, Expressions, and Condition (if…else).",
+    "primary_markdown": "ssc/Module 2/1_variables_and_operators.md; lesson 1 section of Lecture 2_1.",
+    "conditional_crosscheck": "ssc/Module 2/2_making_decisions.md; lesson 2 text for the conditional section that is also present in the PDF.",
+    "scope": "The batch covers the full Lecture 2_1 PDF, including its conditional statements. The second Markdown file was read to cross-check that overlapping section; conditional questions are included now so this lecture is not represented as variables/operators only.",
+    "source_caveats": [
+      "The PDF includes the identity operators `is` and `is not` in a comparator table. Questions do not treat identity as interchangeable with value equality; ordinary equality questions use `==`.",
+      "The source's source-code examples and standard Python rules are kept distinct from incidental slide wording or formatting errors.",
+      "Lesson text says the keyword list has 35 entries in Python 3.11; the batch tests reserved-word rules with examples rather than making the version-specific count a recall target."
+    ]
+  },
+  "batch": {
+    "mcqs": 40,
+    "structured_responses": 8,
+    "marks_each": 5
+  },
+  "objective_counts": {
+    "arithmetic_operators": 4,
+    "comparison_and_logic": 6,
+    "conditional_logic": 4,
+    "conditionals": 7,
+    "development_tools": 3,
+    "integrated_program": 2,
+    "precedence": 6,
+    "variables_and_types": 8
+  },
+  "method": "Source-first question drafting; metadata-hidden content/key pass; source adjudication; task-variety and advisory Bloom review; key-position and answer-cue audit; rendered code preview."
+}

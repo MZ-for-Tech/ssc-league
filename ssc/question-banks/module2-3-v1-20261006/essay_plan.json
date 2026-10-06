@@ -1,0 +1,15 @@
+{
+  "recommendation": "8 structured-response / essay-style prompts, 5 marks each",
+  "rationale": "Prompts cover loop tracing, range boundaries, iteration control, nested loops, growth models, and list counting with percentages.",
+  "total_marks": 40,
+  "coverage": {
+    "M2L3-E01": "trace a while loop and explain termination",
+    "M2L3-E02": "analyze range signatures and endpoints",
+    "M2L3-E03": "compare loop forms for an accumulation",
+    "M2L3-E04": "trace and compare loop-control statements",
+    "M2L3-E05": "analyze nested-loop execution count",
+    "M2L3-E06": "specify and interpret repeated proportional growth",
+    "M2L3-E07": "calculate category frequencies and percentages",
+    "M2L3-E08": "identify an abstraction opportunity from repeated loop logic"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "lesson": "Introduction to programming",
+  "sources": {
+    "primary_pdf": "ssc/Module 1/4. Module 1_4_Intr to programming.pdf (30 pages; newer module-branded copy)",
+    "companion_markdown": "ssc/Module 1/intro.md (lesson text and integrated compound-interest program)",
+    "corroborating_duplicate": "ssc/Module 1/Module 1_3_Intr to programming.pdf (near-identical 30-page copy, created earlier)",
+    "duplicate_differences": [
+      "The newer PDF makes x=1 explicit in the infinite-loop example; the older copy leaves the initial value implicit.",
+      "The PDFs otherwise have the same lesson structure and nearly identical content, with minor heading/layout differences.",
+      "The newer PDF's Print/print exercise labels capitalization as a semantic error, although Python treats the unmatched name as a runtime NameError. This faulty exercise is excluded as a source of category definitions or question keys."
+    ],
+    "scope_note": "The Markdown supplies the integrated compound-interest program; the PDFs supply the slide sequence and examples. The newer PDF is primary; the older PDF is used only to confirm the near-duplicate relationship."
+  },
+  "batch": {
+    "mcq_count": 40,
+    "structured_response_count": 8,
+    "marks_per_response": 5
+  },
+  "objectives": {
+    "error_types": 11,
+    "execution_methods": 6,
+    "hardware_architecture": 5,
+    "language_concepts": 3,
+    "language_types": 10,
+    "programmer_skills": 2,
+    "programming_concepts": 1,
+    "programming_process": 2
+  },
+  "method": "Source-first pilot; balanced MCQ key positions; metadata-hidden content/key review; separate task-variety and Bloom review; code stimulus displayed in preview."
+}

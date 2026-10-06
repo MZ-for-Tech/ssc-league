@@ -1,0 +1,40 @@
+{"id": "FLOW-001", "verdict": "PASS", "note": "Terminal symbol function checked.", "diagramChecked": false}
+{"id": "FLOW-002", "verdict": "PASS", "note": "Correct input symbol selected from the taught symbol set.", "diagramChecked": false}
+{"id": "FLOW-003", "verdict": "PASS", "note": "Assignment classified as process.", "diagramChecked": false}
+{"id": "FLOW-004", "verdict": "PASS", "note": "Arrow-direction rule checked.", "diagramChecked": false}
+{"id": "FLOW-005", "verdict": "PASS", "note": "Usual top-to-bottom convention checked.", "diagramChecked": false}
+{"id": "FLOW-006", "verdict": "PASS", "note": "Average output read from the attached sequence chart.", "diagramChecked": true}
+{"id": "FLOW-007", "verdict": "PASS", "note": "Numeric average recalculated as 9.", "diagramChecked": true}
+{"id": "FLOW-008", "verdict": "PASS", "note": "Sequence order checked from inputs through calculation.", "diagramChecked": true}
+{"id": "FLOW-009", "verdict": "PASS", "note": "Two-exit decision convention checked.", "diagramChecked": false}
+{"id": "FLOW-010", "verdict": "PASS", "note": "5500 takes No and receives the fixed bonus.", "diagramChecked": true}
+{"id": "FLOW-011", "verdict": "PASS", "note": "Inclusive threshold gives 360 at salary 6000.", "diagramChecked": true}
+{"id": "FLOW-012", "verdict": "PASS", "note": "Faulty strict-boundary chart sends equality to No and assigns 250.", "diagramChecked": true}
+{"id": "FLOW-013", "verdict": "PASS", "note": "Bonus branches rejoin before the shared output.", "diagramChecked": false}
+{"id": "FLOW-014", "verdict": "PASS", "note": "Paired B circles depict an on-page connection.", "diagramChecked": true}
+{"id": "FLOW-015", "verdict": "PASS", "note": "Matching A symbols show continuation across pages.", "diagramChecked": true}
+{"id": "FLOW-016", "verdict": "PASS", "note": "N initializes to 1 before the first sum-loop test.", "diagramChecked": true}
+{"id": "FLOW-017", "verdict": "PASS", "note": "First pass gives Sum 1 and updated N 2.", "diagramChecked": true}
+{"id": "FLOW-018", "verdict": "PASS", "note": "Sum from 1 to 100 checked as 5050.", "diagramChecked": true}
+{"id": "FLOW-019", "verdict": "PASS", "note": "False condition exits to Print Sum.", "diagramChecked": true}
+{"id": "FLOW-020", "verdict": "PASS", "note": "Pre-test chart checks condition before its body.", "diagramChecked": true}
+{"id": "FLOW-021", "verdict": "PASS", "note": "Post-test chart performs the body before its condition test.", "diagramChecked": true}
+{"id": "FLOW-022", "verdict": "PASS", "note": "Missing N update keeps N at 1, so the faulty loop cannot exit.", "diagramChecked": true}
+{"id": "FLOW-023", "verdict": "PASS", "note": "First factorial pass leaves PROD at 1.", "diagramChecked": true}
+{"id": "FLOW-024", "verdict": "PASS", "note": "Increment-before-multiply order yields factors 1 through 4.", "diagramChecked": true}
+{"id": "FLOW-025", "verdict": "PASS", "note": "Factorial of 5 is 120.", "diagramChecked": true}
+{"id": "FLOW-026", "verdict": "PASS", "note": "First false condition is tested at I=6 for N=5.", "diagramChecked": true}
+{"id": "FLOW-027", "verdict": "PASS", "note": "Six-score running total re-added to 397.", "diagramChecked": true}
+{"id": "FLOW-028", "verdict": "PASS", "note": "Largest-so-far trace for 8,12,10 prints 12.", "diagramChecked": true}
+{"id": "FLOW-029", "verdict": "PASS", "note": "The incomplete chart lacks a terminal after output.", "diagramChecked": true}
+{"id": "FLOW-030", "verdict": "PASS", "note": "Flowchart and pseudocode representations distinguished.", "diagramChecked": false}
+{"id": "FLOW-031", "verdict": "PASS", "note": "Pseudocode syntax property checked against source.", "diagramChecked": false}
+{"id": "FLOW-032", "verdict": "PASS", "note": "Python conditional identified as exact language syntax.", "diagramChecked": false}
+{"id": "FLOW-033", "verdict": "PASS", "note": "Inclusive grade threshold includes average 60.", "diagramChecked": true}
+{"id": "FLOW-034", "verdict": "PASS", "note": "59.75 takes the Fail branch.", "diagramChecked": true}
+{"id": "FLOW-035", "verdict": "PASS", "note": "Four-mark average is 58.75, so output is Fail.", "diagramChecked": true}
+{"id": "FLOW-036", "verdict": "PASS", "note": "Visible logic-checking benefit supported by the source.", "diagramChecked": false}
+{"id": "FLOW-037", "verdict": "PASS", "note": "Off-page continuation symbol selected.", "diagramChecked": false}
+{"id": "FLOW-038", "verdict": "PASS", "note": "Yes/No and True/False are valid branch labels.", "diagramChecked": false}
+{"id": "FLOW-039", "verdict": "PASS", "note": "Bonus percentage changes while the threshold stays inclusive.", "diagramChecked": true}
+{"id": "FLOW-040", "verdict": "PASS", "note": "Communication benefit is supported by the lesson.", "diagramChecked": false}

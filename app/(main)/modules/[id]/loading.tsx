@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ModuleBriefingLoading() {
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 animate-pulse pb-20">
+    <div className="mx-auto w-full max-w-5xl animate-pulse pb-20" aria-busy="true" aria-label="Loading lesson">
       
       {/* Back Link */}
       <div className="h-4 w-32 bg-surface-light/30 rounded mb-8" />

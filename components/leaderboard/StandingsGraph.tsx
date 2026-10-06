@@ -32,7 +32,7 @@ export default function StandingsGraph({ students, myId }: StandingsGraphProps) 
   const chartData = useMemo(() => {
     const me = students.find(s => s.id === myId);
     const rival = students.find(s => s.id === rivalId);
-    
+
     // Calculate "Class Average Rank" per week
     const weekRanks: Record<number, number[]> = {};
     students.forEach(s => {
@@ -48,7 +48,7 @@ export default function StandingsGraph({ students, myId }: StandingsGraphProps) 
     for (let w = 1; w <= maxWeek; w++) {
         const ranks = weekRanks[w] || [];
         const avg = ranks.length > 0 ? ranks.reduce((a, b) => a + b, 0) / ranks.length : 0;
-        
+
         data.push({
             name: `W${w}`,
             fullWeek: `Week ${w}`,
@@ -74,9 +74,9 @@ export default function StandingsGraph({ students, myId }: StandingsGraphProps) 
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filteredStudents = students.filter(s => 
-    s.id !== myId && 
-    (s.full_name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+  const filteredStudents = students.filter(s =>
+    s.id !== myId &&
+    (s.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
      s.preferred_name?.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
@@ -102,12 +102,12 @@ export default function StandingsGraph({ students, myId }: StandingsGraphProps) 
             </div>
 
             <div className="relative" ref={dropdownRef}>
-                <button 
+                <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     className={clsx(
                         "flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors border shadow-sm",
-                        rivalId 
-                            ? "bg-amber-950/30 text-amber-400 border-amber-500/30 hover:border-amber-500/50" 
+                        rivalId
+                            ? "bg-amber-950/30 text-amber-400 border-amber-500/30 hover:border-amber-500/50"
                             : "bg-slate-800 text-slate-300 border-slate-700 hover:text-white hover:border-slate-600"
                     )}
                 >
@@ -115,7 +115,7 @@ export default function StandingsGraph({ students, myId }: StandingsGraphProps) 
                         <>
                             <Users size={14} />
                             Vs. {selectedRivalName}
-                            <div 
+                            <div
                                 className="ml-1 p-0.5 rounded-full hover:bg-amber-500/20"
                                 onClick={(e) => { e.stopPropagation(); setRivalId(null); }}
                             >
@@ -136,9 +136,9 @@ export default function StandingsGraph({ students, myId }: StandingsGraphProps) 
                         <div className="p-2 border-b border-slate-800">
                             <div className="relative">
                                 <Search size={12} className="absolute left-2 top-1/2 -translate-y-1/2 text-slate-500" />
-                                <input 
-                                    type="text" 
-                                    placeholder="Search by name..." 
+                                <input
+                                    type="text"
+                                    placeholder="Search by name..."
                                     className="w-full bg-slate-950 border border-slate-800 rounded-lg py-1.5 pl-8 pr-2 text-xs text-white focus:outline-none focus:border-cyan-500 placeholder:text-slate-600"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -169,42 +169,42 @@ export default function StandingsGraph({ students, myId }: StandingsGraphProps) 
         </div>
 
         {/* Chart Container */}
-        <div 
+        <div
             className="h-[400px] w-full bg-slate-900/20 border border-slate-800/50 rounded-xl p-4 relative"
             style={{ minHeight: "400px" }}
         >
            <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData} margin={{ top: 10, right: 10, bottom: 0, left: -20 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-                
-                <XAxis 
-                    dataKey="name" 
-                    stroke="#64748b" 
-                    fontSize={10} 
-                    tickLine={false} 
+                <CartesianGrid strokeDasharray="3 3" stroke="rgb(var(--surface))" vertical={false} />
+
+                <XAxis
+                    dataKey="name"
+                    stroke="rgb(var(--slate-500))"
+                    fontSize={10}
+                    tickLine={false}
                     axisLine={false}
                     tickMargin={10}
                 />
-                
-                <YAxis 
-                    reversed 
-                    stroke="#64748b" 
-                    fontSize={10} 
+
+                <YAxis
+                    reversed
+                    stroke="rgb(var(--slate-500))"
+                    fontSize={10}
                     width={40}
                     tickFormatter={(val) => `#${val}`}
-                    tickLine={false} 
-                    axisLine={false} 
-                    domain={[1, maxRank]} 
+                    tickLine={false}
+                    axisLine={false}
+                    domain={[1, maxRank]}
                 />
-                
-                <Tooltip 
+
+                <Tooltip
                     content={({ active, payload }) => {
                         if (active && payload && payload.length) {
                             const data = payload[0].payload;
                             return (
                                 <div className="bg-slate-900/95 border border-slate-700 p-3 rounded-xl shadow-xl backdrop-blur-md text-xs min-w-[140px]">
                                     <p className="text-slate-400 font-bold mb-2 uppercase tracking-wider border-b border-slate-800 pb-1">{data.fullWeek}</p>
-                                    
+
                                     <div className="space-y-1.5">
                                         <div className="flex justify-between items-center">
                                             <span className="text-cyan-400 font-bold">You</span>
@@ -228,36 +228,36 @@ export default function StandingsGraph({ students, myId }: StandingsGraphProps) 
                     }}
                 />
 
-                <Line 
-                    type="monotone" 
-                    dataKey="average" 
-                    stroke="#475569" 
-                    strokeWidth={2} 
-                    strokeDasharray="4 4" 
+                <Line
+                    type="monotone"
+                    dataKey="average"
+                    stroke="rgb(var(--slate-600))"
+                    strokeWidth={2}
+                    strokeDasharray="4 4"
                     dot={false}
                     activeDot={false}
                 />
 
                 {rivalId && (
-                    <Line 
-                        type="monotone" 
-                        dataKey="rivalRank" 
-                        stroke="#fbbf24" 
-                        strokeWidth={2} 
-                        dot={{ r: 3, fill: "#fbbf24", strokeWidth: 0 }} 
-                        activeDot={{ r: 5, stroke: "#fff", strokeWidth: 2 }} 
-                        animationDuration={1000} 
+                    <Line
+                        type="monotone"
+                        dataKey="rivalRank"
+                        stroke="rgb(var(--amber-400))"
+                        strokeWidth={2}
+                        dot={{ r: 3, fill: "rgb(var(--amber-400))", strokeWidth: 0 }}
+                        activeDot={{ r: 5, stroke: "rgb(var(--foreground))", strokeWidth: 2 }}
+                        animationDuration={1000}
                     />
                 )}
 
-                <Line 
-                    type="monotone" 
-                    dataKey="myRank" 
-                    stroke="#22d3ee" 
-                    strokeWidth={3} 
-                    dot={{ r: 4, fill: "#22d3ee", strokeWidth: 2, stroke: "#fff" }} 
-                    activeDot={{ r: 6, stroke: "#fff", strokeWidth: 3 }} 
-                    animationDuration={1500} 
+                <Line
+                    type="monotone"
+                    dataKey="myRank"
+                    stroke="rgb(var(--primary))"
+                    strokeWidth={3}
+                    dot={{ r: 4, fill: "rgb(var(--primary))", strokeWidth: 2, stroke: "rgb(var(--foreground))" }}
+                    activeDot={{ r: 6, stroke: "rgb(var(--foreground))", strokeWidth: 3 }}
+                    animationDuration={1500}
                 />
             </LineChart>
            </ResponsiveContainer>

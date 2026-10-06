@@ -1,0 +1,36 @@
+{
+  "mcq_count": 40,
+  "essay_count": 8,
+  "four_choices_each": true,
+  "keys_valid": true,
+  "answer_positions_A_to_D": [
+    10,
+    10,
+    10,
+    10
+  ],
+  "mcq_code_stimuli": 27,
+  "essay_code_stimuli": 3,
+  "preview_code_blocks": 30,
+  "rubric_totals": {
+    "M2L4-E01": 5,
+    "M2L4-E02": 5,
+    "M2L4-E03": 5,
+    "M2L4-E04": 5,
+    "M2L4-E05": 5,
+    "M2L4-E06": 5,
+    "M2L4-E07": 5,
+    "M2L4-E08": 5
+  },
+  "key_length_cues": [],
+  "duplicate_stems": [],
+  "blind_review_count": 48,
+  "source_pair": "Markdown and Lecture 2_3 PDF",
+  "review_limit": "Same-session metadata-hidden review; earlier exposure to answer-bearing drafts means this is not independent or fully blind review.",
+  "source_caveats": [
+    "The PDF random example imports random as a function and later uses random.choice; the two names do not support that call together. The related item asks for a valid corrected import/call.",
+    "The Sheet 3 simple-interest answer contains a malformed quoted string, and its main program assigns P but calls with p. The question set isolates the case-sensitive name mismatch and does not treat the malformed snippet as runnable.",
+    "The PDF's get_power example evaluates square_number(5) before passing the resulting number; it does not pass the function object itself. Questions follow the code's actual evaluation.",
+    "The PDF states that every package needs __init__.py. The batch does not turn that absolute statement into an item."
+  ]
+}

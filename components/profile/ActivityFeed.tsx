@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CheckCircle2, Calendar, Zap, Trophy, Terminal } from "lucide-react";
+import { CheckCircle2, Calendar, Zap, Terminal } from "lucide-react";
 import clsx from "clsx";
 
 // Simplified Interface
@@ -26,10 +26,7 @@ export default function ActivityFeed({ activities }: { activities: ActivityItem[
 
   return (
     <div className="bg-surface/50 border border-border rounded-2xl p-6 backdrop-blur-sm h-full flex flex-col">
-      <h3 className="text-foreground font-bold mb-4 flex items-center justify-between">
-        <span>Recent Intel</span>
-        <span className="text-xs font-mono text-muted uppercase">Live Feed</span>
-      </h3>
+      <h3 className="text-foreground font-bold mb-4">Recent Activity</h3>
 
       {/* Scrollable Area */}
       <div className="flex-1 overflow-y-auto pr-2 max-h-[300px] space-y-0 relative scrollbar-thin scrollbar-thumb-surface-light scrollbar-track-transparent">

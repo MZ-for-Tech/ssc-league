@@ -1,0 +1,15 @@
+{
+  "recommendation": "8 structured-response / essay-style prompts, 5 marks each",
+  "rationale": "A compact applied set covers data types and initialization, operator tracing, precedence, a formula and output, conditional design, threshold boundaries, and control-flow comparison.",
+  "total_marks": 40,
+  "coverage": {
+    "M2L1-E01": "choose and classify values by type",
+    "M2L1-E02": "trace augmented assignments and explain initialization",
+    "M2L1-E03": "calculate and explain arithmetic operators",
+    "M2L1-E04": "show and apply multi-level operator precedence",
+    "M2L1-E05": "apply a formula and describe formatted output",
+    "M2L1-E06": "design and justify a compound conditional",
+    "M2L1-E07": "design a branch chain and test boundary values",
+    "M2L1-E08": "compare conditional structures and control flow"
+  }
+}

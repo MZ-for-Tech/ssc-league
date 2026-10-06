@@ -1,0 +1,9 @@
+{"id": "M2L2-007", "item": "After the code below, which line runs whether x is positive or not?"}
+{"id": "M2L2-016", "item": "Which compound condition means that x is positive and even?"}
+{"id": "M2L2-023", "item": "An applicant is age 26 and earns 24,999. Under the lesson's loan rule, what is the result?"}
+{"id": "M2L2-029", "item": "What does nesting mean for conditional statements?"}
+{"id": "M2L2-037", "item": "In the five-category number classifier, what category is assigned to a=-5?"}
+{"id": "M2L2-E03", "item": "Use the lesson's leap-year rule to classify 2000, 1900, 2024, and 2023. State the condition and explain why the two century examples differ."}
+{"id": "M2L2-E04", "item": "A chained classification should report above 10, positive, or not positive. The draft tests x>0 before x>10. Explain the bug for x=12 and rewrite the conditions in an order that makes all three outcomes reachable."}
+{"id": "M2L2-E06", "item": "Using the lesson's electricity tariff code, select the rate and calculate the bill for 50, 250, 400, and 800 units. Explain how the order of the branches creates the lower end of each later band."}
+{"id": "M2L2-E08", "item": "Rewrite the nested comparison below as a single if/elif/else chain with the same outcomes. Explain one readability advantage and confirm the output for x=4, y=9."}

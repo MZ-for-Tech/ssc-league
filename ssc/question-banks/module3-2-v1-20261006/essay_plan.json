@@ -1,0 +1,15 @@
+{
+  "recommendation": "8 structured-response prompts, 5 marks each",
+  "rationale": "Prompts assess DataFrame structure and inspection, construction, interpretation of info output, label and positional selection, calculated columns, updates, deletion semantics, and a complete workflow.",
+  "total_marks": 40,
+  "coverage": {
+    "M3L2-E01": "explain and apply DataFrame structure",
+    "M3L2-E02": "construct and compare data representations",
+    "M3L2-E03": "interpret a data summary and plan inspection",
+    "M3L2-E04": "write and explain DataFrame selections",
+    "M3L2-E05": "derive and interpret DataFrame columns",
+    "M3L2-E06": "plan a sequence of DataFrame updates",
+    "M3L2-E07": "compare mutations and explain return values",
+    "M3L2-E08": "design an end-to-end DataFrame workflow"
+  }
+}

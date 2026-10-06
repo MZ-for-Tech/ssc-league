@@ -10,8 +10,10 @@ interface Resource {
 }
 
 interface ModuleNodeProps {
-  moduleId: number; // Used for Link
+  moduleId: string;
   missionId: number; // Used for Display
+  moduleNumber?: number;
+  lessonNumber?: number;
   title: string;
   description: string;
   status: "active" | "completed" | "locked";
@@ -21,7 +23,9 @@ interface ModuleNodeProps {
 
 export default function ModuleNode({ 
   moduleId, 
-  missionId, 
+  missionId,
+  moduleNumber,
+  lessonNumber,
   title, 
   description, 
   status, 
@@ -42,8 +46,8 @@ export default function ModuleNode({
       {/* Status Icon */}
       <div className={clsx(
         "absolute left-0 top-1 w-6 h-6 rounded-full border-2 flex items-center justify-center z-10 bg-slate-950 transition-all duration-300",
-        status === "completed" ? "border-emerald-500 text-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]" :
-        status === "active" ? "border-cyan-500 text-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.5)]" :
+        status === "completed" ? "border-emerald-500 text-emerald-500 shadow-[0_0_10px_rgb(var(--emerald-500)/0.3)]" :
+        status === "active" ? "border-cyan-500 text-cyan-500 shadow-[0_0_10px_rgb(var(--primary-dim)/0.5)]" :
         "border-slate-700 text-slate-700"
       )}>
         {status === "completed" ? <CheckCircle size={14} /> : 
@@ -67,7 +71,7 @@ export default function ModuleNode({
                         status === "completed" ? "text-emerald-400" : 
                         status === "active" ? "text-cyan-400" : "text-slate-500"
                     )}>
-                        Mission {missionId}
+                        {moduleNumber && lessonNumber ? `Lesson ${moduleNumber}.${lessonNumber}` : `Mission ${missionId}`}
                     </span>
                     {status === "completed" && (
                         <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">

@@ -2,25 +2,23 @@
 
 import React, { useState } from "react";
 import { Flag, X, Check } from "lucide-react";
-import { createBrowserClient } from "@supabase/ssr";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import clsx from "clsx";
 
-export default function ReportButton({ questionId, studentId }: { questionId: string, studentId: string }) {
+export default function ReportButton({ questionId, studentId, seasonId }: { questionId: string, studentId: string; seasonId: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const [reason, setReason] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const supabase = createSupabaseBrowserClient();
 
   const handleReport = async () => {
     if (!reason) return;
     setLoading(true);
     
     await supabase.from("QuestionReport").insert({
+        season_id: seasonId,
         question_id: questionId,
         student_id: studentId,
         reason: reason

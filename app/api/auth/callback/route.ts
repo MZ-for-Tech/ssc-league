@@ -1,12 +1,13 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { CookieOptions } from "@supabase/ssr";
 
 /**
  * This route handles Supabase authentication callbacks and session refresh.
  * Replaces the deprecated middleware.ts pattern.
  */
-export async function GET(request: NextRequest) {
+export async function GET() {
   const cookieStore = await cookies();
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -16,8 +17,8 @@ export async function GET(request: NextRequest) {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll(cookiesToSet: any) {
-          cookiesToSet.forEach(({ name, value, options }: any) => {
+        setAll(cookiesToSet: Array<{ name: string; value: string; options: CookieOptions }>) {
+          cookiesToSet.forEach(({ name, value, options }) => {
             cookieStore.set(name, value, options);
           });
         },

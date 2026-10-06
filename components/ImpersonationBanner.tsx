@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { EyeOff, ShieldAlert, LogOut, Users } from "lucide-react";
+import { EyeOff, ShieldAlert, Users } from "lucide-react";
 import { stopImpersonation } from "@/app/actions/admin-actions";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -15,12 +15,13 @@ export default function ImpersonationBanner({ isImpersonating }: { isImpersonati
   const handleExit = async () => {
     setLoading(true);
     await stopImpersonation();
-    // Force redirect back to the Agent Roster for rapid switching
-    window.location.href = "/admin/users"; 
+    // Return to the Agent Roster for rapid student switching.
+    router.push("/dashboard?view=users");
+    router.refresh();
   };
 
   return (
-    <div className="bg-amber-500 text-amber-950 px-4 py-3 shadow-2xl sticky top-0 z-[100] flex flex-col sm:flex-row items-center justify-between gap-3 animate-in slide-in-from-top-full duration-500">
+    <div className="bg-amber-500 text-amber-950 px-4 py-3 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-3 animate-in slide-in-from-top-full duration-500">
         
         {/* Left: Status Indicator */}
         <div className="flex items-center gap-3">
@@ -38,11 +39,11 @@ export default function ImpersonationBanner({ isImpersonating }: { isImpersonati
             
             {/* 1. Jump to Admin (Keep session alive) */}
             <Link 
-                href="/admin"
+                href="/dashboard?view=admin"
                 className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
             >
                 <ShieldAlert size={14} />
-                Command Center
+                Admin Dashboard
             </Link>
 
             {/* 2. Kill Session & Return to Roster (Switch Student) */}

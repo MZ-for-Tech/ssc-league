@@ -1,0 +1,21 @@
+{
+  "lesson": "Module 2, lesson 2: Making decisions",
+  "sources": {
+    "primary_markdown": "ssc/Module 2/2_making_decisions.md",
+    "primary_pdf": "ssc/Module 2/5. Module 2_1_Conditioning.pdf (Lecture 2_1; slides on conditional execution, if/else, chained and nested conditionals, and Sheet 2 exercises)",
+    "overlap": "The PDF is shared with the variables/operators lesson and includes the decision material. The prior Module 2 Lecture 2_1 pilot sampled conditional syntax, branch order, parity, leap years, loan eligibility, tariffs, and nesting. This dedicated set uses different stems and scenarios where practical; some foundational concepts recur by design.",
+    "prior_batch_cross_reference": "ssc/question-banks/module2-1-v1-20261006/final_items.jsonl and essay_items.jsonl"
+  },
+  "batch": {
+    "mcqs": 40,
+    "structured_responses": 8,
+    "marks_each": 5
+  },
+  "coverage": {
+    "flow_and_if_syntax": "sequential versus conditional execution, blocks, indentation, colons",
+    "branching": "simple if, if/else, elif first-match behavior, nested decisions",
+    "compound_logic": "and/or, parity and sign classification",
+    "worked_rules": "leap years, loan eligibility, electricity tariffs, numeric comparisons"
+  },
+  "method": "Dedicated source-first batch; check for overlap with prior pilot; metadata-hidden review; source/key adjudication; code preview and mechanical audit."
+}

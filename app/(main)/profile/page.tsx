@@ -1,15 +1,26 @@
 import React from "react";
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
 import { Mail, Award, Zap, Shield, Target, Percent, Activity, IdCard, BadgeCheck, User, Terminal, Crown, Star, Crosshair, Cpu, ShieldCheck } from "lucide-react";
 import ActivityHeatmap from "@/components/profile/ActivityHeatmap";
 import Badge from "@/components/profile/Badge"; 
 import ActivityFeed from "@/components/profile/ActivityFeed";
-import RulesCard from "@/components/profile/RulesCard";
 import EditProfileModal from "@/components/profile/EditProfileModal";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getImpersonatedStudentId } from "@/lib/auth/impersonation";
+import { redirect } from "next/navigation";
+import { getActiveSeasonId, getSelectedSeasonId } from "@/lib/seasons";
+import PageHeader from "@/components/PageHeader";
+import Image from "next/image";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
+
+type AttendanceRecord = { date: string; status: string };
+type QuizAnswer = {
+  id: string; attempted_at: string; is_correct: boolean;
+  Question: Array<{ text: string; points: number | null; Topic: Array<{ name: string }> }>;
+};
+type XPTransaction = { id: string; action_type: string; description: string | null; amount: number; created_at: string };
+type RankRecord = { rank: number };
 
 // LEVEL DEFINITIONS
 const LEVEL_RANGES = [
@@ -22,26 +33,17 @@ const LEVEL_RANGES = [
 ];
 
 export default async function ProfilePage() {
-  const cookieStore = await cookies();
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() { return cookieStore.getAll() },
-        setAll(cookiesToSet) {
-          try {
-            cookiesToSet.forEach(({ name, value, options }) => cookieStore.set(name, value, options));
-          } catch {}
-        },
-      },
-    }
-  );
+  const supabase = await createSupabaseServerClient();
+  const activeSeasonId = await getActiveSeasonId(supabase);
+  const impersonateId = await getImpersonatedStudentId();
 
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return <div className="text-red-500 p-10">Access Denied.</div>;
 
-  const impersonateId = cookieStore.get("impersonate_id")?.value;
+  const { data: adminProfile } = await supabase.from("Admin").select("id").eq("auth_id", user.id).maybeSingle();
+  if (adminProfile && !impersonateId) redirect("/dashboard");
+  const seasonId = await getSelectedSeasonId(supabase, activeSeasonId, Boolean(adminProfile));
+
   let targetId = user.id; 
   let lookupByAuthId = true; 
 
@@ -53,9 +55,9 @@ export default async function ProfilePage() {
       }
   }
 
-  let studentQuery = supabase.from("Student").select("*, WeeklyRankHistory(rank)");
-  if (lookupByAuthId) studentQuery = studentQuery.eq("auth_id", targetId);
-  else studentQuery = studentQuery.eq("id", targetId);
+  let studentQuery = supabase.from("Student").select("*, WeeklyRankHistory!WeeklyRankHistory_season_student_fkey(rank)");
+  if (lookupByAuthId) studentQuery = studentQuery.eq("auth_id", targetId).eq("season_id", seasonId);
+  else studentQuery = studentQuery.eq("id", targetId).eq("season_id", seasonId);
 
   const { data: student, error } = await studentQuery.single();
   if (error || !student) return <div className="p-10 text-center text-yellow-500">Dossier Not Found</div>;
@@ -66,10 +68,10 @@ export default async function ProfilePage() {
     { data: rankHistory },
     { data: attendanceRecords }
   ] = await Promise.all([
-    supabase.from("XPTransaction").select("*").eq("student_id", student.id),
-    supabase.from("StudentAnswer").select("id, attempted_at, is_correct, Question(text, points, Topic(name))").eq("student_id", student.id),
-    supabase.from("WeeklyRankHistory").select("rank").eq("student_id", student.id),
-    supabase.from("AttendanceRecord").select("date, status").eq("student_id", student.id)
+    supabase.from("XPTransaction").select("*").eq("student_id", student.id).eq("season_id", seasonId),
+    supabase.from("StudentAnswer").select("id, attempted_at, is_correct, Question(text, points, Topic(name))").eq("student_id", student.id).eq("season_id", seasonId),
+    supabase.from("WeeklyRankHistory").select("rank").eq("student_id", student.id).eq("season_id", seasonId),
+    supabase.from("AttendanceRecord").select("date, status").eq("student_id", student.id).eq("season_id", seasonId)
   ]);
 
   // --- DATA PROCESSING ---
@@ -81,27 +83,27 @@ export default async function ProfilePage() {
     heatmapData[key] = (heatmapData[key] || 0) + weight;
   };
 
-  attendanceRecords?.forEach((rec: any) => {
+  (attendanceRecords as AttendanceRecord[] | null)?.forEach((rec) => {
       if (rec.status === 'PRESENT' || rec.status === 'TARDY') addActivity(rec.date, 3);
   });
-  quizAnswers?.forEach((q: any) => addActivity(q.attempted_at, 1));
-  transactions?.forEach((t: any) => addActivity(t.created_at, 1));
+  (quizAnswers as QuizAnswer[] | null)?.forEach((q) => addActivity(q.attempted_at, 1));
+  (transactions as XPTransaction[] | null)?.forEach((t) => addActivity(t.created_at, 1));
 
   const unifiedLog = [
-    ...(transactions || []).map((t: any) => ({
+    ...((transactions || []) as XPTransaction[]).map((t) => ({
       id: t.id,
       type: 'XP Award', 
       title: t.action_type === 'MANUAL_ENTRY' ? 'Manual Adjustment' : t.action_type,
-      desc: t.description,
+      desc: t.description || "",
       xp: t.amount,
       date: new Date(t.created_at),
       status: 'success'
     })),
-    ...(quizAnswers || []).map((q: any) => ({
+    ...((quizAnswers || []) as QuizAnswer[]).map((q) => ({
       id: q.id,
       type: 'quiz',
-      title: q.Question?.text || "Unknown Challenge",
-      desc: q.Question?.Topic?.name || "General Module",
+      title: q.Question[0]?.text || "Unknown Challenge",
+      desc: q.Question[0]?.Topic[0]?.name || "General Module",
       xp: q.is_correct ? 2 : 1,
       date: new Date(q.attempted_at),
       status: q.is_correct ? 'success' : 'failure'
@@ -118,17 +120,16 @@ export default async function ProfilePage() {
   const progressPercent = Math.min(100, Math.max(0, (xpInLevel / xpNeededForLevel) * 100));
 
   const totalSessions = attendanceRecords?.length || 0;
-  // const presentCount = attendanceRecords?.filter((a: any) => ['PRESENT', 'TARDY'].includes(a.status)).length || 0;
   const attendanceRate = totalSessions > 0 
-    ? Math.round((attendanceRecords?.filter((a: any) => ['PRESENT', 'TARDY'].includes(a.status)).length || 0) / totalSessions * 100) 
+    ? Math.round(((attendanceRecords as AttendanceRecord[] | null)?.filter((a) => ['PRESENT', 'TARDY'].includes(a.status)).length || 0) / totalSessions * 100)
     : 0;
   
-  const bestRank = rankHistory && rankHistory.length > 0 ? Math.min(...rankHistory.map((h: any) => h.rank)) : 0;
+  const bestRank = rankHistory && rankHistory.length > 0 ? Math.min(...(rankHistory as RankRecord[]).map((h) => h.rank)) : 0;
   const currentStreak = student.current_streak || 0;
 
   // Quiz Stats
   const totalQuizzes = quizAnswers?.length || 0;
-  const correctQuizzes = quizAnswers?.filter((a: any) => a.is_correct).length || 0;
+  const correctQuizzes = (quizAnswers as QuizAnswer[] | null)?.filter((a) => a.is_correct).length || 0;
   const quizAccuracy = totalQuizzes > 0 ? Math.round((correctQuizzes / totalQuizzes) * 100) : 0;
 
   // --- ACHIEVEMENT LOGIC (TACTICAL THEME) ---
@@ -155,29 +156,19 @@ export default async function ProfilePage() {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-6 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20">
+    <div className="w-full space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20">
       
       {/* --- HEADER --- */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 border-b border-slate-800 pb-6">
-        <div>
-            <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-                <User className="text-cyan-400" size={32} />
-                Agent Dossier
-            </h1>
-            <p className="text-slate-400 text-sm mt-1">Identity, stats, and performance metrics.</p>
-        </div>
-        <div className="flex items-center gap-4">
-             {impersonateId ? (
-                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-xs font-bold uppercase tracking-wider animate-pulse">
-                    <Shield size={14} /> Impersonating
-                 </div>
-             ) : (
-                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider">
-                    <Activity size={14} /> Active Status
-                 </div>
-             )}
-        </div>
-      </div>
+      <PageHeader
+        title="Agent Dossier"
+        description="Identity, stats, and performance metrics."
+        icon={<User size={28} />}
+        actions={impersonateId ? (
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-xs font-bold uppercase tracking-wider animate-pulse">
+            <Shield size={14} /> Impersonating
+          </div>
+        ) : undefined}
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
@@ -189,7 +180,7 @@ export default async function ProfilePage() {
                 <div className="relative flex flex-col items-center text-center z-10">
                     <div className="relative mb-4">
                         <div className="w-32 h-32 rounded-full p-1 border-2 border-slate-800 bg-slate-950 shadow-xl">
-                            <img src={student.avatar_url || `https://api.dicebear.com/9.x/avataaars/svg?seed=${displayName}`} alt="Avatar" className="w-full h-full rounded-full object-cover" />
+                            <Image unoptimized width={128} height={128} src={student.avatar_url || `https://api.dicebear.com/9.x/avataaars/svg?seed=${displayName}`} alt="Avatar" className="h-full w-full rounded-full object-cover" />
                         </div>
                         <div className="absolute bottom-0 right-0 bg-slate-950 rounded-full p-1 border border-slate-800 shadow-sm">
                             <BadgeCheck className="w-6 h-6 text-emerald-500" />
@@ -206,7 +197,7 @@ export default async function ProfilePage() {
                             <span>Lvl {levelDef.level + 1}</span>
                         </div>
                         <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden border border-slate-800 relative">
-                            <div style={{ width: `${progressPercent}%` }} className="h-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)] transition-all duration-1000" />
+                            <div style={{ width: `${progressPercent}%` }} className="h-full bg-cyan-400 shadow-[0_0_10px_rgb(var(--primary)/0.5)] transition-all duration-1000" />
                         </div>
                         <div className="text-center text-[10px] text-slate-500 mt-1 font-mono">{xpInLevel} / {xpNeededForLevel} XP to rank up</div>
                     </div>
@@ -229,7 +220,7 @@ export default async function ProfilePage() {
                             <div className="text-xl font-bold text-purple-400 flex items-center justify-center gap-1"><Target size={14} /> {bestRank > 0 ? `#${bestRank}` : "-"}</div>
                         </div>
                     </div>
-                    <EditProfileModal student={studentForEdit} />
+                    {seasonId === activeSeasonId ? <EditProfileModal student={studentForEdit} /> : <p className="mt-4 text-xs font-semibold text-amber-300">Archived record · read only</p>}
                 </div>
 
                 <div className="mt-8 space-y-3 relative z-10">
@@ -274,19 +265,16 @@ export default async function ProfilePage() {
                     </div>
                 </div>
 
-                {/* HEATMAP & RULES (Narrow Stack) */}
-                <div className="flex flex-col gap-6">
-                    <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/50">
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-sm font-bold uppercase text-slate-400 flex items-center gap-2">
-                                <Activity size={16} /> Frequency
-                            </h3>
-                        </div>
-                        <div className="flex justify-center">
-                            <ActivityHeatmap activityData={heatmapData} startDate="2025-09-27" />
-                        </div>
+                {/* ACTIVITY HEATMAP */}
+                <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/50">
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-sm font-bold uppercase text-slate-400 flex items-center gap-2">
+                            <Activity size={16} /> Frequency
+                        </h3>
                     </div>
-                    <RulesCard />
+                    <div className="flex justify-center">
+                        <ActivityHeatmap activityData={heatmapData} startDate="2025-09-27" />
+                    </div>
                 </div>
 
             </div>

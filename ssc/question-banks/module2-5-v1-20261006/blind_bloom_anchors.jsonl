@@ -1,0 +1,8 @@
+{"id": "M2L5-005", "item": "What does `nums[:3]` select?"}
+{"id": "M2L5-010", "item": "What is the main difference between `append(w)` and `extend(w)` when `w` has three items?"}
+{"id": "M2L5-012", "item": "Which list operation removes and returns the item at a specified index?"}
+{"id": "M2L5-024", "item": "Which part of `[i for i in numbers if i % 2 == 0 and i > 0]` filters out negative even numbers?"}
+{"id": "M2L5-027", "item": "What does `txt_news.find('Palestine')` return when the text does not contain that substring?"}
+{"id": "M2L5-040", "item": "In the improved `analyze_list`, why are both the data items and `word1`/`word2` converted to lowercase?"}
+{"id": "M2L5-E04", "item": "Write or outline a `median_income` function that handles both odd and even non-empty lists. Find the median for `[2500, 3200, 4000, 2800, 5000]` and for `[1, 4, 8, 10]`. Explain why sorting is done first."}
+{"id": "M2L5-E08", "item": "Design or describe a function that takes a list of email strings and returns sorted unique provider domains. Explain how it should handle an item with no `@`, how it extracts the domain, and how it avoids duplicates. Show the result for `['a@gmail.com', 'b@yahoo.com', 'c@gmail.com', 'bad-address']`."}

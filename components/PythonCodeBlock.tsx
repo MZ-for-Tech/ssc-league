@@ -18,10 +18,10 @@ interface PythonCodeBlockProps {
 
 const PythonCodeBlock: React.FC<PythonCodeBlockProps> = ({ code, filename = 'script.py' }) => {
   return (
-    <div className="my-6 rounded-lg overflow-hidden border border-border shadow-2xl bg-[#1e1e1e] text-left">
+    <div className="my-6 rounded-lg overflow-hidden border border-border shadow-2xl bg-code-editor text-left">
       
       {/* Header (VS Code Tab Style) */}
-      <div className="flex items-center gap-2 px-4 py-2 bg-[#1e1e1e] border-b border-border">
+      <div className="flex items-center gap-2 px-4 py-2 bg-code-editor border-b border-border">
         <div className="flex gap-1.5 mr-2">
           <div className="w-3 h-3 rounded-full bg-red-500/80" />
           <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
@@ -42,11 +42,11 @@ const PythonCodeBlock: React.FC<PythonCodeBlockProps> = ({ code, filename = 'scr
           customStyle={{
             margin: 0,
             padding: '1.5rem',
-            backgroundColor: '#1e1e1e', // Matches VS Code background
+            backgroundColor: 'rgb(var(--code-editor))',
             fontFamily: "'Fira Code', 'Consolas', 'Monaco', monospace", // Better fonts
           }}
           showLineNumbers={true}
-          lineNumberStyle={{ minWidth: "2.5em", paddingRight: "1em", color: "#5c6370" }}
+          lineNumberStyle={{ minWidth: "2.5em", paddingRight: "1em", color: "rgb(var(--code-line-number))" }}
           wrapLongLines={true}
         >
           {code}

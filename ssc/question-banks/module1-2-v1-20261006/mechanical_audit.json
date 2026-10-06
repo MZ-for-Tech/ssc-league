@@ -1,0 +1,22 @@
+{
+  "mcqCount": 40,
+  "essayCount": 8,
+  "normalizedDuplicateStems": 0,
+  "correctPositionCounts": [
+    10,
+    10,
+    10,
+    10
+  ],
+  "allMCQKeysMatch": true,
+  "allEssayRubricsTotalFive": true,
+  "diagramDependentMCQs": 26,
+  "diagramDependentEssays": 5,
+  "diagramAssets": 12,
+  "diagramReferencesResolve": true,
+  "svgXmlValid": true,
+  "keyedOptionsUniquelyShortestOrLongest": [],
+  "questionPreviewDiagramInstances": 31,
+  "essay_justifications_present": 8,
+  "essay_count_with_justification": 8
+}

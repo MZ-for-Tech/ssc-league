@@ -17,11 +17,11 @@ FILES = {
     "weeks": os.path.join(BASE_DIR, 'ssc league v1 - Weeks.csv'),
 }
 
-SUPABASE_URL = "https://ribbrxwtzvrijaijryab.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJpYmJyeHd0enZyaWphaWpyeWFiIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2MzU3MzQ5MCwiZXhwIjoyMDc5MTQ5NDkwfQ.H3HpamDaxShBWeIq14J7RjMNuQk7T9KObKs01IREymg"
+SUPABASE_URL = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_SECRET_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 
-if not SUPABASE_KEY:
-    raise ValueError("Missing SUPABASE_SERVICE_ROLE_KEY in .env")
+if not SUPABASE_URL or not SUPABASE_KEY:
+    raise ValueError("Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SECRET_KEY in .env")
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 

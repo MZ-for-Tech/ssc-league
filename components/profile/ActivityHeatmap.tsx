@@ -17,7 +17,7 @@ export default function ActivityHeatmap({
   today.setHours(23,59,59,999);
 
   const days: Date[] = [];
-  let current = new Date(start);
+  const current = new Date(start);
   while (current <= today) {
     days.push(new Date(current));
     current.setDate(current.getDate() + 1);
@@ -27,7 +27,7 @@ export default function ActivityHeatmap({
     if (count === 0) return "bg-slate-800/50 border-slate-800";
     if (count <= 1) return "bg-cyan-950 border-cyan-900"; 
     if (count <= 3) return "bg-cyan-700 border-cyan-600";
-    return "bg-cyan-400 border-cyan-300 shadow-[0_0_8px_rgba(34,211,238,0.5)]";
+    return "bg-cyan-400 border-cyan-300 shadow-glow-primary-pulse";
   };
 
   return (

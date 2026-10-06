@@ -1,0 +1,30 @@
+{
+  "mcq_count": 40,
+  "structured_response_count": 8,
+  "marks_each": 5,
+  "four_distinct_options_each": true,
+  "keys_valid": true,
+  "answer_positions_A_to_D": [
+    10,
+    10,
+    10,
+    10
+  ],
+  "mcq_with_code_stimuli": 14,
+  "essay_with_code_stimuli": 8,
+  "essays_with_justification": 8,
+  "essay_rubric_totals": {
+    "M3L3-E01": 5,
+    "M3L3-E02": 5,
+    "M3L3-E03": 5,
+    "M3L3-E04": 5,
+    "M3L3-E05": 5,
+    "M3L3-E06": 5,
+    "M3L3-E07": 5,
+    "M3L3-E08": 5
+  },
+  "duplicate_stems": [],
+  "blind_review_packet_count": 40,
+  "review_limit": "Same-session metadata-hidden review after answer-bearing drafting; not independent or fully blind instructor validation.",
+  "source_pair": "ssc/Module 3/3_summarising_and_filtering.md and ssc/Module 3/10. Module 3_1_pandas.pdf, pp. 34–46, 48–53"
+}

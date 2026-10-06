@@ -12,8 +12,8 @@ interface BadgeProps {
 export default function Badge({ icon: Icon, name, description, unlocked, color = "text-primary" }: BadgeProps) {
   return (
     <div className={`group relative p-4 rounded-xl border transition-all duration-300 ${
-        unlocked 
-        ? "bg-surface/80 border-surface-light hover:border-primary/50 hover:shadow-[0_0_15px_rgba(34,211,238,0.2)]" 
+        unlocked
+        ? "bg-surface/80 border-surface-light hover:border-primary/50 hover:shadow-glow-primary-subtle"
         : "bg-surface/30 border-border opacity-50 grayscale"
     }`}>
       <div className="flex items-center gap-4">
@@ -25,7 +25,7 @@ export default function Badge({ icon: Icon, name, description, unlocked, color =
           <p className="text-xs text-muted mt-0.5">{description}</p>
         </div>
       </div>
-      
+
       {/* Locked Overlay */}
       {!unlocked && (
         <div className="absolute inset-0 flex items-center justify-center bg-background/60 rounded-xl backdrop-blur-[1px]">

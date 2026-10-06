@@ -1,0 +1,8 @@
+{"id": "M2L6-002", "item": "Given `x = ([1, 2], [3, 4])`, what does `x[0][1] = 7` do?"}
+{"id": "M2L6-007", "item": "In `for name, age, position in team`, what must each element of team provide for unpacking to work?"}
+{"id": "M2L6-018", "item": "What does `for key, value in pd.items():` allow the loop to access on each iteration?"}
+{"id": "M2L6-024", "item": "After `pd['new'] = 3`, which entry does `pd.popitem()` remove according to the lesson?"}
+{"id": "M2L6-026", "item": "What remains true after `pd2 = pd.copy()` followed by `pd.clear()`?"}
+{"id": "M2L6-033", "item": "With `limit=2`, which names does `heavy_users(data)` return for the lesson's survey records?"}
+{"id": "M2L6-E07", "item": "Repair the PDF's character-frequency approach for `txt = 'Hello, I love feps'` so counts are case-insensitive. Show a correct loop and state the counts for `h`, `e`, `l`, and the space character. Explain why the original `set(txt.upper())` combined with `txt.count(char)` fails for lowercase characters."}
+{"id": "M2L6-E08", "item": "Using the nested product data below, calculate the signed price elasticity for Laptop and Smartphone from the formula `(percentage change in quantity)/(percentage change in price)`. Then compare the PDF's direct `elasticity > 1` / `< 1` classification with classification by absolute magnitude, and explain the issue for Laptop.\n\n```python\nproducts = {\n    'Laptop': {'p0': 1000, 'p1': 1500, 'q0': 50, 'q1': 20},\n    'Smartphone': {'p0': 800, 'p1': 1000, 'q0': 200, 'q1': 400}\n}\n```"}

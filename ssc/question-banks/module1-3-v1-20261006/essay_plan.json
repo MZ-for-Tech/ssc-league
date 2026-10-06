@@ -1,0 +1,16 @@
+{
+  "recommendation": "8 structured-response prompts for this college-level introductory lesson",
+  "rationale": "Eight provides focused coverage across hardware, programming process, syntax/semantics, language classification, translation models, and error diagnosis, with two applied code tasks. This is a pilot set rather than a full examination blueprint.",
+  "marks_each": 5,
+  "total_marks": 40,
+  "coverage": {
+    "INTRO-E01": "map roles in a hardware scenario",
+    "INTRO-E02": "apply the two-phase model and connect skills",
+    "INTRO-E03": "compare syntax and semantics across examples",
+    "INTRO-E04": "coordinate multiple independent classification axes",
+    "INTRO-E05": "compare translation workflows and trade-offs",
+    "INTRO-E06": "classify and distinguish concrete error causes",
+    "INTRO-E07": "trace and correct a logical loop error",
+    "INTRO-E08": "trace an integrated program and explain its operators"
+  }
+}

@@ -1,0 +1,321 @@
+{
+  "lesson": "module3-2-v1-20261006",
+  "method": "Provisional operation-based Revised Bloom classification. For each item, label the highest cognitive process essential to a correct response; classify the task, not its command verb. Full-batch classifications from earlier review are retained where present; otherwise the item wording, objective, and operation are assessed.",
+  "status": "All MCQs and essays have item-level labels. Same-session AI authoring review; not independently validated.",
+  "counts": {
+    "MCQ": {
+      "Remember": 2,
+      "Understand": 10,
+      "Apply": 27,
+      "Analyze": 1,
+      "Evaluate": 0,
+      "Create": 0
+    },
+    "Essay": {
+      "Remember": 0,
+      "Understand": 1,
+      "Apply": 2,
+      "Analyze": 2,
+      "Evaluate": 0,
+      "Create": 3
+    },
+    "Combined": {
+      "Remember": 2,
+      "Understand": 11,
+      "Apply": 29,
+      "Analyze": 3,
+      "Evaluate": 0,
+      "Create": 3
+    }
+  },
+  "items": [
+    {
+      "id": "M3L2-001",
+      "type": "MCQ",
+      "level": "Understand",
+      "rationale": "Classified Understand because the required task is to classify an API expression; this requires interpreting, explaining, or classifying meaning. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-002",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to diagnose a missing method call; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-003",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to compute a shape; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-004",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to compute the number of cells; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-005",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to select an inspection attribute; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-006",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to infer missing-value count; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-007",
+      "type": "MCQ",
+      "level": "Understand",
+      "rationale": "Classified Understand because the required task is to diagnose a dtype; this requires interpreting, explaining, or classifying meaning. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-008",
+      "type": "MCQ",
+      "level": "Understand",
+      "rationale": "Classified Understand because the required task is to choose a data representation; this requires interpreting, explaining, or classifying meaning. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-009",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to select the matching constructor; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-010",
+      "type": "MCQ",
+      "level": "Remember",
+      "rationale": "Classified Remember because the required task is to interpret an input structure; this requires retrieving or recognizing a taught fact or convention. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-011",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to apply the default head behavior; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-012",
+      "type": "MCQ",
+      "level": "Understand",
+      "rationale": "Classified Understand because the required task is to interpret tail; this requires interpreting, explaining, or classifying meaning. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-013",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to choose a random preview; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-014",
+      "type": "MCQ",
+      "level": "Understand",
+      "rationale": "Classified Understand because the required task is to identify the result type; this requires interpreting, explaining, or classifying meaning. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-015",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to choose valid column selection; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-016",
+      "type": "MCQ",
+      "level": "Remember",
+      "rationale": "Classified Remember because the required task is to explain access syntax; this requires retrieving or recognizing a taught fact or convention. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-017",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to trace a positional slice; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-018",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to interpret a list of positions; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-019",
+      "type": "MCQ",
+      "level": "Understand",
+      "rationale": "Classified Understand because the required task is to interpret row-column indexing; this requires interpreting, explaining, or classifying meaning. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-020",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to distinguish loc and iloc; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-021",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to compose a loc selection; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-022",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to trace a cell lookup; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-023",
+      "type": "MCQ",
+      "level": "Understand",
+      "rationale": "Classified Understand because the required task is to classify a numeric dtype; this requires interpreting, explaining, or classifying meaning. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-024",
+      "type": "MCQ",
+      "level": "Understand",
+      "rationale": "Classified Understand because the required task is to reason about index assignment; this requires interpreting, explaining, or classifying meaning. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-025",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to apply a shape constraint; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-026",
+      "type": "MCQ",
+      "level": "Understand",
+      "rationale": "Classified Understand because the required task is to predict scalar assignment; this requires interpreting, explaining, or classifying meaning. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-027",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to choose an update method; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-028",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to apply vectorized arithmetic; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-029",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to apply a stated threshold; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-030",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to select a row-append procedure; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-031",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to predict index behavior; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-032",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to reason about index labels; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-033",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to interpret deletion; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-034",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to interpret pop behavior; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-035",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to trace copy-return behavior; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-036",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to repair an unretained update; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-037",
+      "type": "MCQ",
+      "level": "Understand",
+      "rationale": "Classified Understand because the required task is to diagnose destructive assignment; this requires interpreting, explaining, or classifying meaning. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-038",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to choose a row-deletion operation; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-039",
+      "type": "MCQ",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to select an update pattern; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-040",
+      "type": "MCQ",
+      "level": "Analyze",
+      "rationale": "Classified Analyze because the required task is to diagnose an invalid lookup; this requires diagnosing a problem or inferring how parts or conditions relate. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-E01",
+      "type": "Essay",
+      "level": "Understand",
+      "rationale": "Classified Understand because the required task is to explain and apply DataFrame structure; this requires interpreting, explaining, or classifying meaning. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-E02",
+      "type": "Essay",
+      "level": "Create",
+      "rationale": "Classified Create because the required task is to construct and compare data representations; this requires constructing a coherent solution or product that meets the stated constraints. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-E03",
+      "type": "Essay",
+      "level": "Analyze",
+      "rationale": "Classified Analyze because the required task is to interpret a data summary and plan inspection; this requires diagnosing a problem or inferring how parts or conditions relate. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-E04",
+      "type": "Essay",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to write and explain DataFrame selections; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-E05",
+      "type": "Essay",
+      "level": "Apply",
+      "rationale": "Classified Apply because the required task is to derive and interpret DataFrame columns; this requires carrying out a learned rule, calculation, or procedure on the given case. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-E06",
+      "type": "Essay",
+      "level": "Create",
+      "rationale": "Classified Create because the required task is to plan a sequence of DataFrame updates; this requires constructing a coherent solution or product that meets the stated constraints. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-E07",
+      "type": "Essay",
+      "level": "Analyze",
+      "rationale": "Classified Analyze because the required task is to compare mutations and explain return values; this requires diagnosing a problem or inferring how parts or conditions relate. The label reflects the highest process essential to the item, not its command verb alone."
+    },
+    {
+      "id": "M3L2-E08",
+      "type": "Essay",
+      "level": "Create",
+      "rationale": "Classified Create because the required task is to design an end-to-end DataFrame workflow; this requires constructing a coherent solution or product that meets the stated constraints. The label reflects the highest process essential to the item, not its command verb alone."
+    }
+  ]
+}

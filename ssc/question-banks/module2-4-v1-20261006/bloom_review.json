@@ -1,0 +1,50 @@
+{
+  "note": "Provisional operation-based labels, advisory only; no forced Bloom quotas. Review is same-session AI assessment.",
+  "anchors": [
+    {
+      "id": "M2L4-006",
+      "label": "Understand",
+      "reason": "distinguish printed output from returned values"
+    },
+    {
+      "id": "M2L4-010",
+      "label": "Apply",
+      "reason": "interpret a guard clause"
+    },
+    {
+      "id": "M2L4-014",
+      "label": "Apply",
+      "reason": "evaluate defaults and a named argument"
+    },
+    {
+      "id": "M2L4-019",
+      "label": "Analyze",
+      "reason": "reason about reading a global name"
+    },
+    {
+      "id": "M2L4-023",
+      "label": "Apply",
+      "reason": "trace recursive factorial"
+    },
+    {
+      "id": "M2L4-027",
+      "label": "Apply",
+      "reason": "use a module-qualified name"
+    },
+    {
+      "id": "M2L4-033",
+      "label": "Understand",
+      "reason": "classify package use"
+    },
+    {
+      "id": "M2L4-E05",
+      "label": "Analyze",
+      "reason": "trace nested function-call evaluation"
+    },
+    {
+      "id": "M2L4-E08",
+      "label": "Evaluate",
+      "reason": "diagnose a module exercise and explain reuse"
+    }
+  ]
+}

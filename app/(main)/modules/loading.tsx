@@ -1,90 +1,64 @@
-import React from "react";
+import PageHeaderSkeleton from "@/components/PageHeaderSkeleton";
+
+function LessonRowSkeleton() {
+  return (
+    <div className="flex items-center gap-4 rounded-xl border border-border bg-surface/50 p-4">
+      <div className="h-11 w-11 shrink-0 rounded-xl bg-surface-light/30" />
+      <div className="min-w-0 flex-1 space-y-2">
+        <div className="h-4 w-2/3 max-w-72 rounded bg-surface-light/40" />
+        <div className="h-3 w-1/3 max-w-40 rounded bg-surface-light/25" />
+      </div>
+      <div className="hidden h-8 w-20 rounded-lg bg-surface-light/20 sm:block" />
+    </div>
+  );
+}
 
 export default function ModulesLoading() {
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-6 animate-pulse pb-20">
-      
-      {/* Header Skeleton */}
-      <div className="flex items-center justify-between mb-8 border-b border-border pb-6">
-        <div className="space-y-2">
-            <div className="h-8 w-48 bg-surface-light/50 rounded-lg" />
-            <div className="h-4 w-64 bg-surface-light/30 rounded-lg" />
-        </div>
-        <div className="hidden md:block h-8 w-24 bg-surface-light/30 rounded-full" />
-      </div>
+    <div className="w-full space-y-8 pb-20" aria-busy="true" aria-label="Loading modules">
+      <PageHeaderSkeleton titleWidth="w-64" descriptionWidth="w-80" actionWidth="w-28" />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        {/* LEFT COLUMN: Timeline Skeleton */}
-        <div className="lg:col-span-2 relative">
-           
-           {/* Vertical Line Placeholder */}
-           <div className="absolute left-6 top-4 bottom-0 w-0.5 bg-surface-light/30 hidden md:block" />
-
-           <div className="space-y-8">
-              {/* Generate 5 Mock Modules */}
-              {[...Array(5)].map((_, i) => (
-                 <div key={i} className="relative flex gap-6">
-                    
-                    {/* Left Rail Icon */}
-                    <div className="flex flex-col items-center">
-                        <div className="w-12 h-12 rounded-xl bg-surface-light/40 border-2 border-surface-light/50 z-10" />
-                    </div>
-
-                    {/* Right Content Card */}
-                    <div className="flex-1 mb-2 p-6 rounded-2xl border border-border bg-surface/50">
-                        <div className="h-6 w-32 bg-surface-light/40 rounded mb-3" />
-                        <div className="space-y-2 mb-6">
-                            <div className="h-4 w-full bg-surface-light/20 rounded" />
-                            <div className="h-4 w-3/4 bg-surface-light/20 rounded" />
-                        </div>
-                        
-                        {/* Resource Grid Placeholder */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                             <div className="h-12 w-full bg-surface-light/30 rounded-lg border border-border/50" />
-                             <div className="h-12 w-full bg-surface-light/30 rounded-lg border border-border/50" />
-                        </div>
-                    </div>
-                 </div>
-              ))}
-           </div>
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        <div className="space-y-8 lg:col-span-2">
+          {[0, 1, 2].map((module) => (
+            <section key={module} className="space-y-3">
+              <div className="animate-pulse rounded-xl border border-primary/15 bg-primary/5 px-5 py-4">
+                <div className="mb-2 h-3 w-20 rounded bg-primary/20" />
+                <div className="mb-2 h-6 w-2/3 max-w-80 rounded bg-surface-light/40" />
+                <div className="h-3 w-full max-w-xl rounded bg-surface-light/25" />
+              </div>
+              <div className="space-y-3">
+                <LessonRowSkeleton />
+                <LessonRowSkeleton />
+              </div>
+            </section>
+          ))}
         </div>
 
-        {/* RIGHT COLUMN: HUD Skeleton */}
-        <div className="space-y-6 h-fit lg:sticky lg:top-8">
-            
-            {/* Card 1: Campaign Status */}
-            <div className="bg-surface/50 border border-border rounded-2xl p-6 space-y-4">
-                 <div className="h-4 w-32 bg-surface-light/40 rounded" />
-                 <div className="flex items-end justify-between">
-                    <div className="h-8 w-12 bg-surface-light/50 rounded" />
-                    <div className="h-4 w-20 bg-surface-light/30 rounded" />
-                 </div>
-                 <div className="h-2 w-full bg-surface-light/30 rounded-full" />
-                 <div className="h-16 w-full bg-surface-light/10 rounded-lg" />
+        <aside className="h-fit space-y-6 lg:sticky lg:top-8">
+          <div className="animate-pulse space-y-4 rounded-2xl border border-border bg-surface/50 p-6">
+            <div className="h-4 w-32 rounded bg-surface-light/40" />
+            <div className="flex items-end justify-between">
+              <div className="h-10 w-14 rounded bg-surface-light/50" />
+              <div className="h-4 w-24 rounded bg-surface-light/30" />
             </div>
-
-            {/* Card 2: XP */}
-            <div className="bg-surface/50 border border-border rounded-2xl p-6 flex items-center justify-between">
-                 <div className="space-y-2">
-                    <div className="h-3 w-20 bg-surface-light/40 rounded" />
-                    <div className="h-8 w-24 bg-surface-light/50 rounded" />
-                 </div>
-                 <div className="h-10 w-10 bg-surface-light/30 rounded-xl" />
+            <div className="h-2 w-full rounded-full bg-surface-light/30" />
+            <div className="h-16 w-full rounded-lg bg-surface-light/15" />
+          </div>
+          <div className="flex animate-pulse items-center justify-between rounded-2xl border border-border bg-surface/50 p-6">
+            <div className="space-y-2">
+              <div className="h-3 w-20 rounded bg-surface-light/30" />
+              <div className="h-7 w-24 rounded bg-surface-light/45" />
             </div>
-
-            {/* Card 3: Intel Bank */}
-            <div className="bg-surface/50 border border-border rounded-2xl p-6 space-y-4">
-                 <div className="h-4 w-24 bg-surface-light/40 rounded mb-2" />
-                 <div className="space-y-2">
-                     {[...Array(4)].map((_, i) => (
-                         <div key={i} className="h-12 w-full bg-surface-light/20 rounded-lg" />
-                     ))}
-                 </div>
+            <div className="h-10 w-10 rounded-xl bg-surface-light/25" />
+          </div>
+          <div className="animate-pulse space-y-4 rounded-2xl border border-border bg-surface/50 p-6">
+            <div className="h-4 w-24 rounded bg-surface-light/40" />
+            <div className="space-y-2">
+              {[0, 1, 2].map((item) => <div key={item} className="h-12 rounded-lg bg-surface-light/15" />)}
             </div>
-
-        </div>
-
+          </div>
+        </aside>
       </div>
     </div>
   );

@@ -1,0 +1,155 @@
+<!doctype html><html lang='en'><meta charset='utf-8'><meta name='viewport' content='width=device-width'><title>Module 3 Lesson 2 — Question Preview</title>
+<style>body{font:16px/1.55 system-ui,sans-serif;max-width:980px;margin:2rem auto;padding:0 1rem;color:#18212b}article{border:1px solid #ccd3da;border-radius:10px;padding:1rem 1.2rem;margin:1rem 0}pre{overflow:auto;background:#f3f5f7;padding:1rem;border-radius:8px}ol{padding-left:1.5rem}</style><body><h1>Module 3 — Pandas basics: building and reading a DataFrame</h1><p>40 MCQs and 8 structured responses. Scope is limited to the paired Lesson 2 Markdown and corresponding PDF slides 14–33.</p><h2>Multiple-choice questions</h2>
+<article><h3>M3L2-001</h3><p>A DataFrame has `shape`, `columns`, and `head()`. Which expression refers to a characteristic without calling an action?</p>
+<ol type='A'><li>df.shape</li><li>df.head()</li><li>df.describe()</li><li>df.drop(columns=&#x27;x&#x27;)</li></ol></article>
+<article><h3>M3L2-002</h3><p>A student writes `df.info` and sees a method representation instead of a summary. What change should they make?</p>
+<ol type='A'><li>Use `df.info[]`</li><li>Call it as `df.info()`</li><li>Replace it with `df.shape()`</li><li>Use `df.info = True`</li></ol></article>
+<article><h3>M3L2-003</h3><p>A table has 6 rows and 4 columns. What does `df.shape` return?</p>
+<pre><code># df has 6 rows and 4 columns
+print(df.shape)</code></pre>
+<ol type='A'><li>`(4, 6)`</li><li>`24`</li><li>`(6, 4)`</li><li>`6`</li></ol></article>
+<article><h3>M3L2-004</h3><p>For a DataFrame with 6 rows and 4 columns, what does `df.size` return?</p>
+<pre><code># df has 6 rows and 4 columns
+print(df.size)</code></pre>
+<ol type='A'><li>`(6, 4)`</li><li>`10`</li><li>`4`</li><li>`24`</li></ol></article>
+<article><h3>M3L2-005</h3><p>You need the labels of all variables in a DataFrame. Which attribute gives them?</p>
+<ol type='A'><li>`df.columns`</li><li>`df.index`</li><li>`df.values`</li><li>`df.dtypes`</li></ol></article>
+<article><h3>M3L2-006</h3><p>A DataFrame has 500 rows. `df.info()` reports 423 non-null values for `income`. What can you infer from this output?</p>
+<pre><code># The DataFrame has 500 rows
+df.info()  # income: 423 non-null</code></pre>
+<ol type='A'><li>The DataFrame has 77 rows</li><li>77 entries in `income` are missing</li><li>The column contains 423 distinct values</li><li>The column is stored as 77-bit integers</li></ol></article>
+<article><h3>M3L2-007</h3><p>A numeric column unexpectedly has dtype `object`. What is the most appropriate first interpretation?</p>
+<ol type='A'><li>It must contain only whole numbers</li><li>It has no missing values</li><li>It may contain text or mixed Python values</li><li>It is automatically a Boolean column</li></ol></article>
+<article><h3>M3L2-008</h3><p>Which input structure most directly describes a DataFrame one record at a time, with each record naming its fields?</p>
+<ol type='A'><li>A dictionary of column arrays</li><li>A list of field names only</li><li>A single scalar value</li><li>A list of dictionaries</li></ol></article>
+<article><h3>M3L2-009</h3><p>The values are stored row by row in `rows`, while column names are in `fields`. Which constructor matches that layout?</p>
+<pre><code>fields = [&#x27;Name&#x27;, &#x27;Score&#x27;]
+rows = [[&#x27;Mina&#x27;, 82], [&#x27;Omar&#x27;, 91]]</code></pre>
+<ol type='A'><li>`pd.DataFrame(data=rows, columns=fields)`</li><li>`pd.DataFrame(columns=rows, data=fields)`</li><li>`pd.DataFrame(rows, index=fields)`</li><li>`pd.Series(data=rows, columns=fields)`</li></ol></article>
+<article><h3>M3L2-010</h3><p>A dictionary maps each field name to a list of values. How does that representation organize the data?</p>
+<ol type='A'><li>Cell by cell with no row structure</li><li>Column by column</li><li>Only as a list of row labels</li><li>As one nested value in a single column</li></ol></article>
+<article><h3>M3L2-011</h3><p>A DataFrame has 3 rows. What does `df.head()` return by default?</p>
+<pre><code># df has exactly 3 rows
+print(df.head())</code></pre>
+<ol type='A'><li>Only the first row</li><li>The first 5 rows padded with two empty rows</li><li>All 3 rows</li><li>The last 3 rows</li></ol></article>
+<article><h3>M3L2-012</h3><p>What does `df.tail(2)` select?</p>
+<ol type='A'><li>Rows with labels 0 and 1</li><li>The first two rows</li><li>Two randomly selected rows</li><li>The last two rows</li></ol></article>
+<article><h3>M3L2-013</h3><p>An analyst wants a quick, randomly chosen subset of four records for inspection. Which call matches that goal?</p>
+<ol type='A'><li>`df.sample(4)`</li><li>`df.head(4)`</li><li>`df.tail(4)`</li><li>`df.iloc[0:4]`</li></ol></article>
+<article><h3>M3L2-014</h3><p>What object is returned by `df[&#x27;Score&#x27;]` when `Score` is a single column?</p>
+<pre><code>df = pd.DataFrame({&#x27;Name&#x27;: [&#x27;Laila&#x27;, &#x27;Tarek&#x27;], &#x27;Score&#x27;: [88, 75]})
+score = df[&#x27;Score&#x27;]</code></pre>
+<ol type='A'><li>A two-column DataFrame</li><li>A Series</li><li>A list of row labels</li><li>A scalar from the first row</li></ol></article>
+<article><h3>M3L2-015</h3><p>Which expression returns a DataFrame containing both `Name` and `Score`?</p>
+<ol type='A'><li>`df[&#x27;Name&#x27;, &#x27;Score&#x27;]`</li><li>`df[&#x27;Name&#x27;][&#x27;Score&#x27;]`</li><li>`df[[&#x27;Name&#x27;, &#x27;Score&#x27;]]`</li><li>`df.Name.Score`</li></ol></article>
+<article><h3>M3L2-016</h3><p>Why is bracket notation safer than `df.Name` when selecting a column?</p>
+<ol type='A'><li>It always returns a NumPy array</li><li>It changes the DataFrame&#x27;s column order</li><li>Dot notation permanently deletes spaces from a label</li><li>It also works when a column name has spaces or conflicts with an attribute</li></ol></article>
+<article><h3>M3L2-017</h3><p>For the DataFrame below, what rows are selected by `df.iloc[0:2]`?</p>
+<pre><code>df = pd.DataFrame({&#x27;Name&#x27;: [&#x27;Mina&#x27;, &#x27;Omar&#x27;, &#x27;Nour&#x27;],
+                   &#x27;Score&#x27;: [82, 91, 77]})
+print(df.iloc[0:2])</code></pre>
+<ol type='A'><li>The first and second rows (positions 0 and 1)</li><li>The first two rows by label, inclusive of label 2</li><li>Only the row at position 2</li><li>Rows at positions 0 and 2</li></ol></article>
+<article><h3>M3L2-018</h3><p>What does `df.iloc[[0, 2]]` select?</p>
+<ol type='A'><li>Rows at positions 0, 1, and 2</li><li>Rows at positions 0 and 2</li><li>Columns at positions 0 and 2</li><li>Rows whose labels are the strings &#x27;0&#x27; and &#x27;2&#x27;</li></ol></article>
+<article><h3>M3L2-019</h3><p>In `df.iloc[1, 2]`, what do the two integers identify?</p>
+<ol type='A'><li>Column position 1, then row position 2</li><li>Row label 1, then column name 2</li><li>Row position 1, then column position 2</li><li>The second and third rows</li></ol></article>
+<article><h3>M3L2-020</h3><p>The index labels are `a`, `b`, and `c`. Which expression selects the row labelled `b`?</p>
+<ol type='A'><li>`df.iloc[&#x27;b&#x27;]`</li><li>`df.loc[1]` always</li><li>`df.values[&#x27;b&#x27;]`</li><li>`df.loc[&#x27;b&#x27;]`</li></ol></article>
+<article><h3>M3L2-021</h3><p>Which expression selects all rows and the `Name` and `City` columns by their labels?</p>
+<ol type='A'><li>`df.loc[:, [&#x27;Name&#x27;, &#x27;City&#x27;]]`</li><li>`df.iloc[:, [&#x27;Name&#x27;, &#x27;City&#x27;]]`</li><li>`df.loc[[&#x27;Name&#x27;, &#x27;City&#x27;], :]`</li><li>`df[&#x27;Name&#x27;, &#x27;City&#x27;]`</li></ol></article>
+<article><h3>M3L2-022</h3><p>The table has columns `Name`, `Country`, `City`, in that order. What value is selected by `df.iloc[1, 2]`?</p>
+<pre><code>df = pd.DataFrame([[&#x27;Mina&#x27;, &#x27;Egypt&#x27;, &#x27;Cairo&#x27;],
+                   [&#x27;Omar&#x27;, &#x27;France&#x27;, &#x27;Paris&#x27;]],
+                  columns=[&#x27;Name&#x27;, &#x27;Country&#x27;, &#x27;City&#x27;])
+print(df.iloc[1, 2])</code></pre>
+<ol type='A'><li>`Ann`</li><li>`Paris`</li><li>`France`</li><li>`London`</li></ol></article>
+<article><h3>M3L2-023</h3><p>A column contains measurements such as 1.7, 2.4, and 3.0. Which dtype best matches numeric values that can include decimals?</p>
+<ol type='A'><li>`int64`</li><li>`bool`</li><li>`float64`</li><li>`object`</li></ol></article>
+<article><h3>M3L2-024</h3><p>A DataFrame index is changed to `[&#x27;x&#x27;, &#x27;y&#x27;, &#x27;z&#x27;]`. What is the main effect?</p>
+<ol type='A'><li>The rows are sorted alphabetically by their contents</li><li>The column labels become x, y, and z</li><li>The row values are converted to strings</li><li>Rows receive those labels, while their stored order remains</li></ol></article>
+<article><h3>M3L2-025</h3><p>A DataFrame has three columns. What must be true when assigning `df.columns = [&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;]`?</p>
+<ol type='A'><li>The replacement list must have one label for each column</li><li>The labels must match the row count</li><li>All labels must already occur as cell values</li><li>The DataFrame must have exactly three rows</li></ol></article>
+<article><h3>M3L2-026</h3><p>What happens after `df[&#x27;Flag&#x27;] = 1` when `df` has three rows?</p>
+<pre><code>df = pd.DataFrame({&#x27;Name&#x27;: [&#x27;Mina&#x27;, &#x27;Omar&#x27;, &#x27;Nour&#x27;]})
+df[&#x27;Flag&#x27;] = 1
+print(df)</code></pre>
+<ol type='A'><li>Only the first row receives a new value</li><li>A new `Flag` column is added with value 1 in each row</li><li>A new row labelled `Flag` is appended</li><li>The existing first column is renamed to `Flag`</li></ol></article>
+<article><h3>M3L2-027</h3><p>You want to add a `Status` column at position 1. Which method is designed for choosing its insertion position?</p>
+<ol type='A'><li>`df.loc[1] = values`</li><li>`df.drop(1, axis=1)`</li><li>`df.insert(1, &#x27;Status&#x27;, values)`</li><li>`df.sample(1)`</li></ol></article>
+<article><h3>M3L2-028</h3><p>A DataFrame has matching `Weight` and `Height` columns. Which expression computes BMI row by row without writing an explicit loop?</p>
+<pre><code>df[&#x27;BMI&#x27;] = round(df[&#x27;Weight&#x27;] / df[&#x27;Height&#x27;] ** 2, 2)</code></pre>
+<ol type='A'><li>`df[&#x27;Weight&#x27;] / 2 * df[&#x27;Height&#x27;]`</li><li>`df[&#x27;Weight&#x27;] ** 2 / df[&#x27;Height&#x27;]`</li><li>`df[&#x27;Weight&#x27;] + df[&#x27;Height&#x27;]`</li><li>`df[&#x27;Weight&#x27;] / df[&#x27;Height&#x27;] ** 2`</li></ol></article>
+<article><h3>M3L2-029</h3><p>A BMI value is 32.4. Under the PDF example&#x27;s thresholds, which status is assigned?</p>
+<pre><code>if bmi &lt;= 18.5: status = &#x27;Under Weight&#x27;
+elif bmi &lt; 25: status = &#x27;Healthy Weight&#x27;
+elif bmi &lt;= 30: status = &#x27;Over Weight&#x27;
+else: status = &#x27;Obese&#x27;</code></pre>
+<ol type='A'><li>Obese</li><li>Under Weight</li><li>Healthy Weight</li><li>Over Weight</li></ol></article>
+<article><h3>M3L2-030</h3><p>You have one new row as a list and want to add it with `concat`. What is the appropriate sequence?</p>
+<ol type='A'><li>Pass the list directly to `pd.concat` with the original DataFrame</li><li>Build a one-row DataFrame with the existing columns, then concatenate the two DataFrames</li><li>Use `df.insert` with the row as a column</li><li>Assign the row list to `df.columns`</li></ol></article>
+<article><h3>M3L2-031</h3><p>A DataFrame currently has 4 rows with default index labels 0–3. After concatenating one row with `ignore_index=True`, what is the resulting index sequence?</p>
+<pre><code>df = pd.concat([df, one_row], ignore_index=True)</code></pre>
+<ol type='A'><li>0 through 3, with the new row unlabelled</li><li>1 through 5</li><li>0 through 4</li><li>0, 1, 2, 3, and 0</li></ol></article>
+<article><h3>M3L2-032</h3><p>The DataFrame has 4 rows and its index is 0, 1, 2, 3. Why can `df.loc[len(df)] = new_row` add a row at the end in the lesson&#x27;s example?</p>
+<pre><code>df.loc[len(df)] = [&#x27;Lina&#x27;, &#x27;Egypt&#x27;, &#x27;Aswan&#x27;]</code></pre>
+<ol type='A'><li>`.loc` always interprets 4 as the fourth position</li><li>`len(df)` returns the final row&#x27;s label, which is 3</li><li>`.loc` appends regardless of whether label 4 already exists</li><li>`len(df)` is 4, the next unused label in this default index</li></ol></article>
+<article><h3>M3L2-033</h3><p>What does `del df[&#x27;Gender&#x27;]` do?</p>
+<ol type='A'><li>Removes the `Gender` column from `df`</li><li>Returns the removed column and keeps it in `df`</li><li>Removes every row where Gender is missing</li><li>Creates a copy with the column removed but leaves `df` unchanged</li></ol></article>
+<article><h3>M3L2-034</h3><p>After `gender = df.pop(&#x27;Gender&#x27;)`, which description is correct?</p>
+<ol type='A'><li>`Gender` remains in `df`, and `gender` is a full copy of the DataFrame</li><li>`Gender` is removed from `df` and returned in `gender`</li><li>The first row is removed and stored in `gender`</li><li>`pop` only renames the column</li></ol></article>
+<article><h3>M3L2-035</h3><p>What happens after `result = df.drop(columns=&#x27;Country&#x27;)` if `inplace` is not set?</p>
+<pre><code>result = df.drop(columns=&#x27;Country&#x27;)</code></pre>
+<ol type='A'><li>Both `result` and `df` omit Country</li><li>`result` is None and `df` is changed</li><li>`result` omits Country, while the original `df` remains unchanged</li><li>The Country column is renamed to result</li></ol></article>
+<article><h3>M3L2-036</h3><p>Which code keeps the result of dropping `Country` in a variable named `df`?</p>
+<ol type='A'><li>`df.drop(columns=&#x27;Country&#x27;)`</li><li>`df = df.drop(columns=&#x27;Country&#x27;, inplace=True)`</li><li>`df.pop(&#x27;Country&#x27;)`</li><li>`df = df.drop(columns=&#x27;Country&#x27;)`</li></ol></article>
+<article><h3>M3L2-037</h3><p>Why is `df = df.drop(columns=&#x27;Country&#x27;, inplace=True)` a mistake?</p>
+<pre><code>df = df.drop(columns=&#x27;Country&#x27;, inplace=True)</code></pre>
+<ol type='A'><li>With `inplace=True`, `drop` returns None, so the assignment replaces `df` with None</li><li>`inplace=True` returns a copy with Country still present</li><li>`drop` requires a row label, never a column name</li><li>The assignment adds Country as a new row</li></ol></article>
+<article><h3>M3L2-038</h3><p>The index labels are `a`, `b`, and `c`. Which call returns a new DataFrame without rows `a` and `c`, leaving the original unchanged?</p>
+<ol type='A'><li>`df.iloc[[&#x27;a&#x27;, &#x27;c&#x27;]]`</li><li>`df.drop([&#x27;a&#x27;, &#x27;c&#x27;])`</li><li>`del df[[&#x27;a&#x27;, &#x27;c&#x27;]]`</li><li>`df.pop([&#x27;a&#x27;, &#x27;c&#x27;])`</li></ol></article>
+<article><h3>M3L2-039</h3><p>A student wants row deletion to persist in `df`. Which pattern from the lesson accomplishes this?</p>
+<ol type='A'><li>`df.drop([&#x27;a&#x27;, &#x27;c&#x27;])` with no assignment</li><li>`df.iloc[[&#x27;a&#x27;, &#x27;c&#x27;]]`</li><li>`df.drop([&#x27;a&#x27;, &#x27;c&#x27;], inplace=True)`</li><li>`df.columns = [&#x27;a&#x27;, &#x27;c&#x27;]`</li></ol></article>
+<article><h3>M3L2-040</h3><p>A teammate reports a cell using `df.loc[1, &#x27;City&#x27;]`, but the DataFrame&#x27;s index labels are `a`, `b`, and `c`. What is wrong with their lookup?</p>
+<ol type='A'><li>`.loc` only works with integer positions, so 1 is out of range</li><li>Column labels cannot be used with `.loc`</li><li>A cell must be selected with `df.values` only</li><li>They are using label-based `.loc` with `1`, which is not one of the row labels</li></ol></article>
+<h2>Structured-response questions</h2>
+<article><h3>M3L2-E01 · 5 marks</h3><p>A student survey contains respondent names, cities, and scores. Explain the DataFrame&#x27;s row, column, cell, and index roles, then describe how `shape`, `size`, `columns`, and `info()` would help inspect the table.</p>
+<pre><code># A survey DataFrame
+# rows: respondents; columns: Name, City, Score</code></pre>
+</article>
+<article><h3>M3L2-E02 · 5 marks</h3><p>Construct a DataFrame from the two respondent records below using a list of dictionaries. Then show one alternative representation using a dictionary of lists, and explain how the two representations organize records differently.</p>
+<pre><code>{&#x27;Name&#x27;: &#x27;Mina&#x27;, &#x27;City&#x27;: &#x27;Cairo&#x27;}
+{&#x27;Name&#x27;: &#x27;Omar&#x27;, &#x27;City&#x27;: &#x27;Giza&#x27;}</code></pre>
+</article>
+<article><h3>M3L2-E03 · 5 marks</h3><p>A DataFrame has 120 rows and columns `Name`, `Income`, and `City`. Its `info()` output reports 108 non-null values for `Income`, whose dtype is `object`. State what you can infer, what you cannot conclude from this output alone, and two useful next inspection steps from the lesson.</p>
+<pre><code>Rows: 120
+Income non-null: 108
+Income dtype: object</code></pre>
+</article>
+<article><h3>M3L2-E04 · 5 marks</h3><p>Use this table: row labels are `a`, `b`, `c`; columns in order are `Name`, `Country`, `City`; rows are (Mina, Egypt, Cairo), (Omar, France, Paris), and (Nour, Egypt, Aswan). Write expressions to select (a) the `Name` column as a Series, (b) `Name` and `City` as a DataFrame, (c) the row labelled `b`, (d) all rows of `Name` and `City` by label, and (e) the city in the second row by position. Explain the loc/iloc distinction.</p>
+<pre><code>Index: a, b, c
+Columns: Name, Country, City
+Rows: (Mina, Egypt, Cairo), (Omar, France, Paris), (Nour, Egypt, Aswan)</code></pre>
+</article>
+<article><h3>M3L2-E05 · 5 marks</h3><p>A health dataset has `Weight` and `Height` columns. Describe how to add a rounded BMI column, then add a categorical status column using the thresholds in the lecture. State what happens to the original columns and why a vectorized expression is useful.</p>
+<pre><code>BMI = Weight / Height**2
+BMI &lt;= 18.5: Under Weight
+18.5 &lt; BMI &lt; 25: Healthy Weight
+25 &lt;= BMI &lt;= 30: Over Weight
+BMI &gt; 30: Obese</code></pre>
+</article>
+<article><h3>M3L2-E06 · 5 marks</h3><p>A research assistant has a DataFrame with columns `Names`, `Country`, and `City`, and needs to rename the row labels to `r1`, `r2`, `r3`, rename `Names` to `Respondent`, add a `Reviewed` column filled with 0 at the end, add a `Status` column at position 1, and append a new record. Give a reasonable sequence of pandas operations and explain how to maintain a consistent row index when appending with `concat`.</p>
+<pre><code># Existing columns: Names, Country, City
+# Existing rows: 3</code></pre>
+</article>
+<article><h3>M3L2-E07 · 5 marks</h3><p>Compare `del`, `pop`, and `drop` for removing a column, then explain how to use `drop` safely when you either want a new DataFrame or want the existing one changed. Include the return-value problem caused by assigning the result of an in-place drop.</p>
+<pre><code>result = df.drop(columns=&#x27;Country&#x27;)
+df.drop(columns=&#x27;Country&#x27;, inplace=True)
+# Do not assign the in-place call&#x27;s return value back to df</code></pre>
+</article>
+<article><h3>M3L2-E08 · 5 marks</h3><p>A dataset has student names, scores, and cities with default index labels. Outline a small workflow that constructs the DataFrame from row records, checks its dimensions and completeness, previews a few rows, selects a named score column and one specific score cell, then removes one row while preserving the intended change. Explain the purpose of each step and distinguish label from position where relevant.</p>
+<pre><code>records = [
+    {&#x27;Name&#x27;: &#x27;Mina&#x27;, &#x27;Score&#x27;: 88, &#x27;City&#x27;: &#x27;Cairo&#x27;},
+    {&#x27;Name&#x27;: &#x27;Omar&#x27;, &#x27;Score&#x27;: 75, &#x27;City&#x27;: &#x27;Giza&#x27;},
+]</code></pre>
+</article>
+</body></html>

@@ -1,0 +1,24 @@
+{
+  "lesson": "Module 2, Lesson 3: Loops (for and while)",
+  "sources": {
+    "primary": "ssc/Module 2/3_loops.md (Lesson 3 of 6; Lecture 2_2)",
+    "pdf_status": "No loops PDF exists under ssc. Available Module 2 PDFs are Lecture 2_1 conditioning, Lecture 2_3 functions, and two Lecture 2_4 collection-data PDFs. The second PDF in folder order is about functions, so it was not used as a loops source.",
+    "scope": "This batch is based on the full loops Markdown file only. No claims are made that it was cross-checked against lecture slides."
+  },
+  "batch": {
+    "mcqs": 40,
+    "structured_responses": 8,
+    "marks_each": 5
+  },
+  "coverage": {
+    "loop_selection": "for for known repeats/sequences; while for condition-controlled repetition",
+    "while_parts": "initialization, test, body, update; termination",
+    "range": "stop-exclusive ranges, start/stop/step, inclusive counting",
+    "iteration": "collections and strings",
+    "flow_control": "break and continue",
+    "nested_loops": "inner-loop repetition counts and multiplicative work",
+    "models": "population growth, inflation, counting responses and percentages",
+    "connections": "accumulation, exponential change, repeated code as a cue for functions"
+  },
+  "method": "Source-first pilot; metadata-hidden packet; source/answer review based on the Markdown; code-rendered preview and mechanical audit."
+}

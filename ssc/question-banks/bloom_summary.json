@@ -1,0 +1,440 @@
+{
+  "method": "Provisional operation-based Revised Bloom classification; label the highest process essential to a correct response.",
+  "status": "Same-session AI classification; not independently validated.",
+  "lesson_count": 14,
+  "item_count": 672,
+  "counts": {
+    "MCQ": {
+      "Remember": 60,
+      "Understand": 240,
+      "Apply": 229,
+      "Analyze": 23,
+      "Evaluate": 8,
+      "Create": 0
+    },
+    "Essay": {
+      "Remember": 0,
+      "Understand": 9,
+      "Apply": 39,
+      "Analyze": 30,
+      "Evaluate": 13,
+      "Create": 21
+    },
+    "Combined": {
+      "Remember": 60,
+      "Understand": 249,
+      "Apply": 268,
+      "Analyze": 53,
+      "Evaluate": 21,
+      "Create": 21
+    }
+  },
+  "lessons": [
+    {
+      "lesson": "module1-1-v1-20261006",
+      "counts": {
+        "MCQ": {
+          "Remember": 2,
+          "Understand": 15,
+          "Apply": 22,
+          "Analyze": 0,
+          "Evaluate": 1,
+          "Create": 0
+        },
+        "Essay": {
+          "Remember": 0,
+          "Understand": 0,
+          "Apply": 2,
+          "Analyze": 2,
+          "Evaluate": 1,
+          "Create": 3
+        },
+        "Combined": {
+          "Remember": 2,
+          "Understand": 15,
+          "Apply": 24,
+          "Analyze": 2,
+          "Evaluate": 2,
+          "Create": 3
+        }
+      }
+    },
+    {
+      "lesson": "module1-2-v1-20261006",
+      "counts": {
+        "MCQ": {
+          "Remember": 10,
+          "Understand": 10,
+          "Apply": 19,
+          "Analyze": 1,
+          "Evaluate": 0,
+          "Create": 0
+        },
+        "Essay": {
+          "Remember": 0,
+          "Understand": 1,
+          "Apply": 5,
+          "Analyze": 1,
+          "Evaluate": 0,
+          "Create": 1
+        },
+        "Combined": {
+          "Remember": 10,
+          "Understand": 11,
+          "Apply": 24,
+          "Analyze": 2,
+          "Evaluate": 0,
+          "Create": 1
+        }
+      }
+    },
+    {
+      "lesson": "module1-3-v1-20261006",
+      "counts": {
+        "MCQ": {
+          "Remember": 13,
+          "Understand": 17,
+          "Apply": 6,
+          "Analyze": 4,
+          "Evaluate": 0,
+          "Create": 0
+        },
+        "Essay": {
+          "Remember": 0,
+          "Understand": 0,
+          "Apply": 3,
+          "Analyze": 5,
+          "Evaluate": 0,
+          "Create": 0
+        },
+        "Combined": {
+          "Remember": 13,
+          "Understand": 17,
+          "Apply": 9,
+          "Analyze": 9,
+          "Evaluate": 0,
+          "Create": 0
+        }
+      }
+    },
+    {
+      "lesson": "module2-1-v1-20261006",
+      "counts": {
+        "MCQ": {
+          "Remember": 6,
+          "Understand": 21,
+          "Apply": 12,
+          "Analyze": 1,
+          "Evaluate": 0,
+          "Create": 0
+        },
+        "Essay": {
+          "Remember": 0,
+          "Understand": 1,
+          "Apply": 5,
+          "Analyze": 0,
+          "Evaluate": 0,
+          "Create": 2
+        },
+        "Combined": {
+          "Remember": 6,
+          "Understand": 22,
+          "Apply": 17,
+          "Analyze": 1,
+          "Evaluate": 0,
+          "Create": 2
+        }
+      }
+    },
+    {
+      "lesson": "module2-2-v1-20261006",
+      "counts": {
+        "MCQ": {
+          "Remember": 3,
+          "Understand": 15,
+          "Apply": 20,
+          "Analyze": 2,
+          "Evaluate": 0,
+          "Create": 0
+        },
+        "Essay": {
+          "Remember": 0,
+          "Understand": 0,
+          "Apply": 4,
+          "Analyze": 2,
+          "Evaluate": 0,
+          "Create": 2
+        },
+        "Combined": {
+          "Remember": 3,
+          "Understand": 15,
+          "Apply": 24,
+          "Analyze": 4,
+          "Evaluate": 0,
+          "Create": 2
+        }
+      }
+    },
+    {
+      "lesson": "module2-3-v1-20261006",
+      "counts": {
+        "MCQ": {
+          "Remember": 2,
+          "Understand": 23,
+          "Apply": 15,
+          "Analyze": 0,
+          "Evaluate": 0,
+          "Create": 0
+        },
+        "Essay": {
+          "Remember": 0,
+          "Understand": 0,
+          "Apply": 4,
+          "Analyze": 3,
+          "Evaluate": 0,
+          "Create": 1
+        },
+        "Combined": {
+          "Remember": 2,
+          "Understand": 23,
+          "Apply": 19,
+          "Analyze": 3,
+          "Evaluate": 0,
+          "Create": 1
+        }
+      }
+    },
+    {
+      "lesson": "module2-4-v1-20261006",
+      "counts": {
+        "MCQ": {
+          "Remember": 5,
+          "Understand": 18,
+          "Apply": 16,
+          "Analyze": 1,
+          "Evaluate": 0,
+          "Create": 0
+        },
+        "Essay": {
+          "Remember": 0,
+          "Understand": 1,
+          "Apply": 3,
+          "Analyze": 3,
+          "Evaluate": 0,
+          "Create": 1
+        },
+        "Combined": {
+          "Remember": 5,
+          "Understand": 19,
+          "Apply": 19,
+          "Analyze": 4,
+          "Evaluate": 0,
+          "Create": 1
+        }
+      }
+    },
+    {
+      "lesson": "module2-5-v1-20261006",
+      "counts": {
+        "MCQ": {
+          "Remember": 1,
+          "Understand": 26,
+          "Apply": 13,
+          "Analyze": 0,
+          "Evaluate": 0,
+          "Create": 0
+        },
+        "Essay": {
+          "Remember": 0,
+          "Understand": 1,
+          "Apply": 3,
+          "Analyze": 1,
+          "Evaluate": 0,
+          "Create": 3
+        },
+        "Combined": {
+          "Remember": 1,
+          "Understand": 27,
+          "Apply": 16,
+          "Analyze": 1,
+          "Evaluate": 0,
+          "Create": 3
+        }
+      }
+    },
+    {
+      "lesson": "module2-6-v1-20261006",
+      "counts": {
+        "MCQ": {
+          "Remember": 3,
+          "Understand": 21,
+          "Apply": 15,
+          "Analyze": 1,
+          "Evaluate": 0,
+          "Create": 0
+        },
+        "Essay": {
+          "Remember": 0,
+          "Understand": 0,
+          "Apply": 3,
+          "Analyze": 1,
+          "Evaluate": 2,
+          "Create": 2
+        },
+        "Combined": {
+          "Remember": 3,
+          "Understand": 21,
+          "Apply": 18,
+          "Analyze": 2,
+          "Evaluate": 2,
+          "Create": 2
+        }
+      }
+    },
+    {
+      "lesson": "module3-1-v1-20261006",
+      "counts": {
+        "MCQ": {
+          "Remember": 6,
+          "Understand": 24,
+          "Apply": 9,
+          "Analyze": 0,
+          "Evaluate": 1,
+          "Create": 0
+        },
+        "Essay": {
+          "Remember": 0,
+          "Understand": 4,
+          "Apply": 1,
+          "Analyze": 3,
+          "Evaluate": 0,
+          "Create": 0
+        },
+        "Combined": {
+          "Remember": 6,
+          "Understand": 28,
+          "Apply": 10,
+          "Analyze": 3,
+          "Evaluate": 1,
+          "Create": 0
+        }
+      }
+    },
+    {
+      "lesson": "module3-2-v1-20261006",
+      "counts": {
+        "MCQ": {
+          "Remember": 2,
+          "Understand": 10,
+          "Apply": 27,
+          "Analyze": 1,
+          "Evaluate": 0,
+          "Create": 0
+        },
+        "Essay": {
+          "Remember": 0,
+          "Understand": 1,
+          "Apply": 2,
+          "Analyze": 2,
+          "Evaluate": 0,
+          "Create": 3
+        },
+        "Combined": {
+          "Remember": 2,
+          "Understand": 11,
+          "Apply": 29,
+          "Analyze": 3,
+          "Evaluate": 0,
+          "Create": 3
+        }
+      }
+    },
+    {
+      "lesson": "module3-3-v1-20261006",
+      "counts": {
+        "MCQ": {
+          "Remember": 3,
+          "Understand": 14,
+          "Apply": 19,
+          "Analyze": 1,
+          "Evaluate": 3,
+          "Create": 0
+        },
+        "Essay": {
+          "Remember": 0,
+          "Understand": 0,
+          "Apply": 4,
+          "Analyze": 1,
+          "Evaluate": 2,
+          "Create": 1
+        },
+        "Combined": {
+          "Remember": 3,
+          "Understand": 14,
+          "Apply": 23,
+          "Analyze": 2,
+          "Evaluate": 5,
+          "Create": 1
+        }
+      }
+    },
+    {
+      "lesson": "module3-4-v1-20261006",
+      "counts": {
+        "MCQ": {
+          "Remember": 2,
+          "Understand": 11,
+          "Apply": 19,
+          "Analyze": 6,
+          "Evaluate": 2,
+          "Create": 0
+        },
+        "Essay": {
+          "Remember": 0,
+          "Understand": 0,
+          "Apply": 0,
+          "Analyze": 3,
+          "Evaluate": 4,
+          "Create": 1
+        },
+        "Combined": {
+          "Remember": 2,
+          "Understand": 11,
+          "Apply": 19,
+          "Analyze": 9,
+          "Evaluate": 6,
+          "Create": 1
+        }
+      }
+    },
+    {
+      "lesson": "module3-5-v1-20261006",
+      "counts": {
+        "MCQ": {
+          "Remember": 2,
+          "Understand": 15,
+          "Apply": 17,
+          "Analyze": 5,
+          "Evaluate": 1,
+          "Create": 0
+        },
+        "Essay": {
+          "Remember": 0,
+          "Understand": 0,
+          "Apply": 0,
+          "Analyze": 3,
+          "Evaluate": 4,
+          "Create": 1
+        },
+        "Combined": {
+          "Remember": 2,
+          "Understand": 15,
+          "Apply": 17,
+          "Analyze": 8,
+          "Evaluate": 5,
+          "Create": 1
+        }
+      }
+    }
+  ]
+}

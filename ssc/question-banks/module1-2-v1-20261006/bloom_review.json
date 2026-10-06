@@ -1,0 +1,18 @@
+{
+  "status":"provisional descriptive review",
+  "method":"Metadata-hidden classification after authoring; classify the highest operation essential to answer. Fixed anchors and the final items were reviewed in the same AI session, so this is not independent calibration.",
+  "anchorAgreement":"10/10 provisional; interpret cautiously because anchors were authored in-session.",
+  "anchorDisagreements":[],
+  "mcqCounts":{"Remember":10,"Understand":10,"Apply":19,"Analyze":1,"Evaluate":0,"Create":0},
+  "items":[
+    {"id":"FLOW-001","bloom":"Remember"},{"id":"FLOW-002","bloom":"Understand"},{"id":"FLOW-003","bloom":"Apply"},{"id":"FLOW-004","bloom":"Remember"},{"id":"FLOW-005","bloom":"Remember"},
+    {"id":"FLOW-006","bloom":"Apply"},{"id":"FLOW-007","bloom":"Apply"},{"id":"FLOW-008","bloom":"Apply"},{"id":"FLOW-009","bloom":"Remember"},{"id":"FLOW-010","bloom":"Apply"},
+    {"id":"FLOW-011","bloom":"Apply"},{"id":"FLOW-012","bloom":"Apply"},{"id":"FLOW-013","bloom":"Understand"},{"id":"FLOW-014","bloom":"Remember"},{"id":"FLOW-015","bloom":"Understand"},
+    {"id":"FLOW-016","bloom":"Apply"},{"id":"FLOW-017","bloom":"Apply"},{"id":"FLOW-018","bloom":"Apply"},{"id":"FLOW-019","bloom":"Understand"},{"id":"FLOW-020","bloom":"Remember"},
+    {"id":"FLOW-021","bloom":"Understand"},{"id":"FLOW-022","bloom":"Analyze"},{"id":"FLOW-023","bloom":"Apply"},{"id":"FLOW-024","bloom":"Apply"},{"id":"FLOW-025","bloom":"Apply"},
+    {"id":"FLOW-026","bloom":"Apply"},{"id":"FLOW-027","bloom":"Apply"},{"id":"FLOW-028","bloom":"Understand"},{"id":"FLOW-029","bloom":"Remember"},{"id":"FLOW-030","bloom":"Understand"},
+    {"id":"FLOW-031","bloom":"Remember"},{"id":"FLOW-032","bloom":"Understand"},{"id":"FLOW-033","bloom":"Apply"},{"id":"FLOW-034","bloom":"Apply"},{"id":"FLOW-035","bloom":"Apply"},
+    {"id":"FLOW-036","bloom":"Understand"},{"id":"FLOW-037","bloom":"Remember"},{"id":"FLOW-038","bloom":"Remember"},{"id":"FLOW-039","bloom":"Apply"},{"id":"FLOW-040","bloom":"Understand"}
+  ],
+  "interpretation":"One faulty-loop item (FLOW-022) requires diagnosing how a missing update changes the loop state, classified Analyze. No MCQ clearly requires judging alternatives against explicit criteria, so Evaluate remains 0. Do not inflate Analyze/Evaluate counts to meet a target. The structured-response construction prompts may require Create; they are not part of this MCQ count."
+}

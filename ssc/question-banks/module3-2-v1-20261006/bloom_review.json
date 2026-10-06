@@ -1,0 +1,30 @@
+{
+  "note": "Advisory operation-based review; no forced Bloom quotas. Same-session AI assessment.",
+  "anchors": [
+    {
+      "id": "M3L2-006",
+      "label": "Apply",
+      "reason": "infer missing count from info output"
+    },
+    {
+      "id": "M3L2-018",
+      "label": "Apply",
+      "reason": "trace positional slicing"
+    },
+    {
+      "id": "M3L2-037",
+      "label": "Analyze",
+      "reason": "diagnose inplace assignment behavior"
+    },
+    {
+      "id": "M3L2-E03",
+      "label": "Analyze",
+      "reason": "interpret dtype and completeness evidence"
+    },
+    {
+      "id": "M3L2-E08",
+      "label": "Apply",
+      "reason": "design an end-to-end workflow"
+    }
+  ]
+}

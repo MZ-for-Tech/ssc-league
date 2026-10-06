@@ -1,0 +1,15 @@
+{
+  "recommendation": "8 structured responses, 5 marks each",
+  "rationale": "Essays assess distribution summaries, correlation limits, missing-data decisions, single and multi-key group summaries, combined filters, file workflows, category frequencies, and counts by group.",
+  "total_marks": 40,
+  "coverage": {
+    "M3L3-E01": "interpret and critique descriptive summaries",
+    "M3L3-E02": "evaluate correlation evidence",
+    "M3L3-E03": "choose and justify a missing-data operation",
+    "M3L3-E04": "construct and explain a multi-key grouped summary",
+    "M3L3-E05": "write and explain a compound row filter",
+    "M3L3-E06": "plan an import-summary-export workflow",
+    "M3L3-E07": "compare categorical and numeric group summaries",
+    "M3L3-E08": "select group summaries and interpret counts"
+  }
+}

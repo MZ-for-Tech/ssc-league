@@ -1,0 +1,32 @@
+{
+  "mcq_count": 40,
+  "essay_count": 8,
+  "four_choices_each": true,
+  "keys_valid": true,
+  "answer_positions_A_to_D": [
+    10,
+    10,
+    10,
+    10
+  ],
+  "mcq_code_stimuli": 14,
+  "essay_code_stimuli": 3,
+  "preview_code_blocks": 17,
+  "rubric_totals": {
+    "M2L3-E01": 5,
+    "M2L3-E02": 5,
+    "M2L3-E03": 5,
+    "M2L3-E04": 5,
+    "M2L3-E05": 5,
+    "M2L3-E06": 5,
+    "M2L3-E07": 5,
+    "M2L3-E08": 5
+  },
+  "key_length_cues": [],
+  "duplicate_stems": [],
+  "blind_review_count": 48,
+  "source_limit": "Markdown-only; no loops PDF available.",
+  "review_limit": "Same-session AI review; not independent human validation.",
+  "essay_justifications_present": 8,
+  "essay_count_with_justification": 8
+}

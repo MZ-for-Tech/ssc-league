@@ -1,0 +1,19 @@
+{
+  "note": "All figures exported as SVG from actual pandas, Matplotlib, or Seaborn plotting calls; values are illustrative.",
+  "renderers": {
+    "student_scores_grouped_bar.svg": "pandas.DataFrame.plot.bar",
+    "ages_histogram.svg": "pandas.Series.plot.hist",
+    "income_histogram.svg": "pandas.Series.plot.hist",
+    "passenger_class_counts_unsorted.svg": "pandas.DataFrame.plot.bar",
+    "country_category_bar.svg": "pandas.DataFrame.plot.bar",
+    "city_enrolment_horizontal.svg": "pandas.Series.plot.barh",
+    "fare_by_outcome_boxplot.svg": "seaborn.boxplot",
+    "egypt_population_line.svg": "pandas.DataFrame.plot.line",
+    "study_hours_score_scatter.svg": "pandas.DataFrame.plot.scatter",
+    "age_fare_scatter.svg": "pandas.DataFrame.plot.scatter",
+    "two_groups_scatter.svg": "seaborn.scatterplot",
+    "survey_composition_pie.svg": "pandas.Series.plot.pie",
+    "similar_shares_pie.svg": "pandas.Series.plot.pie",
+    "survival_by_class_stacked.svg": "pandas.DataFrame.plot.bar(stacked=True)"
+  }
+}

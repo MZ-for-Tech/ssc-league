@@ -1,15 +1,11 @@
 import React from "react";
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
 import { ScrollText } from "lucide-react";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+
+type AuditEntry = { id: string; action: string; details: string; target: string; created_at: string; Admin: { full_name: string } | null };
 
 export default async function AuditLog() {
-  const cookieStore = await cookies();
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { cookies: { getAll() { return cookieStore.getAll() } } }
-  );
+  const supabase = await createSupabaseServerClient();
 
   const { data: logs } = await supabase
     .from("AuditLog")
@@ -24,7 +20,7 @@ export default async function AuditLog() {
             <span className="text-sm font-bold text-white">Command Log</span>
         </div>
         <div className="divide-y divide-slate-800">
-            {logs?.map((log: any) => (
+            {(logs as AuditEntry[] | null)?.map((log) => (
                 <div key={log.id} className="p-3 text-sm flex justify-between hover:bg-slate-800/50">
                     <div>
                         <span className="font-mono text-cyan-400 font-bold mr-2">{log.action}</span>

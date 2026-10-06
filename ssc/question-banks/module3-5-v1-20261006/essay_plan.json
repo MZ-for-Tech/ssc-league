@@ -1,0 +1,15 @@
+{
+  "recommendation": "8 structured responses, 5 marks each",
+  "total_marks": 40,
+  "rationale": "This capstone lesson integrates data loading, cleaning, descriptive statistics, cross-tabulation, plotting, group analysis, and limitations.",
+  "coverage": {
+    "M3L5-E01": "trace and critique cleaning decisions",
+    "M3L5-E02": "critique duplicate handling",
+    "M3L5-E03": "read and qualify categorical rates",
+    "M3L5-E04": "compare count and rate visualizations",
+    "M3L5-E05": "interpret subgroup rates with denominators",
+    "M3L5-E06": "interpret complementary plots",
+    "M3L5-E07": "evaluate missingness and selection",
+    "M3L5-E08": "transfer the EDA workflow"
+  }
+}

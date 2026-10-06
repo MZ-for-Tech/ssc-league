@@ -1,0 +1,31 @@
+{
+  "mcq_count": 40,
+  "essay_count": 8,
+  "mcq_four_options_each": true,
+  "mcq_keys_valid_and_expected_answer_matches": true,
+  "answer_positions_A_to_D": [
+    10,
+    10,
+    10,
+    10
+  ],
+  "code_displays_mcq": 12,
+  "code_displays_essay": 3,
+  "preview_code_block_count": 15,
+  "essay_rubric_totals": {
+    "INTRO-E01": 5,
+    "INTRO-E02": 5,
+    "INTRO-E03": 5,
+    "INTRO-E04": 5,
+    "INTRO-E05": 5,
+    "INTRO-E06": 5,
+    "INTRO-E07": 5,
+    "INTRO-E08": 5
+  },
+  "keyed_option_unique_length_cues": [],
+  "duplicate_normalized_stems": [],
+  "source_caveats_logged": true,
+  "reviewer_independence": "Same-session AI review; useful as a consistency and coverage audit, not independent human validation.",
+  "essay_justifications_present": 8,
+  "essay_count_with_justification": 8
+}

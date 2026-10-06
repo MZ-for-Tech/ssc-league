@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { User, Lock, ArrowRight, ShieldCheck, Loader2 } from "lucide-react";
-import { createBrowserClient } from "@supabase/ssr";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import SidebarLogo from "@/components/Logo"; 
 
 export default function LoginPage() {
@@ -15,10 +15,7 @@ export default function LoginPage() {
   
   const router = useRouter();
 
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const supabase = createSupabaseBrowserClient();
 
 const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,36 +38,23 @@ const handleLogin = async (e: React.FormEvent) => {
       }
 
       // 2. Perform Login
-      const { error: authError, data: authData } = await supabase.auth.signInWithPassword({
+      const { error: authError } = await supabase.auth.signInWithPassword({
         email: loginEmail,
         password,
       });
 
       if (authError) throw authError;
 
-      // 3. ROUTING LOGIC (The Fix)
-      // Check if this user is an Admin
-      const { data: adminProfile } = await supabase
-        .from("Admin")
-        .select("id")
-        .eq("auth_id", authData.user.id)
-        .single();
+      // The dashboard selects the student or admin view from the authenticated profile.
+      router.refresh();
+      router.push("/dashboard");
 
-      if (adminProfile) {
-          // IS ADMIN -> Go to Command Center
-          router.refresh();
-          router.push("/admin");
-      } else {
-          // IS STUDENT -> Go to Dashboard
-          router.refresh();
-          router.push("/dashboard");
-      }
-
-    } catch (err: any) {
-      if (err.message.includes("Invalid login")) {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "System Error.";
+      if (message.includes("Invalid login")) {
           setError("Access Denied: Incorrect Password.");
       } else {
-          setError(err.message || "System Error.");
+          setError(message);
       }
       setIsLoading(false);
     }
@@ -84,8 +68,7 @@ const handleLogin = async (e: React.FormEvent) => {
         <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] opacity-50" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary-dim/10 rounded-full blur-[100px] opacity-50" />
         <div 
-          className="absolute inset-0 opacity-[0.1]" 
-          style={{ backgroundImage: `radial-gradient(rgb(var(--muted)) 1px, transparent 1px)`, backgroundSize: '24px 24px' }}
+          className="absolute inset-0 opacity-[0.1] bg-dot-grid"
         />
       </div>
 

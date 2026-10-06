@@ -40,8 +40,31 @@ const config: Config = {
       colors: {
         // Keep your existing custom slates
         slate: {
-          850: "#151e2e",
-          900: "#0f172a",
+          200: "rgb(var(--foreground) / <alpha-value>)",
+          300: "rgb(var(--slate-300) / <alpha-value>)",
+          400: "rgb(var(--muted) / <alpha-value>)",
+          500: "rgb(var(--slate-500) / <alpha-value>)",
+          600: "rgb(var(--slate-600) / <alpha-value>)",
+          700: "rgb(var(--surface-light) / <alpha-value>)",
+          800: "rgb(var(--surface) / <alpha-value>)",
+          850: "rgb(var(--slate-850) / <alpha-value>)",
+          900: "rgb(var(--background) / <alpha-value>)",
+          950: "rgb(var(--slate-950) / <alpha-value>)",
+        },
+        cyan: {
+          200: "rgb(var(--cyan-200) / <alpha-value>)",
+          300: "rgb(var(--cyan-300) / <alpha-value>)",
+          400: "rgb(var(--primary) / <alpha-value>)",
+          500: "rgb(var(--primary-dim) / <alpha-value>)",
+          600: "rgb(var(--cyan-600) / <alpha-value>)",
+          700: "rgb(var(--cyan-700) / <alpha-value>)",
+          900: "rgb(var(--cyan-900) / <alpha-value>)",
+          950: "rgb(var(--cyan-950) / <alpha-value>)",
+        },
+        code: {
+          editor: "rgb(var(--code-editor) / <alpha-value>)",
+          console: "rgb(var(--code-console) / <alpha-value>)",
+          line: "rgb(var(--code-line-number) / <alpha-value>)",
         },
 
         // --- NEW: Map CSS Variables to Tailwind Utilities ---

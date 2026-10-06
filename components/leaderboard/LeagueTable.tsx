@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChevronUp, ChevronDown, Minus, ChevronsUp, ChevronsDown, Trophy, Medal, Crown, Zap, Shield } from "lucide-react";
+import Image from "next/image";
+import { ChevronUp, ChevronDown, Minus, ChevronsUp, ChevronsDown, Trophy, Medal, Crown, Zap } from "lucide-react";
 import clsx from "clsx";
 
 interface StudentData {
@@ -63,7 +64,7 @@ export default function LeagueTable({ students }: { students: StudentData[] }) {
 
   // Visual Styles per Rank
   const getRankStyle = (rank: number, isMe: boolean | undefined) => {
-    if (isMe) return "bg-cyan-950/30 border-cyan-500/50 shadow-[0_0_20px_rgba(34,211,238,0.1)] z-10 scale-[1.01]";
+    if (isMe) return "bg-cyan-950/30 border-cyan-500/50 shadow-[0_0_20px_rgb(var(--primary)/0.1)] z-10 scale-[1.01]";
     
     switch (rank) {
       case 1: return "bg-gradient-to-r from-yellow-500/10 to-transparent border-yellow-500/30 hover:border-yellow-500/50";
@@ -129,7 +130,7 @@ export default function LeagueTable({ students }: { students: StudentData[] }) {
                 {/* 2. PROFILE */}
                 <div className="col-span-7 md:col-span-8 pl-2 sm:pl-6 flex items-center gap-4">
                     <div className="relative shrink-0">
-                        <img 
+                        <Image unoptimized width={48} height={48}
                             src={student.avatar_url || `https://api.dicebear.com/9.x/avataaars/svg?seed=${student.preferred_name || 'Agent'}`} 
                             alt="Avatar"
                             className={clsx(

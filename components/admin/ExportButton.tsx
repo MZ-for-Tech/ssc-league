@@ -5,7 +5,7 @@ import { Download, Loader2 } from "lucide-react";
 import { Parser } from "json2csv";
 
 interface ExportButtonProps {
-  data: any[];
+  data: object[];
   filename?: string;
 }
 

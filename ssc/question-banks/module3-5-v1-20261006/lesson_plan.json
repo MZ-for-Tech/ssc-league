@@ -1,0 +1,14 @@
+{
+  "lesson": "Module 3, Lesson 5: Titanic case study",
+  "sources": {
+    "markdown": "ssc/Module 3/5_titanic.md",
+    "pdf": "ssc/Module 3/10. Module 3_1_pandas.pdf, pp. 60–68",
+    "dataset": "Seaborn Titanic sample, copied from mwaskom/seaborn-data; source_data/titanic.csv"
+  },
+  "batch": {
+    "mcqs": 40,
+    "structured_responses": 8,
+    "marks_each": 5
+  },
+  "scope": "Load and inspect; select five fields; assess missingness and duplicates; describe numerical/categorical data; row-normalized crosstabs; actual dataset plots; combined sex/class rates and group sizes; qualify findings."
+}

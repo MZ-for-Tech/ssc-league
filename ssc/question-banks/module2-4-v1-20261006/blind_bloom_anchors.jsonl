@@ -1,0 +1,9 @@
+{"id": "M2L4-006", "item": "What is the key difference between `print` and `return` inside a function?"}
+{"id": "M2L4-010", "item": "What does the guard clause in `loan_payment` do when `annual_rate == 0`?"}
+{"id": "M2L4-014", "item": "What does `generate_full_name(last_name='Saber')` return when the defaults are Arwa and Mohammed?"}
+{"id": "M2L4-019", "item": "In the scope example, why can `print_var()` read global `x` without declaring it `global`?"}
+{"id": "M2L4-023", "item": "What does `fact(4)` return for the recursive definition in the lesson?"}
+{"id": "M2L4-027", "item": "After `import Module_test`, how does the example call `generate_full_name` from that module?"}
+{"id": "M2L4-033", "item": "Which package family includes pandas and NumPy in the PDF's data-science grouping?"}
+{"id": "M2L4-E05", "item": "Trace `get_power(square_number(5), 3)` from the PDF. Show the value produced by each call and clarify whether `get_power` receives the function object `square_number` or the result of calling it."}
+{"id": "M2L4-E08", "item": "A PDF exercise asks for a module containing simple- and compound-interest functions, then imports it into a main program. Describe how a module supports reuse, distinguish `import interest_growth` from importing a function directly, and identify and correct the variable-name case error in the provided main-program call (`P` is assigned from input but `p` is passed)."}

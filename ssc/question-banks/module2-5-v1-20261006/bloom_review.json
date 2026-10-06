@@ -1,0 +1,45 @@
+{
+  "note": "Provisional operation-based labels, advisory only; no forced Bloom quotas. Review is same-session AI assessment.",
+  "anchors": [
+    {
+      "id": "M2L5-005",
+      "label": "Apply",
+      "reason": "index a nested list"
+    },
+    {
+      "id": "M2L5-010",
+      "label": "Analyze",
+      "reason": "trace aliasing and mutation"
+    },
+    {
+      "id": "M2L5-012",
+      "label": "Analyze",
+      "reason": "compare list growth operations"
+    },
+    {
+      "id": "M2L5-024",
+      "label": "Apply",
+      "reason": "calculate a percentage change"
+    },
+    {
+      "id": "M2L5-027",
+      "label": "Understand",
+      "reason": "interpret a filtered comprehension"
+    },
+    {
+      "id": "M2L5-040",
+      "label": "Analyze",
+      "reason": "explain case normalization"
+    },
+    {
+      "id": "M2L5-E04",
+      "label": "Apply",
+      "reason": "design and apply an odd/even median function"
+    },
+    {
+      "id": "M2L5-E08",
+      "label": "Create",
+      "reason": "design a provider-extraction function"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "lesson": "Module 3, Lesson 4: Visualisation with pandas",
+  "sources": {
+    "primary_markdown": "ssc/Module 3/4_visualization.md",
+    "primary_pdf": "ssc/Module 3/10. Module 3_1_pandas.pdf, pp. 56–59",
+    "scope": "Plotting-library roles; pandas.plot for exploratory analysis; selecting and interpreting histograms, pie charts, bars, stacked bars, box plots, line charts, and scatter plots; bins; category ordering; chart implications and limitations."
+  },
+  "batch": {
+    "mcqs": 40,
+    "structured_responses": 8,
+    "marks_each": 5
+  },
+  "method": "Paired-source drafting; original SVG stimuli; answer-key/rubric checks; question-only packets prepared; mechanical audit. No independent blind review performed."
+}

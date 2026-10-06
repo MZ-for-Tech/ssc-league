@@ -27,7 +27,7 @@ export const Tooltip = ({ children }: { children: React.ReactNode }) => {
 };
 
 // 4. Trigger (The thing you hover over)
-export const TooltipTrigger = ({ children, asChild }: any) => {
+export const TooltipTrigger = ({ children }: { children: React.ReactNode }) => {
   const ctx = React.useContext(TooltipContext);
   if (!ctx) throw new Error("TooltipTrigger must be used within a Tooltip");
 

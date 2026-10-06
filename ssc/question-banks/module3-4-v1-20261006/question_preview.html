@@ -1,0 +1,135 @@
+<!doctype html><html lang='en'><meta charset='utf-8'><meta name='viewport' content='width=device-width'><title>Module 3 Lesson 4 — Visualization</title>
+<style>body{font:16px/1.55 system-ui,sans-serif;max-width:1000px;margin:2rem auto;padding:0 1rem;color:#18212b}article{border:1px solid #ccd3da;border-radius:10px;padding:1rem 1.2rem;margin:1rem 0}figure{margin:1rem 0}img{display:block;max-width:100%;height:auto;margin:auto;border:1px solid #e1e5e9}figcaption{font-size:.88rem;color:#52647a;text-align:center}pre{overflow:auto;background:#f3f5f7;padding:1rem;border-radius:8px}ol{padding-left:1.5rem}</style><body><h1>Module 3 — Visualisation with pandas</h1><p>40 MCQs and 8 structured responses. Chart stimuli are original SVG illustrations; values are labeled illustrative unless explicitly identified otherwise.</p><h2>Multiple-choice questions</h2>
+<article><h3>M3L4-001</h3><p>Which library is described as the plotting foundation that offers detailed control but can require more code?</p>
+<ol type='A'><li>Matplotlib</li><li>Seaborn</li><li>Plotly</li><li>Bokeh</li></ol></article>
+<article><h3>M3L4-002</h3><p>Which library is built on Matplotlib and provides statistical plots with attractive defaults?</p>
+<ol type='A'><li>Bokeh</li><li>Seaborn</li><li>NumPy</li><li>Plotly</li></ol></article>
+<article><h3>M3L4-003</h3><p>A dashboard should let users zoom, pan, and hover over data points. Which library pair best fits the lesson&#x27;s description?</p>
+<ol type='A'><li>Matplotlib or NumPy</li><li>pandas or Seaborn</li><li>Plotly or Bokeh</li><li>SciPy or scikit-learn</li></ol></article>
+<article><h3>M3L4-004</h3><p>What is the role of pandas `.plot()` in this lesson?</p>
+<ol type='A'><li>A replacement for storing data in a DataFrame</li><li>A machine-learning method for predicting categories</li><li>An interactive dashboard framework with built-in hover controls</li><li>A convenient way to make quick exploratory charts from pandas data</li></ol></article>
+<article><h3>M3L4-005</h3><p>A researcher wants to see how one numerical variable is distributed across its range. Which chart matches that question?</p>
+<ol type='A'><li>Histogram</li><li>Pie chart</li><li>Stacked bar chart</li><li>Line chart across categories</li></ol></article>
+<article><h3>M3L4-006</h3><p>In the age histogram, which interval has the largest frequency?</p>
+<figure><img src='charts/ages_histogram.svg' alt='Histogram of illustrative ages; bins 0–9 through 50–59 have frequencies 3, 9, 16, 12, 7, and 3.'><figcaption>Histogram of illustrative ages; bins 0–9 through 50–59 have frequencies 3, 9, 16, 12, 7, and 3.</figcaption></figure>
+<ol type='A'><li>0–9</li><li>20–29</li><li>10–19</li><li>50–59</li></ol></article>
+<article><h3>M3L4-007</h3><p>In the income histogram, how many observations fall in the 60–79 interval?</p>
+<figure><img src='charts/income_histogram.svg' alt='Histogram of annual income in thousands; the 60–79 bin has frequency 6.'><figcaption>Histogram of annual income in thousands; the 60–79 bin has frequency 6.</figcaption></figure>
+<ol type='A'><li>3</li><li>11</li><li>6</li><li>18</li></ol></article>
+<article><h3>M3L4-008</h3><p>Why might an analyst try several values for `bins` when exploring the same numerical data?</p>
+<pre><code>values.plot.hist(bins=20)</code></pre>
+<ol type='A'><li>Changing bins changes the original values in the DataFrame</li><li>More bins always prove a causal relationship</li><li>The number of bins determines the sample size</li><li>Different bin counts can reveal or obscure distributional structure even though the observations stay the same</li></ol></article>
+<article><h3>M3L4-009</h3><p>Which variable type and purpose best match a pie chart?</p>
+<ol type='A'><li>One categorical variable, showing parts of a whole</li><li>One numerical variable, showing its distribution</li><li>Two numerical variables, showing their relationship</li><li>A numerical value across time, showing a trend</li></ol></article>
+<article><h3>M3L4-010</h3><p>The survey pie has shares of 52%, 31%, and 17%. What is the strongest reason the pie is interpretable here?</p>
+<figure><img src='charts/survey_composition_pie.svg' alt='Pie chart of service-use categories: weekly 52%, monthly 31%, rarely 17%.'><figcaption>Pie chart of service-use categories: weekly 52%, monthly 31%, rarely 17%.</figcaption></figure>
+<ol type='A'><li>Pie charts are best for comparing exact values across many categories</li><li>It shows a small number of categories that make up one whole</li><li>It places a numerical distribution into bins</li><li>Its slices show a trend between successive months</li></ol></article>
+<article><h3>M3L4-011</h3><p>Why can a pie chart be a poor choice when category shares are 30%, 33%, and 37%?</p>
+<figure><img src='charts/similar_shares_pie.svg' alt='Pie chart with three similar shares: A 30%, B 33%, and C 37%.'><figcaption>Pie chart with three similar shares: A 30%, B 33%, and C 37%.</figcaption></figure>
+<ol type='A'><li>A pie chart cannot represent categorical data</li><li>Pie charts convert categories into time series</li><li>Similar angles are hard to compare precisely; a bar chart makes the differences clearer</li><li>The percentages cannot sum to a whole</li></ol></article>
+<article><h3>M3L4-012</h3><p>In the pie chart with shares of 30%, 33%, and 37%, which category has the largest share?</p>
+<figure><img src='charts/similar_shares_pie.svg' alt='Pie chart with three similar shares: A 30%, B 33%, and C 37%.'><figcaption>Pie chart with three similar shares: A 30%, B 33%, and C 37%.</figcaption></figure>
+<ol type='A'><li>A</li><li>B</li><li>They are equal</li><li>C</li></ol></article>
+<article><h3>M3L4-013</h3><p>A manager wants to compare enrollment counts across Cairo, Giza, and Aswan. Which plot is most suitable?</p>
+<ol type='A'><li>Bar chart</li><li>Histogram</li><li>Pie chart of the city names</li><li>Line chart connecting the cities</li></ol></article>
+<article><h3>M3L4-014</h3><p>In a 100%-stacked bar chart, what can a reader compare?</p>
+<ol type='A'><li>The absolute sample sizes of groups with different totals</li><li>The composition of each group&#x27;s 100% total, including the shares of its categories</li><li>Only the distribution of one numerical variable</li><li>The exact ordering of individual observations</li></ol></article>
+<article><h3>M3L4-015</h3><p>Which question is especially well suited to a box plot?</p>
+<ol type='A'><li>How many records fall in each five-year age interval?</li><li>What share of one total belongs to each category?</li><li>How do the median, quartiles, and spread of fares compare across survival groups?</li><li>How do two numerical variables relate point by point?</li></ol></article>
+<article><h3>M3L4-016</h3><p>On the fare box plot, which outcome group has the higher median fare?</p>
+<figure><img src='charts/fare_by_outcome_boxplot.svg' alt='Two fare box plots; the survived group&#x27;s median is above the not-survived group&#x27;s, and their distributions overlap.'><figcaption>Two fare box plots; the survived group&#x27;s median is above the not-survived group&#x27;s, and their distributions overlap.</figcaption></figure>
+<ol type='A'><li>Not survived</li><li>They have the same median</li><li>The plot does not mark medians</li><li>Survived</li></ol></article>
+<article><h3>M3L4-017</h3><p>What important feature does the fare box plot show beyond a difference in medians?</p>
+<figure><img src='charts/fare_by_outcome_boxplot.svg' alt='Two fare box plots with overlapping boxes and whiskers; survived median is higher.'><figcaption>Two fare box plots with overlapping boxes and whiskers; survived median is higher.</figcaption></figure>
+<ol type='A'><li>The two fare distributions overlap substantially</li><li>Every survivor paid more than every non-survivor</li><li>The two groups have identical distributions</li><li>Fare is a categorical variable</li></ol></article>
+<article><h3>M3L4-018</h3><p>A dataset records Egypt&#x27;s population at ten-year intervals from 1960 to 2020. Which chart fits the ordered time series?</p>
+<ol type='A'><li>Pie chart</li><li>Line chart</li><li>Unordered bar chart only</li><li>Histogram</li></ol></article>
+<article><h3>M3L4-019</h3><p>Why would joining bars for France, Egypt, and Japan with a line suggest something misleading?</p>
+<figure><img src='charts/country_category_bar.svg' alt='Bar chart comparing three unordered countries; categories are France, Egypt, and Japan.'><figcaption>Bar chart comparing three unordered countries; categories are France, Egypt, and Japan.</figcaption></figure>
+<ol type='A'><li>A line chart can show only categorical data</li><li>The country names cannot appear on a horizontal axis</li><li>It implies meaningful intermediate values between unordered country categories</li><li>A line chart always converts values to percentages</li></ol></article>
+<article><h3>M3L4-020</h3><p>A scatter plot is designed to show what kind of relationship?</p>
+<ol type='A'><li>The composition of one categorical total</li><li>The frequency of intervals in one numerical variable</li><li>The distribution of one category across subgroups only</li><li>The relationship between two numerical variables</li></ol></article>
+<article><h3>M3L4-021</h3><p>What pattern is visible in the study-hours scatter plot?</p>
+<figure><img src='charts/study_hours_score_scatter.svg' alt='Scatter plot showing a generally positive association between study hours and quiz score, with points not perfectly aligned.'><figcaption>Scatter plot showing a generally positive association between study hours and quiz score, with points not perfectly aligned.</figcaption></figure>
+<ol type='A'><li>Scores generally increase as study hours increase, with some variation</li><li>Scores are constant for all study-hour values</li><li>Scores generally decrease as study hours increase</li><li>The plot shows only category proportions</li></ol></article>
+<article><h3>M3L4-022</h3><p>Which conclusion is justified by a positive pattern in a scatter plot of study hours and score?</p>
+<figure><img src='charts/study_hours_score_scatter.svg' alt='Scatter plot with a positive association between study hours and scores.'><figcaption>Scatter plot with a positive association between study hours and scores.</figcaption></figure>
+<ol type='A'><li>Studying is proven to cause every score increase</li><li>The variables are positively associated in these observations</li><li>Every additional hour guarantees the same score gain</li><li>The variables are identical</li></ol></article>
+<article><h3>M3L4-023</h3><p>Which chart is shown in the student-score figure, and what is being compared?</p>
+<figure><img src='charts/student_scores_grouped_bar.svg' alt='Grouped bar chart comparing Math and Economics scores for students A to D.'><figcaption>Grouped bar chart comparing Math and Economics scores for students A to D.</figcaption></figure>
+<ol type='A'><li>A stacked bar compares each student&#x27;s score composition</li><li>A histogram compares one score distribution</li><li>Grouped bars compare Math and Economics scores across students</li><li>A line chart shows scores over time</li></ol></article>
+<article><h3>M3L4-024</h3><p>In the city enrollment horizontal bar chart, which city has the lowest displayed enrollment?</p>
+<figure><img src='charts/city_enrolment_horizontal.svg' alt='Horizontal bar chart of student enrollment: Cairo 420, Giza 260, Aswan 180.'><figcaption>Horizontal bar chart of student enrollment: Cairo 420, Giza 260, Aswan 180.</figcaption></figure>
+<ol type='A'><li>Cairo</li><li>Giza</li><li>All three are equal</li><li>Aswan</li></ol></article>
+<article><h3>M3L4-025</h3><p>The class-count chart lists classes in the order 3, 1, 2. What explains this order?</p>
+<figure><img src='charts/passenger_class_counts_unsorted.svg' alt='Bar chart of passenger counts with categories ordered by frequency: class 3, class 1, class 2.'><figcaption>Bar chart of passenger counts with categories ordered by frequency: class 3, class 1, class 2.</figcaption></figure>
+<ol type='A'><li>The categories are arranged by frequency, from largest count to smallest</li><li>The classes are arranged by their natural numeric order</li><li>A line chart reordered the categories by time</li><li>The counts were normalized to percentages</li></ol></article>
+<article><h3>M3L4-026</h3><p>If passenger class has a meaningful order 1, 2, 3, which step makes the bar chart follow that order rather than frequency?</p>
+<pre><code>class_count = df[&#x27;pclass&#x27;].value_counts().sort_index()
+class_count.plot.bar()</code></pre>
+<ol type='A'><li>Apply `.sort_values(ascending=False)`</li><li>Apply `.sort_index()` to the value_counts result before plotting</li><li>Use `.sample()` before plotting</li><li>Convert the class labels to a pie chart</li></ol></article>
+<article><h3>M3L4-027</h3><p>Which chart in the set is designed to show a single numerical distribution rather than category comparisons?</p>
+<figure><img src='charts/ages_histogram.svg' alt='Histogram showing frequencies across numerical age intervals.'><figcaption>Histogram showing frequencies across numerical age intervals.</figcaption></figure>
+<ol type='A'><li>The student grouped bar chart</li><li>The city enrollment bar chart</li><li>The age histogram</li><li>The outcome stacked bar chart</li></ol></article>
+<article><h3>M3L4-028</h3><p>In the Egypt population line chart, what does the rising sequence indicate?</p>
+<figure><img src='charts/egypt_population_line.svg' alt='Line chart of Egypt&#x27;s illustrative population from 27 million in 1960 to 102 million in 2020.'><figcaption>Line chart of Egypt&#x27;s illustrative population from 27 million in 1960 to 102 million in 2020.</figcaption></figure>
+<ol type='A'><li>Population fell steadily from 1960 to 2020</li><li>The points represent unordered countries</li><li>The chart gives the share of a whole</li><li>Population increased across the observed years</li></ol></article>
+<article><h3>M3L4-029</h3><p>In the 100%-stacked outcome chart, which class has the largest &#x27;Survived&#x27; share?</p>
+<figure><img src='charts/survival_by_class_stacked.svg' alt='100% stacked bars; survived shares are 80%, 60%, and 30% for classes 1, 2, and 3.'><figcaption>100% stacked bars; survived shares are 80%, 60%, and 30% for classes 1, 2, and 3.</figcaption></figure>
+<ol type='A'><li>Class 1</li><li>Class 2</li><li>Class 3</li><li>All are equal</li></ol></article>
+<article><h3>M3L4-030</h3><p>A researcher wants to examine whether age and fare vary together for individual passengers. Which chart is the best first view?</p>
+<ol type='A'><li>Pie chart</li><li>Scatter plot</li><li>Histogram of age only</li><li>Stacked bar chart of fare intervals</li></ol></article>
+<article><h3>M3L4-031</h3><p>The age–fare scatter has a few very high fares at different ages and no obvious upward pattern. What is the best reading?</p>
+<figure><img src='charts/age_fare_scatter.svg' alt='Scatter plot of passenger-like ages and fares with several high fares at different ages and no clear linear trend.'><figcaption>Scatter plot of passenger-like ages and fares with several high fares at different ages and no clear linear trend.</figcaption></figure>
+<ol type='A'><li>Every older passenger paid more</li><li>Age determines fare exactly</li><li>The plot shows no clear age trend, and fares vary widely at several ages</li><li>The highest fare must belong to the oldest passenger</li></ol></article>
+<article><h3>M3L4-032</h3><p>Which call creates a histogram of the `age` column with 20 bins in the lesson&#x27;s style?</p>
+<pre><code>df[&#x27;age&#x27;].plot.hist(bins=20)</code></pre>
+<ol type='A'><li>`df[&#x27;age&#x27;].plot.bar(bins=20)`</li><li>`df.plot.line(x=&#x27;age&#x27;, bins=20)`</li><li>`df[&#x27;age&#x27;].plot.pie(bins=20)`</li><li>`df[&#x27;age&#x27;].plot.hist(bins=20)`</li></ol></article>
+<article><h3>M3L4-033</h3><p>A researcher wants to show how each group&#x27;s outcomes contribute to that group&#x27;s total and compare those compositions across groups. Which plot best fits?</p>
+<ol type='A'><li>Stacked bar chart</li><li>Histogram</li><li>Scatter plot</li><li>Single-series line chart</li></ol></article>
+<article><h3>M3L4-034</h3><p>Why might the box plot reveal a more complete group comparison than reporting only the two means?</p>
+<figure><img src='charts/fare_by_outcome_boxplot.svg' alt='Overlapping box plots of fare by outcome; the medians differ but ranges overlap.'><figcaption>Overlapping box plots of fare by outcome; the medians differ but ranges overlap.</figcaption></figure>
+<ol type='A'><li>It removes the need to know which variable is numerical</li><li>It also shows medians, quartiles, spread, and overlap between distributions</li><li>It proves that every observation equals the median</li><li>It shows exact causal effects</li></ol></article>
+<article><h3>M3L4-035</h3><p>The service-use categories form mutually exclusive parts of one response total. Which chart could show their composition, with the lesson&#x27;s readability caveat?</p>
+<ol type='A'><li>Scatter plot, because categories are paired observations</li><li>Histogram, because categories are numerical intervals</li><li>Pie chart, if the number of categories is small</li><li>Line chart, because categories imply continuity</li></ol></article>
+<article><h3>M3L4-036</h3><p>Which plotting call compares Math and Economics by Student using the DataFrame shown in the lesson?</p>
+<pre><code>df.plot.bar(x=&#x27;Student&#x27;)</code></pre>
+<ol type='A'><li>`df.plot.hist(x=&#x27;Student&#x27;)`</li><li>`df.plot.pie(x=&#x27;Student&#x27;)`</li><li>`df.plot.scatter(x=&#x27;Student&#x27;)`</li><li>`df.plot.bar(x=&#x27;Student&#x27;)`</li></ol></article>
+<article><h3>M3L4-037</h3><p>In the two-group scatter plot, which group generally has the higher quiz score at study-hour values shared by both groups?</p>
+<figure><img src='charts/two_groups_scatter.svg' alt='Scatter plot with two colored groups; Group B&#x27;s scores are generally higher where study-hour values overlap.'><figcaption>Scatter plot with two colored groups; Group B&#x27;s scores are generally higher where study-hour values overlap.</figcaption></figure>
+<ol type='A'><li>Group B</li><li>Group A</li><li>The scores are identical at all shared values</li><li>The plot cannot distinguish groups</li></ol></article>
+<article><h3>M3L4-038</h3><p>The lesson says pandas plotting is intentionally limited. What use is it best suited for?</p>
+<ol type='A'><li>Creating every kind of publication-ready graphic with no customization</li><li>Quick exploratory analysis while examining data</li><li>Training machine-learning models</li><li>Serving interactive dashboards with hover controls</li></ol></article>
+<article><h3>M3L4-039</h3><p>A bar chart shows unordered regions with counts. Why are bars preferable to connecting the region values with a line?</p>
+<figure><img src='charts/country_category_bar.svg' alt='Bar chart comparing illustrative counts across unordered regions France, Egypt, and Japan.'><figcaption>Bar chart comparing illustrative counts across unordered regions France, Egypt, and Japan.</figcaption></figure>
+<ol type='A'><li>Bars turn counts into proportions automatically</li><li>Lines are restricted to categorical values</li><li>Bars compare categories without suggesting values between categories</li><li>Regions cannot be displayed on a horizontal axis</li></ol></article>
+<article><h3>M3L4-040</h3><p>Which chart-selection rule best follows the lesson?</p>
+<ol type='A'><li>Use a pie chart whenever the dataset has several columns</li><li>Use a line chart for every comparison</li><li>Choose the chart with the most colors, regardless of the variables</li><li>Choose the chart based on whether the question concerns distribution, composition, comparison, or relationship</li></ol></article>
+<h2>Structured-response questions</h2>
+<article><h3>M3L4-E01 · 5 marks</h3><p>A student dataset has one numerical score for each learner and each learner belongs to one class. Recommend a chart for comparing score distributions across classes, explain what the reader can learn from it, and state one limitation of comparing only class means.</p>
+<figure><img src='charts/fare_by_outcome_boxplot.svg' alt='Two overlapping box plots show different medians but substantial overlap in group distributions.'><figcaption>Two overlapping box plots show different medians but substantial overlap in group distributions.</figcaption></figure>
+</article>
+<article><h3>M3L4-E02 · 5 marks</h3><p>Use the grouped student-score chart. Describe the main comparisons it supports, identify one fact that can be read for a named student, and explain why a grouped bar chart fits better than a histogram for this dataset.</p>
+<figure><img src='charts/student_scores_grouped_bar.svg' alt='Grouped bars compare Math and Economics scores for students A, B, C, and D.'><figcaption>Grouped bars compare Math and Economics scores for students A, B, C, and D.</figcaption></figure>
+</article>
+<article><h3>M3L4-E03 · 5 marks</h3><p>Compare the age histogram and the income histogram. Identify the tallest bin in each, explain what binning does, and describe how changing the number of bins can affect the apparent story without changing the records.</p>
+<figure><img src='charts/ages_histogram.svg' alt='Age histogram with its highest frequency in the 20–29 interval.'><figcaption>Age histogram with its highest frequency in the 20–29 interval.</figcaption></figure>
+<figure><img src='charts/income_histogram.svg' alt='Income histogram with its highest frequency in the 20–39 interval.'><figcaption>Income histogram with its highest frequency in the 20–39 interval.</figcaption></figure>
+</article>
+<article><h3>M3L4-E04 · 5 marks</h3><p>Examine the study-hours and score scatter plot. Describe its pattern and give a careful conclusion. Explain why the plot alone cannot establish that extra study time caused the scores to rise, and name one additional kind of evidence or design that would help investigate causation.</p>
+<figure><img src='charts/study_hours_score_scatter.svg' alt='Scatter plot with a generally positive association between study hours and score.'><figcaption>Scatter plot with a generally positive association between study hours and score.</figcaption></figure>
+</article>
+<article><h3>M3L4-E05 · 5 marks</h3><p>A report compares survival outcomes across passenger classes and also wants readers to see how the total outcome composition differs by class. Use the 100%-stacked chart to state the surviving share in each class and justify why a stacked bar is suitable. What important information would the chart not show?</p>
+<figure><img src='charts/survival_by_class_stacked.svg' alt='100%-stacked bars show survived shares of 80%, 60%, and 30% for classes 1, 2, and 3.'><figcaption>100%-stacked bars show survived shares of 80%, 60%, and 30% for classes 1, 2, and 3.</figcaption></figure>
+</article>
+<article><h3>M3L4-E06 · 5 marks</h3><p>A colleague uses a line chart to connect counts for France, Egypt, and Japan. Use the country comparison chart to explain why the line creates a misleading implication, then recommend a better chart and explain the difference in meaning.</p>
+<figure><img src='charts/country_category_bar.svg' alt='Bar chart comparing counts in three unordered categories: France, Egypt, and Japan.'><figcaption>Bar chart comparing counts in three unordered categories: France, Egypt, and Japan.</figcaption></figure>
+</article>
+<article><h3>M3L4-E07 · 5 marks</h3><p>A categorical survey asks whether respondents use a service weekly, monthly, or rarely. Recommend a chart for showing shares, explain when a pie is reasonable, and describe when a sorted bar chart would communicate the differences more clearly.</p>
+<figure><img src='charts/survey_composition_pie.svg' alt='Pie chart with service use shares of weekly 52%, monthly 31%, rarely 17%.'><figcaption>Pie chart with service use shares of weekly 52%, monthly 31%, rarely 17%.</figcaption></figure>
+</article>
+<article><h3>M3L4-E08 · 5 marks</h3><p>Write pandas plotting code for two tasks: (1) make a 20-bin histogram of a numerical `age` column; (2) make a scatter plot of numerical `age` against numerical `fare`. Explain what question each chart helps answer and state one limitation of using pandas `.plot()`.</p>
+<pre><code>df[&#x27;age&#x27;].plot.hist(bins=20)
+df.plot.scatter(x=&#x27;age&#x27;, y=&#x27;fare&#x27;)</code></pre>
+</article>
+</body></html>

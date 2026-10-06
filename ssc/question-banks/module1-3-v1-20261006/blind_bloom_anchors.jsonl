@@ -1,0 +1,10 @@
+{"id": "INTRO-002", "item": "According to the lecture, a CPU labeled 3.0 GHz completes approximately how many clock cycles per second?"}
+{"id": "INTRO-008", "item": "A student has already planned an algorithm for counting words. What phase begins when they write that algorithm in Python?"}
+{"id": "INTRO-013", "item": "The two statements below use different syntax but have the same semantics. What do they both do?\n\nPython: print(\"Hello, World\")\nC: printf(\"Hello, World\");"}
+{"id": "INTRO-017", "item": "The lecture lists abstraction level, execution method, paradigm, and domain as separate ways to classify languages. What follows from this?"}
+{"id": "INTRO-023", "item": "Using the lecture's different classification axes, which description of Python is supported?"}
+{"id": "INTRO-034", "item": "[Code] What happens when this program is run?\n\nprint(\"This line works fine.\")\nresult = 10 / 0\nprint(\"This line never happens.\")"}
+{"id": "INTRO-035", "item": "[Code] If x starts at 2, why does this loop fail to terminate?\n\nwhile x > 0:\n    x = x + 1"}
+{"id": "INTRO-039", "item": "[Code] The intended grouping is (tax + price) × discount. Which expression preserves that grouping in Python?\n\ntax = 2\nprice = 10\ndiscount = 0.5"}
+{"id": "INTRO-E06", "item": "Classify each example as syntax, runtime, logical, or semantic error, and briefly say when or how it is noticed: (a) `if x > 5` has no colon; (b) `10 / 0`; (c) `while x > 0: x = x + 1` with positive x; (d) `area = length + width` when calculating rectangle area."}
+{"id": "INTRO-E07", "item": "The program below is intended to count x down to zero and print the final value, but x increases instead. Trace the first three values of x, explain why the loop does not finish when x starts at 2, and give a one-line correction.\n\n```python\nx = 2\nwhile x > 0:\n    x = x + 1\nprint(x)\n```"}

@@ -1,0 +1,15 @@
+{
+  "recommendation": "8 structured-response / essay-style prompts, 5 marks each",
+  "rationale": "The prompts extend the MCQ coverage into code tracing, rule application, branch repair, tariff calculations, compound classification, and refactoring.",
+  "total_marks": 40,
+  "coverage": {
+    "M2L2-E01": "trace a simple if and explain indentation",
+    "M2L2-E02": "design and justify a chained comparison",
+    "M2L2-E03": "apply a compound divisibility rule",
+    "M2L2-E04": "diagnose and repair unreachable branch ordering",
+    "M2L2-E05": "apply inclusive thresholds and conjunction",
+    "M2L2-E06": "trace tariff bands and calculate outcomes",
+    "M2L2-E07": "design and trace a multiway compound classification",
+    "M2L2-E08": "refactor a nested decision and trace it"
+  }
+}

@@ -1,0 +1,9 @@
+{"id": "M2L3-003", "item": "Which sequence gives the four parts of the while-loop pattern in the lesson?"}
+{"id": "M2L3-008", "item": "Which values are visited by `range(2, 6)`?"}
+{"id": "M2L3-020", "item": "With an outer loop of 3 iterations and an inner loop of 4 iterations on every pass, how many times does the inner body run?"}
+{"id": "M2L3-026", "item": "A population of 1,000 grows by 2% each year. Approximately what is it after 10 yearly updates?"}
+{"id": "M2L3-018", "item": "In the search loop, what happens after the first odd number 15 is found?"}
+{"id": "M2L3-E05", "item": "A 5-by-5 multiplication table uses `for row in range(1, 6)` and, inside it, `for col in range(1, 6)`. State how many times the inner body runs, describe the order of repetition, and explain why nested iteration counts multiply."}
+{"id": "M2L3-E06", "item": "A population starts at 1,000 and grows by 2% annually for 10 years. Write the repeated update and loop bounds, give the approximate final population, and explain why this is exponential growth rather than adding a fixed 20 each year."}
+{"id": "M2L3-E07", "item": "For the list `['Male','Female','Female','Male','Female','Female']`, give the two counts and their percentages to two decimal places. Describe the loop counters and explain why `len(list)` is the denominator."}
+{"id": "M2L3-E08", "item": "The lesson repeats nearly identical counting code once for gender responses and again for votes. Explain why this duplication suggests a function, and identify which parts of the logic can stay the same and which data should vary between calls."}

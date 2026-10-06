@@ -1,0 +1,55 @@
+{
+  "note": "Provisional labels describe the operation actually required. Bloom labels are advisory, with no quota or forced distribution; same-session AI judgment is not independent validation.",
+  "anchors": [
+    {
+      "id": "INTRO-002",
+      "label": "Remember",
+      "reason": "retrieve and interpret the lecture's stated GHz example"
+    },
+    {
+      "id": "INTRO-008",
+      "label": "Apply",
+      "reason": "identify a programming phase in a concrete situation"
+    },
+    {
+      "id": "INTRO-013",
+      "label": "Understand",
+      "reason": "explain the shared meaning of two language statements"
+    },
+    {
+      "id": "INTRO-017",
+      "label": "Analyze",
+      "reason": "infer the implication of independent classification axes"
+    },
+    {
+      "id": "INTRO-023",
+      "label": "Analyze",
+      "reason": "coordinate four classification criteria for one language"
+    },
+    {
+      "id": "INTRO-034",
+      "label": "Apply",
+      "reason": "trace execution up to a runtime failure"
+    },
+    {
+      "id": "INTRO-035",
+      "label": "Analyze",
+      "reason": "explain why loop state preserves a condition"
+    },
+    {
+      "id": "INTRO-039",
+      "label": "Apply",
+      "reason": "select an expression matching a specified grouping"
+    },
+    {
+      "id": "INTRO-E06",
+      "label": "Analyze",
+      "reason": "distinguish concrete error causes and classifications"
+    },
+    {
+      "id": "INTRO-E07",
+      "label": "Apply",
+      "reason": "trace a loop and repair its update"
+    }
+  ]
+}

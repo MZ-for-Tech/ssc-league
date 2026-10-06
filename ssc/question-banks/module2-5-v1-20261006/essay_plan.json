@@ -1,0 +1,15 @@
+{
+  "recommendation": "8 structured-response prompts, 5 marks each",
+  "rationale": "Prompts assess slice tracing, aliasing and copying, list growth operations, median design, growth calculations, comprehensions, string analysis, and robust domain extraction.",
+  "total_marks": 40,
+  "coverage": {
+    "M2L5-E01": "trace slices and explain endpoint rules",
+    "M2L5-E02": "trace aliasing and copying",
+    "M2L5-E03": "compare append, extend, and concatenation",
+    "M2L5-E04": "design and apply an odd/even median function",
+    "M2L5-E05": "calculate adjacent growth rates and explain indexing",
+    "M2L5-E06": "construct and explain a filtered comprehension",
+    "M2L5-E07": "trace string methods and calculate word density",
+    "M2L5-E08": "design a string-processing and de-duplication function"
+  }
+}

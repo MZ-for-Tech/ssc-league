@@ -1,0 +1,30 @@
+{
+  "mcq_count": 40,
+  "essay_count": 8,
+  "four_choices_each": true,
+  "keys_valid": true,
+  "answer_positions_A_to_D": [
+    10,
+    10,
+    10,
+    10
+  ],
+  "mcq_code_stimuli": 16,
+  "essay_code_stimuli": 2,
+  "preview_code_blocks": 18,
+  "essay_rubric_totals": {
+    "M2L2-E01": 5,
+    "M2L2-E02": 5,
+    "M2L2-E03": 5,
+    "M2L2-E04": 5,
+    "M2L2-E05": 5,
+    "M2L2-E06": 5,
+    "M2L2-E07": 5,
+    "M2L2-E08": 5
+  },
+  "key_length_cues": [],
+  "duplicate_stems": [],
+  "unclassified_items": [],
+  "blind_review_count": 48,
+  "review_limit": "Metadata-hidden same-session AI review; earlier exposure to the prior batch and source means it is not independent or fully blind."
+}

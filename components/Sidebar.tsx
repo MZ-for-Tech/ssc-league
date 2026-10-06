@@ -3,24 +3,70 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { 
-  LayoutDashboard, Trophy, BookOpen, User, Info, 
+import {
+  LayoutDashboard, Trophy, BookOpen, User, Info,
   X, LogOut, Loader2, ChevronLeft, ChevronRight, Bell,
-  Terminal
+  Terminal, Users, FileText, ClipboardCheck
 } from "lucide-react";
 import clsx from "clsx";
-import { createBrowserClient } from "@supabase/ssr";
+import { useSearchParams } from "next/navigation";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { stopImpersonation } from "@/app/actions/admin-actions";
 import SidebarLogo from "./Logo";
 
-const menuItems = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Modules", href: "/modules", icon: BookOpen },
-  { name: "Leaderboard", href: "/leaderboard", icon: Trophy },
-  { name: "Playground", href: "/playground", icon: Terminal },
-  { name: "Comms", href: "/comms", icon: Bell },
-  { name: "Profile", href: "/profile", icon: User },
-  { name: "About", href: "/about", icon: Info }
+const studentNavGroups = [
+  {
+    name: "Learning",
+    items: [
+      { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+      { name: "Modules", href: "/modules", icon: BookOpen },
+      { name: "Playground", href: "/playground", icon: Terminal },
+    ],
+  },
+  {
+    name: "League",
+    items: [
+      { name: "Leaderboard", href: "/leaderboard", icon: Trophy },
+      { name: "Comms", href: "/comms", icon: Bell },
+    ],
+  },
+  {
+    name: "More",
+    items: [
+      { name: "Profile", href: "/profile", icon: User },
+      { name: "About", href: "/about", icon: Info },
+    ],
+  },
+];
+
+const adminNavGroups = [
+  {
+    name: "Teaching",
+    items: [
+      { name: "Dashboard", href: "/dashboard?view=admin", icon: LayoutDashboard },
+      { name: "Modules", href: "/modules", icon: BookOpen },
+      { name: "Playground", href: "/playground", icon: Terminal },
+    ],
+  },
+  {
+    name: "League",
+    items: [
+      { name: "Leaderboard", href: "/leaderboard", icon: Trophy },
+      { name: "Comms", href: "/comms", icon: Bell },
+    ],
+  },
+  {
+    name: "Manage",
+    items: [
+      { name: "Students", href: "/dashboard?view=users", icon: Users },
+      { name: "Question bank", href: "/dashboard?view=questions", icon: FileText },
+      { name: "Operations", href: "/dashboard?view=operations", icon: ClipboardCheck },
+    ],
+  },
+  {
+    name: "More",
+    items: [{ name: "About", href: "/about", icon: Info }],
+  },
 ];
 
 interface SidebarProps {
@@ -28,17 +74,20 @@ interface SidebarProps {
   onClose?: () => void;
   isCollapsed: boolean;
   toggleCollapse: () => void;
+  isAdmin: boolean;
+  isImpersonating: boolean;
 }
 
-export default function Sidebar({ isOpen = false, onClose, isCollapsed, toggleCollapse }: SidebarProps) {
+export default function Sidebar({ isOpen = false, onClose, isCollapsed, toggleCollapse, isAdmin, isImpersonating }: SidebarProps) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
   const [isSigningOut, setIsSigningOut] = useState(false);
 
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const supabase = createSupabaseBrowserClient();
+  const navGroups = isAdmin && !isImpersonating
+    ? adminNavGroups
+    : studentNavGroups;
 
   const handleSignOut = async () => {
     try {
@@ -81,60 +130,78 @@ export default function Sidebar({ isOpen = false, onClose, isCollapsed, toggleCo
         {/* 1. Header */}
         <div className="h-20 flex items-center justify-center relative border-b border-border">
             {isCollapsed ? (
-               <div className="scale-75 font-bold text-primary text-xl">SSC2</div>
+               <SidebarLogo compact />
             ) : (
                <div className="px-6 w-full flex justify-between items-center">
                   <SidebarLogo />
                   <button onClick={onClose} className="lg:hidden text-muted hover:text-foreground"><X size={20} /></button>
                </div>
             )}
+            <button
+              onClick={toggleCollapse}
+              aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+              aria-expanded={!isCollapsed}
+              title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+              className="absolute -right-3 top-1/2 z-10 hidden h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-surface text-muted shadow-md transition hover:border-primary/40 hover:text-primary lg:flex"
+            >
+              {isCollapsed ? <ChevronRight size={15} /> : <ChevronLeft size={15} />}
+            </button>
         </div>
 
         {/* 2. Navigation */}
-        <nav className="flex-1 px-3 py-6 space-y-2 overflow-y-auto scrollbar-none">
-          {menuItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.href;
-            
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={onClose}
-                title={isCollapsed ? item.name : ""}
-                className={clsx(
-                  "flex items-center rounded-xl transition-all duration-200 group font-medium text-sm relative overflow-hidden",
-                  isActive
-                    // THEME: 'text-primary', 'bg-primary/10', 'border-primary/20'
-                    ? "text-primary bg-primary/10 border border-primary/20"
-                    // THEME: 'text-muted', 'hover:bg-surface', 'hover:text-foreground'
-                    : "text-muted hover:bg-surface hover:text-foreground border border-transparent",
-                  isCollapsed ? "justify-center p-3" : "px-4 py-3.5"
-                )}
-              >
-                {isActive && (
-                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary shadow-[0_0_10px_rgb(var(--primary))]" />
-                )}
-                
-                <Icon size={20} className={clsx("transition-colors", isActive ? "text-primary" : "text-muted group-hover:text-foreground", !isCollapsed && "mr-3")} />
-                
-                {!isCollapsed && <span>{item.name}</span>}
-              </Link>
-            );
-          })}
+        <nav className="flex-1 overflow-y-auto px-3 py-5 scrollbar-none">
+          {navGroups.map((group) => (
+            <div key={group.name || "main"} className="mb-5 last:mb-0">
+              {!isCollapsed && group.name && (
+                <p className="mb-2 px-4 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">{group.name}</p>
+              )}
+              <div className="space-y-1.5">
+                {group.items.map((item) => {
+                  const Icon = item.icon;
+                  const [itemPath, itemQuery] = item.href.split("?");
+                  const itemParams = new URLSearchParams(itemQuery || "");
+                  const itemView = itemParams.get("view");
+                  const currentView = searchParams.get("view");
+                  const seasonId = searchParams.get("season");
+                  if (isAdmin && seasonId && itemPath === "/dashboard" && itemView) {
+                    itemParams.set("season", seasonId);
+                  }
+                  const itemSearch = itemParams.toString();
+                  const href = itemSearch ? `${itemPath}?${itemSearch}` : item.href;
+                  const isActive = pathname === itemPath && (
+                    itemView
+                      ? currentView === itemView || (!currentView && itemView === "admin")
+                      : !currentView
+                  );
+
+                  return (
+                    <Link
+                      key={item.name}
+                      href={href}
+                      onClick={onClose}
+                      title={isCollapsed ? item.name : ""}
+                      className={clsx(
+                        "flex items-center rounded-xl transition-all duration-200 group font-medium text-sm relative overflow-hidden",
+                        isActive
+                          ? "text-primary bg-primary/10 border border-primary/20"
+                          : "text-muted hover:bg-surface hover:text-foreground border border-transparent",
+                        isCollapsed ? "justify-center p-3" : "px-4 py-3"
+                      )}
+                    >
+                      {isActive && <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary shadow-[0_0_10px_rgb(var(--primary))]" />}
+                      <Icon size={20} className={clsx("transition-colors", isActive ? "text-primary" : "text-muted group-hover:text-foreground", !isCollapsed && "mr-3")} />
+                      {!isCollapsed && <span>{item.name}</span>}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </nav>
 
         {/* 3. Footer Area */}
         <div className="p-3 border-t border-border bg-surface/30 flex flex-col gap-2">
           
-          {/* Toggle Button */}
-          <button 
-            onClick={toggleCollapse}
-            className="hidden lg:flex items-center justify-center w-full p-2 text-muted hover:text-foreground hover:bg-surface rounded-lg transition-colors"
-          >
-            {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-          </button>
-
           {/* Logout Button */}
           <button 
             onClick={handleSignOut}
@@ -158,14 +225,6 @@ export default function Sidebar({ isOpen = false, onClose, isCollapsed, toggleCo
           {!isCollapsed && (
               <div className="mt-2 flex items-center justify-between px-2 animate-in fade-in slide-in-from-bottom-2">
                  <span className="text-[10px] text-slate-600 font-mono uppercase">v1.0.0 Stable</span>
-                 <div className="flex items-center gap-1.5">
-                    <span className="relative flex h-2 w-2">
-                      {/* THEME: 'bg-success' */}
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
-                    </span>
-                    <span className="text-[10px] text-success font-bold">SYS_ONLINE</span>
-                 </div>
               </div>
           )}
         </div>

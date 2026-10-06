@@ -1,0 +1,16 @@
+{
+  "count": 8,
+  "marksEach": 5,
+  "totalMarks": 40,
+  "allocation": [
+    {"id":"FLOW-E01","family":"trace and modify sequence chart","source":"PDF p. 13; flow.md sequence example"},
+    {"id":"FLOW-E02","family":"trace threshold branches and explain boundary operator","source":"PDF p. 17; flow.md bonus boundary"},
+    {"id":"FLOW-E03","family":"trace early passes and final accumulator result","source":"PDF p. 15; flow.md sum example"},
+    {"id":"FLOW-E04","family":"trace factorial state and termination","source":"PDF p. 16; flow.md factorial chart"},
+    {"id":"FLOW-E05","family":"construct a decision flowchart or node-arrow representation","source":"PDF pp. 5–6, 11, 23–24; flow.md grade rule"},
+    {"id":"FLOW-E06","family":"explain pre-test behavior under altered initial state","source":"PDF p. 12; flow.md loop comparison"},
+    {"id":"FLOW-E07","family":"write arithmetic pseudocode and explain syntax distinction","source":"PDF pp. 21–22, 25; flow.md pseudocode"},
+    {"id":"FLOW-E08","family":"trace fixed-length accumulation and classify structure","source":"PDF pp. 18–20"}
+  ],
+  "responseTypes":"Structured responses (trace tables, pseudocode, construction, debugging/explanation), not long-form essays."
+}

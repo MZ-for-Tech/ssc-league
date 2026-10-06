@@ -1,22 +1,22 @@
 "use client";
 
 import { useEffect, useState, use } from "react";
-import { createBrowserClient } from "@supabase/ssr";
 import { useRouter } from "next/navigation";
-import { ArrowRight, CheckCircle, Trophy, Loader2, Zap, Target, AlertCircle, Terminal, XCircle, HelpCircle, Lock } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowRight, CheckCircle, Trophy, Loader2, Zap, Target, AlertCircle, Terminal, XCircle } from "lucide-react";
 import clsx from "clsx";
 import PythonCodeBlock from "@/components/PythonCodeBlock";
 import PythonPlayground from "@/components/PythonPlayground";
 import ReportButton from "@/components/ReportButton";
+import { useLeagueSeasonId } from "@/components/LeagueSeasonContext";
+import { loadActiveQuiz, submitQuizAnswer } from "@/app/actions/quiz-actions";
 
 // --- TYPES ---
-type Option = { 
-  id: string; 
-  text: string; 
-  is_correct: boolean;
-  justification?: string; 
-};
-type Question = { id: string; text: string; points: number; QuestionOption: Option[] };
+type Option = { id: string; text: string };
+type OptionFeedback = { optionId: string; isCorrect: boolean; justification: string | null };
+type QuizFeedback = { correctOptionId: string | null; optionFeedback: OptionFeedback[] };
+type Question = { id: string; text: string; points: number; stimulus_code: string | null; stimulus_asset_url: string | null; stimulus_asset_alt: string | null; QuestionOption: Option[]; feedback: QuizFeedback | null };
 
 type AnswerRecord = {
     question_id: string;
@@ -27,15 +27,12 @@ type AnswerRecord = {
 export default function QuizPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-
   const router = useRouter();
+  const selectedSeasonId = useLeagueSeasonId();
   
   // State
   const [studentDbId, setStudentDbId] = useState<string | null>(null);
+  const [activeSeasonId, setActiveSeasonId] = useState<string | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answersMap, setAnswersMap] = useState<Record<string, AnswerRecord>>({});
   
@@ -43,42 +40,33 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   
   const [score, setScore] = useState(0);
-  const [totalPoints, setTotalPoints] = useState(0);
   const [quizState, setQuizState] = useState<"loading" | "active" | "finished">("loading");
   
   const [showFeedback, setShowFeedback] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
+  const [feedback, setFeedback] = useState<QuizFeedback | null>(null);
+  const [loadMessage, setLoadMessage] = useState<string | null>(null);
 
   // 1. Initialization
   useEffect(() => {
     const initPage = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) { router.push("/login"); return; }
+      try {
+      const quizData = await loadActiveQuiz(id);
+      if (selectedSeasonId && selectedSeasonId !== quizData.seasonId) {
+        router.replace(`/modules/${id}`);
+        return;
+      }
+      setActiveSeasonId(quizData.seasonId);
+      setStudentDbId(quizData.studentId);
 
-      const { data: studentData } = await supabase.from("Student").select("id").eq("auth_id", user.id).single();
-      if (!studentData) return;
-      setStudentDbId(studentData.id);
-
-      const { data: quizData } = await supabase.from("Question")
-        .select(`id, text, points, QuestionOption (id, text, is_correct, justification)`)
-        .eq("topic_id", id);
-
-      if (!quizData) return;
-      const typedQuestions = quizData as unknown as Question[];
+      const typedQuestions = quizData.questions as Question[];
       setQuestions(typedQuestions);
-      setTotalPoints(typedQuestions.reduce((acc, curr) => acc + curr.points, 0));
-
-      // Fetch Previous Answers
-      const { data: existingAnswers } = await supabase.from("StudentAnswer")
-        .select("question_id, selected_option_id, is_correct")
-        .eq("student_id", studentData.id)
-        .in("question_id", typedQuestions.map(q => q.id));
 
       const loadedAnswers: Record<string, AnswerRecord> = {};
       let initialScore = 0;
       
-      existingAnswers?.forEach((ans: any) => {
+      quizData.answers.forEach((ans: AnswerRecord) => {
           loadedAnswers[ans.question_id] = ans;
           if (ans.is_correct) initialScore += 2; else initialScore += 1;
       });
@@ -93,14 +81,18 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
               setSelectedOption(loadedAnswers[firstQ.id].selected_option_id);
               setShowFeedback(true);
               setIsLocked(true);
+              setFeedback(firstQ.feedback);
           }
       }
 
       setQuizState("active");
+      } catch (error) {
+        setLoadMessage(error instanceof Error ? error.message : "Could not load this lesson.");
+      }
     };
 
     initPage();
-  }, [id, supabase, router]);
+  }, [id, router, selectedSeasonId]);
 
   // --- NEW: NAVIGATION FUNCTION ---
   const jumpToQuestion = (index: number) => {
@@ -114,10 +106,12 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
         setSelectedOption(existingAns.selected_option_id);
         setShowFeedback(true);
         setIsLocked(true);
+        setFeedback(targetQ.feedback);
     } else {
         setSelectedOption(null);
         setShowFeedback(false);
         setIsLocked(false);
+        setFeedback(null);
     }
     setCurrentQIndex(index);
   };
@@ -131,34 +125,31 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
   };
 
   const handleSubmit = async () => {
-    if (!selectedOption || !studentDbId || isLocked) return;
+    if (!selectedOption || !studentDbId || !activeSeasonId || isLocked) return;
     setIsSubmitting(true);
 
     const currentQ = questions[currentQIndex];
-    const chosenOption = currentQ.QuestionOption.find(o => o.id === selectedOption);
-    const isCorrect = chosenOption?.is_correct || false;
-
-    setScore((prev) => prev + (isCorrect ? 2 : 1));
-
-    await supabase.from("StudentAnswer").upsert({
-        student_id: studentDbId,
-        question_id: currentQ.id,
-        selected_option_id: selectedOption,
-        is_correct: isCorrect,
-        attempted_at: new Date().toISOString()
-    }, { onConflict: 'student_id, question_id' });
-
-    setAnswersMap(prev => ({
+    try {
+      const result = await submitQuizAnswer(currentQ.id, selectedOption);
+      const isCorrect = result.isCorrect;
+      setScore((prev) => prev + (isCorrect ? 2 : 1));
+      setFeedback({ correctOptionId: result.correctOptionId, optionFeedback: result.optionFeedback });
+      setAnswersMap((prev) => ({
         ...prev,
-        [currentQ.id]: { question_id: currentQ.id, selected_option_id: selectedOption, is_correct: isCorrect }
-    }));
-
-    setIsSubmitting(false);
-    setShowFeedback(true);
-    setIsLocked(true);
+        [currentQ.id]: { question_id: currentQ.id, selected_option_id: selectedOption, is_correct: isCorrect },
+      }));
+      setShowFeedback(true);
+      setIsLocked(true);
+    } catch (error) {
+      setLoadMessage(error instanceof Error ? error.message : "Could not save this answer.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
+  if (quizState === "loading" && loadMessage) return <div className="mx-auto mt-12 max-w-xl rounded-2xl border border-border bg-surface/70 p-6 text-center"><p className="text-foreground">{loadMessage}</p><button onClick={() => router.push(`/modules/${id}`)} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary">Back to module <ArrowRight size={16} /></button></div>;
   if (quizState === "loading") return <div className="flex h-[50vh] items-center justify-center text-primary"><Loader2 className="animate-spin w-10 h-10" /></div>;
+  if (!questions.length) return <div className="mx-auto mt-12 max-w-xl rounded-2xl border border-border bg-surface/70 p-6 text-center"><p className="font-semibold text-foreground">No multiple-choice questions are available for this lesson yet.</p><Link href={`/modules/${id}/essays`} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary">Open written responses <ArrowRight size={16} /></Link></div>;
   
   if (quizState === "finished") {
     return (
@@ -178,17 +169,20 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
                 <div className="text-2xl font-bold text-primary">+{score}</div>
             </div>
         </div>
-        <button onClick={() => router.push("/modules")} className="w-full py-3 bg-surface-light hover:bg-surface text-foreground rounded-xl font-bold transition-all">Return to Base</button>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Link href={`/modules/${id}/essays`} className="w-full rounded-xl bg-primary px-4 py-3 font-bold text-background transition-all hover:bg-primary-dim">Continue to written responses</Link>
+          <button onClick={() => router.push("/modules")} className="w-full rounded-xl bg-surface-light py-3 font-bold text-foreground transition-all hover:bg-surface">Return to modules</button>
+        </div>
       </div>
     );
   }
 
   const currentQ = questions[currentQIndex];
   const progressPercent = ((currentQIndex) / questions.length) * 100;
-  const isCodeQuestion = currentQ.text.includes("(") || currentQ.text.includes("=") || currentQ.text.includes("def ") || currentQ.text.includes("print");
+  const currentAnswer = answersMap[currentQ.id];
 
   return (
-    <div className="w-full max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4">
+    <div className="w-full animate-in fade-in slide-in-from-bottom-4">
       
       <div className="flex items-center justify-between mb-6">
         <div><h1 className="text-2xl font-bold text-foreground flex items-center gap-3"><span className="px-3 py-1 rounded bg-primary/10 text-primary text-xs font-mono border border-primary/20">M-{id}</span> Active Mission</h1></div>
@@ -207,16 +201,19 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
                         <span className="text-muted text-sm font-mono">QUERY_ID_{currentQIndex + 1}</span>
                         <span className="text-primary text-sm font-bold">2 XP</span>
                     </div>
-                    {isCodeQuestion ? (<div className="mb-6"><div className="text-muted mb-2 text-sm uppercase tracking-wider font-bold">Analyze Syntax:</div><PythonCodeBlock code={currentQ.text} /></div>) : (<h2 className="text-xl md:text-2xl font-medium text-foreground mb-8 leading-relaxed">{currentQ.text}</h2>)}
-                    {isCodeQuestion && (<div className="mt-8 pt-6 border-t border-border/50"><div className="flex items-center justify-between mb-3"><span className="text-xs font-bold text-primary uppercase tracking-widest flex items-center gap-2"><Terminal size={12} /> Live Verification</span><span className="text-[10px] text-muted">Pyodide Environment</span></div><PythonPlayground initialCode="# Use this space to test the code above..." /></div>)}
+                    <h2 className="mb-6 whitespace-pre-wrap text-xl font-medium leading-relaxed text-foreground">{currentQ.text}</h2>
+                    {currentQ.stimulus_code && <PythonCodeBlock code={currentQ.stimulus_code} />}
+                    {currentQ.stimulus_asset_url && <figure className="my-6 overflow-hidden rounded-xl border border-border bg-background p-3"><Image unoptimized width={1200} height={800} src={currentQ.stimulus_asset_url} alt={currentQ.stimulus_asset_alt || currentQ.text} className="mx-auto h-auto max-h-[32rem] w-full object-contain" priority /><figcaption className="mt-2 text-center text-xs text-muted">Lesson visual</figcaption></figure>}
+                    {currentQ.stimulus_code && (<div className="mt-8 border-t border-border/50 pt-6"><div className="mb-3 flex items-center justify-between"><span className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary"><Terminal size={12} /> Optional Python sandbox</span><span className="text-[10px] text-muted">Runs in this browser</span></div><PythonPlayground initialCode={currentQ.stimulus_code} /></div>)}
                 </div>
 
                 <div className="space-y-3">
                     {currentQ.QuestionOption.map((opt) => {
+                        const optionFeedback = feedback?.optionFeedback.find((item) => item.optionId === opt.id);
                         let borderClass = "border-border hover:border-surface-light", bgClass = "bg-surface/30", textClass = "text-muted", Icon = null;
                         if (showFeedback) {
-                            if (opt.is_correct) { borderClass = "border-success/50"; bgClass = "bg-success/10"; textClass = "text-success"; Icon = <CheckCircle className="text-success" size={20} />; } 
-                            else if (selectedOption === opt.id && !opt.is_correct) { borderClass = "border-danger/50"; bgClass = "bg-danger/10"; textClass = "text-danger"; Icon = <XCircle className="text-danger" size={20} />; } 
+                            if (feedback?.correctOptionId === opt.id || (selectedOption === opt.id && currentAnswer?.is_correct)) { borderClass = "border-success/50"; bgClass = "bg-success/10"; textClass = "text-success"; Icon = <CheckCircle className="text-success" size={20} />; }
+                            else if (selectedOption === opt.id) { borderClass = "border-danger/50"; bgClass = "bg-danger/10"; textClass = "text-danger"; Icon = <XCircle className="text-danger" size={20} />; }
                             else { bgClass = "opacity-50"; }
                         } else if (selectedOption === opt.id) { 
                             borderClass = "border-primary"; bgClass = "bg-primary/10"; textClass = "text-foreground"; Icon = <CheckCircle className="text-primary" size={20} />; 
@@ -227,14 +224,14 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
                                 <button onClick={() => !isLocked && setSelectedOption(opt.id)} disabled={isLocked || isSubmitting} className={clsx("w-full text-left p-4 flex justify-between items-center", isLocked ? "cursor-default" : "cursor-pointer")}>
                                     <span className={`font-medium ${textClass}`}>{opt.text}</span>{Icon}
                                 </button>
-                                {showFeedback && opt.justification && (<div className={clsx("px-4 pb-4 text-sm animate-in slide-in-from-top-2", opt.is_correct ? "text-success/80" : "text-muted")}><div className="h-px w-full bg-current opacity-10 mb-2" /><p className="flex gap-2"><HelpCircle size={14} className="mt-0.5 shrink-0" />{opt.justification}</p></div>)}
+                                {showFeedback && optionFeedback?.justification && <div className="border-t border-border/50 px-4 py-3 text-sm leading-6 text-muted"><span className={clsx("mr-2 text-xs font-bold uppercase tracking-wider", optionFeedback.isCorrect ? "text-success" : "text-primary")}>{optionFeedback.isCorrect ? "Why this is correct" : "Why this choice is incorrect"}</span>{optionFeedback.justification}</div>}
                             </div>
                         );
                     })}
                 </div>
 
                 <div className="mt-8 flex justify-between items-center pt-4 border-t border-border/50">
-                    <ReportButton questionId={currentQ.id} studentId={studentDbId!} />
+                    <ReportButton questionId={currentQ.id} studentId={studentDbId!} seasonId={activeSeasonId!} />
                     {!isLocked ? (
                         <button onClick={handleSubmit} disabled={!selectedOption || isSubmitting} className={clsx("px-8 py-3 rounded-xl font-bold flex items-center transition-all", !selectedOption || isSubmitting ? "bg-surface-light text-muted cursor-not-allowed" : "bg-primary hover:bg-primary-dim text-background shadow-lg shadow-primary/20")}>
                             {isSubmitting ? "Processing..." : <>CONFIRM ENTRY <ArrowRight className="ml-2 w-4 h-4" /></>}

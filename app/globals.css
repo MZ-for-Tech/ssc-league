@@ -21,7 +21,7 @@
 /* --- 3. THEME VARIABLES (NEW: The "Tactical" System) --- */
 :root {
   /* Base Colors (Dark Slate Theme) */
-  --background: 15 23 42;       /* slate-950 (#0f172a) */
+  --background: 15 23 42;       /* slate-900 */
   --surface: 30 41 59;          /* slate-800 */
   --surface-light: 51 65 85;    /* slate-700 */
   --border: 30 41 59;           /* slate-800 */
@@ -31,7 +31,7 @@
   --muted: 148 163 184;         /* slate-400 */
 
   /* Brand Colors (Cyberpunk Cyan) */
-  --primary: 34 211 238;        /* cyan-400 (#22d3ee) */
+  --primary: 34 211 238;        /* cyan-400 */
   --primary-dim: 6 182 212;     /* cyan-500 */
   
   /* Status Colors */
@@ -39,15 +39,51 @@
   --warning: 250 204 21;        /* yellow-400 */
   --danger: 251 113 133;        /* rose-400 */
 
-  /* Retro Wave Specifics (Your existing vars mapped to new system where possible) */
-  --labs-sys-color-background: #0f172a; 
-  --labs-sys-color-triangle: #22d3ee;
-  --labs-sys-color-sun-2: #f672ca;      
+  /* Extra depth and highlight shades used by the course and league visuals. */
+  --surface-deep: 9 20 38;
+  --surface-hero: 11 20 38;
+  --surface-node: 16 29 49;
+  --surface-shade: 8 18 35;
+  --success-light: 110 231 183;
+
+  /* Frequently used palette values; exposed through Tailwind's slate/cyan shades. */
+  --slate-300: 203 213 225;
+  --slate-500: 100 116 139;
+  --slate-600: 71 85 105;
+  --slate-850: 21 30 46;
+  --slate-950: 2 6 23;
+  --cyan-200: 165 243 252;
+  --cyan-300: 103 232 249;
+  --cyan-600: 8 145 178;
+  --cyan-700: 14 116 144;
+  --cyan-900: 22 78 99;
+  --cyan-950: 8 51 68;
+  --amber-400: 251 191 36;
+  --emerald-500: 16 185 129;
+  --rose-500: 244 63 94;
+  --logo-secondary: 251 191 36;
+
+  /* Code samples and playground consoles use their own neutral surfaces. */
+  --code-editor: 30 30 30;
+  --code-console: 13 17 23;
+  --code-line-number: 92 100 112;
+
+  /* Retro wave palette */
+  --retro-pink: 246 114 202;
+  --labs-sys-color-background: rgb(var(--background));
+  --labs-sys-color-triangle: rgb(var(--primary));
+  --labs-sys-color-sun-2: rgb(var(--retro-pink));
   --base-speed: 4s;
 }
 
 body {
   @apply bg-background text-foreground;
+}
+
+@layer components {
+  .app-content {
+    @apply mx-auto w-full max-w-7xl px-4 py-6 md:px-8 md:py-8;
+  }
 }
 
 /* --- 4. TACTICAL SCROLLBAR (NEW) --- */
@@ -86,6 +122,22 @@ body {
   .scrollbar-none::-webkit-scrollbar {
     display: none;
   }
+
+  .bg-dot-grid {
+    background-image: radial-gradient(rgb(var(--muted)) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .bg-dot-grid-subtle {
+    background-image: radial-gradient(rgb(var(--surface-light)) 1px, transparent 1px);
+  }
+
+  .shadow-glow-primary-soft { box-shadow: 0 0 40px rgb(var(--primary) / 0.2); }
+  .shadow-glow-primary { box-shadow: 0 0 15px rgb(var(--primary)); }
+  .drop-shadow-logo-symbol { filter: drop-shadow(0 0 8px rgb(var(--primary) / 0.8)); }
+  .drop-shadow-logo-wordmark { filter: drop-shadow(0 0 5px rgb(var(--primary) / 0.2)); }
+  .shadow-glow-primary-subtle { box-shadow: 0 0 15px rgb(var(--primary) / 0.2); }
+  .shadow-glow-primary-pulse { box-shadow: 0 0 8px rgb(var(--primary) / 0.5); }
 }
 
 /* --- 5. RETRO WAVE LOGO STYLES (Keep your existing styles below) --- */

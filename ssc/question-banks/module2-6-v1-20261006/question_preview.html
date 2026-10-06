@@ -1,0 +1,215 @@
+<!doctype html><html lang='en'><meta charset='utf-8'><meta name='viewport' content='width=device-width'><title>Tuples and Dictionaries — Question Preview</title>
+<style>body{font:16px/1.55 system-ui,sans-serif;max-width:980px;margin:2rem auto;padding:0 1rem;color:#18212b}article{border:1px solid #ccd3da;border-radius:10px;padding:1rem 1.2rem;margin:1rem 0}pre{overflow:auto;background:#f3f5f7;padding:1rem;border-radius:8px}ol{padding-left:1.5rem}</style><body><h1>Module 2 — Tuples and dictionaries</h1><p>40 MCQs and 8 structured responses. Questions use the Lesson 6 Markdown and Collection Data Types Part 2 PDF.</p><h2>Multiple-choice questions</h2>
+<article><h3>M2L6-001</h3><p>Which statement describes a tuple&#x27;s defining property?</p>
+<pre><code>rates = (2.1, 1.8, 2.5)
+# rates[0] = 3.0  # raises TypeError</code></pre>
+<ol type='A'><li>Its elements cannot be reassigned after creation</li><li>Its elements can be changed, removed, or replaced after creation</li><li>Its elements can contain only one data type</li><li>It stores values under named keys</li></ol></article>
+<article><h3>M2L6-002</h3><p>Given `x = ([1, 2], [3, 4])`, what does `x[0][1] = 7` do?</p>
+<pre><code>x = ([1, 2], [3, 4])
+x[0][1] = 7
+print(x)</code></pre>
+<ol type='A'><li>Changes the nested list and replaces the tuple&#x27;s first reference with a new list</li><li>Changes the nested list; x becomes ([1, 7], [3, 4])</li><li>Creates a new tuple and leaves x unchanged</li><li>Raises TypeError because x is a tuple</li></ol></article>
+<article><h3>M2L6-003</h3><p>What does `x + y` do when both x and y are tuples?</p>
+<pre><code>x = (1, 2)
+y = (3, 4)
+z = x + y
+print(z, x, y)</code></pre>
+<ol type='A'><li>Creates a list containing both tuples as nested values</li><li>Creates a new tuple holding x and y as two nested values</li><li>Creates a new tuple containing the elements of both</li><li>Changes x by appending y to it in place</li></ol></article>
+<article><h3>M2L6-004</h3><p>For `values = (10, 20, 30, 40, 50)`, what is `values[1:4]`?</p>
+<pre><code>values = (10, 20, 30, 40, 50)
+print(values[1:4])</code></pre>
+<ol type='A'><li>(10, 20, 30, 40)</li><li>(20, 30, 40, 50)</li><li>[20, 30, 40]</li><li>(20, 30, 40)</li></ol></article>
+<article><h3>M2L6-005</h3><p>What does `rates.count(2.5)` return for `rates = (2.1, 1.8, 2.5, 3.0, 2.8, 1.9, 2.5, 3.2, 2.8, 2.5)`?</p>
+<pre><code>rates = (2.1, 1.8, 2.5, 3.0, 2.8, 1.9, 2.5, 3.2, 2.8, 2.5)
+print(rates.count(2.5))</code></pre>
+<ol type='A'><li>3</li><li>1</li><li>2</li><li>10</li></ol></article>
+<article><h3>M2L6-006</h3><p>Which loop visits the characters of the string `&quot;Python&quot;` one at a time?</p>
+<ol type='A'><li>`for letter in len(&quot;Python&quot;):`</li><li>`for letter in &quot;Python&quot;:`</li><li>`for letter in &#x27;Py&#x27;:`</li><li>`for letter in range(&quot;Python&quot;):`</li></ol></article>
+<article><h3>M2L6-007</h3><p>In `for name, age, position in team`, what must each element of team provide for unpacking to work?</p>
+<pre><code>team = [(&#x27;Ahmed&#x27;, 20, &#x27;center&#x27;), (&#x27;Anas&#x27;, 22, &#x27;point guard&#x27;)]
+for name, age, position in team:
+    print(name, age, position)</code></pre>
+<ol type='A'><li>A dictionary containing the three named fields</li><li>Only one tuple</li><li>Three values, in the corresponding order</li><li>Three values, but in the wrong order for the named variables</li></ol></article>
+<article><h3>M2L6-008</h3><p>What is the average age of the five players in the lesson&#x27;s team records?</p>
+<pre><code>ages = [20, 22, 22, 21, 19]
+print(sum(ages) / len(ages))</code></pre>
+<ol type='A'><li>20.0</li><li>21.0</li><li>104</li><li>20.8</li></ol></article>
+<article><h3>M2L6-009</h3><p>For the lesson&#x27;s team list, what does `team[1][2]` select?</p>
+<pre><code>team = [(&#x27;Ahmed&#x27;, 20, &#x27;center&#x27;), (&#x27;Anas&#x27;, 22, &#x27;point guard&#x27;)]
+print(team[1][2])</code></pre>
+<ol type='A'><li>The second player&#x27;s position, `point guard`</li><li>The second player&#x27;s age, 22</li><li>The third player&#x27;s position, `shooting guard`</li><li>The second player&#x27;s name, `Anas`</li></ol></article>
+<article><h3>M2L6-010</h3><p>In `country_capitals`, what is the role of `&quot;Canada&quot;` in the expression `country_capitals[&quot;Canada&quot;]`?</p>
+<pre><code>country_capitals = {&#x27;Germany&#x27;: &#x27;Berlin&#x27;, &#x27;Canada&#x27;: &#x27;Ottawa&#x27;, &#x27;England&#x27;: &#x27;London&#x27;}
+print(country_capitals[&#x27;Canada&#x27;])</code></pre>
+<ol type='A'><li>It is a method that returns all dictionary entries</li><li>It is a key used to look up its associated value</li><li>It is a positional index into the dictionary</li><li>It is a value searched for among the capitals</li></ol></article>
+<article><h3>M2L6-011</h3><p>Which statement about dictionary keys and values is correct?</p>
+<ol type='A'><li>Both keys and values must be unique</li><li>Keys must be strings; values must be numbers</li><li>Keys are unique; values may be repeated</li><li>Keys may repeat; values must be unique</li></ol></article>
+<article><h3>M2L6-012</h3><p>Which value cannot be used as a dictionary key in the lesson&#x27;s examples because it is mutable?</p>
+<ol type='A'><li>A string such as `&quot;country&quot;`</li><li>An integer such as `7`</li><li>A tuple such as `(1, 2)`</li><li>A list such as `[1, 2]`</li></ol></article>
+<article><h3>M2L6-013</h3><p>Which expression constructs the mapping `{&#x27;first_name&#x27;: &#x27;Rob&#x27;, &#x27;surname&#x27;: &#x27;Jone&#x27;}` using keyword arguments?</p>
+<ol type='A'><li>`dict(first_name=&#x27;Rob&#x27;, surname=&#x27;Jone&#x27;)`</li><li>`dict(first_name=&#x27;Rob&#x27;)`</li><li>`dict((&#x27;first_name&#x27;, &#x27;Rob&#x27;), (&#x27;surname&#x27;, &#x27;Jone&#x27;))`</li><li>`dict(first_name: &#x27;Rob&#x27;, surname: &#x27;Jone&#x27;)`</li></ol></article>
+<article><h3>M2L6-014</h3><p>Which argument shape can be passed to `dict()` to create several key-value pairs?</p>
+<pre><code>pairs = [(&#x27;first_name&#x27;, &#x27;Rob&#x27;), (&#x27;surname&#x27;, &#x27;Jone&#x27;)]
+print(dict(pairs))</code></pre>
+<ol type='A'><li>A tuple containing only the keys</li><li>An iterable of two-element pairs</li><li>A flat iterable of alternating keys and values</li><li>A set containing all keys and values</li></ol></article>
+<article><h3>M2L6-015</h3><p>How can one dictionary key map to three numbers?</p>
+<ol type='A'><li>Write each number after the key with commas between them</li><li>Use three colons after the key</li><li>Store the numbers together in one list as the value</li><li>Repeat the key three times in the dictionary</li></ol></article>
+<article><h3>M2L6-016</h3><p>For `person = {&#x27;name&#x27;: &#x27;Mona&#x27;, &#x27;age&#x27;: 25}`, what does `&#x27;age&#x27; in person` test?</p>
+<pre><code>person = {&#x27;name&#x27;: &#x27;Mona&#x27;, &#x27;age&#x27;: 25}
+print(&#x27;age&#x27; in person)</code></pre>
+<ol type='A'><li>Whether 25 is present</li><li>Whether person has exactly 25 dictionary items</li><li>Whether the key and its value are both strings</li><li>Whether `age` is a key in person</li></ol></article>
+<article><h3>M2L6-017</h3><p>By default, what does `for key in person:` iterate over?</p>
+<pre><code>person = {&#x27;first_name&#x27;: &#x27;Mona&#x27;, &#x27;age&#x27;: 25}
+for key in person:
+    print(key)</code></pre>
+<ol type='A'><li>The dictionary&#x27;s keys</li><li>The dictionary values</li><li>The dictionary&#x27;s key-value pairs</li><li>The integer positions of its entries</li></ol></article>
+<article><h3>M2L6-018</h3><p>What does `for key, value in pd.items():` allow the loop to access on each iteration?</p>
+<pre><code>pd = {&#x27;first_name&#x27;: &#x27;Rob&#x27;, &#x27;surname&#x27;: &#x27;Jone&#x27;}
+for key, value in pd.items():
+    print(key, value)</code></pre>
+<ol type='A'><li>A copy of the entire dictionary each time</li><li>Both the key and its associated value</li><li>Only the key, then the next numeric index</li><li>Only the values and their positions</li></ol></article>
+<article><h3>M2L6-019</h3><p>Which expression returns the values from `pd`?</p>
+<ol type='A'><li>`pd.keys()`</li><li>`dict(pd.items())`</li><li>`pd.values()`</li><li>`pd.value()`</li></ol></article>
+<article><h3>M2L6-020</h3><p>In `pd[&#x27;hobby&#x27;] = &#x27;tennis&#x27;`, what happens if `hobby` was not already a key?</p>
+<pre><code>pd = {}
+pd[&#x27;hobby&#x27;] = &#x27;tennis&#x27;
+print(pd)</code></pre>
+<ol type='A'><li>A KeyError is raised because the key is missing</li><li>It changes pd&#x27;s type</li><li>The value is added to every existing key</li><li>A new key-value item is added</li></ol></article>
+<article><h3>M2L6-021</h3><p>If `pd` contains `{&#x27;name&#x27;: &#x27;Rob&#x27;}`, what does `pd[&#x27;name&#x27;] = &#x27;James&#x27;` do?</p>
+<pre><code>pd = {&#x27;name&#x27;: &#x27;Rob&#x27;}
+pd[&#x27;name&#x27;] = &#x27;James&#x27;
+print(pd)</code></pre>
+<ol type='A'><li>Replaces the value for the existing key `name`</li><li>Adds a second `name` key beside the first</li><li>Raises an error because dictionary values cannot change</li><li>Renames the key to `James`</li></ol></article>
+<article><h3>M2L6-022</h3><p>What does `pd.pop(&#x27;favourite_food&#x27;)` do when that key exists?</p>
+<pre><code>pd = {&#x27;favourite_food&#x27;: &#x27;Pizza&#x27;, &#x27;hobby&#x27;: &#x27;tennis&#x27;}
+value = pd.pop(&#x27;favourite_food&#x27;)
+print(value, pd)</code></pre>
+<ol type='A'><li>Removes every item whose value is a food</li><li>Removes that key-value item and returns its value</li><li>Removes the last inserted item regardless of its key</li><li>Returns the value but leaves the item in pd</li></ol></article>
+<article><h3>M2L6-023</h3><p>What does `del pd[&#x27;hobby&#x27;]` remove?</p>
+<ol type='A'><li>Every dictionary item with a string value</li><li>The variable pd itself</li><li>The item stored under the key `hobby`</li><li>The last item inserted into pd</li></ol></article>
+<article><h3>M2L6-024</h3><p>After `pd[&#x27;new&#x27;] = 3`, which entry does `pd.popitem()` remove according to the lesson?</p>
+<pre><code>pd = {&#x27;old&#x27;: 1}
+pd[&#x27;new&#x27;] = 3
+print(pd.popitem())</code></pre>
+<ol type='A'><li>The first key alphabetically</li><li>The item with the smallest value</li><li>A randomly selected key-value pair</li><li>The last inserted key-value pair</li></ol></article>
+<article><h3>M2L6-025</h3><p>What does `pd.update({&#x27;age&#x27;: 25, &#x27;city&#x27;: &#x27;Cairo&#x27;})` do?</p>
+<pre><code>pd = {&#x27;name&#x27;: &#x27;Mona&#x27;, &#x27;age&#x27;: 24}
+pd.update({&#x27;age&#x27;: 25, &#x27;city&#x27;: &#x27;Cairo&#x27;})
+print(pd)</code></pre>
+<ol type='A'><li>Adds or replaces the specified key-value pairs in pd</li><li>Adds only new keys without replacing existing values</li><li>Deletes keys missing from the supplied dictionary</li><li>Returns a new dictionary and leaves pd unchanged</li></ol></article>
+<article><h3>M2L6-026</h3><p>What remains true after `pd2 = pd.copy()` followed by `pd.clear()`?</p>
+<pre><code>pd = {&#x27;name&#x27;: &#x27;Rob&#x27;, &#x27;age&#x27;: 25}
+pd2 = pd.copy()
+pd.clear()
+print(pd, pd2)</code></pre>
+<ol type='A'><li>pd2 is cleared too, because clear empties all dictionaries sharing their values</li><li>pd becomes empty while pd2 retains the original top-level items</li><li>pd2 contains only the last item removed from pd</li><li>pd remains unchanged while pd2 becomes empty</li></ol></article>
+<article><h3>M2L6-027</h3><p>What is the main limitation of `pd.copy()` when pd contains a nested list?</p>
+<pre><code>pd = {&#x27;scores&#x27;: [4, 5]}
+pd2 = pd.copy()
+pd2[&#x27;scores&#x27;].append(6)
+print(pd[&#x27;scores&#x27;])</code></pre>
+<ol type='A'><li>The copy changes every dictionary key</li><li>The shallow copy recursively duplicates each nested list into a separate object</li><li>The copy is shallow, so the nested list is still shared</li><li>The copy omits all nested values</li></ol></article>
+<article><h3>M2L6-028</h3><p>Given the lesson&#x27;s person dictionary, what does `person[&#x27;address&#x27;][&#x27;street&#x27;]` access?</p>
+<pre><code>person = {&#x27;address&#x27;: {&#x27;street&#x27;: &#x27;Main Road&#x27;, &#x27;zipcode&#x27;: &#x27;02210&#x27;}}
+print(person[&#x27;address&#x27;][&#x27;street&#x27;])</code></pre>
+<ol type='A'><li>The address key&#x27;s first character in the dictionary&#x27;s displayed text</li><li>The address dictionary&#x27;s first positional item</li><li>The zipcode inside the nested address dictionary</li><li>The street value inside the nested address dictionary</li></ol></article>
+<article><h3>M2L6-029</h3><p>For the lesson&#x27;s person record, what does `person[&#x27;skills&#x27;][2]` return?</p>
+<pre><code>person = {&#x27;skills&#x27;: [&#x27;JavaScript&#x27;, &#x27;React&#x27;, &#x27;Node&#x27;, &#x27;MongoDB&#x27;, &#x27;Python&#x27;]}
+print(person[&#x27;skills&#x27;][2])</code></pre>
+<ol type='A'><li>`Node`, the third item</li><li>`Java`</li><li>`React`, the second skill in the list</li><li>`Python`, the final skill</li></ol></article>
+<article><h3>M2L6-030</h3><p>Which data shape does the lesson identify as a table-like collection of records?</p>
+<ol type='A'><li>A string containing comma-separated labels</li><li>A list of dictionaries with the same keys</li><li>A tuple containing one dictionary key</li><li>A dictionary whose keys are all list positions</li></ol></article>
+<article><h3>M2L6-031</h3><p>In the lesson&#x27;s `avg_hours(entries)`, which values are added before dividing by the number of records?</p>
+<pre><code>data = [{&#x27;hours&#x27;: 3}, {&#x27;hours&#x27;: 1}, {&#x27;hours&#x27;: 4}, {&#x27;hours&#x27;: 2}]
+print(sum(e[&#x27;hours&#x27;] for e in data) / len(data))</code></pre>
+<ol type='A'><li>The number of hours in the first respondent&#x27;s record</li><li>The hours key repeated once for each record</li><li>The `hours` value from each dictionary in entries</li><li>The number of keys stored in every dictionary record</li></ol></article>
+<article><h3>M2L6-032</h3><p>For the four survey records in the lesson, what does `avg_hours(data)` return?</p>
+<pre><code>hours = [3, 1, 4, 2]
+print(sum(hours) / len(hours))</code></pre>
+<ol type='A'><li>2</li><li>3</li><li>2.75</li><li>2.5</li></ol></article>
+<article><h3>M2L6-033</h3><p>With `limit=2`, which names does `heavy_users(data)` return for the lesson&#x27;s survey records?</p>
+<pre><code>data = [{&#x27;name&#x27;: &#x27;Alice&#x27;, &#x27;hours&#x27;: 3}, {&#x27;name&#x27;: &#x27;Bob&#x27;, &#x27;hours&#x27;: 1}, {&#x27;name&#x27;: &#x27;Charlie&#x27;, &#x27;hours&#x27;: 4}, {&#x27;name&#x27;: &#x27;David&#x27;, &#x27;hours&#x27;: 2}]
+print([e[&#x27;name&#x27;] for e in data if e[&#x27;hours&#x27;] &gt; 2])</code></pre>
+<ol type='A'><li>Alice and Charlie</li><li>Alice, Charlie, and David</li><li>Charlie and David</li><li>Bob and David</li></ol></article>
+<article><h3>M2L6-034</h3><p>In the character-frequency PDF example, why can the expression `txt.count(i)` give zero for a character in `set(txt.upper())`?</p>
+<pre><code>txt = &#x27;Hello, I love feps&#x27;
+for char in set(txt.upper()):
+    print(char, txt.count(char))</code></pre>
+<ol type='A'><li>upper() changes txt, but count searches a separate lower-case copy</li><li>`i` is uppercase, while `txt` remains mixed-case</li><li>The set removes characters that occur more than once in the string</li><li>The set counts characters by itself</li></ol></article>
+<article><h3>M2L6-035</h3><p>Which correction makes the PDF&#x27;s character-frequency loop count letters case-insensitively?</p>
+<ol type='A'><li>`text = txt.lower()`; iterate over `set(text)` and count in `txt`</li><li>`text = txt.upper()`; iterate over `set(text)` and count in `txt`</li><li>`text = txt.lower()`; iterate over `set(text)` and count in `text`</li><li>`text = txt.lower()`; iterate over `set(txt.upper())` and count in `text`</li></ol></article>
+<article><h3>M2L6-036</h3><p>For the case-insensitive text `&quot;Hello, I love feps&quot;`, how many times does `l` occur?</p>
+<pre><code>text = &#x27;Hello, I love feps&#x27;.lower()
+print(text.count(&#x27;l&#x27;))</code></pre>
+<ol type='A'><li>1</li><li>2</li><li>4</li><li>3</li></ol></article>
+<article><h3>M2L6-037</h3><p>For `ad_ctr` in the lesson, what does `max(ad_ctr.values())` return?</p>
+<pre><code>ad_ctr = {&#x27;Google Ads&#x27;: 5.4, &#x27;Facebook Ads&#x27;: 3.8, &#x27;Instagram Ads&#x27;: 4.2, &#x27;LinkedIn Ads&#x27;: 1.9}
+print(max(ad_ctr.values()))</code></pre>
+<ol type='A'><li>5.4</li><li>4.2</li><li>3.8</li><li>1.9</li></ol></article>
+<article><h3>M2L6-038</h3><p>With `min_ctr=4.0`, which platforms does `suggest_improvement(ad_ctr)` select?</p>
+<pre><code>ad_ctr = {&#x27;Google Ads&#x27;: 5.4, &#x27;Facebook Ads&#x27;: 3.8, &#x27;Instagram Ads&#x27;: 4.2, &#x27;LinkedIn Ads&#x27;: 1.9}
+print([p for p, c in ad_ctr.items() if c &lt; 4.0])</code></pre>
+<ol type='A'><li>Google Ads and Facebook Ads</li><li>Facebook Ads and LinkedIn Ads</li><li>Facebook Ads and Instagram Ads</li><li>Instagram Ads and LinkedIn Ads</li></ol></article>
+<article><h3>M2L6-039</h3><p>What is the list produced by `[k for k, v in ad_ctr.items() if v == top]` for the lesson&#x27;s campaign data?</p>
+<ol type='A'><li>[&#x27;Facebook Ads&#x27;]</li><li>[&#x27;Instagram Ads&#x27;]</li><li>`[&#x27;Google Ads&#x27;]`</li><li>[]</li></ol></article>
+<article><h3>M2L6-040</h3><p>If `price_change` is zero in the lesson&#x27;s elasticity calculation, what does its guard do?</p>
+<pre><code>price_change = 0
+if price_change != 0:
+    elasticity = 0.2 / price_change
+else:
+    elasticity = float(&#x27;inf&#x27;)
+print(elasticity)</code></pre>
+<ol type='A'><li>Sets elasticity to zero</li><li>Skips the product without assigning elasticity</li><li>Changes the price change to one</li><li>Avoids dividing by zero and assigns infinity</li></ol></article>
+<h2>Structured-response questions</h2>
+<article><h3>M2L6-E01 · 5 marks</h3><p>Compare tuples, lists, and dictionaries for storing (a) fixed annual inflation observations, (b) a collection of student records that will be edited, and (c) country-to-capital mappings. For each, choose a suitable type and explain the access and mutability trade-off.</p>
+<pre><code>inflation = (2.1, 1.8, 2.5)
+students = [&#x27;Mona&#x27;, &#x27;Ali&#x27;]
+capitals = {&#x27;Canada&#x27;: &#x27;Ottawa&#x27;}</code></pre>
+</article>
+<article><h3>M2L6-E02 · 5 marks</h3><p>Using `team = [(&#x27;Ahmed&#x27;, 20, &#x27;center&#x27;), (&#x27;Anas&#x27;, 22, &#x27;point guard&#x27;), (&#x27;Wael&#x27;, 22, &#x27;shooting guard&#x27;), (&#x27;Ameer&#x27;, 21, &#x27;power forward&#x27;), (&#x27;Ali&#x27;, 19, &#x27;small forward&#x27;)]`, write or outline a loop that prints each name and position, calculates average age, then state the result of `team[1][2]` and `team[2:4][1]`.</p>
+<pre><code>team = [(&#x27;Ahmed&#x27;, 20, &#x27;center&#x27;),
+        (&#x27;Anas&#x27;, 22, &#x27;point guard&#x27;),
+        (&#x27;Wael&#x27;, 22, &#x27;shooting guard&#x27;),
+        (&#x27;Ameer&#x27;, 21, &#x27;power forward&#x27;),
+        (&#x27;Ali&#x27;, 19, &#x27;small forward&#x27;)]</code></pre>
+</article>
+<article><h3>M2L6-E03 · 5 marks</h3><p>Build a dictionary for two survey respondents using a list of `(key, value)` pairs, with each respondent&#x27;s name and hours. Explain why a list of dictionaries with the same keys represents a table, and show how to retrieve the second respondent&#x27;s hours. State one valid way to store several scores under one key.</p>
+<pre><code>rows = [
+    dict([(&#x27;name&#x27;, &#x27;Alice&#x27;), (&#x27;hours&#x27;, 3)]),
+    dict([(&#x27;name&#x27;, &#x27;Bob&#x27;), (&#x27;hours&#x27;, 1)])
+]</code></pre>
+</article>
+<article><h3>M2L6-E04 · 5 marks</h3><p>Trace this code. Give `selected`, `removed`, `copied`, and `data` after execution. Explain what `update`, `pop`, `copy`, and `clear` each do.</p>
+<pre><code>data = {&#x27;name&#x27;: &#x27;Rob&#x27;, &#x27;age&#x27;: 24}
+data.update({&#x27;age&#x27;: 25, &#x27;city&#x27;: &#x27;Cairo&#x27;})
+removed = data.pop(&#x27;name&#x27;)
+copied = data.copy()
+data.clear()
+selected = copied[&#x27;city&#x27;]</code></pre>
+</article>
+<article><h3>M2L6-E05 · 5 marks</h3><p>Use the lesson&#x27;s survey records to state (a) the average hours, (b) the names returned by `heavy_users(data)` with its default limit, and (c) the names returned by `heavy_users(data, avg)`. Explain how the strict comparison affects David, who has exactly 2 hours.</p>
+<pre><code>data = [
+    {&#x27;name&#x27;: &#x27;Alice&#x27;, &#x27;hours&#x27;: 3},
+    {&#x27;name&#x27;: &#x27;Bob&#x27;, &#x27;hours&#x27;: 1},
+    {&#x27;name&#x27;: &#x27;Charlie&#x27;, &#x27;hours&#x27;: 4},
+    {&#x27;name&#x27;: &#x27;David&#x27;, &#x27;hours&#x27;: 2}
+]</code></pre>
+</article>
+<article><h3>M2L6-E06 · 5 marks</h3><p>For the lesson&#x27;s campaign rates `{&#x27;Google Ads&#x27;: 5.4, &#x27;Facebook Ads&#x27;: 3.8, &#x27;Instagram Ads&#x27;: 4.2, &#x27;LinkedIn Ads&#x27;: 1.9}`, identify the best platform and the improvement lists for thresholds 4.0 and 2.0. Describe the role of `values()`, `items()`, and the list comprehension in finding these results.</p>
+<pre><code>ad_ctr = {&#x27;Google Ads&#x27;: 5.4, &#x27;Facebook Ads&#x27;: 3.8,
+          &#x27;Instagram Ads&#x27;: 4.2, &#x27;LinkedIn Ads&#x27;: 1.9}
+top = max(ad_ctr.values())
+best = [k for k, v in ad_ctr.items() if v == top]</code></pre>
+</article>
+<article><h3>M2L6-E07 · 5 marks</h3><p>Repair the PDF&#x27;s character-frequency approach for `txt = &#x27;Hello, I love feps&#x27;` so counts are case-insensitive. Show a correct loop and state the counts for `h`, `e`, `l`, and the space character. Explain why the original `set(txt.upper())` combined with `txt.count(char)` fails for lowercase characters.</p>
+<pre><code>txt = &#x27;Hello, I love feps&#x27;
+# PDF version: for char in set(txt.upper()):
+#                 freq[char] = txt.count(char)</code></pre>
+</article>
+<article><h3>M2L6-E08 · 5 marks</h3><p>Using the nested product data below, calculate the signed price elasticity for Laptop and Smartphone from the formula `(percentage change in quantity)/(percentage change in price)`. Then compare the PDF&#x27;s direct `elasticity &gt; 1` / `&lt; 1` classification with classification by absolute magnitude, and explain the issue for Laptop.</p>
+<pre><code>products = {
+    &#x27;Laptop&#x27;: {&#x27;p0&#x27;: 1000, &#x27;p1&#x27;: 1500, &#x27;q0&#x27;: 50, &#x27;q1&#x27;: 20},
+    &#x27;Smartphone&#x27;: {&#x27;p0&#x27;: 800, &#x27;p1&#x27;: 1000, &#x27;q0&#x27;: 200, &#x27;q1&#x27;: 400}
+}</code></pre>
+</article>
+</body></html>

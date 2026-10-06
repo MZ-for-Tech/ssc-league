@@ -1,0 +1,15 @@
+{
+  "recommendation": "8 structured responses, 5 marks each",
+  "rationale": "Essays require students to read real charts, justify chart choices, explain visual limitations, and write pandas plotting calls.",
+  "total_marks": 40,
+  "coverage": {
+    "M3L4-E01": "choose and interpret a distribution comparison",
+    "M3L4-E02": "read and justify a grouped bar chart",
+    "M3L4-E03": "read histograms and explain binning",
+    "M3L4-E04": "interpret a relationship plot cautiously",
+    "M3L4-E05": "read and critique a normalized stacked chart",
+    "M3L4-E06": "critique a chart choice and select a replacement",
+    "M3L4-E07": "choose and qualify a composition chart",
+    "M3L4-E08": "write plotting calls and explain their use"
+  }
+}

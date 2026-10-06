@@ -1,0 +1,10 @@
+{"id": "A01", "prompt": "What does the oval symbol represent?"}
+{"id": "A02", "prompt": "What must every flow line show?"}
+{"id": "A03", "prompt": "Why do the Yes and No branches of the bonus chart join before Print Bonus?"}
+{"id": "A04", "prompt": "In your own words, how does a backward arrow in a loop change the path through the chart?"}
+{"id": "A05", "prompt": "Trace the average sequence for a=6, b=9, c=12."}
+{"id": "A06", "prompt": "For salary=5500, follow the bonus chart and state the assigned bonus."}
+{"id": "A07", "prompt": "A sum-loop chart returns to its condition without changing N. What behavior follows, and which missing relationship causes it?"}
+{"id": "A08", "prompt": "A decision diamond asks Avg >= 60, but both exits are labeled Yes. Diagnose the chart problem and explain why its paths cannot be distinguished."}
+{"id": "A09", "prompt": "A policy says salaries of 6000 or more receive 6%; a proposed chart uses salary > 6000. Judge whether it implements the policy and support your judgment with the boundary case."}
+{"id": "A10", "prompt": "Two equivalent charts calculate an average: one uses a single process box; the other uses separate add and divide boxes. Given the criterion “make every arithmetic step explicit to a beginner,” which better meets the criterion?"}

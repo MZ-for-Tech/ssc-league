@@ -1,0 +1,242 @@
+<!doctype html><html lang='en'><meta charset='utf-8'><meta name='viewport' content='width=device-width'><title>Functions and Modules — Question Preview</title>
+<style>body{font:16px/1.55 system-ui,sans-serif;max-width:980px;margin:2rem auto;padding:0 1rem;color:#18212b}article{border:1px solid #ccd3da;border-radius:10px;padding:1rem 1.2rem;margin:1rem 0}pre{overflow:auto;background:#f3f5f7;padding:1rem;border-radius:8px}ol{padding-left:1.5rem}</style><body><h1>Module 2 — Functions and Modules</h1><p>40 MCQs and 8 structured responses. Questions use both the Markdown lesson and Lecture 2_3 PDF.</p><h2>Multiple-choice questions</h2>
+<article><h3>M2L4-001</h3><p>Which statement best distinguishes a built-in function from a user-defined function?</p>
+<ol type='A'><li>Python supplies built-ins; programmers define user functions for a particular task</li><li>A built-in always returns a value; a user-defined function always prints</li><li>A built-in must be imported from a module; a user-defined function cannot be imported</li><li>A built-in accepts no arguments; a user-defined function must accept arguments</li></ol></article>
+<article><h3>M2L4-002</h3><p>What happens when Python executes a function definition that has not been called?</p>
+<pre><code>def greet():
+    print(&#x27;Hello&#x27;)
+</code></pre>
+<ol type='A'><li>Python runs the body only if it contains a return statement</li><li>The name is bound; the function body waits for a call</li><li>Python runs the body once and then stores its return value</li><li>Python prints the docstring and waits for input</li></ol></article>
+<article><h3>M2L4-003</h3><p>In `def add(a, b):`, what are `a` and `b`?</p>
+<pre><code>def add(a, b):
+    return a + b</code></pre>
+<ol type='A'><li>The function calls</li><li>The module aliases</li><li>Formal parameter names</li><li>The returned values produced by a call</li></ol></article>
+<article><h3>M2L4-004</h3><p>What does `print_hello()` do in the lesson&#x27;s example when called three times?</p>
+<pre><code>def print_hello():
+    print(&#x27;Good Morning FEPS&#x27;)
+
+print_hello()
+print_hello()
+print_hello()</code></pre>
+<ol type='A'><li>It defines three separate functions</li><li>It returns the greeting once and stores it</li><li>It prints the function&#x27;s docstring three times</li><li>It displays the greeting three times</li></ol></article>
+<article><h3>M2L4-005</h3><p>What does `add(5, 7)` return in the lesson&#x27;s example?</p>
+<pre><code>def add(a, b):
+    s = a + b
+    return s
+
+print(add(5, 7))</code></pre>
+<ol type='A'><li>12</li><li>5</li><li>7</li><li>35</li></ol></article>
+<article><h3>M2L4-006</h3><p>What is the key difference between `print` and `return` inside a function?</p>
+<pre><code>def shows(x):
+    print(x * 2)
+
+def gives(x):
+    return x * 2
+
+a = shows(5)
+b = gives(5)</code></pre>
+<ol type='A'><li>`return` defines the function, while `print` calls it</li><li>`print` displays; `return` sends a value to its caller</li><li>`print` hands a value back; `return` displays it</li><li>Both show output, but only `return` can pass a value back</li></ol></article>
+<article><h3>M2L4-007</h3><p>After `a = shows(5)` where `shows` only prints `x * 2`, what value is assigned to `a`?</p>
+<pre><code>def shows(x):
+    print(x * 2)
+
+a = shows(5)
+print(a)</code></pre>
+<ol type='A'><li>5</li><li>The string `&#x27;10&#x27;`</li><li>`None`</li><li>10</li></ol></article>
+<article><h3>M2L4-008</h3><p>For `my_avg(10, 20)` defined as `(x + y) / 2`, what is returned?</p>
+<pre><code>def my_avg(x, y):
+    return (x + y) / 2
+
+print(my_avg(10, 20))</code></pre>
+<ol type='A'><li>30</li><li>10</li><li>20.0</li><li>15.0</li></ol></article>
+<article><h3>M2L4-009</h3><p>In `my_avg_list(L)`, why does the function initialize `s = 0` before its loop?</p>
+<pre><code>def my_avg_list(L):
+    s = 0
+    for i in L:
+        s += i
+    return s / len(L)</code></pre>
+<ol type='A'><li>Give the running sum a zero starting value</li><li>It sets the list length to zero</li><li>It makes the function return zero after the loop</li><li>It prevents the loop from visiting the first item</li></ol></article>
+<article><h3>M2L4-010</h3><p>What does the guard clause in `loan_payment` do when `annual_rate == 0`?</p>
+<pre><code>def loan_payment(principal, annual_rate, years):
+    months = years * 12
+    if annual_rate == 0:
+        return principal / months
+    monthly_rate = annual_rate / (100 * 12)
+    R = (1 + monthly_rate) ** months
+    return round((principal * monthly_rate * R) / (R - 1), 2)</code></pre>
+<ol type='A'><li>It changes the annual rate to 100 percent</li><li>It handles zero interest before the general payment formula runs</li><li>It raises an error to prevent an interest-free loan</li><li>It skips all payment calculations and returns the principal amount only</li></ol></article>
+<article><h3>M2L4-011</h3><p>In the loan function, how is an annual rate given as a percentage converted to a monthly decimal rate?</p>
+<pre><code>monthly_rate = annual_rate / (100 * 12)</code></pre>
+<ol type='A'><li>Divide by 12 and then add 100</li><li>Subtract 12 and divide by 100</li><li>Divide the annual percentage by `100 * 12`</li><li>Multiply the annual percentage rate by `100 * 12`</li></ol></article>
+<article><h3>M2L4-012</h3><p>A function receives three scores, calculates their mean, and divides the sum of squared deviations by 3. Which variance convention is it using?</p>
+<pre><code>v = ((x-m)**2 + (y-m)**2 + (z-m)**2) / 3</code></pre>
+<ol type='A'><li>Sample variance using n minus one after squaring deviations</li><li>Standard deviation, taking a square root</li><li>Range, subtracting the minimum from the maximum</li><li>Population variance, dividing squared deviations by n</li></ol></article>
+<article><h3>M2L4-013</h3><p>If both default parameters are omitted in the lesson&#x27;s `generate_full_name` example, what name is returned?</p>
+<pre><code>def generate_full_name(first_name=&#x27;Arwa&#x27;, last_name=&#x27;Mohammed&#x27;):
+    return first_name + &#x27; &#x27; + last_name
+
+print(generate_full_name())</code></pre>
+<ol type='A'><li>Arwa Mohammed</li><li>Mona Saber</li><li>Arwa Saber</li><li>Mona Mohammed</li></ol></article>
+<article><h3>M2L4-014</h3><p>What does `generate_full_name(last_name=&#x27;Saber&#x27;)` return when the defaults are Arwa and Mohammed?</p>
+<pre><code>def generate_full_name(first_name=&#x27;Arwa&#x27;, last_name=&#x27;Mohammed&#x27;):
+    return first_name + &#x27; &#x27; + last_name
+
+print(generate_full_name(last_name=&#x27;Saber&#x27;))</code></pre>
+<ol type='A'><li>Saber Mohammed</li><li>Arwa Saber</li><li>Saber Arwa</li><li>Arwa Mohammed</li></ol></article>
+<article><h3>M2L4-015</h3><p>What does the `*nums` parameter collect in `sum_all_nums(*nums)`?</p>
+<pre><code>def sum_all_nums(*nums):
+    return nums
+
+print(sum_all_nums(2, 3, 5))</code></pre>
+<ol type='A'><li>The function&#x27;s return values as a list</li><li>A required list object passed as the only argument</li><li>Extra positional values, collected as a tuple</li><li>All keyword arguments as a dictionary</li></ol></article>
+<article><h3>M2L4-016</h3><p>What value does `sum_all_nums(2, 3, 5, 10, 20)` return?</p>
+<pre><code>def sum_all_nums(*nums):
+    total = 0
+    for i in nums:
+        total += i
+    return total
+
+print(sum_all_nums(2, 3, 5, 10, 20))</code></pre>
+<ol type='A'><li>20</li><li>25</li><li>10</li><li>40</li></ol></article>
+<article><h3>M2L4-017</h3><p>In `def generate_groups(team, *args):`, what does `team` receive when called as `generate_groups(&#x27;Team-1&#x27;, &#x27;Ana&#x27;, &#x27;Mona&#x27;)`?</p>
+<pre><code>def generate_groups(team, *args):
+    return team, args
+
+print(generate_groups(&#x27;Team-1&#x27;, &#x27;Ana&#x27;, &#x27;Mona&#x27;))</code></pre>
+<ol type='A'><li>The first positional argument, `&#x27;Team-1&#x27;`</li><li>All three arguments as one tuple</li><li>The final positional argument, `&#x27;Mona&#x27;`</li><li>No value, because `*args` must come first</li></ol></article>
+<article><h3>M2L4-018</h3><p>A function-local variable `y` is assigned inside `print_var`. What happens if the main program tries to use that local `y` after the call?</p>
+<pre><code>def f():
+    y = 10
+
+f()
+print(y)</code></pre>
+<ol type='A'><li>It is available only until the next function definition</li><li>`NameError`; the local name is outside its scope</li><li>It reads the value from the most recent call</li><li>It automatically becomes a global variable</li></ol></article>
+<article><h3>M2L4-019</h3><p>In the scope example, why can `print_var()` read global `x` without declaring it `global`?</p>
+<pre><code>x = 5
+def show():
+    print(x)
+
+show()</code></pre>
+<ol type='A'><li>The call passes `x` as an implicit parameter</li><li>Python treats all single-letter names as global</li><li>Reading a global name does not require assigning to it</li><li>Every function automatically copies all globals into locals</li></ol></article>
+<article><h3>M2L4-020</h3><p>What effect does `global x` have before the function assigns `x = -60`?</p>
+<pre><code>x = 5
+def change():
+    global x
+    x = -60
+
+change()
+print(x)</code></pre>
+<ol type='A'><li>It creates a new local variable named `x`</li><li>It makes every variable in the function global</li><li>It passes the old value of `x` as an extra function parameter</li><li>It makes that assignment rebind the module-level `x`</li></ol></article>
+<article><h3>M2L4-021</h3><p>What is recursion?</p>
+<ol type='A'><li>A function calling itself during execution</li><li>A function importing its own module</li><li>A loop repeatedly calling a function until a condition is met</li><li>A function returning without a value</li></ol></article>
+<article><h3>M2L4-022</h3><p>What stops the countdown recursion when it reaches zero?</p>
+<pre><code>def countdown(n):
+    print(n)
+    if n &gt; 0:
+        countdown(n - 1)
+
+countdown(2)</code></pre>
+<ol type='A'><li>Python resets `n` to its original value</li><li>At zero, the condition fails and recursion stops</li><li>Python uses `break` to exit the recursive function</li><li>The `print` statement returns zero</li></ol></article>
+<article><h3>M2L4-023</h3><p>What does `fact(4)` return for the recursive definition in the lesson?</p>
+<pre><code>def fact(n):
+    if n &lt;= 1:
+        return 1
+    return n * fact(n - 1)
+
+print(fact(4))</code></pre>
+<ol type='A'><li>16</li><li>4</li><li>24</li><li>10</li></ol></article>
+<article><h3>M2L4-024</h3><p>What is a likely result of a recursive function whose calls never reach a base case?</p>
+<ol type='A'><li>It automatically converts itself into a loop</li><li>It returns `None` after one call</li><li>It exits normally at the end of the module</li><li>Python eventually raises `RecursionError`</li></ol></article>
+<article><h3>M2L4-025</h3><p>Which practice best follows the lesson&#x27;s clean-code guidance?</p>
+<ol type='A'><li>Use focused functions with meaningful, descriptive names</li><li>Use short names such as `x` and `y` everywhere</li><li>Add a comment that repeats every line of code</li><li>Group the whole program in one function with short generic names</li></ol></article>
+<article><h3>M2L4-026</h3><p>What is a Python module in the lecture&#x27;s definition?</p>
+<ol type='A'><li>A variable that stores imported package versions</li><li>A `.py` file grouping related definitions</li><li>A folder containing only installed third-party packages</li><li>A function that calls another function</li></ol></article>
+<article><h3>M2L4-027</h3><p>After `import Module_test`, how does the example call `generate_full_name` from that module?</p>
+<pre><code>import Module_test
+print(Module_test.generate_full_name(&#x27;Mona&#x27;, &#x27;Ahmed&#x27;))</code></pre>
+<ol type='A'><li>`import.generate_full_name(...)`</li><li>`Module_test::generate_full_name(...)`</li><li>`Module_test.generate_full_name(...)`</li><li>`generate_full_name.Module_test(...)`</li></ol></article>
+<article><h3>M2L4-028</h3><p>What does `from Module_test import generate_full_name as fullname` do?</p>
+<ol type='A'><li>Renames the module file on disk</li><li>Creates a new function with different behavior</li><li>Imports every module name locally under the alias `fullname`</li><li>Imports the name locally as `fullname`</li></ol></article>
+<article><h3>M2L4-029</h3><p>Which import pattern lets code call `sqrt` as `math.sqrt(2)`?</p>
+<pre><code>import math
+print(math.sqrt(2))</code></pre>
+<ol type='A'><li>Import the `math` module</li><li>`from math import sqrt as math`</li><li>`import math.sqrt as 2`</li><li>`from math import * as sqrt`</li></ol></article>
+<article><h3>M2L4-030</h3><p>The PDF imports `random` and `randint` directly, then calls `random.choice(items)`. Which edit gives a valid choice call?</p>
+<ol type='A'><li>Import `choice` and call `random.choice(items)`</li><li>Import `choice` and call `choice(items)`</li><li>Import `randint` and call `randint(items)`</li><li>Import `random` and call `random(items)`</li></ol></article>
+<article><h3>M2L4-031</h3><p>Which statement best describes a Python package in the lesson?</p>
+<ol type='A'><li>A built-in function that installs modules</li><li>A list of all functions in the standard library</li><li>A folder grouping related modules together</li><li>A single function stored in a variable</li></ol></article>
+<article><h3>M2L4-032</h3><p>Which alias is conventionally used for `matplotlib.pyplot` in the lesson?</p>
+<pre><code>import matplotlib.pyplot as plt</code></pre>
+<ol type='A'><li>`mp`</li><li>`sns`</li><li>`pd`</li><li>`plt`</li></ol></article>
+<article><h3>M2L4-033</h3><p>Which package family includes pandas and NumPy in the PDF&#x27;s data-science grouping?</p>
+<ol type='A'><li>Operational packages prepare data for analysis</li><li>Data-visualization packages for plotting</li><li>Machine-learning packages for predictive models</li><li>Operating-system packages for file management</li></ol></article>
+<article><h3>M2L4-034</h3><p>What does software deprecation mean in the lecture?</p>
+<ol type='A'><li>An imported module member is renamed to fit a new alias</li><li>A feature becomes outdated and may be removed later</li><li>A function has completed its return statement</li><li>A package has been installed successfully</li></ol></article>
+<article><h3>M2L4-035</h3><p>In the reusable `growth_model`, why can the same function handle population growth, inflation, interest, and depreciation?</p>
+<pre><code>def growth_model(label, start_value=10000, growth_rate=0.05, n=5):
+    year = 1
+    value = start_value
+    while year &lt;= n:
+        value += value * growth_rate
+        year += 1
+    return value</code></pre>
+<ol type='A'><li>All four examples use the same numerical rate</li><li>The function ignores its arguments and reads global values</li><li>One growth function is reused with changed arguments</li><li>Each call changes the function definition itself</li></ol></article>
+<article><h3>M2L4-036</h3><p>In `analyze_list(data_list, word1, word2)`, what happens when the two counts are equal?</p>
+<pre><code>if count1 &gt; count2:
+    print(&#x27;word1 wins&#x27;)
+elif count2 &gt; count1:
+    print(&#x27;word2 wins&#x27;)
+else:
+    print(&#x27;The counts are equal&#x27;)</code></pre>
+<ol type='A'><li>It reports `word1` as the majority</li><li>It reports `word2` as the majority</li><li>It errors</li><li>It reports a tie</li></ol></article>
+<article><h3>M2L4-037</h3><p>For 1,000 invested at a 5% annual rate for 2 years, what amount does the simple-interest formula `P + P*r*t` give?</p>
+<ol type='A'><li>1,100</li><li>1,102.50</li><li>1,050</li><li>1,025</li></ol></article>
+<article><h3>M2L4-038</h3><p>For the same 1,000 principal, 5% annual rate, and 2 years, what is the compound amount using `P*(1+r)^t`, rounded to two decimals?</p>
+<ol type='A'><li>1,050.00</li><li>1,102.50</li><li>1,100.00</li><li>1,105.00</li></ol></article>
+<article><h3>M2L4-039</h3><p>The PDF assigns the principal input to `P` but later calls `Deposite_simple_interest(p, r, t)`. Why does that name reference fail?</p>
+<pre><code>P = int(input(&#x27;Principal investment: &#x27;))
+r = float(input(&#x27;Annual interest rate (0-1): &#x27;))
+t = int(input(&#x27;Time in years: &#x27;))
+interest_growth.Deposite_simple_interest(p, r, t)</code></pre>
+<ol type='A'><li>Function parameters cannot be passed from variables</li><li>Python converts lowercase variable names to strings</li><li>Uppercase `P` differs from lowercase `p`</li><li>Imported module names must be lowercase</li></ol></article>
+<article><h3>M2L4-040</h3><p>Which is the best reason to put related functions in a module and import them into a main program?</p>
+<ol type='A'><li>It makes every function run automatically on import without any call</li><li>It converts functions into built-in functions</li><li>It prevents the module from using parameters</li><li>It organizes reusable definitions so other files can use them</li></ol></article>
+<h2>Structured-response questions</h2>
+<article><h3>M2L4-E01 · 5 marks</h3><p>Trace the two calls and explain the distinction between displayed output and returned values. State what is printed by `shows(5)` and `gives(5)`, and what values are assigned to `a` and `b`.</p>
+<pre><code>def shows(x):
+    print(x * 2)
+
+def gives(x):
+    return x * 2
+
+a = shows(5)
+b = gives(5)</code></pre>
+</article>
+<article><h3>M2L4-E02 · 5 marks</h3><p>Write a function `mean_of(values)` that returns the arithmetic mean of a non-empty list. Trace its result for `[10, 20, 30, 40, 50]`, and explain the role of the accumulator and `len(values)`. State one issue the function should consider for an empty list.</p>
+</article>
+<article><h3>M2L4-E03 · 5 marks</h3><p>Explain how the loan-payment function handles zero annual interest. Then calculate the interest-free monthly payment for a principal of 12,000 repaid over 4 years, and explain why the guard must occur before the general formula.</p>
+</article>
+<article><h3>M2L4-E04 · 5 marks</h3><p>Compare positional arguments, default parameters, keyword arguments, and `*args`. Use `generate_full_name(first_name=&#x27;Arwa&#x27;, last_name=&#x27;Mohammed&#x27;)` to show what `generate_full_name(last_name=&#x27;Saber&#x27;)` returns, then explain what `*nums` receives in `sum_all_nums(2, 3, 5)`.</p>
+</article>
+<article><h3>M2L4-E05 · 5 marks</h3><p>Trace `get_power(square_number(5), 3)` from the PDF. Show the value produced by each call and clarify whether `get_power` receives the function object `square_number` or the result of calling it.</p>
+<pre><code>def square_number(n):
+    return n * n
+
+def get_power(f, x):
+    return pow(f, x)
+
+result = get_power(square_number(5), 3)</code></pre>
+</article>
+<article><h3>M2L4-E06 · 5 marks</h3><p>For the scope example, identify which variables are local and global. Explain why a function can read a global `x` without `global`, why `y` is unavailable outside the function, and what changes when the function declares `global x` and assigns `x = -60`.</p>
+</article>
+<article><h3>M2L4-E07 · 5 marks</h3><p>Trace the recursive factorial function for `fact(4)`. Show the sequence of calls down to the base case and the values returned while the calls unwind. Explain what role the base case plays.</p>
+<pre><code>def fact(n):
+    if n &lt;= 1:
+        return 1
+    return n * fact(n - 1)
+
+print(fact(4))</code></pre>
+</article>
+<article><h3>M2L4-E08 · 5 marks</h3><p>A PDF exercise asks for a module containing simple- and compound-interest functions, then imports it into a main program. Describe how a module supports reuse, distinguish `import interest_growth` from importing a function directly, and identify and correct the variable-name case error in the provided main-program call (`P` is assigned from input but `p` is passed).</p>
+</article>
+</body></html>

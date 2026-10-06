@@ -1,0 +1,49 @@
+{
+  "lesson": "Module 3, Lesson 2: Pandas basics — building and reading a DataFrame",
+  "sources": {
+    "primary_markdown": "ssc/Module 3/2_pandas.md",
+    "primary_pdf": "ssc/Module 3/10. Module 3_1_pandas.pdf, corresponding pages 14–33 of 68",
+    "scope": "DataFrame attributes and methods distinction; construction; shape, size, columns, index, dtypes, info; basic dtypes; previewing; column, row, and cell selection; loc/iloc; updating labels; adding calculated columns and rows; deleting rows and columns with del/pop/drop."
+  },
+  "batch": {
+    "mcqs": 40,
+    "structured_responses": 8,
+    "marks_each": 5
+  },
+  "coverage": {
+    "distinguish attributes from methods": 2,
+    "interpret DataFrame dimensions": 2,
+    "inspect DataFrame attributes": 1,
+    "inspect completeness and types": 1,
+    "interpret common data types": 2,
+    "create a DataFrame from records": 1,
+    "construct a DataFrame from rows": 1,
+    "create a DataFrame from columns": 1,
+    "preview rows": 3,
+    "select columns": 1,
+    "select multiple columns": 1,
+    "select columns robustly": 1,
+    "select rows by position": 2,
+    "select cells by position": 1,
+    "select rows by label": 1,
+    "select rows and columns by label": 1,
+    "select a cell by position": 1,
+    "update row labels": 1,
+    "update column labels": 1,
+    "add a column": 1,
+    "insert a column at a position": 1,
+    "create a calculated column": 1,
+    "interpret a derived value": 1,
+    "add rows with concat": 2,
+    "add a row with loc": 1,
+    "remove a column": 1,
+    "remove and retrieve a column": 1,
+    "remove data with drop": 1,
+    "apply drop and preserve its result": 1,
+    "understand inplace behavior": 1,
+    "remove rows by label": 1,
+    "persist row deletion": 1,
+    "debug label-based indexing": 1
+  },
+  "method": "Paired-source drafting; answer-bearing review; metadata-hidden item review; rendered code preview; mechanical consistency audit."
+}

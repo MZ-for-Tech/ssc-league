@@ -1,0 +1,15 @@
+{
+  "recommendation": "8 structured-response prompts, 5 marks each",
+  "rationale": "Prompts assess data-structure choice, tuple unpacking, dictionary construction and tracing, survey and campaign analysis, frequency-code debugging, and critical analysis of the elasticity example.",
+  "total_marks": 40,
+  "coverage": {
+    "M2L6-E01": "compare collection types and justify data-structure choices",
+    "M2L6-E02": "write and trace a loop over unpacked tuple records",
+    "M2L6-E03": "construct and query a list of dictionaries",
+    "M2L6-E04": "trace dictionary mutations and explain methods",
+    "M2L6-E05": "calculate and apply thresholds to dictionary records",
+    "M2L6-E06": "analyze dictionary data using maximum and filtering",
+    "M2L6-E07": "debug and repair a dictionary frequency program",
+    "M2L6-E08": "calculate elasticity and critically evaluate a classification rule"
+  }
+}

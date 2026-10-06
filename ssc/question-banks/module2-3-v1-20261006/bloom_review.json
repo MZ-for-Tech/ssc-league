@@ -1,0 +1,50 @@
+{
+  "note": "Provisional operation-based labels, advisory only; no forced Bloom quotas. Review is same-session AI assessment.",
+  "anchors": [
+    {
+      "id": "M2L3-003",
+      "label": "Understand",
+      "reason": "identify the four control steps in a while loop"
+    },
+    {
+      "id": "M2L3-008",
+      "label": "Apply",
+      "reason": "compute a range's generated values"
+    },
+    {
+      "id": "M2L3-020",
+      "label": "Apply",
+      "reason": "calculate nested iteration count"
+    },
+    {
+      "id": "M2L3-026",
+      "label": "Apply",
+      "reason": "evaluate repeated growth"
+    },
+    {
+      "id": "M2L3-018",
+      "label": "Apply",
+      "reason": "trace break and continue effects"
+    },
+    {
+      "id": "M2L3-E05",
+      "label": "Apply",
+      "reason": "trace nested loops"
+    },
+    {
+      "id": "M2L3-E06",
+      "label": "Apply",
+      "reason": "calculate compounded growth"
+    },
+    {
+      "id": "M2L3-E07",
+      "label": "Analyze",
+      "reason": "interpret response counts and shares"
+    },
+    {
+      "id": "M2L3-E08",
+      "label": "Evaluate",
+      "reason": "identify repeated structure as a refactoring signal"
+    }
+  ]
+}

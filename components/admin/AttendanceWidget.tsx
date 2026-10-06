@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ClipboardCheck, CheckCircle2, XCircle, Clock } from "lucide-react";
+import { ClipboardCheck, CheckCircle2, XCircle } from "lucide-react";
 import { markGroupAttendance } from "@/app/actions/admin-actions";
 import clsx from "clsx";
 
@@ -12,7 +12,7 @@ export default function AttendanceWidget() {
 
   const handleMark = async (status: 'PRESENT' | 'ABSENT') => {
     if (!confirm(`Mark entire ${group} as ${status} for today?`)) return;
-    
+
     setLoading(true);
     const res = await markGroupAttendance(group, status);
     setLoading(false);
@@ -46,8 +46,8 @@ export default function AttendanceWidget() {
                             onClick={() => setGroup(g)}
                             className={clsx(
                                 "py-2 rounded-lg text-xs font-bold font-mono border transition-all",
-                                group === g 
-                                    ? "bg-emerald-500 text-white border-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.3)]" 
+                                group === g
+                                    ? "bg-emerald-500 text-white border-emerald-400 shadow-[0_0_10px_rgb(var(--emerald-500)/0.3)]"
                                     : "bg-slate-950 border-slate-700 text-slate-400 hover:border-slate-500"
                             )}
                         >
@@ -58,7 +58,7 @@ export default function AttendanceWidget() {
             </div>
 
             <div className="grid grid-cols-2 gap-3 pt-2">
-                <button 
+                <button
                     onClick={() => handleMark('PRESENT')}
                     disabled={loading}
                     className="flex flex-col items-center justify-center gap-2 py-4 bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400 rounded-xl transition-all disabled:opacity-50"
@@ -66,7 +66,7 @@ export default function AttendanceWidget() {
                     <CheckCircle2 size={20} />
                     <span className="text-xs font-bold uppercase">Mark Present</span>
                 </button>
-                <button 
+                <button
                     onClick={() => handleMark('ABSENT')}
                     disabled={loading}
                     className="flex flex-col items-center justify-center gap-2 py-4 bg-rose-500/10 border border-rose-500/30 hover:bg-rose-500/20 text-rose-400 rounded-xl transition-all disabled:opacity-50"

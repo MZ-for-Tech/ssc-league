@@ -1,0 +1,10 @@
+{"id": "M2L1-001", "item": "In the lecture's named-container model, after `score = 8`, what does `score` represent?"}
+{"id": "M2L1-011", "item": "For `a = 17` and `b = 5`, what do `a // b` and `a % b` return, respectively?"}
+{"id": "M2L1-014", "item": "What is the value of `(6 + 2) * 3 ** 2`?"}
+{"id": "M2L1-022", "item": "In the expression `not A and B or C`, which grouping follows Python's logical precedence?"}
+{"id": "M2L1-031", "item": "Why can an overly broad `elif a > 0` make a later `elif a > 0 and a % 2 != 0` unreachable?"}
+{"id": "M2L1-033", "item": "Which leap-year condition matches the lesson's rule?"}
+{"id": "M2L1-036", "item": "In the tariff chain, why is the second branch written `elif units <= 300` rather than `101 <= units <= 300`?"}
+{"id": "M2L1-E04", "item": "Evaluate and show the order of operations for both expressions displayed below. State the precedence rules you used."}
+{"id": "M2L1-E06", "item": "Write a conditional outline for an integer `x` that reports whether it is positive, negative, or zero, and whether a nonzero value is even or odd. Explain how the branch order ensures each case is handled once."}
+{"id": "M2L1-E07", "item": "An electricity provider uses these rates per unit: up to 100 at 0.10, 101–300 at 0.15, 301–500 at 0.20, and above 500 at 0.25. Complete or describe an ordered `if`/`elif`/`else` structure to select the rate, then state which rate applies at 100, 250, 500, and 501 units."}

@@ -1,0 +1,45 @@
+{
+  "status": "author-proposed calibration key; freeze before independent review",
+  "labels": {
+    "ANCHOR-R1": {
+      "bloom": "remember",
+      "rationale": "Retrieves the named definition directly."
+    },
+    "ANCHOR-R2": {
+      "bloom": "remember",
+      "rationale": "Retrieves the stated rule for when a for loop is used."
+    },
+    "ANCHOR-U1": {
+      "bloom": "understand",
+      "rationale": "Interprets why an example violates clarity and unambiguity."
+    },
+    "ANCHOR-U2": {
+      "bloom": "understand",
+      "rationale": "Explains the relationship between step order and what action can follow."
+    },
+    "ANCHOR-A1": {
+      "bloom": "apply",
+      "rationale": "Substitutes supplied values into a familiar formula."
+    },
+    "ANCHOR-A2": {
+      "bloom": "apply",
+      "rationale": "Executes a familiar loop procedure on supplied input."
+    },
+    "ANCHOR-AN1": {
+      "bloom": "analyze",
+      "rationale": "Compares behavior across positive and negative inputs and diagnoses how initialization interacts with the update condition."
+    },
+    "ANCHOR-AN2": {
+      "bloom": "analyze",
+      "rationale": "Interprets the relationship between two changing state variables across loop iterations."
+    },
+    "ANCHOR-E1": {
+      "bloom": "evaluate",
+      "rationale": "Judges a student's generality claim against an explicit all-valid-input criterion."
+    },
+    "ANCHOR-E2": {
+      "bloom": "evaluate",
+      "rationale": "Judges a broad recommendation against several explicit algorithm-selection criteria."
+    }
+  }
+}

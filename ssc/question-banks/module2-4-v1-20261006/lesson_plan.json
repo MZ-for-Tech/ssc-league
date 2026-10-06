@@ -1,0 +1,36 @@
+{
+  "lesson": "Module 2, Lesson 4: Functions and modules",
+  "sources": {
+    "primary_markdown": "ssc/Module 2/4_funcitons_and_modules.md",
+    "primary_pdf": "ssc/Module 2/7. Module 2_3_Function-1.pdf (Lecture 2_3, 44 pages)",
+    "scope": "The batch uses both sources. The PDF contributes parameter techniques, scope and recursion examples, module imports, built-in modules, package families, deprecation, and Sheet 3 exercises; the Markdown provides expanded explanations and runnable examples.",
+    "source_caveats": [
+      "The PDF random example imports random as a function and later uses random.choice; the two names do not support that call together. The related item asks for a valid corrected import/call.",
+      "The Sheet 3 simple-interest answer contains a malformed quoted string, and its main program assigns P but calls with p. The question set isolates the case-sensitive name mismatch and does not treat the malformed snippet as runnable.",
+      "The PDF's get_power example evaluates square_number(5) before passing the resulting number; it does not pass the function object itself. Questions follow the code's actual evaluation.",
+      "The PDF states that every package needs __init__.py. The batch does not turn that absolute statement into an item."
+    ]
+  },
+  "batch": {
+    "mcqs": 40,
+    "structured_responses": 8,
+    "marks_each": 5
+  },
+  "coverage": [
+    "built-in and user-defined functions",
+    "definition, calls, parameters, arguments, docstrings",
+    "print, return, implicit None",
+    "accumulators, averages, currency conversion and loan guard clauses",
+    "defaults, keyword arguments, *args",
+    "function-call evaluation",
+    "local and global scope",
+    "recursion and base cases",
+    "modularity, abstraction, reuse, clean code",
+    "user-defined modules and import forms/aliases",
+    "math, statistics, random",
+    "packages, aliases, package families",
+    "deprecation and version awareness",
+    "growth models, list analysis, simple versus compound interest"
+  ],
+  "method": "Paired-source question drafting; answer-bearing review; metadata-hidden question review; code-rendered preview; mechanical audit."
+}

@@ -1,0 +1,38 @@
+{
+  "mcq_count": 40,
+  "essay_count": 8,
+  "four_choices_each": true,
+  "keys_valid": true,
+  "answer_positions_A_to_D": [
+    10,
+    10,
+    10,
+    10
+  ],
+  "mcq_code_stimuli": 11,
+  "essay_code_stimuli": 5,
+  "preview_code_blocks": 16,
+  "essays_with_explicit_justification": 8,
+  "rubric_totals": {
+    "M2L5-E01": 5,
+    "M2L5-E02": 5,
+    "M2L5-E03": 5,
+    "M2L5-E04": 5,
+    "M2L5-E05": 5,
+    "M2L5-E06": 5,
+    "M2L5-E07": 5,
+    "M2L5-E08": 5
+  },
+  "key_length_cues": [],
+  "duplicate_stems": [],
+  "blind_review_count": 48,
+  "source_pair": "5_lists_and_strings.md and Collection Data Types Part 1 PDF",
+  "review_limit": "Same-session metadata-hidden review; earlier exposure to answer-bearing drafts means this is not independent or fully blind review.",
+  "source_caveats": [
+    "The Part 1 PDF's method table gives remove(x, value); the valid list method is remove(value). No item uses the incorrect signature.",
+    "The Part 1 PDF contains a malformed odd-number comprehension written with range(1:n). The batch uses valid Python syntax and does not present that typo as valid code.",
+    "The PDF has extraction/quotation defects in a string example; no item depends on the defective snippet.",
+    "copy() creates a shallow copy. The batch only makes claims about top-level list behavior and does not imply a deep copy.",
+    "Part 2 of the collection-types lecture covers tuples and dictionaries and is reserved for Lesson 6; it is not used for this batch."
+  ]
+}

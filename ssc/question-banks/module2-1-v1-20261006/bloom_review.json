@@ -1,0 +1,55 @@
+{
+  "note": "Provisional, operation-based labels; advisory only, with no forced category quotas. Same-session AI assessment is not independent human validation.",
+  "anchors": [
+    {
+      "id": "M2L1-001",
+      "label": "Understand",
+      "reason": "interpret a variable assignment"
+    },
+    {
+      "id": "M2L1-011",
+      "label": "Apply",
+      "reason": "calculate quotient and remainder"
+    },
+    {
+      "id": "M2L1-014",
+      "label": "Apply",
+      "reason": "evaluate nested arithmetic precedence"
+    },
+    {
+      "id": "M2L1-022",
+      "label": "Understand",
+      "reason": "explain logical grouping"
+    },
+    {
+      "id": "M2L1-031",
+      "label": "Analyze",
+      "reason": "identify an unreachable branch"
+    },
+    {
+      "id": "M2L1-033",
+      "label": "Apply",
+      "reason": "assemble a rule from divisibility conditions"
+    },
+    {
+      "id": "M2L1-036",
+      "label": "Analyze",
+      "reason": "reason about prior branch coverage"
+    },
+    {
+      "id": "M2L1-E04",
+      "label": "Apply",
+      "reason": "work through operator precedence"
+    },
+    {
+      "id": "M2L1-E06",
+      "label": "Create",
+      "reason": "design a conditional outline"
+    },
+    {
+      "id": "M2L1-E07",
+      "label": "Apply",
+      "reason": "construct and test threshold branches"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{"id": "M3L1-008", "item": "A loan-default model is trained on past lending decisions that systematically excluded a community. What risk does the lesson highlight?"}
+{"id": "M3L1-015", "item": "An AI system uses a neural network with several layers. Where does the lecture's hierarchy place deep learning?"}
+{"id": "M3L1-022", "item": "Which is the most careful way to use the lecture's statistics-versus-data-science comparison?"}
+{"id": "M3L1-027", "item": "A project requires tools for classification, regression, and clustering. Which library best fits the lesson's description?"}
+{"id": "M3L1-036", "item": "In the lesson's table, what is the cell at row Ali and column Math?"}
+{"id": "M3L1-E03", "item": "Classify each system as AI, machine learning, both, or neither based on the lecture: (a) an expert system that follows specialists' IF/THEN rules; (b) a model that learns churn patterns from historical data; (c) a deep neural network trained on examples. Explain the nesting relationships among AI, ML, neural networks, and deep learning."}
+{"id": "M3L1-E07", "item": "The lecture contrasts statistics as more model-driven and data science as more data-driven. Explain these two starting points using one question about explaining an association and one question about predicting future behavior. Then discuss why the contrast should not be treated as a strict boundary between the fields."}
+{"id": "M3L1-E08", "item": "A university plans to use past admissions decisions to predict which applicants will succeed. Identify how this could be a data science and machine-learning project, describe the role of domain expertise, and analyze two ethical risks the university should address before acting on predictions."}

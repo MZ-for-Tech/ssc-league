@@ -1,0 +1,154 @@
+<!doctype html><html lang='en'><meta charset='utf-8'><meta name='viewport' content='width=device-width'><title>Loops Question Preview</title>
+<style>body{font:16px/1.55 system-ui,sans-serif;max-width:980px;margin:2rem auto;padding:0 1rem;color:#18212b}article{border:1px solid #ccd3da;border-radius:10px;padding:1rem 1.2rem;margin:1rem 0}pre{overflow:auto;background:#f3f5f7;padding:1rem;border-radius:8px}ol{padding-left:1.5rem}</style><body><h1>Module 2 — Loops</h1><p>40 MCQs and 8 structured responses. This pilot uses the loops Markdown because no corresponding PDF is present.</p><h2>Multiple-choice questions</h2>
+<article><h3>M2L3-001</h3><p>When is a `for` loop usually the more direct choice?</p>
+<ol type='A'><li>When the number of repetitions or items to visit is known</li><li>When repetition should continue until an unknown condition changes</li><li>When the program must skip every other line</li><li>When no block of code should repeat</li></ol></article>
+<article><h3>M2L3-002</h3><p>When does the lesson recommend a `while` loop?</p>
+<ol type='A'><li>When the loop body contains no condition</li><li>When a condition controls how long repetition continues</li><li>Only when the loop must visit every item in a collection</li><li>Only when exactly five repetitions are required</li></ol></article>
+<article><h3>M2L3-003</h3><p>Which sequence gives the four parts of the while-loop pattern in the lesson?</p>
+<ol type='A'><li>Input value, print, compare, stop</li><li>Define, call, import, update</li><li>Initialize, test, body, update</li><li>Test condition, output, break, return</li></ol></article>
+<article><h3>M2L3-004</h3><p>In a counter-controlled `while` loop, what is the usual purpose of the update statement?</p>
+<pre><code>i = 1
+while i &lt;= 5:
+    print(i)
+    i += 1</code></pre>
+<ol type='A'><li>Reset the counter to its initial value on every pass</li><li>Skip evaluation of the condition entirely</li><li>Run the loop body one extra time after termination</li><li>Move the control variable toward a false condition</li></ol></article>
+<article><h3>M2L3-005</h3><p>How many times does the body run in this loop?</p>
+<pre><code>i = 1
+while i &lt;= 5:
+    print(i)
+    i += 1</code></pre>
+<ol type='A'><li>5</li><li>4</li><li>6</li><li>It never stops</li></ol></article>
+<article><h3>M2L3-006</h3><p>After the loop finishes, what value does `i` have?</p>
+<pre><code>i = 1
+while i &lt;= 5:
+    i += 1</code></pre>
+<ol type='A'><li>1</li><li>6</li><li>5</li><li>4</li></ol></article>
+<article><h3>M2L3-007</h3><p>What values are produced by `range(5)`?</p>
+<ol type='A'><li>0, 1, 2, 3, 4, 5</li><li>5 only</li><li>0, 1, 2, 3, 4</li><li>1, 2, 3, 4, 5</li></ol></article>
+<article><h3>M2L3-008</h3><p>Which values are visited by `range(2, 6)`?</p>
+<ol type='A'><li>2, 3, 4, 5, 6</li><li>1, 2, 3, 4, 5</li><li>3, 4, 5, 6</li><li>2, 3, 4, 5</li></ol></article>
+<article><h3>M2L3-009</h3><p>Which sequence comes from `range(0, 21, 5)`?</p>
+<pre><code>print(list(range(0, 21, 5)))</code></pre>
+<ol type='A'><li>0, 5, 10, 15, 20</li><li>0, 5, 10, 15, 20, 25</li><li>5, 10, 15, 20</li><li>0, 1, 2, 3, 4, 5</li></ol></article>
+<article><h3>M2L3-010</h3><p>What is the last value visited by `range(1, 101)`?</p>
+<ol type='A'><li>1</li><li>100</li><li>99</li><li>101</li></ol></article>
+<article><h3>M2L3-011</h3><p>Which range visits every integer from 1 through 100, including 100?</p>
+<ol type='A'><li>`range(0, 100)`</li><li>`range(1, 100, 2)`</li><li>`range(1, 101)`</li><li>`range(1, 100)`</li></ol></article>
+<article><h3>M2L3-012</h3><p>What sum is produced by adding all integers from 1 through 100?</p>
+<pre><code>total = 0
+for n in range(1, 101):
+    total += n
+print(total)</code></pre>
+<ol type='A'><li>5000</li><li>4950</li><li>5051</li><li>5050</li></ol></article>
+<article><h3>M2L3-013</h3><p>Which built-in expression gives the sum of integers from 1 through 100?</p>
+<ol type='A'><li>`sum(range(1, 101))`</li><li>`sum(range(1, 100))`</li><li>`range(sum(1, 101))`</li><li>`sum(range(1, 101, 2))`</li></ol></article>
+<article><h3>M2L3-014</h3><p>How can a for loop visit each country in a list without using `range()`?</p>
+<ol type='A'><li>Use the list as the loop&#x27;s Boolean condition</li><li>Visit list items directly, one per pass</li><li>Convert the list length into a while condition only</li><li>Call break once for each country</li></ol></article>
+<article><h3>M2L3-015</h3><p>How many characters does `for letter in &#x27;Python&#x27;` visit?</p>
+<pre><code>for letter in &#x27;Python&#x27;:
+    print(letter)</code></pre>
+<ol type='A'><li>7</li><li>1</li><li>6</li><li>5</li></ol></article>
+<article><h3>M2L3-016</h3><p>What does `break` do when executed inside a loop?</p>
+<ol type='A'><li>Skips only the current pass and continues with the next one</li><li>Restarts the loop from its first value</li><li>Waits for more input</li><li>Leaves the loop immediately</li></ol></article>
+<article><h3>M2L3-017</h3><p>What does `continue` do when executed inside a loop?</p>
+<ol type='A'><li>Skip the rest of this pass and move to the next</li><li>Stop the loop right away</li><li>Restarts the program from its first line</li><li>Finishes every remaining loop pass without testing</li></ol></article>
+<article><h3>M2L3-018</h3><p>In the search loop, what happens after the first odd number 15 is found?</p>
+<pre><code>for n in [4, 8, 15, 23, 42]:
+    if n % 2 != 0:
+        print(n)
+        break
+    print(n, &#x27;is even&#x27;)</code></pre>
+<ol type='A'><li>The loop restarts at 4</li><li>The loop exits because `break` runs</li><li>The loop skips 15 and checks 23</li><li>The loop prints every remaining number</li></ol></article>
+<article><h3>M2L3-019</h3><p>Which values are printed by the continue example that keeps multiples of 3 from 1 through 10?</p>
+<pre><code>for n in range(1, 11):
+    if n % 3 != 0:
+        continue
+    print(n)</code></pre>
+<ol type='A'><li>3, 6, 8</li><li>1, 4, 7, 10</li><li>3, 6, 9</li><li>1, 2, 3, 4, 5, 6, 7, 8, 9, 10</li></ol></article>
+<article><h3>M2L3-020</h3><p>With an outer loop of 3 iterations and an inner loop of 4 iterations on every pass, how many times does the inner body run?</p>
+<pre><code>for row in range(3):
+    for col in range(4):
+        pass</code></pre>
+<ol type='A'><li>14</li><li>4</li><li>3</li><li>12</li></ol></article>
+<article><h3>M2L3-021</h3><p>How many product values are placed in a 5-row by 5-column multiplication table built with nested loops?</p>
+<pre><code>for row in range(1, 6):
+    for col in range(1, 6):
+        print(row * col)</code></pre>
+<ol type='A'><li>25</li><li>10</li><li>20</li><li>5</li></ol></article>
+<article><h3>M2L3-022</h3><p>Two nested loops that each run 1,000 times have how many combined inner-body passes?</p>
+<ol type='A'><li>100,000</li><li>1,000,000</li><li>2,000,000</li><li>1,000</li></ol></article>
+<article><h3>M2L3-023</h3><p>Why should an accumulating loop usually set `total = 0` before it starts?</p>
+<ol type='A'><li>So break can reset the total</li><li>So range() knows its stop value</li><li>Initialize the accumulator at zero</li><li>So the loop condition is automatically true</li></ol></article>
+<article><h3>M2L3-024</h3><p>In the lesson&#x27;s while-loop pattern, what should happen before the first condition test?</p>
+<ol type='A'><li>Update the variable using its old value</li><li>Run the body once</li><li>Call continue</li><li>Initialize the control variable</li></ol></article>
+<article><h3>M2L3-025</h3><p>A population starts at 1,000 and grows by 2% in one year. What is its value after that update?</p>
+<pre><code>population = 1000
+rate = 0.02
+population += population * rate</code></pre>
+<ol type='A'><li>1,020</li><li>1,002</li><li>1,200</li><li>980</li></ol></article>
+<article><h3>M2L3-026</h3><p>A population of 1,000 grows by 2% each year. Approximately what is it after 10 yearly updates?</p>
+<ol type='A'><li>1,000.20</li><li>1,218.99</li><li>1,200.00</li><li>1,020.00</li></ol></article>
+<article><h3>M2L3-027</h3><p>A price of 250 increases by 8% for one year. What is the new price before rounding?</p>
+<ol type='A'><li>250.08</li><li>230</li><li>270</li><li>258</li></ol></article>
+<article><h3>M2L3-028</h3><p>A price of 250 rises by 8% per year for five years. Approximately what is the final price?</p>
+<ol type='A'><li>350.00</li><li>290.00</li><li>367.00</li><li>367.33</li></ol></article>
+<article><h3>M2L3-029</h3><p>If a growth-model rate is -0.05, what does the sign indicate in the lesson&#x27;s model?</p>
+<ol type='A'><li>The quantity decays by 5% per period</li><li>The quantity grows by 5% per period</li><li>The quantity becomes negative immediately</li><li>The loop must execute five times</li></ol></article>
+<article><h3>M2L3-030</h3><p>In `quantity += quantity * rate`, what is added to the current quantity each period?</p>
+<pre><code>quantity += quantity * rate</code></pre>
+<ol type='A'><li>The current quantity divided by the rate</li><li>The current quantity multiplied by the rate</li><li>The rate multiplied by the year number only</li><li>A fixed amount unrelated to the current quantity</li></ol></article>
+<article><h3>M2L3-031</h3><p>In the lesson&#x27;s response list, how many Male entries are present?</p>
+<pre><code>genders = [&#x27;Male&#x27;, &#x27;Female&#x27;, &#x27;Female&#x27;, &#x27;Male&#x27;, &#x27;Female&#x27;, &#x27;Female&#x27;]</code></pre>
+<ol type='A'><li>4</li><li>6</li><li>2</li><li>3</li></ol></article>
+<article><h3>M2L3-032</h3><p>For 2 Male responses out of 6 total, what percentage is Male to two decimal places?</p>
+<ol type='A'><li>25.00%</li><li>50.00%</li><li>66.67%</li><li>33.33%</li></ol></article>
+<article><h3>M2L3-033</h3><p>Why does the lesson set `total = len(genders)` before calculating percentages?</p>
+<ol type='A'><li>Use list length as the denominator</li><li>It counts only Male responses</li><li>It converts every item to a string</li><li>It stops the for loop after the last item</li></ol></article>
+<article><h3>M2L3-034</h3><p>When does the majority message report Male in the response-counting example?</p>
+<ol type='A'><li>Whenever the list has six items</li><li>When `count_male &gt; count_female`</li><li>When `count_male == count_female`</li><li>When `count_male &lt; count_female`</li></ol></article>
+<article><h3>M2L3-035</h3><p>What does the loop variable `item` represent in `for item in genders`?</p>
+<ol type='A'><li>The total number of list elements</li><li>A copy of the entire list on every pass</li><li>The current item in the list for this pass</li><li>The position number assigned to every list item</li></ol></article>
+<article><h3>M2L3-036</h3><p>In `range(start, stop, step)`, is the stop value included?</p>
+<ol type='A'><li>Yes, always</li><li>Only if step is positive</li><li>Only when start is zero, unless the step is positive</li><li>No; range stops before that value</li></ol></article>
+<article><h3>M2L3-037</h3><p>Why does the multiples-of-3 loop use `continue` for values where `n % 3 != 0`?</p>
+<pre><code>for n in range(1, 11):
+    if n % 3 != 0:
+        continue
+    print(n)</code></pre>
+<ol type='A'><li>Skip the rest of this pass and continue</li><li>Those values terminate the loop immediately</li><li>Those values are added to a total</li><li>Those values restart the range at 1</li></ol></article>
+<article><h3>M2L3-038</h3><p>What repeated-code pattern does the lesson say can signal that a function would help?</p>
+<ol type='A'><li>A single break statement in a search</li><li>Repeated counting loops for gender and vote data</li><li>A loop that visits a string one character at a time</li><li>A range with a step of five</li></ol></article>
+<article><h3>M2L3-039</h3><p>Why can the same growth loop model population, inflation, interest, or currency depreciation?</p>
+<ol type='A'><li>The loop body never changes the value</li><li>All four quantities use the same numerical rate</li><li>Reuse the update pattern with different inputs</li><li>Each topic requires a different kind of loop keyword</li></ol></article>
+<article><h3>M2L3-040</h3><p>When is a `while` loop&#x27;s condition checked?</p>
+<ol type='A'><li>Only once, before the loop starts</li><li>Only after the body runs</li><li>Only after the update statement</li><li>Before each possible body pass</li></ol></article>
+<h2>Structured-response questions</h2>
+<article><h3>M2L3-E01 · 5 marks</h3><p>Trace this loop. List each value printed and state the value of `i` after the loop ends. Explain how the test and update make it terminate.</p>
+<pre><code>i = 1
+while i &lt;= 5:
+    print(i)
+    i += 1</code></pre>
+</article>
+<article><h3>M2L3-E02 · 5 marks</h3><p>For each expression, list every value generated and explain the stop-exclusive endpoint: (a) `range(5)`; (b) `range(2, 6)`; (c) `range(0, 21, 5)`. Then give the range that counts from 1 through 100 inclusive.</p>
+</article>
+<article><h3>M2L3-E03 · 5 marks</h3><p>Write both a while-loop outline and a for-loop outline to add the integers from 1 through 100. State the common total and explain why the for-loop range stops at 101.</p>
+</article>
+<article><h3>M2L3-E04 · 5 marks</h3><p>Trace the search loop over `[4, 8, 15, 23, 42]`. State each printed line and explain exactly what `break` changes. Then explain how `continue` in the multiples-of-3 example changes one pass.</p>
+<pre><code>for n in [4, 8, 15, 23, 42]:
+    if n % 2 != 0:
+        print(&#x27;First odd number found:&#x27;, n)
+        break
+    print(n, &#x27;is even, keep looking&#x27;)</code></pre>
+</article>
+<article><h3>M2L3-E05 · 5 marks</h3><p>A 5-by-5 multiplication table uses `for row in range(1, 6)` and, inside it, `for col in range(1, 6)`. State how many times the inner body runs, describe the order of repetition, and explain why nested iteration counts multiply.</p>
+<pre><code>for row in range(1, 6):
+    for col in range(1, 6):
+        print(row * col)</code></pre>
+</article>
+<article><h3>M2L3-E06 · 5 marks</h3><p>A population starts at 1,000 and grows by 2% annually for 10 years. Write the repeated update and loop bounds, give the approximate final population, and explain why this is exponential growth rather than adding a fixed 20 each year.</p>
+</article>
+<article><h3>M2L3-E07 · 5 marks</h3><p>For the list `[&#x27;Male&#x27;,&#x27;Female&#x27;,&#x27;Female&#x27;,&#x27;Male&#x27;,&#x27;Female&#x27;,&#x27;Female&#x27;]`, give the two counts and their percentages to two decimal places. Describe the loop counters and explain why `len(list)` is the denominator.</p>
+</article>
+<article><h3>M2L3-E08 · 5 marks</h3><p>The lesson repeats nearly identical counting code once for gender responses and again for votes. Explain why this duplication suggests a function, and identify which parts of the logic can stay the same and which data should vary between calls.</p>
+</article>
+</body></html>

@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import Image from "next/image";
 import { X, Save, Loader2, RefreshCw, User, Users, Upload, Camera, Check, Pencil } from "lucide-react";
 import { updateStudentProfile } from "@/app/actions/profile-actions";
 import { useRouter } from "next/navigation";
-import { createBrowserClient } from "@supabase/ssr";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 interface Student {
   id: string;
@@ -29,10 +30,7 @@ export default function EditProfileModal({ student }: { student: Student }) {
 
   const router = useRouter();
   
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const supabase = createSupabaseBrowserClient();
 
   // 1. Handle File Upload
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,9 +66,9 @@ export default function EditProfileModal({ student }: { student: Student }) {
       const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
       setAvatarUrl(data.publicUrl);
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Upload failed:", error);
-      alert("Error uploading image: " + error.message);
+      alert("Error uploading image: " + (error instanceof Error ? error.message : "Please try again."));
     } finally {
       setIsUploading(false);
     }
@@ -102,7 +100,7 @@ export default function EditProfileModal({ student }: { student: Student }) {
         setIsSuccess(false);
       }, 1500);
 
-    } catch (error) {
+    } catch {
       alert("Something went wrong saving your profile.");
       setIsSaving(false);
     }
@@ -151,7 +149,7 @@ export default function EditProfileModal({ student }: { student: Student }) {
                          <Loader2 className="animate-spin text-primary w-8 h-8" />
                     ) : (
                         <>
-                            <img 
+                            <Image unoptimized width={256} height={256}
                                 src={avatarUrl} 
                                 className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
                                 alt="Avatar Preview"

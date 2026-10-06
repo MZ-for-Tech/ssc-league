@@ -1,0 +1,133 @@
+<!doctype html><html lang='en'><meta charset='utf-8'><meta name='viewport' content='width=device-width'><title>Module 3 Lesson 3 — Question Preview</title>
+<style>body{font:16px/1.55 system-ui,sans-serif;max-width:980px;margin:2rem auto;padding:0 1rem;color:#18212b}article{border:1px solid #ccd3da;border-radius:10px;padding:1rem 1.2rem;margin:1rem 0}pre{overflow:auto;background:#f3f5f7;padding:1rem;border-radius:8px}ol{padding-left:1.5rem}</style><body><h1>Module 3 — Summarising, grouping, and filtering</h1><p>40 MCQs and 8 structured responses. Paired scope: Lesson 3 Markdown and PDF slides 34–46, 48–53.</p><h2>Multiple-choice questions</h2>
+<article><h3>M3L3-001</h3><p>A column contains 8 non-missing values and 2 missing values. What does `df.count()` report for that column?</p>
+<pre><code># One column has 10 rows, 2 missing
+print(df.count())</code></pre>
+<ol type='A'><li>8</li><li>10</li><li>2</li><li>The sum of the values</li></ol></article>
+<article><h3>M3L3-002</h3><p>For a numeric DataFrame, what does `df.mean()` calculate by default in the lesson&#x27;s example?</p>
+<ol type='A'><li>The mean of each row</li><li>The mean of each column</li><li>The median of each column</li><li>The mean of the index labels</li></ol></article>
+<article><h3>M3L3-003</h3><p>What is the result type of `df.agg([&#x27;mean&#x27;, &#x27;median&#x27;, &#x27;std&#x27;])` in the lesson?</p>
+<pre><code>vstat = df.agg([&#x27;mean&#x27;, &#x27;median&#x27;, &#x27;std&#x27;])</code></pre>
+<ol type='A'><li>A single number</li><li>A Boolean mask</li><li>A DataFrame</li><li>A list of column labels</li></ol></article>
+<article><h3>M3L3-004</h3><p>Which statistic in numeric `describe()` output is the 50th percentile?</p>
+<ol type='A'><li>`25%`</li><li>`std`</li><li>`count`</li><li>`50%`</li></ol></article>
+<article><h3>M3L3-005</h3><p>A numeric column&#x27;s `describe()` output has count 40, min 2, max 98. What does `count` mean here?</p>
+<ol type='A'><li>There are 40 non-null observations</li><li>There are 40 unique values</li><li>The average value is 40</li><li>The column has 40 missing observations</li></ol></article>
+<article><h3>M3L3-006</h3><p>A mixed DataFrame has numeric and categorical columns. What does plain `df.describe()` summarize according to the lecture?</p>
+<ol type='A'><li>Only categorical columns</li><li>The numerical columns</li><li>Every column using the same eight statistics</li><li>Only the index</li></ol></article>
+<article><h3>M3L3-007</h3><p>Which set of fields is characteristic of `describe()` on a categorical column?</p>
+<ol type='A'><li>mean, std, min, max</li><li>sum, median, variance, range</li><li>count, unique, top, freq</li><li>true, false, null, total</li></ol></article>
+<article><h3>M3L3-008</h3><p>A variable&#x27;s mean is much higher than its median. What is a reasonable interpretation to investigate?</p>
+<ol type='A'><li>The variable must be normally distributed</li><li>There are no extreme values</li><li>The median is necessarily calculated incorrectly</li><li>The distribution may be right-skewed, making the mean a less representative summary</li></ol></article>
+<article><h3>M3L3-009</h3><p>A survey summary reports a minimum age of −4. What should the analyst do first?</p>
+<ol type='A'><li>Investigate it as a possible data-quality problem</li><li>Treat it as evidence that negative age is common</li><li>Delete the whole dataset</li><li>Replace every age with the mean without checking</li></ol></article>
+<article><h3>M3L3-010</h3><p>The value of `df.corr()[&#x27;GDP&#x27;][&#x27;population&#x27;]` is 0.78. What does this describe?</p>
+<pre><code>r = df.corr()[&#x27;GDP&#x27;][&#x27;population&#x27;]
+print(r)  # 0.78</code></pre>
+<ol type='A'><li>GDP causes population to increase</li><li>A positive association between GDP and population in the observed data</li><li>Population causes GDP to increase</li><li>GDP and population are identical variables</li></ol></article>
+<article><h3>M3L3-011</h3><p>Why should an analyst be cautious about a correlation computed from only four countries?</p>
+<ol type='A'><li>Correlation is undefined for any dataset with fewer than five rows</li><li>Four observations prove the relationship is causal</li><li>A strong-looking value from so few observations is weak evidence and may occur by chance</li><li>A correlation matrix always removes sampling uncertainty</li></ol></article>
+<article><h3>M3L3-012</h3><p>What does `data.isna()` produce?</p>
+<ol type='A'><li>A Series of means</li><li>A DataFrame with all missing rows removed</li><li>A count of distinct values</li><li>A same-shaped Boolean DataFrame marking missing values as True</li></ol></article>
+<article><h3>M3L3-013</h3><p>What does `data.isna().sum()` normally give in a DataFrame with columns A and B?</p>
+<pre><code>missing_by_column = data.isna().sum()</code></pre>
+<ol type='A'><li>A missing-value count for each column</li><li>The number of rows after dropping missing data</li><li>A Boolean for each entire column</li><li>The sum of all observed numeric values</li></ol></article>
+<article><h3>M3L3-014</h3><p>What happens to the original `data` after `clean = data.dropna()` when `inplace` is not set?</p>
+<pre><code>clean = data.dropna()</code></pre>
+<ol type='A'><li>Both variables are changed in place</li><li>`clean` has rows with missing values removed; `data` remains unchanged</li><li>`clean` is None and `data` is changed</li><li>Only columns with missing values are removed from `data`</li></ol></article>
+<article><h3>M3L3-015</h3><p>A table has missing values in columns A and B. You want to retain rows whenever A is present, even if B is missing. Which call fits?</p>
+<ol type='A'><li>`data.dropna(axis=1)`</li><li>`data.dropna(subset=[&#x27;B&#x27;])`</li><li>`data.dropna(subset=[&#x27;A&#x27;])`</li><li>`data.isna(subset=[&#x27;A&#x27;])`</li></ol></article>
+<article><h3>M3L3-016</h3><p>What does `data.dropna(axis=1)` remove by default?</p>
+<pre><code>data_without_gap_columns = data.dropna(axis=1)</code></pre>
+<ol type='A'><li>Rows that contain missing values</li><li>Only rows where every value is missing</li><li>The index column</li><li>Columns that contain missing values</li></ol></article>
+<article><h3>M3L3-017</h3><p>Before using `dropna()`, why does the lesson recommend counting missing values and reporting removals?</p>
+<ol type='A'><li>Removing incomplete cases can change who remains in the analysis and may bias conclusions</li><li>`dropna()` automatically replaces every missing value with zero</li><li>Rows with missing data are always duplicates</li><li>A reported sample size is unrelated to data cleaning</li></ol></article>
+<article><h3>M3L3-018</h3><p>Which sequence best describes `groupby()`?</p>
+<ol type='A'><li>Sort columns, delete rows, and rename the index</li><li>Split rows into groups, apply a calculation, combine the results</li><li>Read a CSV, draw a plot, and save an image</li><li>Convert each value to text, then concatenate columns</li></ol></article>
+<article><h3>M3L3-019</h3><p>Given groups A, B, C each appear twice, what does `df.groupby(&#x27;key&#x27;).size()` report?</p>
+<pre><code>df = pd.DataFrame({&#x27;key&#x27;:[&#x27;A&#x27;,&#x27;B&#x27;,&#x27;C&#x27;,&#x27;A&#x27;,&#x27;B&#x27;,&#x27;C&#x27;], &#x27;data&#x27;:range(6)})
+print(df.groupby(&#x27;key&#x27;).size())</code></pre>
+<ol type='A'><li>The sum of the data values in each group</li><li>The number of columns in the original table</li><li>The number of rows in each group</li><li>The count of distinct key labels in each row</li></ol></article>
+<article><h3>M3L3-020</h3><p>For `key` values A, B, C, A, B, C and `data` values 0–5, what is the sum for group A?</p>
+<pre><code>df = pd.DataFrame({&#x27;key&#x27;:[&#x27;A&#x27;,&#x27;B&#x27;,&#x27;C&#x27;,&#x27;A&#x27;,&#x27;B&#x27;,&#x27;C&#x27;], &#x27;data&#x27;:range(6)})
+print(df.groupby(&#x27;key&#x27;)[&#x27;data&#x27;].sum())</code></pre>
+<ol type='A'><li>2</li><li>6</li><li>9</li><li>3</li></ol></article>
+<article><h3>M3L3-021</h3><p>Which expression computes both the sum and count of `data` within each `key` group?</p>
+<ol type='A'><li>`df.groupby(&#x27;key&#x27;)[&#x27;data&#x27;].agg([&#x27;sum&#x27;, &#x27;count&#x27;])`</li><li>`df.groupby(&#x27;key&#x27;).size([&#x27;sum&#x27;, &#x27;count&#x27;])`</li><li>`df.agg(&#x27;key&#x27;, [&#x27;sum&#x27;, &#x27;count&#x27;])`</li><li>`df[&#x27;data&#x27;].groupby([&#x27;sum&#x27;, &#x27;count&#x27;])`</li></ol></article>
+<article><h3>M3L3-022</h3><p>What does `df.groupby(&#x27;key&#x27;).get_group(&#x27;A&#x27;)` return?</p>
+<ol type='A'><li>A scalar equal to the mean of group A</li><li>The subset of original rows whose key is A</li><li>The group-size table for all keys</li><li>The original DataFrame with key renamed to A</li></ol></article>
+<article><h3>M3L3-023</h3><p>In `df.groupby(&#x27;Department&#x27;)[&#x27;Salary&#x27;].mean()`, which quantity is computed for each department?</p>
+<ol type='A'><li>The total number of departments</li><li>The average of all columns for each employee</li><li>The average Salary among rows in that department</li><li>The median Salary across all departments combined</li></ol></article>
+<article><h3>M3L3-024</h3><p>What does grouping by both `Department` and `Year` do before aggregation?</p>
+<pre><code>df.groupby([&#x27;Department&#x27;, &#x27;Year&#x27;])[&#x27;Salary&#x27;].mean()</code></pre>
+<ol type='A'><li>Creates one group for each row regardless of values</li><li>Uses Year only and ignores Department</li><li>Adds Year to every salary value</li><li>Creates groups for each observed Department–Year combination</li></ol></article>
+<article><h3>M3L3-025</h3><p>After grouping by Department and Year, what does `.unstack()` do in the lesson&#x27;s table?</p>
+<ol type='A'><li>Moves one index level, such as Year, into columns</li><li>Removes all rows containing missing values</li><li>Calculates a second mean</li><li>Sorts each group&#x27;s salary values</li></ol></article>
+<article><h3>M3L3-026</h3><p>Which expression returns both mean and standard deviation of Salary for each Department–Year group?</p>
+<ol type='A'><li>`df.groupby(&#x27;Salary&#x27;).mean([&#x27;Department&#x27;,&#x27;Year&#x27;])`</li><li>`df.groupby([&#x27;Department&#x27;,&#x27;Year&#x27;])[&#x27;Salary&#x27;].agg([&#x27;mean&#x27;,&#x27;std&#x27;])`</li><li>`df.agg([&#x27;Department&#x27;,&#x27;Year&#x27;], [&#x27;mean&#x27;,&#x27;std&#x27;])`</li><li>`df.groupby([&#x27;Department&#x27;,&#x27;Year&#x27;]).size()`</li></ol></article>
+<article><h3>M3L3-027</h3><p>To count employees in every Department–Year group, which operation is most direct?</p>
+<ol type='A'><li>`df.groupby([&#x27;Department&#x27;, &#x27;Year&#x27;]).mean()`</li><li>`df.describe()`</li><li>`df.groupby([&#x27;Department&#x27;, &#x27;Year&#x27;]).size()`</li><li>`df[&#x27;Department&#x27;].value_counts(normalize=True)`</li></ol></article>
+<article><h3>M3L3-028</h3><p>A group contains 5 rows, but one row has a missing Salary. What are `group.size()` and `group[&#x27;Salary&#x27;].count()` respectively?</p>
+<ol type='A'><li>4 rows and 5 non-missing salaries</li><li>5 for both because count includes missing values</li><li>1 row and 4 unique salaries</li><li>5 rows and 4 non-missing salaries</li></ol></article>
+<article><h3>M3L3-029</h3><p>What does Boolean indexing such as `df[df[&#x27;Country&#x27;] == &#x27;UK&#x27;]` keep?</p>
+<pre><code>mask = df[&#x27;Country&#x27;] == &#x27;UK&#x27;
+selected = df[mask]</code></pre>
+<ol type='A'><li>Rows for which the condition is True</li><li>Columns for which the label equals UK</li><li>Rows for which the condition is False</li><li>Only the Boolean mask, not the matching records</li></ol></article>
+<article><h3>M3L3-030</h3><p>Which expression filters for rows where City is not London?</p>
+<ol type='A'><li>`df[df[&#x27;City&#x27;] == &#x27;London&#x27;]`</li><li>`df[df[&#x27;City&#x27;] != &#x27;London&#x27;]`</li><li>`df[&#x27;City&#x27;] != &#x27;London&#x27;`</li><li>`df.drop(columns=&#x27;City&#x27;)`</li></ol></article>
+<article><h3>M3L3-031</h3><p>Which `query()` call is equivalent to `df[df[&#x27;Country&#x27;] == &#x27;UK&#x27;]`?</p>
+<ol type='A'><li>`df.query(&quot;Country != &#x27;UK&#x27;&quot;)`</li><li>`df.query(Country == UK)`</li><li>`df.query(&quot;Country == &#x27;UK&#x27;&quot;)`</li><li>`df[&#x27;Country&#x27;].query(&#x27;UK&#x27;)`</li></ol></article>
+<article><h3>M3L3-032</h3><p>When combining two pandas Series conditions element by element, which operators does the lesson use for AND and OR?</p>
+<ol type='A'><li>`and` for AND and `or` for OR</li><li>`&amp;&amp;` for AND and `||` for OR</li><li>`+` for AND and `*` for OR</li><li>`&amp;` for AND and `|` for OR</li></ol></article>
+<article><h3>M3L3-033</h3><p>In a filter like `(df[&#x27;age&#x27;] &gt;= 18) &amp; (df[&#x27;score&#x27;] &gt; 70)`, why should each comparison be parenthesized?</p>
+<pre><code>df[(df[&#x27;age&#x27;] &gt;= 18) &amp; (df[&#x27;score&#x27;] &gt; 70)]</code></pre>
+<ol type='A'><li>Because of operator precedence: parentheses ensure each comparison is evaluated before combining</li><li>Parentheses convert strings to numbers</li><li>Pandas requires every DataFrame to have two conditions</li><li>The parentheses cause the filter to sort its results</li></ol></article>
+<article><h3>M3L3-034</h3><p>A researcher wants rows from Egypt OR Sweden. Which combined filter has the intended meaning?</p>
+<ol type='A'><li>`(df[&#x27;Country&#x27;] == &#x27;Egypt&#x27;) &amp; (df[&#x27;Country&#x27;] == &#x27;Sweden&#x27;)`</li><li>`(df[&#x27;Country&#x27;] == &#x27;Egypt&#x27;) | (df[&#x27;Country&#x27;] == &#x27;Sweden&#x27;)`</li><li>`df[&#x27;Country&#x27;] == (&#x27;Egypt&#x27; | &#x27;Sweden&#x27;)`</li><li>`df[df[&#x27;Country&#x27;] != &#x27;Egypt&#x27;] &amp; &#x27;Sweden&#x27;`</li></ol></article>
+<article><h3>M3L3-035</h3><p>Which call reads a local comma-separated file named `survey.csv` into a DataFrame?</p>
+<ol type='A'><li>`pd.to_csv(&#x27;survey.csv&#x27;)`</li><li>`pd.read_excel(&#x27;survey.csv&#x27;)`</li><li>`pd.read_csv(&#x27;survey.csv&#x27;)`</li><li>`pd.DataFrame.read(&#x27;survey.csv&#x27;)`</li></ol></article>
+<article><h3>M3L3-036</h3><p>Which expression writes a DataFrame summary to a CSV file named `summary.csv`?</p>
+<pre><code>summary = df.describe().round(2)
+summary.to_csv(&#x27;summary.csv&#x27;)</code></pre>
+<ol type='A'><li>`summary.read_csv(&#x27;summary.csv&#x27;)`</li><li>`pd.read_csv(summary, &#x27;summary.csv&#x27;)`</li><li>`summary.to_excel(&#x27;summary.csv&#x27;)`</li><li>`summary.to_csv(&#x27;summary.csv&#x27;)`</li></ol></article>
+<article><h3>M3L3-037</h3><p>A researcher needs an Excel workbook rather than a CSV. Which method matches the lesson&#x27;s example?</p>
+<ol type='A'><li>`summary.to_excel(&#x27;summary.xlsx&#x27;)`</li><li>`summary.to_csv(&#x27;summary.xlsx&#x27;)`</li><li>`pd.read_excel(summary)`</li><li>`summary.to_xlsx(&#x27;summary.xlsx&#x27;)`</li></ol></article>
+<article><h3>M3L3-038</h3><p>What does `df[&#x27;sex&#x27;].value_counts()` return?</p>
+<pre><code>counts = df[&#x27;sex&#x27;].value_counts()</code></pre>
+<ol type='A'><li>A DataFrame of means for every numerical column</li><li>A Series with counts for each distinct sex category</li><li>A Boolean Series marking missing values</li><li>The number of rows in the whole DataFrame only</li></ol></article>
+<article><h3>M3L3-039</h3><p>What changes when calling `df[&#x27;sex&#x27;].value_counts(normalize=True)`?</p>
+<ol type='A'><li>It sorts category labels alphabetically</li><li>It removes categories with fewer than two records</li><li>The output gives proportions rather than raw counts</li><li>It returns only missing values</li></ol></article>
+<article><h3>M3L3-040</h3><p>`pclass.value_counts()` orders categories by frequency. What does `.sort_index()` change in the lesson&#x27;s example?</p>
+<pre><code>class_count = df[&#x27;pclass&#x27;].value_counts().sort_index()</code></pre>
+<ol type='A'><li>Orders the result from largest count to smallest</li><li>Converts counts to proportions</li><li>Removes the index labels</li><li>Orders the result by category label, such as class 1, 2, 3</li></ol></article>
+<h2>Structured-response questions</h2>
+<article><h3>M3L3-E01 · 5 marks</h3><p>A numeric dataset has columns for income and age. Explain what `describe()` reports for a numeric variable, how you would use count, quartiles, mean, median, minimum, and maximum to inspect it, and identify two warning signs that merit follow-up.</p>
+<pre><code>df[&#x27;income&#x27;].describe()
+# count, mean, std, min, 25%, 50%, 75%, max</code></pre>
+</article>
+<article><h3>M3L3-E02 · 5 marks</h3><p>An analyst finds a correlation of 0.78 between GDP and population across four countries. Explain the numerical direction, two reasons this result is weak evidence, and what cannot be concluded from the correlation alone.</p>
+<pre><code>r = 0.78
+observations = 4 countries</code></pre>
+</article>
+<article><h3>M3L3-E03 · 5 marks</h3><p>A six-row dataset has missing values in columns A and B. A researcher wants to keep every row where A is observed, even if B is missing. Describe how to count missingness, produce that subset, and explain why deleting all incomplete rows without checking can distort the study.</p>
+<pre><code>A: [1, 2, None, 4, 5, 6]
+B: [0.2, None, None, 4, 5, 6]</code></pre>
+</article>
+<article><h3>M3L3-E04 · 5 marks</h3><p>Using a dataset with Department, Year, and Salary, write a workflow to find mean salary for each department and year, then show how to produce means and standard deviations together and reshape years into columns. Explain split–apply–combine and the role of `unstack()`.</p>
+<pre><code>df.groupby([&#x27;Department&#x27;, &#x27;Year&#x27;])[&#x27;Salary&#x27;].mean().unstack()</code></pre>
+</article>
+<article><h3>M3L3-E05 · 5 marks</h3><p>A table contains Country and City columns. Write both Boolean-indexing and `query()` expressions to select rows where Country is Egypt and City is not Cairo. Explain why the conditions use parentheses and `&amp;` rather than Python&#x27;s `and`.</p>
+<pre><code>Country == &#x27;Egypt&#x27;
+City != &#x27;Cairo&#x27;</code></pre>
+</article>
+<article><h3>M3L3-E06 · 5 marks</h3><p>Outline a reproducible workflow for reading `survey.csv`, inspecting its dimensions and structure, previewing records, summarizing numeric fields, and saving the summary as both CSV and Excel. Name the relevant pandas calls and distinguish reading from writing.</p>
+<pre><code>df = pd.read_csv(&#x27;survey.csv&#x27;)
+summary = df.describe().round(2)</code></pre>
+</article>
+<article><h3>M3L3-E07 · 5 marks</h3><p>For a categorical variable such as passenger class, explain what `value_counts()` reports, how normalization changes the result, and why `sort_index()` may be useful after counting. Contrast this with grouping a numeric variable to calculate its mean by category.</p>
+<pre><code>df[&#x27;pclass&#x27;].value_counts(normalize=True).sort_index()</code></pre>
+</article>
+<article><h3>M3L3-E08 · 5 marks</h3><p>A policy dataset contains Department, Year, Employee, and Salary. Describe a set of group summaries that would answer (1) average salary by department, (2) average salary by department and year, (3) group size by department and year. State when `count()` and `size()` would differ if Salary contains missing values.</p>
+<pre><code># Department | Year | Employee | Salary</code></pre>
+</article>
+</body></html>

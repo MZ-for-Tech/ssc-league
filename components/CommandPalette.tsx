@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search, LayoutDashboard, Trophy, BookOpen, User, LogOut, Terminal, Moon, Sun } from "lucide-react";
+import { Search, LayoutDashboard, Trophy, BookOpen, User, LogOut, Terminal, Moon } from "lucide-react";
 import clsx from "clsx";
 
 export default function CommandPalette() {

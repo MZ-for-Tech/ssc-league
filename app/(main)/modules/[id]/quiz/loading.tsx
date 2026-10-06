@@ -2,7 +2,7 @@ import React from "react";
 
 export default function QuizLoading() {
   return (
-    <div className="w-full max-w-7xl mx-auto animate-pulse pb-20">
+    <div className="w-full animate-pulse pb-20" aria-busy="true" aria-label="Loading quiz">
       
       {/* 1. Header Skeleton */}
       <div className="flex items-center justify-between mb-6">

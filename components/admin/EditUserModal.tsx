@@ -6,7 +6,7 @@ import { updateStudent, awardStudentXP, resetAgentPassword } from "@/app/actions
 import clsx from "clsx";
 
 interface EditUserModalProps {
-  user: any;
+  user: { id: string; full_name: string; student_id: string; group_id: string; current_xp: number | null };
   onClose: () => void;
   onRefresh: () => void;
 }
@@ -60,12 +60,12 @@ export default function EditUserModal({ user, onClose, onRefresh }: EditUserModa
   };
 
   const handleResetPassword = async () => {
-    if (!confirm(`CONFIRM: Reset password for ${user.full_name}?\n\nThis will set it to the default pattern: Agent[ID]!`)) return;
+    if (!confirm(`CONFIRM: Reset password for ${user.full_name}?\n\nA random temporary password will be generated.`)) return;
     
     setLoading(true);
     setStatus(null);
     
-    const res = await resetAgentPassword(user.auth_id, user.student_id);
+    const res = await resetAgentPassword(user.id);
     setLoading(false);
     
     if (res.success) {
@@ -103,7 +103,7 @@ export default function EditUserModal({ user, onClose, onRefresh }: EditUserModa
             ].map((tab) => (
                 <button
                     key={tab.id}
-                    onClick={() => { setActiveTab(tab.id as any); setStatus(null); }}
+                    onClick={() => { setActiveTab(tab.id as "profile" | "xp" | "security"); setStatus(null); }}
                     className={clsx(
                         "flex-1 py-3 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all relative",
                         activeTab === tab.id 
@@ -148,7 +148,7 @@ export default function EditUserModal({ user, onClose, onRefresh }: EditUserModa
                     <div className="space-y-1.5">
                         <label className="text-[10px] uppercase font-bold text-slate-500">Manual XP Override</label>
                         <input type="number" className="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-white focus:border-cyan-500 outline-none transition-colors" value={formData.current_xp} onChange={e => setFormData({...formData, current_xp: parseInt(e.target.value)})} />
-                        <p className="text-[10px] text-slate-600">Warning: Direct override. Use 'Logistics' tab for transactions.</p>
+                        <p className="text-[10px] text-slate-600">Warning: Direct override. Use &apos;Logistics&apos; tab for transactions.</p>
                     </div>
                     
                     <button disabled={loading} className="w-full py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-xl flex items-center justify-center gap-2 mt-4 transition-all shadow-lg shadow-cyan-500/20 disabled:opacity-50">
@@ -196,10 +196,12 @@ export default function EditUserModal({ user, onClose, onRefresh }: EditUserModa
                         </div>
                         <h4 className="text-white font-bold text-lg">Credential Reset Protocol</h4>
                         <p className="text-sm text-slate-400 mt-2 max-w-xs mx-auto leading-relaxed">
-                            This action will reset the operative's password to the system default format:
+                            This action generates a random temporary password. It will appear here after reset:
                         </p>
                         <code className="mt-4 block bg-slate-950 border border-slate-800 px-4 py-2 rounded-lg text-cyan-400 font-mono text-sm">
-                            Agent{user.student_id}!
+                            {status?.type === "success" && status.msg.startsWith("Temporary password:")
+                              ? status.msg.replace("Temporary password: ", "")
+                              : "Shown once after reset"}
                         </code>
                     </div>
                     

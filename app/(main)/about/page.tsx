@@ -1,249 +1,223 @@
-import React from "react";
-import { Github, Linkedin, Mail, ArrowLeft, Users, Terminal, Cpu, Database, Globe, Layers, Trophy, Target, Zap, Activity } from "lucide-react";
 import Link from "next/link";
-import clsx from "clsx";
+import type { ReactNode } from "react";
+import {
+  ArrowRight,
+  BookOpen,
+  ChartNoAxesCombined,
+  Code2,
+  ExternalLink,
+  MessageSquare,
+  Trophy,
+  Users,
+} from "lucide-react";
+import CombatManual from "@/components/about/CombatManual";
+
+const leagueTools = [
+  {
+    icon: BookOpen,
+    title: "Course modules",
+    description: "Follow the SSC2 curriculum by topic, with lesson material and practice questions together.",
+  },
+  {
+    icon: Code2,
+    title: "Python playground",
+    description: "Try ideas in code, experiment with data, and learn by making things work.",
+  },
+  {
+    icon: ChartNoAxesCombined,
+    title: "Progress tracking",
+    description: "See your XP, attendance, streaks, activity, and league standing over the season.",
+  },
+  {
+    icon: MessageSquare,
+    title: "Cohort comms",
+    description: "Keep up with announcements and stay connected with the rest of the league.",
+  },
+];
+
+const learningLoop = [
+  { number: "01", title: "Explore", text: "Choose a module and get the core idea." },
+  { number: "02", title: "Experiment", text: "Practise with questions and code." },
+  { number: "03", title: "Improve", text: "Return, build consistency, and watch your progress grow." },
+];
 
 export default function AboutPage() {
-  const creators = [
-    {
-      name: "Ahmed Tawfik",
-      role: "Concept Creator & Strategy Lead",
-      id: "CMD-001",
-      color: "blue",
-      description: "The strategic architect of the SSC2 League. He fused advanced data science curriculum with competitive game theory to create this high-performance learning environment. The mind behind the ranking algorithms, mission structure, and tactical progression system.",
-      image: "https://media.licdn.com/dms/image/v2/D5603AQH95B_WwHbj3A/profile-displayphoto-shrink_200_200/B56ZTC4FjeGoAY-/0/1738436273176?e=2147483647&v=beta&t=8etFI9HIduTsS9ZQLfMDM-HovVMPQpsG4sEaZZ13efg",
-      stats: [
-        { label: "Focus", value: "Game Theory" },
-        { label: "Class", value: "Visionary" },
-        { label: "Status", value: "Founder" } 
-      ],
-      links: {
-        linkedin: "https://www.linkedin.com/in/ahmed-m-tawfeek",
-        email: "mailto:ahmed.tawfeek2019@feps.edu.eg"
-      }
-    },
-    {
-      name: "Ezz Eldin",
-      role: "Lead Engineer & Executor",
-      id: "DEV-001",
-      color: "cyan",
-      description: "The technical architect who executed the vision. Responsible for building the platform infrastructure, coding the database triggers, and implementing the complex XP algorithms designed by leadership.",
-      image: "https://i.ibb.co/DD68DVnD/ezz.jpg",
-      stats: [
-        { label: "Focus", value: "Execution" },
-        { label: "Class", value: "Builder" },
-        { label: "Stack", value: "Next.js" }
-      ],
-      links: {
-        website: "https://ezzio.netlify.app",
-        github: "https://github.com", 
-        linkedin: "https://linkedin.com",
-        email: "mailto:ezz.dev@example.com"
-      }
-    }
-  ];
-
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 py-8 pb-20 relative min-h-screen flex flex-col">
-      
-      {/* Background: Technical Grid */}
-      <div className="absolute inset-0 pointer-events-none" 
-           style={{ backgroundImage: 'radial-gradient(circle, #334155 1px, transparent 1px)', backgroundSize: '24px 24px', opacity: 0.1 }} 
-      />
+    <main className="mx-auto w-full max-w-7xl space-y-20 pb-20 lg:space-y-28">
+      <section className="relative isolate grid min-h-[560px] overflow-hidden rounded-[2rem] border border-cyan-300/10 bg-[rgb(var(--surface-hero))] lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_78%_45%,rgb(var(--primary)/0.16),transparent_43%),linear-gradient(120deg,rgb(var(--surface-shade)/0.2),rgb(var(--primary-dim)/0.05))]" />
+        <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.12] [background-image:linear-gradient(rgb(var(--muted)/.2)_1px,transparent_1px),linear-gradient(90deg,rgb(var(--muted)/.2)_1px,transparent_1px)] [background-size:36px_36px] [mask-image:linear-gradient(90deg,black,transparent)]" />
 
-      {/* --- 1. HEADER: MISSION BRIEFING --- */}
-      <div className="relative border-b border-slate-700 pb-8 mb-12">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-6">
-            <div>
-                <div className="flex items-center gap-2 text-xs font-mono text-cyan-500 mb-2 uppercase tracking-widest">
-                    <Activity size={12} />
-                    System_Overview // V2.0
-                </div>
-                <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight uppercase">
-                    Mission <span className="text-slate-500">Briefing</span>
-                </h1>
-            </div>
-            
-            <Link href="/dashboard" className="flex items-center gap-3 px-4 py-2 border border-slate-700 hover:border-white hover:bg-white hover:text-black text-slate-400 transition-all text-xs font-bold uppercase tracking-widest group">
-                <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
-                Return to Base
+        <div className="relative z-10 flex flex-col justify-center px-7 py-14 sm:px-12 lg:px-16 lg:py-20">
+          <h1 className="max-w-2xl text-5xl font-black leading-[0.98] tracking-[-0.05em] text-white sm:text-6xl xl:text-7xl">
+            Learn the material.
+            <span className="mt-2 block text-cyan-300">Make your mark.</span>
+          </h1>
+          <p className="mt-7 max-w-xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
+            SSC2 League turns an introductory data science course into a place to learn, experiment, and grow together. Follow the curriculum, put ideas into practice, and see your progress take shape across the season.
+          </p>
+          <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
+            <Link href="/modules" className="group inline-flex items-center gap-3 border-b border-cyan-300 pb-2 text-sm font-bold text-cyan-200 transition hover:text-white">
+              Start with a module <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
             </Link>
-        </div>
-      </div>
-
-      {/* --- 2. PLATFORM DESCRIPTION (THE SYSTEM) --- */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-20">
-          {/* Text Description */}
-          <div className="lg:col-span-1 space-y-6">
-              <h3 className="text-sm font-bold text-white uppercase tracking-widest flex items-center gap-2 border-l-2 border-cyan-500 pl-3">
-                  System Directive
-              </h3>
-              <p className="text-slate-400 leading-relaxed text-sm font-mono">
-                  The <strong className="text-cyan-400">SSC2 League</strong> is a tactical Learning Management System (LMS) designed to gamify the data science curriculum. 
-                  <br/><br/>
-                  Unlike standard educational protocols, this platform tracks operative performance in real-time, rewarding consistency, accuracy, and technical proficiency with XP and Rank advancements.
-              </p>
+            <Link href="/leaderboard" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-300 transition hover:text-white">
+              See the standings <Trophy size={15} className="text-cyan-300" />
+            </Link>
           </div>
-
-          {/* Feature Grid */}
-          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <FeatureCard 
-                  icon={Trophy} 
-                  title="Global Ranking" 
-                  desc="Live competitive leaderboard tracking operative standing across the entire cohort."
-                  code="RANK_SYS"
-              />
-              <FeatureCard 
-                  icon={Target} 
-                  title="Tactical Modules" 
-                  desc="Structured mission intel and weekly automated assessments."
-                  code="LMS_CORE"
-              />
-              <FeatureCard 
-                  icon={Zap} 
-                  title="Live Metrics" 
-                  desc="Granular tracking of attendance streaks, quiz accuracy, and XP gain."
-                  code="STAT_ENG"
-              />
-          </div>
-      </div>
-
-      {/* --- 3. PERSONNEL RECORDS (CREATORS) --- */}
-      <div className="mb-8">
-        <div className="flex items-center gap-4 mb-8">
-            <h3 className="text-sm font-bold text-white uppercase tracking-widest flex items-center gap-2">
-                <Users size={16} className="text-slate-500" />
-                Command Staff
-            </h3>
-            <div className="h-px flex-1 bg-slate-800" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
-            {creators.map((creator, idx) => (
-            <div 
-                key={idx} 
-                className="group relative bg-slate-900 border border-slate-800 p-6 hover:border-slate-600 transition-all duration-300 flex flex-col h-full"
-            >
-                {/* Decoration: Corner Markers */}
-                <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-slate-600 group-hover:border-white transition-colors" />
-                <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-slate-600 group-hover:border-white transition-colors" />
-                <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-slate-600 group-hover:border-white transition-colors" />
-                <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-slate-600 group-hover:border-white transition-colors" />
+        <LeagueSignal />
+        <div className="pointer-events-none absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent lg:hidden" />
+      </section>
 
-                <div className="flex items-start justify-between mb-6 border-b border-slate-800 pb-4">
-                    <div className="flex items-center gap-4">
-                        <div className={clsx(
-                            "w-16 h-16 bg-slate-800 overflow-hidden border-2 transition-colors",
-                            creator.color === "blue" ? "border-blue-500/50 group-hover:border-blue-400" : "border-cyan-500/50 group-hover:border-cyan-400"
-                        )}>
-                            <img src={creator.image} alt={creator.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
-                        </div>
-                        <div>
-                            <div className="text-[10px] font-mono text-slate-500 mb-0.5">ID: {creator.id}</div>
-                            <h2 className="text-xl font-bold text-white uppercase tracking-wide">{creator.name}</h2>
-                            <div className={clsx(
-                                "text-xs font-bold uppercase tracking-wider mt-1",
-                                creator.color === "blue" ? "text-blue-400" : "text-cyan-400"
-                            )}>
-                                {creator.role}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <p className="text-sm text-slate-400 leading-relaxed mb-8 flex-1 font-mono">
-                    {creator.description}
-                </p>
-
-                {/* Stats Grid */}
-                <div className="grid grid-cols-3 gap-2 mb-6">
-                    {creator.stats.map((stat, i) => (
-                        <div key={i} className="bg-slate-950 border border-slate-800 p-2 text-center">
-                            <div className="text-[9px] text-slate-600 uppercase font-bold mb-1">{stat.label}</div>
-                            <div className="text-xs text-slate-300 font-mono">{stat.value}</div>
-                        </div>
-                    ))}
-                </div>
-
-                {/* Links */}
-                <div className="flex gap-2">
-                    {creator.links.website && (
-                        <TechLink href={creator.links.website} icon={Globe} label="WEB" />
-                    )}
-                    {creator.links.github && (
-                        <TechLink href={creator.links.github} icon={Github} label="GH" />
-                    )}
-                    {creator.links.linkedin && (
-                        <TechLink href={creator.links.linkedin} icon={Linkedin} label="IN" />
-                    )}
-                    <TechLink href={creator.links.email} icon={Mail} label="MSG" />
-                </div>
+      <section className="relative overflow-hidden border-y border-cyan-200/15 bg-surface/50 px-6 py-7 sm:px-9 sm:py-8">
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-1/3 bg-[linear-gradient(110deg,transparent,rgb(var(--primary)/0.05))]" />
+        <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-start gap-5">
+            <div className="grid h-12 w-12 shrink-0 place-items-center border border-cyan-300/30 bg-cyan-300/[0.08] text-cyan-300">
+              <BookOpen size={22} />
             </div>
-            ))}
+            <div>
+              <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">Programming Fundamentals</h2>
+              <p className="mt-1 text-xs font-mono uppercase tracking-[0.12em] text-cyan-200/70">Intro to Programming with Python</p>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">A course guide covering programming foundations, Python fundamentals, and data science.</p>
+            </div>
+          </div>
+          <a
+            href="https://tn-data.github.io/PFwithPython/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex shrink-0 items-center gap-3 border border-cyan-300/30 px-4 py-3 text-sm font-bold text-cyan-200 transition hover:border-cyan-300 hover:bg-cyan-300/10 hover:text-white"
+          >
+            Open learning source <ExternalLink size={15} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </a>
         </div>
-      </div>
+      </section>
 
-      {/* --- 4. SYSTEM ARCHITECTURE (Technical Spec Sheet) --- */}
-      <div className="mt-8 pt-8 border-t border-slate-800 border-dashed">
-        <div className="flex items-center gap-4 mb-8">
-            <h3 className="text-sm font-bold text-white uppercase tracking-widest flex items-center gap-2">
-                <Terminal size={16} className="text-slate-500" />
-                System Dependencies
-            </h3>
-            <div className="h-px flex-1 bg-slate-800" />
+      <section>
+        <div className="mb-10">
+          <div>
+            <SectionLabel>How learning moves</SectionLabel>
+            <h2 className="mt-4 max-w-2xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl">A loop that takes you from idea to insight.</h2>
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <SpecCard icon={Globe} label="Framework" value="Next.js 16" code="APP_ROUTER" />
-            <SpecCard icon={Database} label="Database" value="Supabase" code="POSTGRES_V15" />
-            <SpecCard icon={Layers} label="Styling" value="Tailwind" code="UTILITY_FIRST" />
-            <SpecCard icon={Cpu} label="Logic" value="TypeScript" code="STRICT_MODE" />
+        <div className="relative grid gap-7 md:grid-cols-3 md:gap-0">
+          <div className="absolute left-[16%] right-[16%] top-5 hidden h-px bg-gradient-to-r from-cyan-400/20 via-cyan-300/70 to-cyan-400/20 md:block" />
+          {learningLoop.map((step, index) => (
+            <article key={step.number} className="relative flex gap-5 px-0 md:px-8 first:md:pl-0 last:md:pr-0">
+              <div className="relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full border border-cyan-300/50 bg-background font-mono text-xs font-bold text-cyan-300 shadow-[0_0_24px_rgb(var(--primary)/0.12)]">
+                {step.number}
+              </div>
+              <div className="pt-1">
+                <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">Stage {index + 1}</div>
+                <h3 className="text-lg font-bold text-foreground">{step.title}</h3>
+                <p className="mt-2 max-w-xs text-sm leading-6 text-muted">{step.text}</p>
+              </div>
+            </article>
+          ))}
         </div>
-      </div>
+      </section>
 
+      <section>
+        <div className="mb-8">
+          <SectionLabel>Built for the course</SectionLabel>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Everything you need to keep moving.</h2>
+        </div>
+
+        <div className="grid border-y border-border sm:grid-cols-2 xl:grid-cols-4">
+          {leagueTools.map(({ icon: Icon, title, description }, index) => (
+            <article key={title} className={`group relative py-6 sm:px-6 sm:py-8 xl:px-7 ${index % 2 === 0 ? "sm:border-r" : ""} ${index < 2 ? "sm:border-b xl:border-b-0" : ""} ${index > 0 ? "xl:border-l" : ""} border-border`}>
+              <div className="mb-8 flex items-start justify-between">
+                <div className="grid h-10 w-10 place-items-center border border-cyan-300/20 bg-cyan-300/[0.06] text-cyan-300 transition group-hover:border-cyan-300/50 group-hover:bg-cyan-300/10">
+                  <Icon size={18} />
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-foreground">{title}</h3>
+              <p className="mt-2 text-sm leading-6 text-muted">{description}</p>
+            </article>
+          ))}
+        </div>
+        <Link href="/comms" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 transition hover:text-white">
+          Open cohort comms <ArrowRight size={15} />
+        </Link>
+      </section>
+
+      <CombatManual />
+
+      <footer className="flex flex-col gap-3 border-t border-border pt-6 text-xs font-mono uppercase tracking-wider text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+        <span>Made by MZ for Tech</span>
+        <a href="https://mzfortech.com" target="_blank" rel="noopener noreferrer" className="text-cyan-300 transition hover:text-white">mzfortech.com</a>
+      </footer>
+    </main>
+  );
+}
+
+function SectionLabel({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-cyan-300">
+      <span className="h-1.5 w-1.5 bg-cyan-300 shadow-[0_0_10px_rgb(var(--primary)/.8)]" />
+      {children}
     </div>
   );
 }
 
-// --- MICRO COMPONENTS ---
+function LeagueSignal() {
+  return (
+    <div className="relative flex min-h-[390px] items-center justify-center overflow-hidden px-6 pb-10 pt-4 lg:min-h-0 lg:px-0 lg:py-12" aria-label="Illustration of the league learning path">
+      <div className="absolute left-1/2 top-1/2 aspect-square w-[min(88vw,480px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/[0.08]" />
+      <div className="absolute left-1/2 top-1/2 aspect-square w-[min(68vw,370px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-cyan-200/[0.13]" />
+      <div className="absolute left-1/2 top-1/2 aspect-square w-[min(47vw,250px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/[0.08]" />
+      <div className="absolute left-1/2 top-1/2 h-[min(88vw,480px)] w-px -translate-y-1/2 bg-gradient-to-b from-transparent via-cyan-200/10 to-transparent" />
+      <div className="absolute left-1/2 top-1/2 h-px w-[min(88vw,480px)] -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-200/10 to-transparent" />
 
-function FeatureCard({ icon: Icon, title, desc, code }: { icon: any, title: string, desc: string, code: string }) {
-    return (
-        <div className="bg-slate-900/50 border border-slate-800 p-4 hover:border-slate-600 transition-colors group">
-            <div className="flex justify-between items-start mb-3">
-                <Icon size={20} className="text-cyan-500 group-hover:text-white transition-colors" />
-                <span className="text-[9px] font-mono text-slate-600">{code}</span>
-            </div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-2">{title}</h4>
-            <p className="text-[11px] text-slate-400 leading-normal">{desc}</p>
+      <div className="relative h-[370px] w-full max-w-[500px] sm:h-[430px]">
+        <svg viewBox="0 0 500 430" className="absolute inset-0 h-full w-full overflow-visible" fill="none" aria-hidden="true">
+          <path d="M95 104 C142 125 165 173 213 202" stroke="url(#pathA)" strokeWidth="1.5" strokeDasharray="5 7" />
+          <path d="M408 92 C354 118 334 169 287 200" stroke="url(#pathB)" strokeWidth="1.5" strokeDasharray="5 7" />
+          <path d="M250 350 C248 305 250 271 250 238" stroke="url(#pathC)" strokeWidth="1.5" strokeDasharray="5 7" />
+          <circle cx="155" cy="151" r="3" fill="rgb(var(--cyan-300))"><animate attributeName="opacity" values=".2;1;.2" dur="2.8s" repeatCount="indefinite" /></circle>
+          <circle cx="344" cy="146" r="3" fill="rgb(var(--cyan-300))"><animate attributeName="opacity" values="1;.2;1" dur="3.2s" repeatCount="indefinite" /></circle>
+          <defs>
+            <linearGradient id="pathA" x1="95" y1="104" x2="213" y2="202" gradientUnits="userSpaceOnUse"><stop stopColor="rgb(var(--primary))" stopOpacity=".08" /><stop offset="1" stopColor="rgb(var(--cyan-300))" stopOpacity=".8" /></linearGradient>
+            <linearGradient id="pathB" x1="408" y1="92" x2="287" y2="200" gradientUnits="userSpaceOnUse"><stop stopColor="rgb(var(--primary))" stopOpacity=".08" /><stop offset="1" stopColor="rgb(var(--cyan-300))" stopOpacity=".8" /></linearGradient>
+            <linearGradient id="pathC" x1="250" y1="350" x2="250" y2="238" gradientUnits="userSpaceOnUse"><stop stopColor="rgb(var(--primary))" stopOpacity=".08" /><stop offset="1" stopColor="rgb(var(--cyan-300))" stopOpacity=".8" /></linearGradient>
+          </defs>
+        </svg>
+
+        <div className="absolute left-1/2 top-1/2 z-10 grid h-36 w-36 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-cyan-200/30 bg-[rgb(var(--surface-hero))]/85 shadow-[0_0_70px_rgb(var(--primary)/0.15)] sm:h-40 sm:w-40">
+          <div className="absolute inset-2 rounded-full border border-dashed border-cyan-200/15" />
+          <div className="text-center">
+            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-slate-400">The league</div>
+            <div className="mt-1 text-3xl font-black tracking-[-0.08em] text-white">SSC<span className="text-cyan-300">2</span></div>
+            <div className="mt-1 font-mono text-[9px] uppercase tracking-[0.24em] text-cyan-200/70">Learn together</div>
+          </div>
         </div>
-    )
+
+        <SignalNode className="left-0 top-8 sm:left-4 sm:top-10" icon={<BookOpen size={15} />} label="Curriculum" />
+        <SignalNode className="right-0 top-6 sm:right-2 sm:top-8" icon={<Code2 size={15} />} label="Practice" />
+        <SignalNode className="bottom-0 left-1/2 -translate-x-1/2" icon={<Users size={15} />} label="Cohort" />
+
+        <div className="absolute bottom-16 right-0 hidden border-l border-cyan-300/40 pl-3 font-mono text-[9px] uppercase leading-5 tracking-widest text-slate-500 sm:block">
+          <div>Course signal</div>
+          <div className="text-cyan-200/80">Connected</div>
+        </div>
+        <div className="absolute left-0 top-1/2 hidden -translate-y-1/2 font-mono text-[9px] uppercase leading-5 tracking-[0.18em] text-slate-600 sm:block">
+          <div>Explore</div><div className="ml-3">Build</div><div className="ml-6">Advance</div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-function TechLink({ href, icon: Icon, label }: { href: string, icon: any, label: string }) {
-    return (
-        <a 
-            href={href} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-2 py-2 border border-slate-700 bg-slate-800/50 text-slate-400 text-xs font-bold hover:bg-slate-700 hover:text-white hover:border-slate-500 transition-all uppercase tracking-wider"
-        >
-            <Icon size={12} /> {label}
-        </a>
-    )
-}
-
-function SpecCard({ icon: Icon, label, value, code }: { icon: any, label: string, value: string, code: string }) {
-    return (
-        <div className="flex items-start gap-4 p-4 border border-slate-800 bg-slate-900/30">
-            <div className="text-slate-600 mt-1">
-                <Icon size={16} />
-            </div>
-            <div>
-                <div className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-0.5">{label}</div>
-                <div className="text-sm font-bold text-white">{value}</div>
-                <div className="text-[9px] text-slate-600 font-mono mt-1">{code}</div>
-            </div>
-        </div>
-    )
+function SignalNode({ className, icon, label }: { className: string; icon: ReactNode; label: string }) {
+  return (
+    <div className={`absolute z-20 min-w-[132px] border border-cyan-200/15 bg-[rgb(var(--surface-node))]/95 p-3 shadow-xl backdrop-blur-sm ${className}`}>
+      <div className="flex items-center">
+        <span className="text-cyan-300">{icon}</span>
+      </div>
+      <div className="mt-2 text-xs font-semibold text-slate-200">{label}</div>
+      <div className="mt-2 h-px w-full bg-gradient-to-r from-cyan-300/50 to-transparent" />
+    </div>
+  );
 }

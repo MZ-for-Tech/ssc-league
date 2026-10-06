@@ -1,0 +1,33 @@
+{
+  "lesson": "Module 2, Lesson 6: Tuples and dictionaries",
+  "sources": {
+    "primary_markdown": "ssc/Module 2/6_tuples_and_dictionaries.md",
+    "primary_pdf": "ssc/Module 2/9. Module 2_4_Collection Data Types_Prat2.pdf (22 pages)",
+    "scope": "Paired Lesson 6 sources cover tuples, tuple operations and unpacking, dictionaries and their methods, nested structures, character frequency, marketing analysis, survey records, and the price-elasticity exercise.",
+    "source_caveats": [
+      "The PDF character-frequency example iterates over set(txt.upper()) but counts with txt.count(i), mixing uppercase characters with the unchanged case-sensitive source string. The corrected Markdown normalizes consistently; questions ask students to diagnose and repair the PDF version.",
+      "The PDF survey exercise uses range(L) without defining L. The paired Markdown correctly iterates directly over the record list; no keyed item relies on the undefined name.",
+      "The elasticity exercise compares signed values directly with 1, which classifies negative elasticities as inelastic regardless of magnitude. The final essay explicitly identifies this code behavior and contrasts it with the magnitude-based criterion.",
+      "The PDF converts rates through tuple(set(rates)); set iteration order is not specified. No item requires a particular order for the unique rates.",
+      "A tuple is hashable as a dictionary key only when its contents are hashable. The key question uses a tuple of integers, not a tuple containing a mutable list."
+    ]
+  },
+  "batch": {
+    "mcqs": 40,
+    "structured_responses": 8,
+    "marks_each": 5
+  },
+  "coverage": [
+    "tuple immutability, slicing, concatenation, count and index",
+    "mutable objects nested inside tuples",
+    "looping and unpacking a list of tuple records",
+    "dictionary keys, values, items, creation and access",
+    "key uniqueness, hashability, and one value per key",
+    "adding, updating, checking, popping, deleting, copying and clearing entries",
+    "nested dictionaries and lists of dictionaries",
+    "aggregates, thresholds, comprehensions, and marketing campaign data",
+    "case-insensitive character-frequency debugging",
+    "price elasticity calculation and critical review of signed classification"
+  ],
+  "method": "Paired-source question drafting; answer-bearing review; metadata-hidden question review; rendered code preview; mechanical audit."
+}

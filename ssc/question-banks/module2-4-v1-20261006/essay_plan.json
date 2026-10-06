@@ -1,0 +1,15 @@
+{
+  "recommendation": "8 structured-response prompts, 5 marks each",
+  "rationale": "Prompts assess return behavior, list-function design, guard clauses, parameter passing, nested calls, scope, recursion, and modular reuse/diagnosis.",
+  "total_marks": 40,
+  "coverage": {
+    "M2L4-E01": "trace and explain output versus returned values",
+    "M2L4-E02": "design and analyze a list-processing function",
+    "M2L4-E03": "explain and calculate a guarded formula",
+    "M2L4-E04": "compare parameter-passing techniques",
+    "M2L4-E05": "trace nested calls and argument evaluation",
+    "M2L4-E06": "analyze local and global scope",
+    "M2L4-E07": "trace recursive calls and returns",
+    "M2L4-E08": "explain module reuse and diagnose an import example"
+  }
+}

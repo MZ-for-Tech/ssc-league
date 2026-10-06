@@ -1,0 +1,39 @@
+{
+  "lessonId": "flow-1-2",
+  "title": "Flowcharts and pseudocode",
+  "status": "nonproduction pilot; AI-reviewed draft",
+  "sources": [
+    {
+      "file": "Module 1-20251002T083148Z-1-001/Module 1/Module1_2_flowcharts.pdf",
+      "coverage": "Printed pages 2–25: purpose and benefits, symbols and conventions, sequence/decision/loop structures, worked average/bonus/sum/factorial/six-score examples, pseudocode, and the algorithm/pseudocode/program distinction."
+    },
+    {
+      "file": "Module 1-20251002T083148Z-1-001/Module 1/flow.md",
+      "coverage": "Lesson 2 of 3: flowchart purpose, symbols and rules, bonus threshold, factorial and sum loops, pre-test/post-test distinction, pseudocode, and grade-pass example."
+    }
+  ],
+  "objectives": [
+    {"id":"symbols_rules_connectors","count":10,"source":"PDF pp. 5–9, 11; flow.md ‘The symbols’ and ‘The rules, in one breath’","operations":["select symbols for input/process/output/decision/terminal steps","interpret arrows, branch labels, and terminal conventions","distinguish on-page from off-page connectors"]},
+    {"id":"purpose_and_benefits","count":2,"source":"PDF pp. 2–3; flow.md ‘Why bother drawing it?’","operations":["connect a visible representation to logic checking and communication"]},
+    {"id":"sequence_and_accumulation","count":4,"source":"PDF pp. 13, 18–20; flow.md ‘Structure 1 — Sequence’","operations":["trace a three-input average sequence","trace an explicitly expanded six-score accumulator"]},
+    {"id":"maximum_selection","count":1,"source":"PDF p. 14; maximum-of-three worked example","operations":["trace sequential comparisons that maintain and update a largest-so-far value"]},
+    {"id":"decision_and_boundaries","count":6,"source":"PDF pp. 11, 17; flow.md ‘Structure 2 — Decision’ and boundary discussion","operations":["trace branches and convergent paths","apply inclusive thresholds","reason about how a boundary operator changes a branch"]},
+    {"id":"loops_and_test_position","count":7,"source":"PDF pp. 10, 12, 15; flow.md ‘Structure 3 — Loop’ and ‘Pre-test and post-test loops’","operations":["trace loop initialization, updates, and exit","distinguish pre-test from post-test behavior","interpret a backward arrow"]},
+    {"id":"factorial_trace","count":4,"source":"PDF p. 16; flow.md factorial flowchart","operations":["trace increment-before-multiply order","find factorial output and first failing test"]},
+    {"id":"pseudocode_and_representations","count":3,"source":"PDF pp. 21–22, 25; flow.md ‘Pseudocode: the middle step’","operations":["distinguish flowchart, pseudocode, and exact program syntax","apply the arithmetic pseudocode structure"]},
+    {"id":"grade_threshold_decision","count":3,"source":"PDF pp. 23–24; flow.md student-grade pseudocode and program example","operations":["calculate a four-mark average and follow an inclusive pass threshold"]}
+  ],
+  "visualAssets": {
+    "format":"SVG, provided as local assets in diagrams/ and referenced on each diagram-dependent item via stimulusAsset",
+    "itemsWithDiagram": ["FLOW-006","FLOW-007","FLOW-008","FLOW-010","FLOW-011","FLOW-012","FLOW-014","FLOW-015","FLOW-016","FLOW-017","FLOW-018","FLOW-019","FLOW-020","FLOW-021","FLOW-022","FLOW-023","FLOW-024","FLOW-025","FLOW-026","FLOW-027","FLOW-028","FLOW-029","FLOW-033","FLOW-034","FLOW-035","FLOW-039","FLOW-E01","FLOW-E02","FLOW-E03","FLOW-E04","FLOW-E08"],
+    "displayRequirement":"Render the referenced SVG with the stem in any learner/reviewer view. A text-only stem is incomplete for items marked [Diagram]."
+  },
+  "excluded": [
+    "Questions requiring exact visual details from the PDF's six-score flowchart image beyond the readable sequence; this pilot uses a clean equivalent diagram based on PDF pp. 18–20.",
+    "Python implementation details beyond the pseudocode/program distinction and lesson examples.",
+    "Flowchart standards not taught in the two sources, including formal ISO symbol variants or complexity notation."
+  ],
+  "questionCount":40,
+  "structuredResponseCount":8,
+  "bloomPolicy":"Bloom labels are descriptive review evidence, not quotas. Create is excluded from the single-select MCQ classification; construction prompts in the structured-response set can require Create."
+}

@@ -118,7 +118,7 @@ export default function AdminDashboardView({
         <section aria-label="Season totals" className="grid grid-cols-2 gap-2.5 sm:gap-3 xl:grid-cols-4">
           <MetricCard label="Students" value={totalStudents} detail="In this season" icon={Users} accent="cyan" />
           <MetricCard label="Student adoption" value={adoptionRate === null ? "—" : `${adoptionRate}%`} detail={totalStudents ? `${studentsAttempted} of ${totalStudents} students attempted a question` : "No students enrolled"} icon={Target} accent="violet" />
-          <MetricCard label="Questions" value={totalQuestions} detail="In the question bank" icon={FileQuestion} accent="amber" />
+          <MetricCard label="Questions" value={totalQuestions} detail="Multiple-choice and essay prompts" icon={FileQuestion} accent="amber" />
           <MetricCard label="Attempts" value={totalAttempts} detail="Across the season" icon={Activity} accent="rose" />
         </section>
       )}

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { User, Lock, ArrowRight, ShieldCheck, Loader2, Radio, ScanLine, Terminal } from "lucide-react";
+import { Mail, Lock, ArrowRight, ShieldCheck, Loader2, Radio, ScanLine, Terminal, Eye, EyeOff } from "lucide-react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import SidebarLogo from "@/components/Logo"; 
 import { resetLeagueSeasonSelection } from "@/app/actions/season-actions";
@@ -147,6 +147,7 @@ function CourseCodeTerminal() {
 export default function LoginPage() {
   const [input, setInput] = useState(""); // Can be ID or Email
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   
@@ -267,11 +268,13 @@ const handleLogin = async (e: React.FormEvent) => {
                 Student ID <span className="font-medium normal-case tracking-normal text-muted/70">or email</span>
               </label>
               <div className="group relative">
-                <User aria-hidden="true" className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted transition-colors group-focus-within:text-primary" />
+                <Mail aria-hidden="true" className="pointer-events-none absolute left-3.5 top-1/2 z-10 h-5 w-5 -translate-y-1/2 text-primary" />
                 <input
                   id="login-identity"
                   type="text"
                   autoComplete="username"
+                  autoCapitalize="none"
+                  spellCheck={false}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   className="auth-input console-control min-h-14 w-full border border-border/90 bg-background/55 py-4 pl-12 pr-4 text-base text-foreground outline-none transition placeholder:text-muted/55 focus:border-primary/70 focus:bg-background/80 focus:ring-2 focus:ring-primary/15"
@@ -284,17 +287,30 @@ const handleLogin = async (e: React.FormEvent) => {
             <div className="space-y-2">
               <label htmlFor="login-password" className="ml-1 text-[11px] font-bold uppercase tracking-[0.16em] text-muted">Password</label>
               <div className="group relative">
-                <Lock aria-hidden="true" className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted transition-colors group-focus-within:text-primary" />
+                <Lock aria-hidden="true" className="pointer-events-none absolute left-3.5 top-1/2 z-10 h-5 w-5 -translate-y-1/2 text-primary" />
                 <input
                   id="login-password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   autoComplete="current-password"
+                  autoCapitalize="none"
+                  spellCheck={false}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="auth-input console-control min-h-14 w-full border border-border/90 bg-background/55 py-4 pl-12 pr-4 text-base text-foreground outline-none transition placeholder:text-muted/55 focus:border-primary/70 focus:bg-background/80 focus:ring-2 focus:ring-primary/15"
+                  className="auth-input console-control min-h-14 w-full border border-border/90 bg-background/55 py-4 pl-12 pr-12 text-base text-foreground outline-none transition placeholder:text-muted/55 focus:border-primary/70 focus:bg-background/80 focus:ring-2 focus:ring-primary/15"
                   placeholder="Enter your password"
                   required
                 />
+                <button
+                  type="button"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  aria-pressed={showPassword}
+                  title={showPassword ? "Hide password" : "Show password"}
+                  onMouseDown={(event) => event.preventDefault()}
+                  onClick={() => setShowPassword((visible) => !visible)}
+                  className="absolute right-1.5 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-muted transition hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-primary"
+                >
+                  {showPassword ? <EyeOff aria-hidden="true" size={18} /> : <Eye aria-hidden="true" size={18} />}
+                </button>
               </div>
               <div className="flex justify-end px-1">
                 <Link href="/forgot-password" className="text-xs font-semibold text-primary transition hover:text-cyan-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">

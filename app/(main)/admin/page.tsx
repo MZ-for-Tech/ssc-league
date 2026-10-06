@@ -11,12 +11,13 @@ export const dynamic = "force-dynamic";
 export default async function AdminHomePage() {
   const { supabase, user, activeSeasonId, seasonId } = await getAdminPageContext();
   const impersonateId = await getImpersonatedStudentId();
-  const [{ data: seasons }, studentsResult, answerCountResult, topicsResult, questionsResult] = await Promise.all([
+  const [{ data: seasons }, studentsResult, answerCountResult, topicsResult, questionsResult, essaysResult] = await Promise.all([
     supabase.from("Season").select("id, name, status").order("id", { ascending: false }),
     supabase.from("Student").select("id", { count: "exact", head: true }).eq("season_id", seasonId),
     supabase.from("StudentAnswer").select("id", { count: "exact", head: true }).eq("season_id", seasonId),
     supabase.from("Topic").select("id, name, week_number").eq("season_id", seasonId).order("week_number"),
     supabase.from("Question").select("id, topic_id").eq("season_id", seasonId),
+    supabase.from("EssayQuestion").select("id", { count: "exact", head: true }).eq("season_id", seasonId),
   ]);
 
   const adminDisplayName = user.user_metadata?.preferred_name || user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0] || "Agent";
@@ -39,7 +40,7 @@ export default async function AdminHomePage() {
   const allAnswers = answerPages.flatMap((page) => page.data || []);
   const studentsAttempted = new Set(allAnswers.map((answer) => answer.student_id)).size;
   const dataError = Boolean(
-    studentsResult.error || answerCountResult.error || topicsResult.error || questionsResult.error ||
+    studentsResult.error || answerCountResult.error || topicsResult.error || questionsResult.error || essaysResult.error ||
     answerPages.some((page) => page.error),
   );
 
@@ -137,7 +138,7 @@ export default async function AdminHomePage() {
     <AdminDashboardView
       totalStudents={totalStudents}
       studentsAttempted={studentsAttempted}
-      totalQuestions={questions.length}
+      totalQuestions={questions.length + (essaysResult.count || 0)}
       totalAttempts={totalAnswerCount}
       activityByDay={activityByDay}
       activeLearners={activeStudentIds.size}

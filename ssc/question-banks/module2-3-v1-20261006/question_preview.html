@@ -2,9 +2,9 @@
 <style>body{font:16px/1.55 system-ui,sans-serif;max-width:980px;margin:2rem auto;padding:0 1rem;color:#18212b}article{border:1px solid #ccd3da;border-radius:10px;padding:1rem 1.2rem;margin:1rem 0}pre{overflow:auto;background:#f3f5f7;padding:1rem;border-radius:8px}ol{padding-left:1.5rem}</style><body><h1>Module 2 — Loops</h1><p>40 MCQs and 8 structured responses. This pilot uses the loops Markdown because no corresponding PDF is present.</p><h2>Multiple-choice questions</h2>
 <article><h3>M2L3-001</h3><p>When is a `for` loop usually the more direct choice?</p>
 <ol type='A'><li>When the number of repetitions or items to visit is known</li><li>When repetition should continue until an unknown condition changes</li><li>When the program must skip every other line</li><li>When no block of code should repeat</li></ol></article>
-<article><h3>M2L3-002</h3><p>When does the lesson recommend a `while` loop?</p>
+<article><h3>M2L3-002</h3><p>When is a `while` loop appropriate?</p>
 <ol type='A'><li>When the loop body contains no condition</li><li>When a condition controls how long repetition continues</li><li>Only when the loop must visit every item in a collection</li><li>Only when exactly five repetitions are required</li></ol></article>
-<article><h3>M2L3-003</h3><p>Which sequence gives the four parts of the while-loop pattern in the lesson?</p>
+<article><h3>M2L3-003</h3><p>Which sequence gives the four parts of a while-loop pattern?</p>
 <ol type='A'><li>Input value, print, compare, stop</li><li>Define, call, import, update</li><li>Initialize, test, body, update</li><li>Test condition, output, break, return</li></ol></article>
 <article><h3>M2L3-004</h3><p>In a counter-controlled `while` loop, what is the usual purpose of the update statement?</p>
 <pre><code>i = 1
@@ -79,7 +79,7 @@ print(total)</code></pre>
 <ol type='A'><li>100,000</li><li>1,000,000</li><li>2,000,000</li><li>1,000</li></ol></article>
 <article><h3>M2L3-023</h3><p>Why should an accumulating loop usually set `total = 0` before it starts?</p>
 <ol type='A'><li>So break can reset the total</li><li>So range() knows its stop value</li><li>Initialize the accumulator at zero</li><li>So the loop condition is automatically true</li></ol></article>
-<article><h3>M2L3-024</h3><p>In the lesson&#x27;s while-loop pattern, what should happen before the first condition test?</p>
+<article><h3>M2L3-024</h3><p>In a while-loop pattern, what should happen before the first condition test?</p>
 <ol type='A'><li>Update the variable using its old value</li><li>Run the body once</li><li>Call continue</li><li>Initialize the control variable</li></ol></article>
 <article><h3>M2L3-025</h3><p>A population starts at 1,000 and grows by 2% in one year. What is its value after that update?</p>
 <pre><code>population = 1000
@@ -92,17 +92,17 @@ population += population * rate</code></pre>
 <ol type='A'><li>250.08</li><li>230</li><li>270</li><li>258</li></ol></article>
 <article><h3>M2L3-028</h3><p>A price of 250 rises by 8% per year for five years. Approximately what is the final price?</p>
 <ol type='A'><li>350.00</li><li>290.00</li><li>367.00</li><li>367.33</li></ol></article>
-<article><h3>M2L3-029</h3><p>If a growth-model rate is -0.05, what does the sign indicate in the lesson&#x27;s model?</p>
+<article><h3>M2L3-029</h3><p>If a growth-model rate is -0.05, what does the negative sign indicate?</p>
 <ol type='A'><li>The quantity decays by 5% per period</li><li>The quantity grows by 5% per period</li><li>The quantity becomes negative immediately</li><li>The loop must execute five times</li></ol></article>
 <article><h3>M2L3-030</h3><p>In `quantity += quantity * rate`, what is added to the current quantity each period?</p>
 <pre><code>quantity += quantity * rate</code></pre>
 <ol type='A'><li>The current quantity divided by the rate</li><li>The current quantity multiplied by the rate</li><li>The rate multiplied by the year number only</li><li>A fixed amount unrelated to the current quantity</li></ol></article>
-<article><h3>M2L3-031</h3><p>In the lesson&#x27;s response list, how many Male entries are present?</p>
+<article><h3>M2L3-031</h3><p>In the response list, how many Male entries are present?</p>
 <pre><code>genders = [&#x27;Male&#x27;, &#x27;Female&#x27;, &#x27;Female&#x27;, &#x27;Male&#x27;, &#x27;Female&#x27;, &#x27;Female&#x27;]</code></pre>
 <ol type='A'><li>4</li><li>6</li><li>2</li><li>3</li></ol></article>
 <article><h3>M2L3-032</h3><p>For 2 Male responses out of 6 total, what percentage is Male to two decimal places?</p>
 <ol type='A'><li>25.00%</li><li>50.00%</li><li>66.67%</li><li>33.33%</li></ol></article>
-<article><h3>M2L3-033</h3><p>Why does the lesson set `total = len(genders)` before calculating percentages?</p>
+<article><h3>M2L3-033</h3><p>Why set `total = len(genders)` before calculating percentages?</p>
 <ol type='A'><li>Use list length as the denominator</li><li>It counts only Male responses</li><li>It converts every item to a string</li><li>It stops the for loop after the last item</li></ol></article>
 <article><h3>M2L3-034</h3><p>When does the majority message report Male in the response-counting example?</p>
 <ol type='A'><li>Whenever the list has six items</li><li>When `count_male &gt; count_female`</li><li>When `count_male == count_female`</li><li>When `count_male &lt; count_female`</li></ol></article>
@@ -116,7 +116,7 @@ population += population * rate</code></pre>
         continue
     print(n)</code></pre>
 <ol type='A'><li>Skip the rest of this pass and continue</li><li>Those values terminate the loop immediately</li><li>Those values are added to a total</li><li>Those values restart the range at 1</li></ol></article>
-<article><h3>M2L3-038</h3><p>What repeated-code pattern does the lesson say can signal that a function would help?</p>
+<article><h3>M2L3-038</h3><p>What repeated-code pattern can signal that a function would help?</p>
 <ol type='A'><li>A single break statement in a search</li><li>Repeated counting loops for gender and vote data</li><li>A loop that visits a string one character at a time</li><li>A range with a step of five</li></ol></article>
 <article><h3>M2L3-039</h3><p>Why can the same growth loop model population, inflation, interest, or currency depreciation?</p>
 <ol type='A'><li>The loop body never changes the value</li><li>All four quantities use the same numerical rate</li><li>Reuse the update pattern with different inputs</li><li>Each topic requires a different kind of loop keyword</li></ol></article>
@@ -149,6 +149,6 @@ while i &lt;= 5:
 </article>
 <article><h3>M2L3-E07 · 5 marks</h3><p>For the list `[&#x27;Male&#x27;,&#x27;Female&#x27;,&#x27;Female&#x27;,&#x27;Male&#x27;,&#x27;Female&#x27;,&#x27;Female&#x27;]`, give the two counts and their percentages to two decimal places. Describe the loop counters and explain why `len(list)` is the denominator.</p>
 </article>
-<article><h3>M2L3-E08 · 5 marks</h3><p>The lesson repeats nearly identical counting code once for gender responses and again for votes. Explain why this duplication suggests a function, and identify which parts of the logic can stay the same and which data should vary between calls.</p>
+<article><h3>M2L3-E08 · 5 marks</h3><p>Nearly identical counting code is used once for gender responses and again for votes. Explain why this duplication suggests a function, and identify which parts of the logic can stay the same and which data should vary between calls.</p>
 </article>
 </body></html>

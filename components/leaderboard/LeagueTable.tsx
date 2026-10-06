@@ -87,7 +87,7 @@ export default function LeagueTable({ students }: { students: StudentData[] }) {
     <div className="w-full space-y-3">
       
       {/* HEADER ROW */}
-      <div className="grid grid-cols-12 px-6 pb-2 text-[10px] uppercase tracking-widest text-slate-500 font-bold opacity-70 border-b border-slate-800/50 mb-2">
+      <div className="grid grid-cols-12 px-6 pb-2 text-xs uppercase tracking-widest text-slate-500 font-bold opacity-70 border-b border-slate-800/50 mb-2">
         <div className="col-span-2 md:col-span-1 text-center">Rank</div>
         <div className="col-span-7 md:col-span-8 pl-4">Operative</div>
         <div className="col-span-3 md:col-span-3 text-right">XP</div>
@@ -114,16 +114,16 @@ export default function LeagueTable({ students }: { students: StudentData[] }) {
                     {(() => {
                         const diff = student.prevRank - student.rank;
                         if (diff > 0) return (
-                            <div className="flex items-center gap-1 text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                            <div className="flex items-center gap-1 text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
                                 <ChevronUp size={10} strokeWidth={4} /> {diff}
                             </div>
                         );
                         if (diff < 0) return (
-                            <div className="flex items-center gap-1 text-[10px] font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-full border border-rose-500/20">
+                            <div className="flex items-center gap-1 text-xs font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-full border border-rose-500/20">
                                 <ChevronDown size={10} strokeWidth={4} /> {Math.abs(diff)}
                             </div>
                         );
-                        return <div className="text-slate-600 text-[10px]"><Minus size={12} /></div>;
+                        return <div className="text-slate-600 text-xs"><Minus size={12} /></div>;
                     })()}
                 </div>
 
@@ -145,7 +145,7 @@ export default function LeagueTable({ students }: { students: StudentData[] }) {
                             </div>
                         )}
                         {/* Level Badge (Tiny) */}
-                        <div className="absolute -bottom-1 -right-1 bg-slate-900 text-[8px] font-bold text-slate-300 px-1.5 py-px rounded border border-slate-700 shadow-sm">
+                        <div className="absolute left-1/2 top-full z-10 mt-1 -translate-x-1/2 whitespace-nowrap rounded border border-slate-700 bg-slate-900 px-1.5 py-0.5 text-2xs font-bold text-slate-300 shadow-sm">
                             Level {student.current_level}
                         </div>
                     </div>
@@ -157,13 +157,13 @@ export default function LeagueTable({ students }: { students: StudentData[] }) {
                             </span>
                             {/* Group Tag */}
                             {student.group_id && (
-                                <span className="hidden sm:inline-flex text-[9px] bg-slate-800/80 text-slate-400 px-1.5 py-0.5 rounded border border-slate-700/50 font-mono tracking-wide">
+                                <span className="hidden sm:inline-flex text-xs bg-slate-800/80 text-slate-400 px-1.5 py-0.5 rounded border border-slate-700/50 font-mono tracking-wide">
                                     {student.group_id}
                                 </span>
                             )}
                         </div>
                         {/* Sub Name (Arabic) */}
-                        <div className="text-[10px] sm:text-xs text-slate-500 truncate font-medium">
+                        <div className="text-xs text-slate-500 truncate font-medium">
                             {student.full_name}
                         </div>
                     </div>
@@ -179,7 +179,7 @@ export default function LeagueTable({ students }: { students: StudentData[] }) {
                     <div className="flex items-center gap-2 mt-1.5">
                         {student.current_streak > 0 ? (
                             <div className={clsx(
-                                "flex items-center gap-1 text-[9px] font-bold px-1.5 py-0.5 rounded border",
+                                "flex items-center gap-1 text-xs font-bold px-1.5 py-0.5 rounded border",
                                 student.current_streak >= 3 
                                     ? "bg-amber-500/10 text-amber-500 border-amber-500/20" 
                                     : "bg-slate-800 text-slate-500 border-slate-700"
@@ -188,7 +188,7 @@ export default function LeagueTable({ students }: { students: StudentData[] }) {
                                 <span className="hidden sm:inline">Streak</span> {student.current_streak}
                             </div>
                         ) : (
-                            <div className="text-[9px] text-slate-600 font-medium">No Streak</div>
+                            <div className="text-xs text-slate-600 font-medium">No Streak</div>
                         )}
                     </div>
                 </div>
@@ -202,7 +202,7 @@ export default function LeagueTable({ students }: { students: StudentData[] }) {
       {students.length > 5 && (
           <button 
             onClick={() => setIsExpanded(!isExpanded)}
-            className="w-full py-4 rounded-xl border border-dashed border-slate-800 bg-slate-900/10 hover:bg-slate-900/30 text-[10px] font-bold text-slate-500 hover:text-cyan-400 hover:border-cyan-500/30 transition-all flex items-center justify-center gap-2 uppercase tracking-widest group mt-2"
+            className="w-full py-4 rounded-xl border border-dashed border-slate-800 bg-slate-900/10 hover:bg-slate-900/30 text-xs font-bold text-slate-500 hover:text-cyan-400 hover:border-cyan-500/30 transition-all flex items-center justify-center gap-2 uppercase tracking-widest group mt-2"
           >
              {isExpanded ? (
                 <><ChevronsUp size={14} className="group-hover:-translate-y-0.5 transition-transform" /> Collapse Roster</>

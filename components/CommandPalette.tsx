@@ -89,7 +89,7 @@ export default function CommandPalette() {
                 }}
             />
             <div className="hidden md:flex gap-1">
-            <kbd className="px-2 py-1 bg-surface-light rounded text-[10px] font-mono text-muted">ESC</kbd>
+            <kbd className="px-2 py-1 bg-surface-light rounded text-xs font-mono text-muted">ESC</kbd>
             </div>
         </div>
 
@@ -129,7 +129,7 @@ export default function CommandPalette() {
         </div>
 
         {/* Footer */}
-                    <div className="bg-background/50 px-4 py-2 border-t border-border flex items-center justify-between text-[10px] text-muted font-mono">
+                    <div className="bg-background/50 px-4 py-2 border-t border-border flex items-center justify-between text-xs text-muted font-mono">
             <div className="flex items-center gap-2">
                 <Terminal size={12} />
                 <span>SSC2 SYSTEM CONSOLE v2.4</span>

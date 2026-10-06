@@ -45,7 +45,7 @@ export default function ExportButton({ data, filename = "ssc_export.csv" }: Expo
     <button 
       onClick={handleExport}
       disabled={loading}
-      className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl border border-slate-700 transition-all text-xs uppercase tracking-wider disabled:opacity-50"
+      className="inline-flex items-center gap-2 rounded-xl border border-primary/20 bg-background/55 px-4 py-2 font-bold uppercase tracking-wider text-foreground transition hover:border-primary/50 hover:bg-primary/5 disabled:opacity-50"
     >
       {loading ? <Loader2 size={16} className="animate-spin" /> : <Download size={16} />}
       Export CSV

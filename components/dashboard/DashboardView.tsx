@@ -1,10 +1,12 @@
 import WelcomeScreen from "@/components/WelcomeScreen";
+import Link from "next/link";
 import DashboardHero from "./DashboardHero";
 import DashboardStats from "./DashboardStats";
 import NextObjective from "./NextObjective";
+import ModuleFocusChart from "./ModuleFocusChart";
 import RecentActivity from "./RecentActivity";
 import RivalsWidget from "./RivalsWidget";
-import type { DashboardActivity, DashboardRival, DashboardStudent, DashboardTopic } from "./types";
+import type { DashboardActivity, DashboardCurriculumModule, DashboardRival, DashboardStudent, DashboardTopic } from "./types";
 
 interface DashboardViewProps {
   student: DashboardStudent;
@@ -18,6 +20,7 @@ interface DashboardViewProps {
   rivals: DashboardRival[];
   nextMission: DashboardTopic | null;
   recentActivity: DashboardActivity[];
+  curriculumModules: DashboardCurriculumModule[];
   seasonId: string;
 }
 
@@ -33,6 +36,7 @@ export default function DashboardView({
   rivals,
   nextMission,
   recentActivity,
+  curriculumModules,
   seasonId,
 }: DashboardViewProps) {
   return (
@@ -46,20 +50,27 @@ export default function DashboardView({
         topPercent={topPercent}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
-          <DashboardStats
-            student={student}
-            completedModulesCount={completedModulesCount}
-            totalModules={totalModules}
-            accuracy={accuracy}
-          />
-          <RivalsWidget rivals={rivals} myId={student.id} seasonId={seasonId} />
-          <RecentActivity activity={recentActivity} />
+      <DashboardStats
+        student={student}
+        completedModulesCount={completedModulesCount}
+        totalModules={totalModules}
+        accuracy={accuracy}
+      />
+
+      <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-[minmax(0,1.65fr)_minmax(19rem,0.85fr)]">
+        <div className="space-y-5">
+          <NextObjective topic={nextMission} completedModulesCount={completedModulesCount} totalModules={totalModules} />
+          <ModuleFocusChart modules={curriculumModules} />
         </div>
 
-        <div className="lg:col-span-1 space-y-6">
-          <NextObjective topic={nextMission} />
+        <div className="space-y-5">
+          <RecentActivity activity={recentActivity} />
+          <RivalsWidget rivals={rivals} myId={student.id} seasonId={seasonId} />
+
+          <Link href="/modules" className="instrument-panel group flex items-center justify-between gap-4 rounded-xl border border-border/80 bg-background/35 px-4 py-3 text-sm transition hover:border-primary/35 hover:bg-primary/5">
+            <span className="text-muted">Want to explore another topic?</span>
+            <span className="shrink-0 font-semibold text-primary transition group-hover:translate-x-0.5">View modules <span aria-hidden="true">→</span></span>
+          </Link>
         </div>
       </div>
     </div>

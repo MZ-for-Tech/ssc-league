@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { User, Lock, ArrowRight, ShieldCheck, Loader2 } from "lucide-react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import SidebarLogo from "@/components/Logo"; 
+import { resetLeagueSeasonSelection } from "@/app/actions/season-actions";
 
 export default function LoginPage() {
   const [input, setInput] = useState(""); // Can be ID or Email
@@ -44,6 +45,8 @@ const handleLogin = async (e: React.FormEvent) => {
       });
 
       if (authError) throw authError;
+
+      await resetLeagueSeasonSelection();
 
       // The dashboard selects the student or admin view from the authenticated profile.
       router.refresh();

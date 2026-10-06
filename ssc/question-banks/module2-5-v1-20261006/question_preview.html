@@ -34,7 +34,7 @@ w = [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;]
 a = x.copy(); a.append(w)
 b = x.copy(); b.extend(w)
 print(len(a), len(b))</code></pre>
-<ol type='A'><li>append and extend both add the entire w as one item</li><li>append adds w as one item; extend adds its three items individually</li><li>append adds w as one item; extend adds all the elements stored inside w</li><li>append adds each item; extend nests w as one object</li></ol></article>
+<ol type='A'><li>append and extend both add the entire w as one item</li><li>append adds w as one item; extend adds its three items individually</li><li>append adds w as one item; extend removes its items from the list</li><li>append adds each item; extend nests w as one object</li></ol></article>
 <article><h3>M2L5-011</h3><p>For `x = [1, 2]`, what is `len(x)` after `x.append([3, 4, 5])`?</p>
 <pre><code>x = [1, 2]
 x.append([3, 4, 5])
@@ -43,7 +43,7 @@ print(len(x))</code></pre>
 <article><h3>M2L5-012</h3><p>Which list operation removes and returns the item at a specified index?</p>
 <ol type='A'><li>`remove(x)`</li><li>`clear()`</li><li>`sort()`</li><li>`pop(i)`</li></ol></article>
 <article><h3>M2L5-013</h3><p>What does `x.remove(20)` remove from a list?</p>
-<ol type='A'><li>The first item whose value equals 20</li><li>The first item whose value is 20</li><li>The item at position 20 in the list of values</li><li>All items whose value is 20 in the list</li></ol></article>
+<ol type='A'><li>The first item whose value equals 20</li><li>The last item whose value equals 20</li><li>The item at position 20 in the list of values</li><li>All items whose value is 20 in the list</li></ol></article>
 <article><h3>M2L5-014</h3><p>What is the result of `y.count(4)` for `y = [1, 4, 4, 5, 4]`?</p>
 <pre><code>y = [1, 4, 4, 5, 4]
 print(y.count(4))</code></pre>
@@ -96,12 +96,12 @@ print(sorted(incomes))</code></pre>
 <ol type='A'><li>To avoid duplicate provider domains in the result</li><li>To alphabetize all domains before returning them</li><li>To remove email addresses from repeat providers</li><li>To check whether each email address contains an `@`</li></ol></article>
 <article><h3>M2L5-034</h3><p>What does the `sorted(domains)` return in the email-provider function?</p>
 <ol type='A'><li>A set that contains the provider names only</li><li>A new list of unique domains in sorted order</li><li>A list of addresses in their reversed order</li><li>The original domains list reordered in place</li></ol></article>
-<article><h3>M2L5-035</h3><p>For sorted incomes `[500, 1000, 1500, 2000, 3000]`, the lesson&#x27;s Gini calculation returns approximately what value?</p>
+<article><h3>M2L5-035</h3><p>For sorted incomes `[500, 1000, 1500, 2000, 3000]`, what approximate value does the Gini calculation return?</p>
 <ol type='A'><li>0.50</li><li>0.70</li><li>0.30</li><li>0.03</li></ol></article>
-<article><h3>M2L5-036</h3><p>Under the PDF&#x27;s interpretation bands, how is a Gini index of exactly 0.30 classified?</p>
+<article><h3>M2L5-036</h3><p>A Gini index from 0 to 0.30 indicates low inequality; above 0.30 through 0.50 indicates moderate inequality; above 0.50 indicates high inequality. How is an index of exactly 0.30 classified?</p>
 <ol type='A'><li>Moderate range</li><li>High inequality</li><li>Invalid result</li><li>Low inequality</li></ol></article>
 <article><h3>M2L5-037</h3><p>Why does the Gini function sort its data before applying the rank-weighted sum?</p>
-<ol type='A'><li>The formula&#x27;s weights depend on each income&#x27;s position in ascending order</li><li>Each income&#x27;s rank in ascending order determines its weight</li><li>Sorting first removes repeated income values from the data</li><li>The rank-weighted calculation can only be applied after all income values are sorted</li></ol></article>
+<ol type='A'><li>The formula&#x27;s weights depend on each income&#x27;s position in ascending order</li><li>Each income&#x27;s original row position determines its rank</li><li>Sorting first removes repeated income values from the data</li><li>The rank-weighted calculation can only be applied after all income values are sorted</li></ol></article>
 <article><h3>M2L5-038</h3><p>Which comprehension builds the same full-name list as looping through `[ [&#x27;Ahmed&#x27;,&#x27;Ali&#x27;], [&#x27;Dina&#x27;,&#x27;Khaled&#x27;] ]` and appending first plus last name?</p>
 <ol type='A'><li>`[s for s in students if s[0]]`</li><li>`[s[0] + &#x27; &#x27; + s[1] for s in students]`</li><li>`[students[0] + students[1]]`</li><li>`[s[1] + &#x27; &#x27; + s[0] for s in students]`</li></ol></article>
 <article><h3>M2L5-039</h3><p>What does `len(growth_rates)` equal when `gdp_values` contains four yearly observations and the function starts at index 1?</p>

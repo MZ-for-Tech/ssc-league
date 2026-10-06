@@ -1,223 +1,162 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
+import Image from "next/image";
 import {
   ArrowRight,
+  ArrowUpRight,
   BookOpen,
+  Braces,
   ChartNoAxesCombined,
   Code2,
   ExternalLink,
-  MessageSquare,
-  Trophy,
+  Target,
   Users,
 } from "lucide-react";
 import CombatManual from "@/components/about/CombatManual";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { mergeRewardProtocol, type RewardProtocolValue } from "@/lib/reward-protocol";
 
-const leagueTools = [
+const systems = [
   {
     icon: BookOpen,
     title: "Course modules",
-    description: "Follow the SSC2 curriculum by topic, with lesson material and practice questions together.",
+    description: "Move through the course one concept at a time, with lessons and practice in the same place.",
+    href: "/modules",
+    action: "Browse modules",
+    tone: "text-cyan-300",
   },
   {
     icon: Code2,
     title: "Python playground",
-    description: "Try ideas in code, experiment with data, and learn by making things work.",
+    description: "Write and run code in your browser. Test an idea, inspect the output, and iterate.",
+    href: "/playground",
+    action: "Enter playground",
+    tone: "text-emerald-300",
   },
   {
     icon: ChartNoAxesCombined,
-    title: "Progress tracking",
-    description: "See your XP, attendance, streaks, activity, and league standing over the season.",
+    title: "Progress record",
+    description: "Track XP, attendance, streaks, medals, and your standing across the season.",
+    href: "/profile",
+    action: "View profile",
+    tone: "text-amber-300",
   },
   {
-    icon: MessageSquare,
-    title: "Cohort comms",
-    description: "Keep up with announcements and stay connected with the rest of the league.",
+    icon: Users,
+    title: "Cohort channel",
+    description: "Follow announcements, ask questions, and stay connected with your cohort.",
+    href: "/comms",
+    action: "Open comms",
+    tone: "text-violet-300",
   },
 ];
 
-const learningLoop = [
-  { number: "01", title: "Explore", text: "Choose a module and get the core idea." },
-  { number: "02", title: "Experiment", text: "Practise with questions and code." },
-  { number: "03", title: "Improve", text: "Return, build consistency, and watch your progress grow." },
+const stages = [
+  { id: "01", name: "Acquire", detail: "Take in the core idea.", icon: BookOpen },
+  { id: "02", name: "Apply", detail: "Solve, code, experiment.", icon: Braces },
+  { id: "03", name: "Advance", detail: "Build skill through practice.", icon: Target },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const supabase = await createSupabaseServerClient();
+  const { data: protocolValues } = await supabase
+    .from("RewardProtocolTask")
+    .select("category, reward_key, xp");
+  const protocol = mergeRewardProtocol((protocolValues ?? []) as RewardProtocolValue[]);
+
   return (
-    <main className="mx-auto w-full max-w-7xl space-y-20 pb-20 lg:space-y-28">
-      <section className="relative isolate grid min-h-[560px] overflow-hidden rounded-[2rem] border border-cyan-300/10 bg-[rgb(var(--surface-hero))] lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_78%_45%,rgb(var(--primary)/0.16),transparent_43%),linear-gradient(120deg,rgb(var(--surface-shade)/0.2),rgb(var(--primary-dim)/0.05))]" />
-        <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.12] [background-image:linear-gradient(rgb(var(--muted)/.2)_1px,transparent_1px),linear-gradient(90deg,rgb(var(--muted)/.2)_1px,transparent_1px)] [background-size:36px_36px] [mask-image:linear-gradient(90deg,black,transparent)]" />
+    <main className="mx-auto w-full max-w-[1500px] space-y-8 pb-12 sm:space-y-12 sm:pb-16">
+      <section className="group relative isolate min-h-[520px] overflow-hidden border border-cyan-200/20 bg-[#07121a] text-white shadow-[0_24px_80px_rgba(0,0,0,.3)] sm:min-h-[590px] lg:min-h-[660px]">
+        <Image src="/images/about/python-learning-hero.png" alt="A Python coding workspace with a code editor, notebook, and data visualizations" fill priority sizes="(max-width: 1500px) 100vw, 1500px" className="-z-20 object-cover object-[58%_center] transition-transform duration-[1200ms] group-hover:scale-[1.015]" />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(3,9,14,.93)_0%,rgba(4,12,18,.79)_29%,rgba(4,12,18,.23)_62%,rgba(4,12,18,.08)_100%),linear-gradient(0deg,rgba(3,8,13,.86)_0%,transparent_34%,rgba(3,8,13,.32)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 -z-10 opacity-[.1] [background-image:linear-gradient(rgba(130,214,220,.35)_1px,transparent_1px),linear-gradient(90deg,rgba(130,214,220,.35)_1px,transparent_1px)] [background-size:52px_52px] [mask-image:linear-gradient(90deg,black,transparent_72%)]" />
+        <div className="absolute inset-4 border border-white/[.12] sm:inset-6" />
+        <div className="absolute left-4 top-4 h-8 w-8 border-l border-t border-cyan-200/75 sm:left-6 sm:top-6" />
+        <div className="absolute bottom-4 right-4 h-8 w-8 border-b border-r border-cyan-200/75 sm:bottom-6 sm:right-6" />
 
-        <div className="relative z-10 flex flex-col justify-center px-7 py-14 sm:px-12 lg:px-16 lg:py-20">
-          <h1 className="max-w-2xl text-5xl font-black leading-[0.98] tracking-[-0.05em] text-white sm:text-6xl xl:text-7xl">
-            Learn the material.
-            <span className="mt-2 block text-cyan-300">Make your mark.</span>
-          </h1>
-          <p className="mt-7 max-w-xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-            SSC2 League turns an introductory data science course into a place to learn, experiment, and grow together. Follow the curriculum, put ideas into practice, and see your progress take shape across the season.
-          </p>
-          <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
-            <Link href="/modules" className="group inline-flex items-center gap-3 border-b border-cyan-300 pb-2 text-sm font-bold text-cyan-200 transition hover:text-white">
-              Start with a module <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
-            </Link>
-            <Link href="/leaderboard" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-300 transition hover:text-white">
-              See the standings <Trophy size={15} className="text-cyan-300" />
-            </Link>
-          </div>
-        </div>
-
-        <LeagueSignal />
-        <div className="pointer-events-none absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent lg:hidden" />
-      </section>
-
-      <section className="relative overflow-hidden border-y border-cyan-200/15 bg-surface/50 px-6 py-7 sm:px-9 sm:py-8">
-        <div className="pointer-events-none absolute right-0 top-0 h-full w-1/3 bg-[linear-gradient(110deg,transparent,rgb(var(--primary)/0.05))]" />
-        <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-start gap-5">
-            <div className="grid h-12 w-12 shrink-0 place-items-center border border-cyan-300/30 bg-cyan-300/[0.08] text-cyan-300">
-              <BookOpen size={22} />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">Programming Fundamentals</h2>
-              <p className="mt-1 text-xs font-mono uppercase tracking-[0.12em] text-cyan-200/70">Intro to Programming with Python</p>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">A course guide covering programming foundations, Python fundamentals, and data science.</p>
+        <div className="relative flex min-h-[520px] flex-col justify-between px-8 pb-8 pt-7 sm:min-h-[590px] sm:px-12 sm:pb-10 sm:pt-9 lg:min-h-[660px] lg:px-16 lg:pb-12">
+          <div className="relative z-10 max-w-[530px] py-14 sm:py-16 lg:py-20">
+            <h1 className="max-w-[560px] text-[clamp(3.1rem,7vw,6.4rem)] font-medium leading-[.9] tracking-[-.065em] text-white [text-shadow:0_3px_30px_rgba(0,0,0,.5)]">Code. Compete.<br /><span className="text-cyan-300">Climb.</span></h1>
+            <div className="mt-7 flex flex-wrap gap-2.5">
+              <Link href="/modules" className="group/button inline-flex min-h-11 items-center gap-3 bg-cyan-300 px-4 text-xs font-extrabold tracking-wide text-slate-950 transition hover:bg-white">ENTER THE LEAGUE <ArrowUpRight size={16} className="transition-transform group-hover/button:-translate-y-0.5 group-hover/button:translate-x-0.5" /></Link>
+              <Link href="/leaderboard" className="inline-flex min-h-11 items-center gap-3 border border-white/40 bg-black/30 px-4 text-xs font-bold tracking-wide text-white backdrop-blur-sm transition hover:border-white hover:bg-black/55">VIEW STANDINGS <ArrowRight size={15} className="text-cyan-200" /></Link>
             </div>
           </div>
-          <a
-            href="https://tn-data.github.io/PFwithPython/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex shrink-0 items-center gap-3 border border-cyan-300/30 px-4 py-3 text-sm font-bold text-cyan-200 transition hover:border-cyan-300 hover:bg-cyan-300/10 hover:text-white"
-          >
-            Open learning source <ExternalLink size={15} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </a>
-        </div>
-      </section>
 
-      <section>
-        <div className="mb-10">
-          <div>
-            <SectionLabel>How learning moves</SectionLabel>
-            <h2 className="mt-4 max-w-2xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl">A loop that takes you from idea to insight.</h2>
+          <div className="flex items-end justify-between border-t border-white/25 pt-3 font-mono text-xs uppercase tracking-[.16em] text-slate-300">
+            <div><span className="text-slate-500">LIVE FEED</span><span className="mx-2 text-cyan-200">●</span>Learning network established</div>
+            <div className="text-right"><span className="text-slate-500">ACCESS</span><span className="ml-2 text-cyan-100">STUDENT</span></div>
           </div>
         </div>
-
-        <div className="relative grid gap-7 md:grid-cols-3 md:gap-0">
-          <div className="absolute left-[16%] right-[16%] top-5 hidden h-px bg-gradient-to-r from-cyan-400/20 via-cyan-300/70 to-cyan-400/20 md:block" />
-          {learningLoop.map((step, index) => (
-            <article key={step.number} className="relative flex gap-5 px-0 md:px-8 first:md:pl-0 last:md:pr-0">
-              <div className="relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full border border-cyan-300/50 bg-background font-mono text-xs font-bold text-cyan-300 shadow-[0_0_24px_rgb(var(--primary)/0.12)]">
-                {step.number}
-              </div>
-              <div className="pt-1">
-                <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">Stage {index + 1}</div>
-                <h3 className="text-lg font-bold text-foreground">{step.title}</h3>
-                <p className="mt-2 max-w-xs text-sm leading-6 text-muted">{step.text}</p>
-              </div>
-            </article>
-          ))}
-        </div>
       </section>
 
-      <section>
-        <div className="mb-8">
-          <SectionLabel>Built for the course</SectionLabel>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Everything you need to keep moving.</h2>
-        </div>
-
-        <div className="grid border-y border-border sm:grid-cols-2 xl:grid-cols-4">
-          {leagueTools.map(({ icon: Icon, title, description }, index) => (
-            <article key={title} className={`group relative py-6 sm:px-6 sm:py-8 xl:px-7 ${index % 2 === 0 ? "sm:border-r" : ""} ${index < 2 ? "sm:border-b xl:border-b-0" : ""} ${index > 0 ? "xl:border-l" : ""} border-border`}>
-              <div className="mb-8 flex items-start justify-between">
-                <div className="grid h-10 w-10 place-items-center border border-cyan-300/20 bg-cyan-300/[0.06] text-cyan-300 transition group-hover:border-cyan-300/50 group-hover:bg-cyan-300/10">
-                  <Icon size={18} />
+      <section className="grid gap-6 lg:grid-cols-[1.45fr_.75fr]">
+        <div className="instrument-panel relative overflow-hidden border border-border bg-surface/55 p-5 sm:p-7 lg:p-8">
+          <h2 className="mt-4 max-w-xl text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">Build knowledge by putting it to work.</h2>
+          <div className="relative mt-8 grid gap-3 sm:grid-cols-3 sm:gap-0">
+            <div className="absolute left-[13%] right-[13%] top-5 hidden h-px bg-gradient-to-r from-cyan-300/20 via-cyan-300/75 to-cyan-300/20 sm:block" />
+            {stages.map(({ id, name, detail, icon: Icon }, index) => (
+              <article key={id} className="relative flex items-start gap-3 border border-border/70 bg-background/35 p-4 sm:mx-2 sm:flex-col sm:border-0 sm:bg-transparent sm:px-3 sm:py-0 first:sm:ml-0 last:sm:mr-0">
+                <div className="relative z-10 grid h-10 w-10 shrink-0 place-items-center border border-cyan-200/40 bg-[rgb(var(--surface-deep))] text-cyan-200 shadow-[0_0_18px_rgb(var(--primary)/.12)]">
+                  <Icon size={17} />
+                  <span className="absolute -right-1.5 -top-1.5 font-mono text-xs text-cyan-200">{id}</span>
                 </div>
-              </div>
-              <h3 className="text-lg font-bold text-foreground">{title}</h3>
-              <p className="mt-2 text-sm leading-6 text-muted">{description}</p>
-            </article>
-          ))}
-        </div>
-        <Link href="/comms" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 transition hover:text-white">
-          Open cohort comms <ArrowRight size={15} />
-        </Link>
-      </section>
-
-      <CombatManual />
-
-      <footer className="flex flex-col gap-3 border-t border-border pt-6 text-xs font-mono uppercase tracking-wider text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-        <span>Made by MZ for Tech</span>
-        <a href="https://mzfortech.com" target="_blank" rel="noopener noreferrer" className="text-cyan-300 transition hover:text-white">mzfortech.com</a>
-      </footer>
-    </main>
-  );
-}
-
-function SectionLabel({ children }: { children: ReactNode }) {
-  return (
-    <div className="flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-cyan-300">
-      <span className="h-1.5 w-1.5 bg-cyan-300 shadow-[0_0_10px_rgb(var(--primary)/.8)]" />
-      {children}
-    </div>
-  );
-}
-
-function LeagueSignal() {
-  return (
-    <div className="relative flex min-h-[390px] items-center justify-center overflow-hidden px-6 pb-10 pt-4 lg:min-h-0 lg:px-0 lg:py-12" aria-label="Illustration of the league learning path">
-      <div className="absolute left-1/2 top-1/2 aspect-square w-[min(88vw,480px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/[0.08]" />
-      <div className="absolute left-1/2 top-1/2 aspect-square w-[min(68vw,370px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-cyan-200/[0.13]" />
-      <div className="absolute left-1/2 top-1/2 aspect-square w-[min(47vw,250px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/[0.08]" />
-      <div className="absolute left-1/2 top-1/2 h-[min(88vw,480px)] w-px -translate-y-1/2 bg-gradient-to-b from-transparent via-cyan-200/10 to-transparent" />
-      <div className="absolute left-1/2 top-1/2 h-px w-[min(88vw,480px)] -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-200/10 to-transparent" />
-
-      <div className="relative h-[370px] w-full max-w-[500px] sm:h-[430px]">
-        <svg viewBox="0 0 500 430" className="absolute inset-0 h-full w-full overflow-visible" fill="none" aria-hidden="true">
-          <path d="M95 104 C142 125 165 173 213 202" stroke="url(#pathA)" strokeWidth="1.5" strokeDasharray="5 7" />
-          <path d="M408 92 C354 118 334 169 287 200" stroke="url(#pathB)" strokeWidth="1.5" strokeDasharray="5 7" />
-          <path d="M250 350 C248 305 250 271 250 238" stroke="url(#pathC)" strokeWidth="1.5" strokeDasharray="5 7" />
-          <circle cx="155" cy="151" r="3" fill="rgb(var(--cyan-300))"><animate attributeName="opacity" values=".2;1;.2" dur="2.8s" repeatCount="indefinite" /></circle>
-          <circle cx="344" cy="146" r="3" fill="rgb(var(--cyan-300))"><animate attributeName="opacity" values="1;.2;1" dur="3.2s" repeatCount="indefinite" /></circle>
-          <defs>
-            <linearGradient id="pathA" x1="95" y1="104" x2="213" y2="202" gradientUnits="userSpaceOnUse"><stop stopColor="rgb(var(--primary))" stopOpacity=".08" /><stop offset="1" stopColor="rgb(var(--cyan-300))" stopOpacity=".8" /></linearGradient>
-            <linearGradient id="pathB" x1="408" y1="92" x2="287" y2="200" gradientUnits="userSpaceOnUse"><stop stopColor="rgb(var(--primary))" stopOpacity=".08" /><stop offset="1" stopColor="rgb(var(--cyan-300))" stopOpacity=".8" /></linearGradient>
-            <linearGradient id="pathC" x1="250" y1="350" x2="250" y2="238" gradientUnits="userSpaceOnUse"><stop stopColor="rgb(var(--primary))" stopOpacity=".08" /><stop offset="1" stopColor="rgb(var(--cyan-300))" stopOpacity=".8" /></linearGradient>
-          </defs>
-        </svg>
-
-        <div className="absolute left-1/2 top-1/2 z-10 grid h-36 w-36 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-cyan-200/30 bg-[rgb(var(--surface-hero))]/85 shadow-[0_0_70px_rgb(var(--primary)/0.15)] sm:h-40 sm:w-40">
-          <div className="absolute inset-2 rounded-full border border-dashed border-cyan-200/15" />
-          <div className="text-center">
-            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-slate-400">The league</div>
-            <div className="mt-1 text-3xl font-black tracking-[-0.08em] text-white">SSC<span className="text-cyan-300">2</span></div>
-            <div className="mt-1 font-mono text-[9px] uppercase tracking-[0.24em] text-cyan-200/70">Learn together</div>
+                <div className="sm:mt-4">
+                  <h3 className="mt-1 text-sm font-bold text-foreground">{name}</h3>
+                  <p className="mt-1 text-xs leading-5 text-muted">{detail}</p>
+                </div>
+                {index < stages.length - 1 && <ArrowRight size={14} className="absolute right-3 top-1/2 hidden -translate-y-1/2 text-cyan-200/50 sm:block" />}
+              </article>
+            ))}
           </div>
         </div>
 
-        <SignalNode className="left-0 top-8 sm:left-4 sm:top-10" icon={<BookOpen size={15} />} label="Curriculum" />
-        <SignalNode className="right-0 top-6 sm:right-2 sm:top-8" icon={<Code2 size={15} />} label="Practice" />
-        <SignalNode className="bottom-0 left-1/2 -translate-x-1/2" icon={<Users size={15} />} label="Cohort" />
+        <a href="https://tn-data.github.io/PFwithPython/" target="_blank" rel="noopener noreferrer" className="group relative flex min-h-[220px] flex-col justify-between overflow-hidden border border-amber-200/20 bg-[linear-gradient(130deg,rgba(37,37,25,.72),rgba(16,25,34,.92)_58%)] p-5 transition hover:border-amber-200/50 sm:p-7">
+          <div className="pointer-events-none absolute -right-10 -top-16 h-56 w-56 rotate-45 border border-amber-100/[.08]" />
+          <div className="relative flex justify-end">
+            <ExternalLink size={16} className="text-amber-200/60 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-amber-200" />
+          </div>
+          <div className="relative mt-8">
+            <div className="font-mono text-xs uppercase tracking-[.18em] text-amber-100/55">COURSE SOURCE // PYTHON</div>
+            <h2 className="mt-2 text-xl font-semibold text-white sm:text-2xl">Programming Fundamentals</h2>
+            <p className="mt-2 max-w-md text-sm leading-6 text-slate-300">Course guide for programming foundations, Python, and data science.</p>
+          </div>
+          <div className="relative mt-5 flex items-center justify-between border-t border-amber-100/15 pt-3 font-mono text-xs uppercase tracking-[.15em] text-amber-100/75">
+            <span>Open external source</span><ArrowUpRight size={15} />
+          </div>
+        </a>
+      </section>
 
-        <div className="absolute bottom-16 right-0 hidden border-l border-cyan-300/40 pl-3 font-mono text-[9px] uppercase leading-5 tracking-widest text-slate-500 sm:block">
-          <div>Course signal</div>
-          <div className="text-cyan-200/80">Connected</div>
+      <section className="relative">
+        <div className="mb-5 flex flex-wrap items-end justify-between gap-4 border-b border-border pb-4">
+          <div>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">Tools for the season ahead.</h2>
+          </div>
+          <span className="font-mono text-xs uppercase tracking-[.16em] text-slate-500">Select a system to access</span>
         </div>
-        <div className="absolute left-0 top-1/2 hidden -translate-y-1/2 font-mono text-[9px] uppercase leading-5 tracking-[0.18em] text-slate-600 sm:block">
-          <div>Explore</div><div className="ml-3">Build</div><div className="ml-6">Advance</div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
-function SignalNode({ className, icon, label }: { className: string; icon: ReactNode; label: string }) {
-  return (
-    <div className={`absolute z-20 min-w-[132px] border border-cyan-200/15 bg-[rgb(var(--surface-node))]/95 p-3 shadow-xl backdrop-blur-sm ${className}`}>
-      <div className="flex items-center">
-        <span className="text-cyan-300">{icon}</span>
-      </div>
-      <div className="mt-2 text-xs font-semibold text-slate-200">{label}</div>
-      <div className="mt-2 h-px w-full bg-gradient-to-r from-cyan-300/50 to-transparent" />
-    </div>
+        <div className="grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-2 xl:grid-cols-4">
+          {systems.map(({ icon: Icon, title, description, href, action, tone }) => (
+            <Link key={href} href={href} className="group relative flex min-h-[245px] flex-col bg-[rgb(var(--surface-deep))] p-5 transition hover:bg-[rgb(var(--surface-node))] sm:p-6">
+              <div className="pointer-events-none absolute right-0 top-0 h-16 w-16 border-l border-b border-white/[.035]" />
+              <div className="flex items-start justify-between">
+                <div className={`grid h-11 w-11 place-items-center border border-current/25 bg-white/[.025] ${tone}`}><Icon size={19} /></div>
+              </div>
+              <h3 className="mt-7 text-lg font-bold text-foreground">{title}</h3>
+              <p className="mt-2 text-sm leading-6 text-muted">{description}</p>
+              <div className={`mt-auto flex items-center justify-between border-t border-white/[.07] pt-4 font-mono text-xs uppercase tracking-[.12em] ${tone}`}>
+                <span>{action}</span><ArrowUpRight size={15} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <CombatManual protocol={protocol} />
+
+      <footer className="flex flex-col gap-3 border-t border-border pt-5 font-mono text-xs uppercase tracking-[.16em] text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+        <span>SSC2 LEAGUE <span className="mx-2 text-slate-700">/</span> MADE BY MZ FOR TECH</span>
+        <a href="https://mzfortech.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-cyan-200 transition hover:text-white">MZFORTECH.COM <ArrowUpRight size={13} /></a>
+  </footer>
+    </main>
   );
 }

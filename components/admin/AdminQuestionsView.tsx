@@ -20,6 +20,7 @@ import {
   X,
 } from "lucide-react";
 import clsx from "clsx";
+import SelectDropdown from "@/components/ui/SelectDropdown";
 import {
   createQuestionWithOptions,
   createQuestionsBulk,
@@ -241,17 +242,11 @@ export default function AdminQuestionsView({
   const pageTitle = view === "lesson" && selectedTopic
     ? selectedTopic.name
     : view === "add" ? "Add question" : view === "import" ? "Import questions" : "Question Bank";
-  const pageDescription = view === "lesson" && selectedTopic
-    ? selectedTopic.description || "Review this lesson’s questions and written prompts."
-    : view === "add" ? "Write a question and add it to a lesson."
-      : view === "import" ? "Add multiple-choice questions in a structured batch."
-        : readOnly ? "Browse the archived season’s curriculum." : "Choose a lesson to review its questions.";
 
   return (
     <div className="w-full animate-in fade-in space-y-6 pb-16">
       <PageHeader
         title={pageTitle}
-        description={pageDescription}
         icon={<FileQuestion size={28} />}
         actions={(
           <div className="flex flex-wrap items-center gap-2">
@@ -274,7 +269,7 @@ export default function AdminQuestionsView({
         <p>{notice.text}</p>
       </div>}
 
-      {view === "add" && !readOnly && <section className="rounded-2xl border border-border bg-surface/70 p-5 sm:p-7">
+      {view === "add" && !readOnly && <section className="instrument-panel relative isolate overflow-hidden rounded-2xl border border-border bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] p-5 shadow-lg shadow-black/20 sm:p-7">
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">New multiple-choice question</p>
@@ -313,10 +308,10 @@ export default function AdminQuestionsView({
           <aside className="h-fit space-y-5 rounded-xl border border-border bg-background/50 p-4 sm:p-5">
             <label className="block space-y-2">
               <span className="text-xs font-bold uppercase tracking-wider text-muted">Lesson</span>
-              <select required value={activeDraftTopicId} onChange={(event) => setDraftTopicId(event.target.value)} className={fieldClass}>
+              <SelectDropdown required value={activeDraftTopicId} onChange={(event) => setDraftTopicId(event.target.value)} className={fieldClass}>
                 <option value="">Select a lesson</option>
                 {topics.map((topic) => <option key={topic.id} value={topic.id}>{topic.name}</option>)}
-              </select>
+              </SelectDropdown>
             </label>
             <label className="block space-y-2">
               <span className="text-xs font-bold uppercase tracking-wider text-muted">Points</span>
@@ -331,7 +326,7 @@ export default function AdminQuestionsView({
         </form>
       </section>}
 
-      {view === "import" && !readOnly && <section className="rounded-2xl border border-border bg-surface/70 p-5 sm:p-7">
+      {view === "import" && !readOnly && <section className="instrument-panel relative isolate overflow-hidden rounded-2xl border border-border bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] p-5 shadow-lg shadow-black/20 sm:p-7">
         <div className="mb-5 flex items-start gap-3">
           <div className="rounded-lg bg-primary/10 p-2 text-primary"><Upload size={18} /></div>
           <div>
@@ -351,34 +346,42 @@ export default function AdminQuestionsView({
         </div>
       </section>}
 
-      {isLoading ? <div className="flex items-center justify-center gap-3 rounded-2xl border border-border bg-surface/50 p-12 text-sm text-muted"><Loader2 size={18} className="animate-spin text-primary" />Loading question bank…</div>
+      {isLoading ? <QuestionBankSkeleton />
         : loadError ? <div role="alert" className="flex items-center gap-3 rounded-xl border border-danger/20 bg-danger/5 p-4 text-sm text-danger"><AlertCircle size={18} />{loadError}</div>
-        : view === "library" ? <section className="space-y-6">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4 text-sm text-muted">
-            <p><span className="font-semibold text-foreground">{questions.length}</span> questions <span className="mx-2 text-border">·</span> <span className="font-semibold text-foreground">{topics.length}</span> lessons <span className="mx-2 text-border">·</span> <span className="font-semibold text-foreground">{essays.length}</span> written prompts</p>
-            <label className="relative block w-full sm:w-72">
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-              <input value={lessonSearch} onChange={(event) => setLessonSearch(event.target.value)} className={`${fieldClass} py-2.5 pl-9`} placeholder="Find a lesson" />
-            </label>
+        : view === "library" ? <section className="space-y-7">
+          <div className="instrument-panel relative isolate overflow-hidden rounded-xl border border-border bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] p-4 shadow-lg shadow-black/15 sm:p-5">
+            <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 -z-10 w-1/3 bg-dot-grid opacity-[0.06]" />
+            <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex flex-wrap gap-2.5">
+                <div className="rounded-lg border border-primary/15 bg-background/45 px-3 py-2"><span className="font-mono text-base font-bold text-foreground">{questions.length}</span><span className="ml-2 text-xs text-muted">questions</span></div>
+                <div className="rounded-lg border border-border/80 bg-background/35 px-3 py-2"><span className="font-mono text-base font-bold text-foreground">{topics.length}</span><span className="ml-2 text-xs text-muted">lessons</span></div>
+                <div className="rounded-lg border border-border/80 bg-background/35 px-3 py-2"><span className="font-mono text-base font-bold text-foreground">{essays.length}</span><span className="ml-2 text-xs text-muted">written prompts</span></div>
+              </div>
+              <label className="relative block w-full sm:w-72">
+                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+                <input value={lessonSearch} onChange={(event) => setLessonSearch(event.target.value)} className={`${fieldClass} bg-background/65 py-2.5 pl-9 focus:ring-2 focus:ring-primary/10`} placeholder="Find a lesson" />
+              </label>
+            </div>
           </div>
           {visibleLessonGroups.length ? visibleLessonGroups.map((group) => <section key={group.id} className="space-y-3">
-            <header className="flex items-baseline justify-between gap-4 px-1">
+            <header className="flex items-end justify-between gap-4 border-b border-border/70 px-1 pb-3">
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">{group.number ? `Module ${group.number}` : "Archive"}</p>
+                <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-primary">{group.number ? `Module ${group.number}` : "Archive"}</p>
                 <h2 className="mt-1 text-lg font-bold text-foreground">{group.name}</h2>
               </div>
-              <span className="shrink-0 text-xs text-muted">{group.lessons.length} lessons</span>
+              <span className="shrink-0 font-mono text-xs text-muted">{group.lessons.length} lessons</span>
             </header>
             <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
               {group.lessons.map((topic) => <button
                 type="button"
                 key={topic.id}
                 onClick={() => { setSelectedTopicId(topic.id); setSearch(""); setPage(1); setNotice(null); setView("lesson"); }}
-                className="group/card rounded-2xl border border-border bg-surface/55 p-5 text-left transition hover:border-primary/35 hover:bg-surface/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="instrument-panel group/card relative isolate overflow-hidden rounded-xl border border-border bg-[linear-gradient(135deg,rgb(var(--surface-hero)),rgb(var(--surface))_62%,rgb(var(--surface-node)))] p-5 text-left shadow-lg shadow-black/10 transition duration-200 hover:-translate-y-0.5 hover:border-primary/45 hover:shadow-[0_0_28px_rgb(var(--primary)/0.1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
-                <div className="flex items-start justify-between gap-4">
+                <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent opacity-0 transition group-hover/card:opacity-100" />
+                <div className="relative z-10 flex items-start justify-between gap-4">
                   <div className="flex min-w-0 items-start gap-3">
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-primary/15 bg-primary/10 text-xs font-bold text-primary">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-primary/25 bg-primary/10 font-mono text-xs font-bold text-primary shadow-[0_0_18px_rgb(var(--primary)/0.08)]">
                       {group.number && topic.lesson_number ? `${group.number}.${topic.lesson_number}` : `W${topic.week_number}`}
                     </span>
                     <div className="min-w-0">
@@ -388,20 +391,20 @@ export default function AdminQuestionsView({
                   </div>
                   <ArrowRight size={17} className="mt-1 shrink-0 text-muted transition group-hover/card:translate-x-0.5 group-hover/card:text-primary" />
                 </div>
-                <div className="mt-5 flex flex-wrap gap-x-4 gap-y-1 border-t border-border/70 pt-3 text-xs text-muted">
+                <div className="relative z-10 mt-5 flex flex-wrap gap-x-4 gap-y-1 border-t border-border/70 pt-3 font-mono text-xs text-muted">
                   <span>{topic.questionCount} questions</span>
                   <span>{topic.essayCount} written prompts</span>
                 </div>
               </button>)}
             </div>
-          </section>) : <div className="rounded-2xl border border-dashed border-border p-10 text-center">
-            <Search size={22} className="mx-auto text-muted" />
+          </section>) : <div className="instrument-panel rounded-2xl border border-dashed border-border bg-surface/35 p-10 text-center">
+            <Search size={22} className="mx-auto text-primary" />
             <h2 className="mt-3 font-semibold text-foreground">No lessons found</h2>
             <p className="mt-1 text-sm text-muted">Try another search.</p>
           </div>}
         </section>
         : view === "lesson" && selectedTopic ? <section className="space-y-5">
-          <section className="overflow-hidden rounded-2xl border border-border bg-surface/45">
+          <section className="instrument-panel relative isolate overflow-hidden rounded-2xl border border-border bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] shadow-lg shadow-black/20">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border p-4">
               <div>
                 <h3 className="font-semibold text-foreground">Multiple-choice questions</h3>
@@ -428,8 +431,61 @@ export default function AdminQuestionsView({
   );
 }
 
+function QuestionBankSkeleton() {
+  return (
+    <section className="animate-pulse space-y-7" aria-busy="true" aria-label="Loading question bank">
+      <div className="instrument-panel relative isolate overflow-hidden rounded-xl border border-border bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] p-4 shadow-lg shadow-black/15 sm:p-5">
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex flex-wrap gap-2.5">
+            {["w-24", "w-20", "w-32"].map((width, index) => (
+              <div key={index} className="flex h-10 items-center gap-2 rounded-lg border border-border bg-background/40 px-3">
+                <div className={`h-4 rounded bg-surface-light/35 ${width}`} />
+                <div className="h-3 w-12 rounded bg-surface-light/20" />
+              </div>
+            ))}
+          </div>
+          <div className="h-11 w-full rounded-xl border border-border bg-background/50 sm:w-72" />
+        </div>
+      </div>
+
+      {[0, 1, 2].map((group) => (
+        <section key={group} className="space-y-3">
+          <header className="flex items-end justify-between gap-4 border-b border-border/70 px-1 pb-3">
+            <div className="space-y-2">
+              <div className="h-3 w-20 rounded bg-primary/20" />
+              <div className="h-5 w-44 rounded bg-surface-light/35" />
+            </div>
+            <div className="h-3 w-16 rounded bg-surface-light/20" />
+          </header>
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {[0, 1, 2].map((lesson) => (
+              <article key={lesson} className="min-h-44 rounded-xl border border-border bg-surface/55 p-5">
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 shrink-0 rounded-lg border border-primary/15 bg-primary/10" />
+                  <div className="min-w-0 flex-1 space-y-3">
+                    <div className="h-4 w-4/5 rounded bg-surface-light/35" />
+                    <div className="space-y-2">
+                      <div className="h-3 w-full rounded bg-surface-light/20" />
+                      <div className="h-3 w-2/3 rounded bg-surface-light/20" />
+                    </div>
+                  </div>
+                  <div className="h-4 w-4 shrink-0 rounded bg-surface-light/20" />
+                </div>
+                <div className="mt-5 flex gap-4 border-t border-border/70 pt-3">
+                  <div className="h-3 w-24 rounded bg-surface-light/20" />
+                  <div className="h-3 w-28 rounded bg-surface-light/20" />
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
+    </section>
+  );
+}
+
 function QuestionRow({ question }: { question: BankQuestion }) {
-  return <details className="group px-4 py-4 transition hover:bg-background/25 sm:px-5">
+  return <details className="group px-4 py-4 transition hover:bg-primary/[0.035] sm:px-5">
     <summary className="flex cursor-pointer list-none items-start gap-3 [&::-webkit-details-marker]:hidden">
       <span className="min-w-0 flex-1">
         <span className="block whitespace-pre-wrap text-sm font-medium leading-6 text-foreground">{question.text}</span>
@@ -442,9 +498,9 @@ function QuestionRow({ question }: { question: BankQuestion }) {
     <div className="mt-4 space-y-4 pl-1 sm:pl-0">
       <div className="grid gap-2 sm:grid-cols-2">
         {question.options.map((option, index) => <div key={option.id} className={clsx("flex items-start gap-2 rounded-lg border px-3 py-2.5 text-sm", option.is_correct ? "border-success/25 bg-success/5 text-foreground" : "border-border bg-background/40 text-muted")}>
-          <span className={clsx("mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full text-[10px] font-bold", option.is_correct ? "bg-success text-background" : "bg-surface text-muted")}>{String.fromCharCode(65 + index)}</span>
+          <span className={clsx("mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full text-xs font-bold", option.is_correct ? "bg-success text-background" : "bg-surface text-muted")}>{String.fromCharCode(65 + index)}</span>
           <span className="min-w-0 flex-1 whitespace-pre-wrap">{option.text}{option.justification && <span className="mt-1 block text-xs leading-5 text-muted">{option.justification}</span>}</span>
-          {option.is_correct && <span className="shrink-0 text-[10px] font-bold uppercase tracking-wider text-success">Correct</span>}
+          {option.is_correct && <span className="shrink-0 text-xs font-bold uppercase tracking-wider text-success">Correct</span>}
         </div>)}
       </div>
       {question.explanation && <div className="rounded-lg border border-primary/15 bg-primary/5 px-3 py-2.5 text-sm leading-6 text-muted"><span className="mr-2 text-xs font-bold uppercase tracking-wider text-primary">Explanation</span>{question.explanation}</div>}

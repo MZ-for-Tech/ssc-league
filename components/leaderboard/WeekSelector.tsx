@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChevronDown, Calendar, Activity } from "lucide-react";
 import clsx from "clsx";
+import Dropdown from "@/components/ui/Dropdown";
 
 interface WeekSelectorProps {
   maxWeek: number;
@@ -15,37 +15,43 @@ export default function WeekSelector({ maxWeek }: WeekSelectorProps) {
   const currentWeek = searchParams.get("week");
   const isLive = !currentWeek;
 
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  const handleSelect = (week: number | null) => {
+  const handleSelect = (week: number | null, close: () => void) => {
     if (week === null) {
       router.push("/leaderboard");
     } else {
       router.push(`/leaderboard?week=${week}`);
     }
-    setIsOpen(false);
+    close();
   };
 
   return (
-    <div className="relative">
-      <button 
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-sm font-bold text-white transition-all min-w-[140px] justify-between"
-      >
-        <span className="flex items-center gap-2">
+    <Dropdown
+      panelRole="menu"
+      panelClassName="w-48"
+      trigger={({ open, toggle, panelId }) => (
+        <button
+          type="button"
+          onClick={toggle}
+          aria-haspopup="menu"
+          aria-expanded={open}
+          aria-controls={panelId}
+          className="flex min-w-[140px] items-center justify-between gap-2 rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 text-sm font-bold text-white transition-all hover:bg-slate-700"
+        >
+          <span className="flex items-center gap-2">
             {isLive ? <Activity size={16} className="text-emerald-400" /> : <Calendar size={16} className="text-cyan-400" />}
             {isLive ? "Live Ranking" : `Week ${currentWeek}`}
-        </span>
-        <ChevronDown size={14} className={clsx("transition-transform", isOpen && "rotate-180")} />
-      </button>
-
-      {isOpen && (
-        <div className="absolute top-full right-0 mt-2 w-48 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-50">
+          </span>
+          <ChevronDown size={14} className={clsx("transition-transform", open && "rotate-180")} />
+        </button>
+      )}
+    >
+      {({ close }) => (
             <div className="max-h-[300px] overflow-y-auto p-1 space-y-1 scrollbar-thin scrollbar-thumb-slate-700">
                 
                 {/* Live Option */}
                 <button
-                    onClick={() => handleSelect(null)}
+                    role="menuitem"
+                    onClick={() => handleSelect(null, close)}
                     className={clsx(
                         "w-full text-left px-3 py-2 rounded-lg text-xs font-bold flex items-center gap-2",
                         isLive ? "bg-emerald-500/10 text-emerald-400" : "text-slate-400 hover:bg-slate-800 hover:text-white"
@@ -60,7 +66,8 @@ export default function WeekSelector({ maxWeek }: WeekSelectorProps) {
                 {Array.from({ length: maxWeek }, (_, i) => maxWeek - i).map((week) => (
                     <button
                         key={week}
-                        onClick={() => handleSelect(week)}
+                        role="menuitem"
+                        onClick={() => handleSelect(week, close)}
                         className={clsx(
                             "w-full text-left px-3 py-2 rounded-lg text-xs font-bold flex items-center gap-2",
                             currentWeek === String(week) ? "bg-cyan-500/10 text-cyan-400" : "text-slate-400 hover:bg-slate-800 hover:text-white"
@@ -71,8 +78,7 @@ export default function WeekSelector({ maxWeek }: WeekSelectorProps) {
                     </button>
                 ))}
             </div>
-        </div>
       )}
-    </div>
+    </Dropdown>
   );
 }

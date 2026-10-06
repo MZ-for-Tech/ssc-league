@@ -34,7 +34,7 @@ export default function ReportButton({ questionId, studentId, seasonId }: { ques
       {/* Trigger Button */}
       <button 
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-rose-400 transition-colors mt-4"
+        className="inline-flex min-h-10 items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-muted transition-colors hover:text-danger"
       >
         <Flag size={12} /> Report Issue
       </button>

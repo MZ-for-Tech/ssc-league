@@ -4,16 +4,16 @@
 <pre><code># One column has 10 rows, 2 missing
 print(df.count())</code></pre>
 <ol type='A'><li>8</li><li>10</li><li>2</li><li>The sum of the values</li></ol></article>
-<article><h3>M3L3-002</h3><p>For a numeric DataFrame, what does `df.mean()` calculate by default in the lesson&#x27;s example?</p>
+<article><h3>M3L3-002</h3><p>For a numeric DataFrame, what does `df.mean()` calculate by default?</p>
 <ol type='A'><li>The mean of each row</li><li>The mean of each column</li><li>The median of each column</li><li>The mean of the index labels</li></ol></article>
-<article><h3>M3L3-003</h3><p>What is the result type of `df.agg([&#x27;mean&#x27;, &#x27;median&#x27;, &#x27;std&#x27;])` in the lesson?</p>
+<article><h3>M3L3-003</h3><p>What is the result type of `df.agg([&#x27;mean&#x27;, &#x27;median&#x27;, &#x27;std&#x27;])`?</p>
 <pre><code>vstat = df.agg([&#x27;mean&#x27;, &#x27;median&#x27;, &#x27;std&#x27;])</code></pre>
 <ol type='A'><li>A single number</li><li>A Boolean mask</li><li>A DataFrame</li><li>A list of column labels</li></ol></article>
 <article><h3>M3L3-004</h3><p>Which statistic in numeric `describe()` output is the 50th percentile?</p>
 <ol type='A'><li>`25%`</li><li>`std`</li><li>`count`</li><li>`50%`</li></ol></article>
 <article><h3>M3L3-005</h3><p>A numeric column&#x27;s `describe()` output has count 40, min 2, max 98. What does `count` mean here?</p>
 <ol type='A'><li>There are 40 non-null observations</li><li>There are 40 unique values</li><li>The average value is 40</li><li>The column has 40 missing observations</li></ol></article>
-<article><h3>M3L3-006</h3><p>A mixed DataFrame has numeric and categorical columns. What does plain `df.describe()` summarize according to the lecture?</p>
+<article><h3>M3L3-006</h3><p>A mixed DataFrame has numeric and categorical columns. By default, what does plain `df.describe()` summarize in pandas?</p>
 <ol type='A'><li>Only categorical columns</li><li>The numerical columns</li><li>Every column using the same eight statistics</li><li>Only the index</li></ol></article>
 <article><h3>M3L3-007</h3><p>Which set of fields is characteristic of `describe()` on a categorical column?</p>
 <ol type='A'><li>mean, std, min, max</li><li>sum, median, variance, range</li><li>count, unique, top, freq</li><li>true, false, null, total</li></ol></article>
@@ -40,7 +40,7 @@ print(r)  # 0.78</code></pre>
 <article><h3>M3L3-016</h3><p>What does `data.dropna(axis=1)` remove by default?</p>
 <pre><code>data_without_gap_columns = data.dropna(axis=1)</code></pre>
 <ol type='A'><li>Rows that contain missing values</li><li>Only rows where every value is missing</li><li>The index column</li><li>Columns that contain missing values</li></ol></article>
-<article><h3>M3L3-017</h3><p>Before using `dropna()`, why does the lesson recommend counting missing values and reporting removals?</p>
+<article><h3>M3L3-017</h3><p>Before using `dropna()`, why should you count missing values and report removals?</p>
 <ol type='A'><li>Removing incomplete cases can change who remains in the analysis and may bias conclusions</li><li>`dropna()` automatically replaces every missing value with zero</li><li>Rows with missing data are always duplicates</li><li>A reported sample size is unrelated to data cleaning</li></ol></article>
 <article><h3>M3L3-018</h3><p>Which sequence best describes `groupby()`?</p>
 <ol type='A'><li>Sort columns, delete rows, and rename the index</li><li>Split rows into groups, apply a calculation, combine the results</li><li>Read a CSV, draw a plot, and save an image</li><li>Convert each value to text, then concatenate columns</li></ol></article>
@@ -61,7 +61,7 @@ print(df.groupby(&#x27;key&#x27;)[&#x27;data&#x27;].sum())</code></pre>
 <article><h3>M3L3-024</h3><p>What does grouping by both `Department` and `Year` do before aggregation?</p>
 <pre><code>df.groupby([&#x27;Department&#x27;, &#x27;Year&#x27;])[&#x27;Salary&#x27;].mean()</code></pre>
 <ol type='A'><li>Creates one group for each row regardless of values</li><li>Uses Year only and ignores Department</li><li>Adds Year to every salary value</li><li>Creates groups for each observed Department–Year combination</li></ol></article>
-<article><h3>M3L3-025</h3><p>After grouping by Department and Year, what does `.unstack()` do in the lesson&#x27;s table?</p>
+<article><h3>M3L3-025</h3><p>After grouping by Department and Year, what does `.unstack()` do to the table?</p>
 <ol type='A'><li>Moves one index level, such as Year, into columns</li><li>Removes all rows containing missing values</li><li>Calculates a second mean</li><li>Sorts each group&#x27;s salary values</li></ol></article>
 <article><h3>M3L3-026</h3><p>Which expression returns both mean and standard deviation of Salary for each Department–Year group?</p>
 <ol type='A'><li>`df.groupby(&#x27;Salary&#x27;).mean([&#x27;Department&#x27;,&#x27;Year&#x27;])`</li><li>`df.groupby([&#x27;Department&#x27;,&#x27;Year&#x27;])[&#x27;Salary&#x27;].agg([&#x27;mean&#x27;,&#x27;std&#x27;])`</li><li>`df.agg([&#x27;Department&#x27;,&#x27;Year&#x27;], [&#x27;mean&#x27;,&#x27;std&#x27;])`</li><li>`df.groupby([&#x27;Department&#x27;,&#x27;Year&#x27;]).size()`</li></ol></article>
@@ -77,7 +77,7 @@ selected = df[mask]</code></pre>
 <ol type='A'><li>`df[df[&#x27;City&#x27;] == &#x27;London&#x27;]`</li><li>`df[df[&#x27;City&#x27;] != &#x27;London&#x27;]`</li><li>`df[&#x27;City&#x27;] != &#x27;London&#x27;`</li><li>`df.drop(columns=&#x27;City&#x27;)`</li></ol></article>
 <article><h3>M3L3-031</h3><p>Which `query()` call is equivalent to `df[df[&#x27;Country&#x27;] == &#x27;UK&#x27;]`?</p>
 <ol type='A'><li>`df.query(&quot;Country != &#x27;UK&#x27;&quot;)`</li><li>`df.query(Country == UK)`</li><li>`df.query(&quot;Country == &#x27;UK&#x27;&quot;)`</li><li>`df[&#x27;Country&#x27;].query(&#x27;UK&#x27;)`</li></ol></article>
-<article><h3>M3L3-032</h3><p>When combining two pandas Series conditions element by element, which operators does the lesson use for AND and OR?</p>
+<article><h3>M3L3-032</h3><p>When combining two pandas Series conditions element by element, which operators represent AND and OR?</p>
 <ol type='A'><li>`and` for AND and `or` for OR</li><li>`&amp;&amp;` for AND and `||` for OR</li><li>`+` for AND and `*` for OR</li><li>`&amp;` for AND and `|` for OR</li></ol></article>
 <article><h3>M3L3-033</h3><p>In a filter like `(df[&#x27;age&#x27;] &gt;= 18) &amp; (df[&#x27;score&#x27;] &gt; 70)`, why should each comparison be parenthesized?</p>
 <pre><code>df[(df[&#x27;age&#x27;] &gt;= 18) &amp; (df[&#x27;score&#x27;] &gt; 70)]</code></pre>
@@ -90,14 +90,14 @@ selected = df[mask]</code></pre>
 <pre><code>summary = df.describe().round(2)
 summary.to_csv(&#x27;summary.csv&#x27;)</code></pre>
 <ol type='A'><li>`summary.read_csv(&#x27;summary.csv&#x27;)`</li><li>`pd.read_csv(summary, &#x27;summary.csv&#x27;)`</li><li>`summary.to_excel(&#x27;summary.csv&#x27;)`</li><li>`summary.to_csv(&#x27;summary.csv&#x27;)`</li></ol></article>
-<article><h3>M3L3-037</h3><p>A researcher needs an Excel workbook rather than a CSV. Which method matches the lesson&#x27;s example?</p>
+<article><h3>M3L3-037</h3><p>A researcher needs an Excel workbook rather than a CSV. Which method exports to Excel?</p>
 <ol type='A'><li>`summary.to_excel(&#x27;summary.xlsx&#x27;)`</li><li>`summary.to_csv(&#x27;summary.xlsx&#x27;)`</li><li>`pd.read_excel(summary)`</li><li>`summary.to_xlsx(&#x27;summary.xlsx&#x27;)`</li></ol></article>
 <article><h3>M3L3-038</h3><p>What does `df[&#x27;sex&#x27;].value_counts()` return?</p>
 <pre><code>counts = df[&#x27;sex&#x27;].value_counts()</code></pre>
 <ol type='A'><li>A DataFrame of means for every numerical column</li><li>A Series with counts for each distinct sex category</li><li>A Boolean Series marking missing values</li><li>The number of rows in the whole DataFrame only</li></ol></article>
 <article><h3>M3L3-039</h3><p>What changes when calling `df[&#x27;sex&#x27;].value_counts(normalize=True)`?</p>
 <ol type='A'><li>It sorts category labels alphabetically</li><li>It removes categories with fewer than two records</li><li>The output gives proportions rather than raw counts</li><li>It returns only missing values</li></ol></article>
-<article><h3>M3L3-040</h3><p>`pclass.value_counts()` orders categories by frequency. What does `.sort_index()` change in the lesson&#x27;s example?</p>
+<article><h3>M3L3-040</h3><p>`pclass.value_counts()` orders categories by frequency. What does `.sort_index()` change?</p>
 <pre><code>class_count = df[&#x27;pclass&#x27;].value_counts().sort_index()</code></pre>
 <ol type='A'><li>Orders the result from largest count to smallest</li><li>Converts counts to proportions</li><li>Removes the index labels</li><li>Orders the result by category label, such as class 1, 2, 3</li></ol></article>
 <h2>Structured-response questions</h2>

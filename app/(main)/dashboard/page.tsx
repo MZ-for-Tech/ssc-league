@@ -1,12 +1,10 @@
 import DashboardView from "@/components/dashboard/DashboardView";
-import AdminDashboardView from "@/components/admin/AdminDashboardView";
-import AdminUsersView from "@/components/admin/AdminUsersView";
-import AdminQuestionsView from "@/components/admin/AdminQuestionsView";
 import StudentDashboardPreview from "@/components/dashboard/StudentDashboardPreview";
-import type { DashboardActivity, DashboardRankHistory, DashboardRival, DashboardStudent, DashboardTopic } from "@/components/dashboard/types";
+import type { DashboardActivity, DashboardCurriculumModule, DashboardRankHistory, DashboardRival, DashboardStudent, DashboardTopic } from "@/components/dashboard/types";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getImpersonatedStudentId } from "@/lib/auth/impersonation";
 import { getActiveSeasonId, getSelectedSeasonId } from "@/lib/seasons";
+import { redirect } from "next/navigation";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
@@ -14,7 +12,7 @@ export const dynamic = "force-dynamic";
 type RankedStudent = DashboardStudent & { WeeklyRankHistory: DashboardRankHistory[] };
 
 interface DashboardPageProps {
-  searchParams?: Promise<{ view?: string; season?: string }>;
+  searchParams?: Promise<{ view?: string }>;
 }
 
 export default async function DashboardPage({ searchParams }: DashboardPageProps) {
@@ -38,183 +36,9 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
   const isAdmin = Boolean(adminProfile);
   const selectedSeasonId = await getSelectedSeasonId(supabase, activeSeasonId, isAdmin);
   const dashboardSeasonId = isAdmin ? selectedSeasonId : activeSeasonId;
-  const isAdminPage = ["admin", "users", "questions", "operations"].includes(params.view || "");
-  const showAdminView = isAdmin && (!impersonateId || isAdminPage);
 
-  if (isAdmin && params.view === "student") return <StudentDashboardPreview />;
-
-  if (showAdminView) {
-    const { data: seasons } = await supabase
-      .from("Season")
-      .select("id, name, status")
-      .order("id", { ascending: false });
-    const adminDisplayName = user.user_metadata?.preferred_name || user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0] || "Agent";
-    const adminWelcomeName = String(adminDisplayName).trim().split(/\s+/)[0] || "Agent";
-    const adminAvatarUrl = user.user_metadata?.avatar_url || user.user_metadata?.picture || null;
-    if (params.view === "users") return <AdminUsersView seasonId={selectedSeasonId} activeSeasonId={activeSeasonId} seasons={seasons || []} />;
-    if (params.view === "questions") return <AdminQuestionsView seasonId={selectedSeasonId} activeSeasonId={activeSeasonId} seasons={seasons || []} />;
-
-    if (params.view === "operations") {
-      return (
-        <AdminDashboardView
-          totalStudents={0}
-          studentsNotStarted={0}
-          totalQuestions={0}
-          totalAttempts={0}
-          activityByDay={[]}
-          activeLearners={0}
-          topicStats={[]}
-          activityWindowLabel="Past 7 days"
-          recentActivity={[]}
-          isImpersonating={Boolean(impersonateId)}
-          seasonId={selectedSeasonId}
-          activeSeasonId={activeSeasonId}
-          seasons={seasons || []}
-          welcomeName={adminWelcomeName}
-          welcomeAvatarUrl={adminAvatarUrl}
-          view="operations"
-        />
-      );
-    }
-
-    const [studentsResult, answerCountResult, topicsResult, questionsResult] = await Promise.all([
-      supabase.from("Student").select("id", { count: "exact", head: true }).eq("season_id", selectedSeasonId),
-      supabase.from("StudentAnswer").select("id", { count: "exact", head: true }).eq("season_id", selectedSeasonId),
-      supabase.from("Topic").select("id, name, week_number").eq("season_id", selectedSeasonId).order("week_number"),
-      supabase.from("Question").select("id, topic_id").eq("season_id", selectedSeasonId),
-    ]);
-    const totalStudents = studentsResult.count || 0;
-    const totalAnswerCount = answerCountResult.count || 0;
-    const topics = topicsResult.data || [];
-    const questions = questionsResult.data || [];
-
-    const answerPageSize = 1000;
-    const answerPageCount = Math.ceil((totalAnswerCount || 0) / answerPageSize);
-    const answerPages = await Promise.all(Array.from({ length: answerPageCount }, (_, page) =>
-      supabase.from("StudentAnswer")
-        .select("id, student_id, question_id, is_correct, attempted_at")
-        .eq("season_id", selectedSeasonId)
-        .order("id", { ascending: true })
-        .range(page * answerPageSize, (page + 1) * answerPageSize - 1)
-    ));
-    const allAnswers = answerPages.flatMap((page) => page.data || []);
-    const studentsWithAttempts = new Set(allAnswers.map((answer) => answer.student_id));
-    const studentsNotStarted = Math.max(0, totalStudents - studentsWithAttempts.size);
-    const chartDataError = Boolean(
-      studentsResult.error || answerCountResult.error || topicsResult.error || questionsResult.error ||
-      answerPages.some((page) => page.error)
-    );
-
-    const questionTopic = new Map<string, string>();
-    const topicStatsById = new Map<string, {
-      topicId: string;
-      name: string;
-      weekNumber: number;
-      learnerIds: Set<string>;
-      attempts: number;
-      correct: number;
-    }>();
-    for (const topic of topics || []) {
-      topicStatsById.set(topic.id, {
-        topicId: topic.id,
-        name: topic.name,
-        weekNumber: topic.week_number,
-        learnerIds: new Set(),
-        attempts: 0,
-        correct: 0,
-      });
-    }
-    for (const question of questions || []) questionTopic.set(question.id, question.topic_id);
-
-    const isArchivedSeason = selectedSeasonId !== activeSeasonId;
-    const currentStartDate = new Date();
-    currentStartDate.setUTCHours(0, 0, 0, 0);
-    currentStartDate.setUTCDate(currentStartDate.getUTCDate() - 6);
-    let activityStartDate = currentStartDate;
-    let activityEndDate: Date | null = null;
-    let activityWindowLabel = "Past 7 days";
-    if (isArchivedSeason && allAnswers.length) {
-      const latestAttempt = allAnswers.reduce((latest, answer) => {
-        const attemptedAt = new Date(answer.attempted_at);
-        return attemptedAt > latest ? attemptedAt : latest;
-      }, new Date(0));
-      activityEndDate = new Date(latestAttempt);
-      activityEndDate.setUTCHours(0, 0, 0, 0);
-      activityEndDate.setUTCDate(activityEndDate.getUTCDate() + 1);
-      activityStartDate = new Date(activityEndDate);
-      activityStartDate.setUTCDate(activityStartDate.getUTCDate() - 7);
-      activityWindowLabel = "Last active week";
-    }
-
-    const attemptsByDate = new Map<string, number>();
-    const activeStudentIds = new Set<string>();
-    for (const answer of allAnswers) {
-      const attemptedAt = new Date(answer.attempted_at);
-      const topicId = questionTopic.get(answer.question_id);
-      const topicStats = topicId ? topicStatsById.get(topicId) : null;
-      if (topicStats) {
-        topicStats.attempts++;
-        if (answer.is_correct) topicStats.correct++;
-        topicStats.learnerIds.add(answer.student_id);
-      }
-      if (attemptedAt >= activityStartDate && (!activityEndDate || attemptedAt < activityEndDate)) {
-        const date = attemptedAt.toISOString().slice(0, 10);
-        attemptsByDate.set(date, (attemptsByDate.get(date) || 0) + 1);
-        activeStudentIds.add(answer.student_id);
-      }
-    }
-    const weekdayFormatter = new Intl.DateTimeFormat("en-US", { weekday: "short", timeZone: "UTC" });
-    const activityByDay = Array.from({ length: 7 }, (_, index) => {
-      const date = new Date(activityStartDate);
-      date.setUTCDate(activityStartDate.getUTCDate() + index);
-      const key = date.toISOString().slice(0, 10);
-      return { date: key, label: weekdayFormatter.format(date), count: attemptsByDate.get(key) || 0 };
-    });
-    const topicStats = Array.from(topicStatsById.values()).map(({ learnerIds, ...topic }) => ({
-      ...topic,
-      learners: learnerIds.size,
-    }));
-    const latestAttemptsByStudent = new Map<string, (typeof allAnswers)[number]>();
-    for (const attempt of [...allAnswers].sort((a, b) => new Date(b.attempted_at).getTime() - new Date(a.attempted_at).getTime())) {
-      if (!latestAttemptsByStudent.has(attempt.student_id)) latestAttemptsByStudent.set(attempt.student_id, attempt);
-      if (latestAttemptsByStudent.size === 6) break;
-    }
-    const latestAttempts = [...latestAttemptsByStudent.values()];
-    const recentStudentIds = [...new Set(latestAttempts.map((attempt) => attempt.student_id))];
-    const { data: recentStudents } = recentStudentIds.length
-      ? await supabase.from("Student").select("id, full_name, preferred_name").eq("season_id", selectedSeasonId).in("id", recentStudentIds)
-      : { data: [] };
-    const studentNameById = new Map<string, string>((recentStudents || []).map((student) => [student.id, student.preferred_name || student.full_name] as const));
-    const topicNameById = new Map<string, string>(topicStats.map((topic) => [topic.topicId, topic.name] as const));
-    const recentActivity = latestAttempts.map((attempt) => ({
-      id: attempt.id,
-      studentName: studentNameById.get(attempt.student_id) || "Student",
-      topicName: topicNameById.get(questionTopic.get(attempt.question_id) || "") || "Course question",
-      isCorrect: attempt.is_correct,
-      attemptedAt: attempt.attempted_at,
-    }));
-
-    return (
-      <AdminDashboardView
-        totalStudents={totalStudents}
-        studentsNotStarted={studentsNotStarted}
-        totalQuestions={questions.length}
-        totalAttempts={totalAnswerCount}
-        activityByDay={activityByDay}
-        activeLearners={activeStudentIds.size}
-        topicStats={topicStats}
-        activityWindowLabel={activityWindowLabel}
-        dataError={chartDataError}
-        recentActivity={recentActivity}
-        isImpersonating={Boolean(impersonateId)}
-        seasonId={selectedSeasonId}
-        activeSeasonId={activeSeasonId}
-        seasons={seasons || []}
-        welcomeName={adminWelcomeName}
-        welcomeAvatarUrl={adminAvatarUrl}
-      />
-    );
-  }
+  if (isAdmin && params.view === "student" && !impersonateId) return <StudentDashboardPreview />;
+  if (isAdmin && !impersonateId) redirect("/admin");
 
   let targetId = user.id;
   let lookupByAuthId = true;
@@ -286,17 +110,72 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
     formattedRivals.push(await formatRival(rivalsBelow[0], false, await getRankForXp(rivalsBelow[0].current_xp)));
   }
 
-  const { data: answersData } = await supabase.from("StudentAnswer").select("is_correct, question_id").eq("season_id", dashboardSeasonId).eq("student_id", student.id);
-  const answers = (answersData || []) as { is_correct: boolean; question_id: string }[];
+  const { data: answersData } = await supabase.from("StudentAnswer")
+    .select("is_correct, question_id, attempted_at")
+    .eq("season_id", dashboardSeasonId)
+    .eq("student_id", student.id);
+  const answers = (answersData || []) as { is_correct: boolean; question_id: string; attempted_at: string }[];
   const totalAnswers = answers.length;
   const correctAnswers = answers.filter((answer) => answer.is_correct).length;
   const accuracy = totalAnswers > 0 ? Math.round((correctAnswers / totalAnswers) * 100) : 0;
 
-  const { data: rawTopics } = await supabase.from("Topic")
-    .select("id, name, week_number, description, Question(id)")
-    .eq("season_id", dashboardSeasonId).order("week_number", { ascending: true });
-  const topics = (rawTopics || []) as unknown as DashboardTopic[];
+  const [{ data: rawTopics }, { data: courseQuestions }, { data: moduleRows }] = await Promise.all([
+    supabase.from("Topic")
+      .select("id, name, week_number, description, module_id, lesson_number")
+      .eq("season_id", dashboardSeasonId)
+      .order("week_number", { ascending: true }),
+    supabase.from("Question")
+      .select("id, topic_id")
+      .eq("season_id", dashboardSeasonId),
+    supabase.from("Module")
+      .select("id, module_number, name, description, display_order")
+      .eq("season_id", dashboardSeasonId)
+      .order("display_order", { ascending: true }),
+  ]);
+  const questionsByTopic = new Map<string | number, { id: string }[]>();
+  for (const question of courseQuestions || []) {
+    const topicQuestions = questionsByTopic.get(question.topic_id) || [];
+    topicQuestions.push({ id: question.id });
+    questionsByTopic.set(question.topic_id, topicQuestions);
+  }
+  const topics: DashboardTopic[] = ((rawTopics || []) as Omit<DashboardTopic, "Question">[]).map((topic) => ({
+    ...topic,
+    Question: questionsByTopic.get(topic.id) || [],
+  }));
   const attemptedQuestionIds = new Set(answers.map((answer) => answer.question_id));
+  const moduleByQuestionId = new Map<string, string>();
+  const moduleIdByTopicId = new Map(topics.map((topic) => [String(topic.id), topic.module_id]));
+  for (const question of courseQuestions || []) {
+    const moduleId = moduleIdByTopicId.get(String(question.topic_id));
+    if (moduleId) moduleByQuestionId.set(question.id, moduleId);
+  }
+  // The rolling window is calculated once per server request.
+  // eslint-disable-next-line react-hooks/purity
+  const recentPracticeSince = Date.now() - 30 * 24 * 60 * 60 * 1000;
+  const recentAttemptsByModule = new Map<string, number>();
+  for (const answer of answers) {
+    const moduleId = moduleByQuestionId.get(answer.question_id);
+    if (moduleId && new Date(answer.attempted_at).getTime() >= recentPracticeSince) {
+      recentAttemptsByModule.set(moduleId, (recentAttemptsByModule.get(moduleId) || 0) + 1);
+    }
+  }
+  const curriculumModules: DashboardCurriculumModule[] = (moduleRows || []).map((module) => ({
+    id: module.id,
+    module_number: module.module_number,
+    name: module.name,
+    description: module.description,
+    recentAttempts: recentAttemptsByModule.get(module.id) || 0,
+    lessons: topics
+      .filter((topic) => topic.module_id === module.id)
+      .sort((left, right) => (left.lesson_number ?? left.week_number) - (right.lesson_number ?? right.week_number))
+      .map((topic) => ({
+        id: topic.id,
+        name: topic.name,
+        lesson_number: topic.lesson_number,
+        questionCount: topic.Question.length,
+        exploredCount: topic.Question.filter((question) => attemptedQuestionIds.has(question.id)).length,
+      })),
+  }));
 
   let nextMission: DashboardTopic | null = null;
   let completedModulesCount = 0;
@@ -325,11 +204,12 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
       totalStudents={studentCount}
       topPercent={topPercent}
       completedModulesCount={completedModulesCount}
-      totalModules={topics.length || 12}
+      totalModules={topics.length}
       accuracy={accuracy}
       rivals={formattedRivals}
       nextMission={nextMission}
       recentActivity={recentActivity}
+      curriculumModules={curriculumModules}
       seasonId={dashboardSeasonId}
     />
   );

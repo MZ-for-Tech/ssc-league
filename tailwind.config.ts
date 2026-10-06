@@ -7,6 +7,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        "2xs": ["0.6875rem", { lineHeight: "1rem" }],
+      },
       // 1. Custom Fonts (Matches your globals.css @font-face)
       fontFamily: {
         sans: ["var(--font-inter)"],

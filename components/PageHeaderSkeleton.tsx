@@ -1,29 +1,34 @@
 interface PageHeaderSkeletonProps {
   titleWidth?: string;
-  descriptionWidth?: string;
   actionWidth?: string;
+  actionWidths?: string[];
   actionHeight?: string;
 }
 
 export default function PageHeaderSkeleton({
   titleWidth = "w-52",
-  descriptionWidth = "w-72",
   actionWidth = "w-32",
+  actionWidths,
   actionHeight = "h-10",
 }: PageHeaderSkeletonProps) {
+  const actions = actionWidths ?? [actionWidth];
   return (
     <header
       aria-hidden="true"
-      className="flex animate-pulse flex-col gap-4 border-b border-border/80 pb-6 sm:flex-row sm:items-end sm:justify-between"
+      className="instrument-panel relative isolate animate-pulse overflow-hidden rounded-2xl border border-border bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] p-5 shadow-xl shadow-black/20 sm:p-6"
     >
-      <div className="min-w-0">
-        <div className="flex items-center gap-3">
-          <div className="h-7 w-7 shrink-0 rounded-md bg-primary/20" />
-          <div className={`h-10 max-w-full rounded-lg bg-surface-light/50 ${titleWidth}`} />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+      <div className="relative z-10 flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
+        <div className="min-w-0">
+          <div className="flex items-center gap-3">
+            <div className="h-7 w-7 shrink-0 rounded-md bg-primary/25" />
+            <div className={`h-9 max-w-full rounded-lg bg-surface-light/45 sm:h-10 ${titleWidth}`} />
+          </div>
         </div>
-        <div className={`mt-3 h-4 max-w-full rounded bg-surface-light/30 ${descriptionWidth}`} />
+        <div className="flex max-w-full flex-wrap items-center gap-3">
+          {actions.map((width, index) => <div key={index} className={`max-w-full rounded-lg border border-border bg-background/45 ${width} ${actionHeight}`} />)}
+        </div>
       </div>
-      <div className={`${actionHeight} max-w-full rounded-lg border border-border bg-surface/70 ${actionWidth}`} />
     </header>
   );
 }

@@ -3,7 +3,21 @@ export interface DashboardTopic {
   name: string;
   week_number: number;
   description: string;
+  module_id: string | null;
+  lesson_number: number | null;
   Question: { id: string }[];
+}
+
+export interface DashboardCurriculumModule {
+  id: string;
+  module_number: number;
+  name: string;
+  description: string;
+  recentAttempts: number;
+  lessons: Array<Pick<DashboardTopic, "id" | "name" | "lesson_number"> & {
+    questionCount: number;
+    exploredCount: number;
+  }>;
 }
 
 export interface DashboardRival {

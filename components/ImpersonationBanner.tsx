@@ -16,7 +16,7 @@ export default function ImpersonationBanner({ isImpersonating }: { isImpersonati
     setLoading(true);
     await stopImpersonation();
     // Return to the Agent Roster for rapid student switching.
-    router.push("/dashboard?view=users");
+    router.push("/admin/users");
     router.refresh();
   };
 
@@ -25,11 +25,11 @@ export default function ImpersonationBanner({ isImpersonating }: { isImpersonati
         
         {/* Left: Status Indicator */}
         <div className="flex items-center gap-3">
-            <div className="p-2 bg-amber-900/10 rounded-full animate-pulse">
+            <div className="p-2 bg-amber-900/10 rounded-full">
                 <EyeOff size={20} />
             </div>
             <div>
-                <p className="font-black text-sm uppercase tracking-wider leading-none">GOD MODE ACTIVE</p>
+                <p className="font-black text-sm uppercase tracking-wider leading-none">STUDENT VIEW ACTIVE</p>
                 <p className="text-xs font-medium opacity-80">You are viewing this interface as a Student.</p>
             </div>
         </div>
@@ -39,7 +39,7 @@ export default function ImpersonationBanner({ isImpersonating }: { isImpersonati
             
             {/* 1. Jump to Admin (Keep session alive) */}
             <Link 
-                href="/dashboard?view=admin"
+                href="/admin"
                 className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
             >
                 <ShieldAlert size={14} />

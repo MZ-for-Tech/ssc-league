@@ -4,7 +4,7 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getImpersonatedStudentId } from "@/lib/auth/impersonation";
 
-async function getActiveLearner() {
+async function getActiveAccess() {
   const sessionClient = await createSupabaseServerClient();
   const { data: { user }, error: authError } = await sessionClient.auth.getUser();
   if (authError || !user) throw new Error("Authentication required.");
@@ -19,20 +19,35 @@ async function getActiveLearner() {
     getImpersonatedStudentId(),
   ]);
 
-  const studentQuery = admin && impersonatedId
-    ? adminClient.from("Student").select("id").eq("id", impersonatedId)
-    : adminClient.from("Student").select("id").eq("auth_id", user.id);
-  const { data: student, error: studentError } = await studentQuery
-    .eq("season_id", season.id).maybeSingle();
-  if (studentError || !student) throw new Error("This account is not enrolled in the active season.");
+  let studentId: string | null = null;
+  if (!admin || impersonatedId) {
+    const studentQuery = admin && impersonatedId
+      ? adminClient.from("Student").select("id").eq("id", impersonatedId)
+      : adminClient.from("Student").select("id").eq("auth_id", user.id);
+    const { data: student, error: studentError } = await studentQuery
+      .eq("season_id", season.id).maybeSingle();
+    if (studentError || !student) throw new Error("This account is not enrolled in the active season.");
+    studentId = student.id;
+  }
 
-  return { adminClient, studentId: student.id, seasonId: season.id as string };
+  return {
+    adminClient,
+    studentId,
+    seasonId: season.id as string,
+    isTeacherPreview: Boolean(admin && !impersonatedId),
+  };
+}
+
+async function getActiveLearner() {
+  const access = await getActiveAccess();
+  if (!access.studentId) throw new Error("A student account is required to submit quiz answers.");
+  return { ...access, studentId: access.studentId };
 }
 
 export async function loadActiveQuiz(topicId: string) {
-  const { adminClient, studentId, seasonId } = await getActiveLearner();
+  const { adminClient, studentId, seasonId, isTeacherPreview } = await getActiveAccess();
   const { data: topic, error: topicError } = await adminClient.from("Topic")
-    .select("id, season_id")
+    .select("id, season_id, name")
     .eq("id", topicId)
     .eq("season_id", seasonId)
     .maybeSingle();
@@ -46,27 +61,30 @@ export async function loadActiveQuiz(topicId: string) {
   if (questionError) throw questionError;
 
   const questionIds = (questions || []).map((question) => question.id);
-  if (!questionIds.length) return { studentId, seasonId, questions: [], answers: [] };
+  if (!questionIds.length) return { studentId, seasonId, isTeacherPreview, lessonName: topic.name, questions: [], answers: [] };
 
-  const [{ data: options, error: optionsError }, { data: answers, error: answersError }] = await Promise.all([
-    adminClient.from("QuestionOption")
+  const { data: options, error: optionsError } = await adminClient.from("QuestionOption")
       .select("id, question_id, text, option_order, is_correct, justification")
       .eq("season_id", seasonId)
       .in("question_id", questionIds)
       .order("option_order", { ascending: true, nullsFirst: false })
-      .order("created_at", { ascending: true }),
-    adminClient.from("StudentAnswer")
+      .order("created_at", { ascending: true });
+  if (optionsError) throw optionsError;
+
+  let answers: { question_id: string; selected_option_id: string; is_correct: boolean }[] = [];
+  if (studentId) {
+    const { data, error } = await adminClient.from("StudentAnswer")
       .select("question_id, selected_option_id, is_correct")
       .eq("season_id", seasonId)
       .eq("student_id", studentId)
-      .in("question_id", questionIds),
-  ]);
-  if (optionsError) throw optionsError;
-  if (answersError) throw answersError;
+      .in("question_id", questionIds);
+    if (error) throw error;
+    answers = data || [];
+  }
 
   const answeredQuestionIds = new Set((answers || []).map((answer) => answer.question_id));
   const feedbackFor = (questionId: string) => {
-    if (!answeredQuestionIds.has(questionId)) return null;
+    if (!isTeacherPreview && !answeredQuestionIds.has(questionId)) return null;
     const questionOptions = (options || []).filter((option) => option.question_id === questionId);
     return {
       correctOptionId: questionOptions.find((option) => option.is_correct)?.id || null,
@@ -81,6 +99,8 @@ export async function loadActiveQuiz(topicId: string) {
   return {
     studentId,
     seasonId,
+    isTeacherPreview,
+    lessonName: topic.name,
     questions: (questions || []).map((question) => ({
       ...question,
       QuestionOption: (options || []).filter((option) => option.question_id === question.id).map(({ id, question_id, text, option_order }) => ({ id, question_id, text, option_order })),

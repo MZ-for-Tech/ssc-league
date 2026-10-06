@@ -16,6 +16,7 @@ import {
 import clsx from "clsx";
 
 type OutputKind = "stdout" | "stderr" | "result" | "system" | "plot";
+type ConsoleTab = "output" | "errors" | "plots";
 
 interface OutputLine {
   id: number;
@@ -45,6 +46,7 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
   const [isReady, setIsReady] = useState(false);
   const [runtimeError, setRuntimeError] = useState<string | null>(null);
   const [runtimeLabel, setRuntimeLabel] = useState<string | null>(null);
+  const [consoleTab, setConsoleTab] = useState<ConsoleTab>("output");
   const [editorScrollTop, setEditorScrollTop] = useState(0);
   const [editorScrollLeft, setEditorScrollLeft] = useState(0);
   const [workerGeneration, setWorkerGeneration] = useState(0);
@@ -69,6 +71,7 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
       if (message.type === "load-error") {
         setRuntimeError(`Could not load Python: ${message.message}`);
         setIsReady(false);
+        setConsoleTab("errors");
         return;
       }
       if (message.runId !== activeRunId.current) return;
@@ -99,6 +102,7 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
       }
 
       const kind: OutputKind = message.type;
+      if (kind === "stderr") setConsoleTab("errors");
       setOutput((previous) => [...previous, {
         id: nextOutputId.current++,
         kind,
@@ -110,6 +114,7 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
       setRuntimeError(`Python worker error: ${event.message || "The worker stopped unexpectedly."}`);
       setIsReady(false);
       setIsRunning(false);
+      setConsoleTab("errors");
     };
 
     return () => {
@@ -126,6 +131,7 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
     setRuntimeError(null);
     setOutput([]);
     setIsRunning(true);
+    setConsoleTab("output");
     workerRef.current.postMessage({ type: "run", runId, code });
   };
 
@@ -136,6 +142,7 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
     setIsRunning(false);
     setIsReady(false);
     setRuntimeError(null);
+    setConsoleTab("output");
     setOutput((previous) => [...previous, {
       id: nextOutputId.current++,
       kind: "system",
@@ -171,9 +178,19 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
   };
 
   const lineCount = Math.max(1, code.split("\n").length);
+  const visibleOutput = output.filter((line) => {
+    if (consoleTab === "errors") return line.kind === "stderr";
+    if (consoleTab === "plots") return line.kind === "plot";
+    return line.kind !== "stderr" && line.kind !== "plot";
+  });
+  const consoleTabs: { id: ConsoleTab; label: string; count: number }[] = [
+    { id: "output", label: "Output", count: output.filter((line) => line.kind !== "stderr" && line.kind !== "plot").length },
+    { id: "errors", label: "Errors", count: output.filter((line) => line.kind === "stderr").length + (runtimeError ? 1 : 0) },
+    { id: "plots", label: "Plots", count: output.filter((line) => line.kind === "plot").length },
+  ];
   return (
-    <section className="overflow-hidden rounded-xl border border-border bg-surface/70" aria-label="Python coding workspace">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border bg-background/60 px-4 py-2.5 md:px-5">
+    <section className="instrument-panel overflow-hidden rounded-xl border border-border bg-surface/70" aria-label="Python coding workspace">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border bg-background/70 px-4 py-2.5 md:px-5">
         <div className="flex min-w-0 items-center gap-3">
           <div className="flex shrink-0 items-center gap-1.5" aria-hidden="true">
             <span className="h-2 w-2 rounded-full bg-danger/70" />
@@ -188,18 +205,17 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="hidden text-[10px] text-muted/70 md:inline">Runs in this browser</span>
-          <div className="mr-1 hidden items-center gap-2 font-mono text-[10px] text-muted sm:flex" aria-live="polite">
+          <div className="mr-1 hidden items-center gap-2 border border-border/80 bg-surface/40 px-2 py-1 font-mono text-2xs uppercase tracking-wider text-muted sm:flex" aria-live="polite">
             <span className={clsx(
               "h-1.5 w-1.5 rounded-full",
               isReady ? "bg-success" : runtimeError ? "bg-danger" : "animate-pulse bg-warning",
             )} />
-            <span className="max-w-56 truncate">{runtimeLabel || (runtimeError ? "Runtime unavailable" : "Starting Python runtime")}</span>
+            <span className="max-w-56 truncate">{runtimeLabel || (runtimeError ? "Unavailable" : "Booting")}</span>
           </div>
           <button
             type="button"
             onClick={resetCode}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-transparent text-muted transition-colors hover:border-border hover:bg-surface hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="console-control inline-flex h-8 w-8 items-center justify-center border border-transparent text-muted transition-colors hover:border-border hover:bg-surface hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             title="Reset starter code"
             aria-label="Reset starter code"
           >
@@ -209,7 +225,7 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
             <button
               type="button"
               onClick={stopCode}
-              className="inline-flex items-center gap-2 rounded-md border border-danger/30 bg-danger/10 px-3 py-2 text-xs font-semibold text-danger transition-colors hover:bg-danger/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger"
+              className="console-control inline-flex items-center gap-2 border border-danger/30 bg-danger/10 px-3 py-2 text-xs font-semibold text-danger transition-colors hover:bg-danger/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger"
             >
               <Square size={13} fill="currentColor" /> Stop
             </button>
@@ -220,9 +236,10 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
                 setRuntimeError(null);
                 setRuntimeLabel(null);
                 setIsReady(false);
+                setConsoleTab("output");
                 setWorkerGeneration((generation) => generation + 1);
               }}
-              className="inline-flex items-center gap-2 rounded-md bg-primary px-3 py-2 text-xs font-semibold text-background transition-colors hover:bg-primary-dim focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="console-control inline-flex items-center gap-2 bg-primary px-3 py-2 text-xs font-semibold text-background transition-colors hover:bg-primary-dim focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <RotateCcw size={13} /> Retry runtime
             </button>
@@ -232,7 +249,7 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
               onClick={runCode}
               disabled={!isReady}
               className={clsx(
-                "inline-flex items-center gap-2 rounded-md px-3.5 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                "console-control inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                 isReady
                   ? "bg-primary text-background hover:bg-primary-dim"
                   : "cursor-wait border border-border bg-surface text-muted",
@@ -245,13 +262,13 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
         </div>
       </div>
 
-      <div className="grid min-h-[31rem] grid-cols-1 lg:grid-cols-2">
+      <div className="grid min-h-[34rem] grid-cols-1 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)]">
         <div className="flex min-h-[25rem] flex-col border-b border-border lg:border-b-0 lg:border-r">
-          <div className="flex h-9 shrink-0 items-center justify-between border-b border-border/70 bg-code-editor px-4">
-            <div className="flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-muted">
+          <div className="flex h-10 shrink-0 items-center justify-between border-b border-border/70 bg-code-editor px-4">
+            <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.18em] text-muted">
               <Braces size={13} className="text-primary" /> Source
             </div>
-            <span className="font-mono text-[10px] text-muted/70">Python 3 · {lineCount} lines</span>
+            <span className="font-mono text-xs text-muted/70">{lineCount} lines</span>
           </div>
           <div className="relative flex-1 overflow-hidden bg-code-editor">
             <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 overflow-hidden border-r border-white/[0.04] bg-black/10 pt-4 text-right font-mono text-xs leading-[1.625rem] text-slate-600">
@@ -261,7 +278,7 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
                 ))}
               </div>
             </div>
-            <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+              <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden text-sm">
               <div style={{ transform: `translate(${-editorScrollLeft}px, -${editorScrollTop}px)` }}>
                 <SyntaxHighlighter
                   language="python"
@@ -274,7 +291,7 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
                     background: "transparent",
                     overflow: "visible",
                     fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
-                    fontSize: "13px",
+                    fontSize: "inherit",
                     lineHeight: "1.625rem",
                     whiteSpace: "pre",
                   }}
@@ -294,29 +311,47 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
                 setEditorScrollLeft(event.currentTarget.scrollLeft);
               }}
               aria-label="Python code editor"
-              className="relative z-[1] h-full min-h-[25rem] w-full resize-none overflow-auto bg-transparent py-4 pl-16 pr-5 font-mono text-[13px] leading-[1.625rem] text-transparent caret-primary focus:outline-none focus:ring-1 focus:ring-inset focus:ring-primary/35 selection:bg-primary/25 selection:text-transparent"
+              className="relative z-[1] h-full min-h-[25rem] w-full resize-none overflow-auto bg-transparent py-4 pl-16 pr-5 font-mono text-sm leading-[1.625rem] text-transparent caret-primary focus:outline-none focus:ring-1 focus:ring-inset focus:ring-primary/35 selection:bg-primary/25 selection:text-transparent"
               spellCheck={false}
               autoCapitalize="off"
               autoCorrect="off"
               autoComplete="off"
               wrap="off"
             />
-            <div className="pointer-events-none absolute bottom-3 right-4 hidden font-mono text-[10px] text-slate-500 xl:block">
+            <div className="pointer-events-none absolute bottom-3 right-4 hidden font-mono text-2xs text-slate-500 xl:block">
               Ctrl / ⌘ + Enter to run
             </div>
           </div>
         </div>
 
         <div className="flex min-h-[25rem] flex-col bg-code-console" aria-live="polite">
-          <div className="flex h-9 shrink-0 items-center justify-between border-b border-white/[0.06] px-4">
-            <div className="flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-muted">
+          <div className="flex min-h-10 shrink-0 flex-wrap items-center justify-between gap-2 border-b border-white/[0.06] px-3 sm:px-4">
+            <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.18em] text-muted">
               <Terminal size={13} className="text-primary" /> Console
             </div>
-            <span className="font-mono text-[10px] text-muted/70">STDOUT · STDERR · PLOTS</span>
+            <div className="flex items-center gap-1" role="tablist" aria-label="Console output type">
+              {consoleTabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  id={`console-tab-${tab.id}`}
+                  role="tab"
+                  aria-selected={consoleTab === tab.id}
+                  aria-controls="console-output-panel"
+                  onClick={() => setConsoleTab(tab.id)}
+                  className={clsx(
+                    "console-control inline-flex items-center gap-1.5 border px-2 py-1 font-mono text-xs font-bold uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                    consoleTab === tab.id ? "border-primary/25 bg-primary/10 text-primary" : "border-transparent text-muted hover:border-border hover:text-foreground",
+                  )}
+                >
+                  {tab.label}<span className="text-xs opacity-65">{tab.count}</span>
+                </button>
+              ))}
+            </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4 md:p-5">
-            {runtimeError && (
+          <div id="console-output-panel" role="tabpanel" aria-labelledby={`console-tab-${consoleTab}`} className="flex-1 overflow-y-auto p-4 md:p-5">
+            {runtimeError && consoleTab === "errors" && (
               <div className="flex items-start gap-3 rounded-md border border-danger/25 bg-danger/10 p-3 text-sm text-danger">
                 <AlertCircle size={16} className="mt-0.5 shrink-0" />
                 <div>
@@ -326,32 +361,69 @@ export default function PythonPlayground({ initialCode = "" }: { initialCode?: s
               </div>
             )}
 
-            {!runtimeError && output.length === 0 && !isReady && (
+            {runtimeError && consoleTab !== "errors" && (
               <div className="flex min-h-[21rem] items-center justify-center px-6 text-center">
-                <div className="flex items-center gap-3 text-xs text-muted">
-                  <Loader2 size={15} className="animate-spin text-primary" />
-                  <span>Starting Python runtime… First launch may take a moment.</span>
+                <div className="text-xs text-muted">
+                  <p className="font-mono text-xs font-bold uppercase tracking-wider text-danger">Runtime unavailable</p>
+                  <p className="mt-1">Select Errors for connection details, or retry the runtime.</p>
                 </div>
               </div>
             )}
 
-            {!runtimeError && output.length === 0 && isReady && (
+            {!runtimeError && visibleOutput.length === 0 && consoleTab === "output" && !isReady && (
+              <div className="flex min-h-[21rem] items-center justify-center px-5 py-8">
+                <div className="w-full max-w-sm">
+                  <div className="mb-4 flex items-center gap-3">
+                    <div className="grid h-10 w-10 shrink-0 place-items-center border border-primary/20 bg-primary/5 text-primary"><Loader2 size={18} className="animate-spin" /></div>
+                    <div>
+                      <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-primary">Runtime handshake</p>
+                      <p className="mt-1 text-xs text-muted">Starting Python in this browser…</p>
+                    </div>
+                  </div>
+                  <div aria-hidden="true" className="relative h-px overflow-hidden bg-surface-light/50">
+                    <div className="absolute inset-y-0 left-0 w-1/3 animate-shimmer bg-primary/80" />
+                  </div>
+                  <p className="mt-3 font-mono text-xs leading-4 text-muted/75">First launch downloads and initializes the Python runtime. You can keep editing while it starts.</p>
+                </div>
+              </div>
+            )}
+
+            {!runtimeError && visibleOutput.length === 0 && consoleTab === "output" && isReady && (
+              <div className="flex min-h-[21rem] items-center justify-center px-6 text-center">
+                <div className="max-w-xs">
+                  <div className="mx-auto grid h-10 w-10 place-items-center border border-success/20 bg-success/5 text-success"><Terminal size={17} /></div>
+                  <p className="mt-3 font-mono text-xs font-bold uppercase tracking-wider text-foreground">Awaiting execution</p>
+                  <p className="mt-1 text-xs text-muted">Output will appear here.</p>
+                </div>
+              </div>
+            )}
+
+            {!runtimeError && visibleOutput.length === 0 && consoleTab === "errors" && (
               <div className="flex min-h-[21rem] items-center justify-center px-6 text-center">
                 <div className="text-xs text-muted">
-                  <p>Ready for execution.</p>
-                  <p className="mt-2 font-mono text-[10px] text-muted/70">Run or press Ctrl / ⌘ + Enter</p>
+                  <p className="font-mono text-xs font-bold uppercase tracking-wider text-success">No errors reported</p>
+                  <p className="mt-1">Runtime and execution errors will appear here.</p>
+                </div>
+              </div>
+            )}
+
+            {!runtimeError && visibleOutput.length === 0 && consoleTab === "plots" && (
+              <div className="flex min-h-[21rem] items-center justify-center px-6 text-center">
+                <div className="text-xs text-muted">
+                  <p className="font-mono text-xs font-bold uppercase tracking-wider text-foreground">No figures rendered</p>
+                  <p className="mt-1">Plots created with matplotlib will appear here.</p>
                 </div>
               </div>
             )}
 
             <div className="space-y-2">
-              {output.map((line) => (
+              {visibleOutput.map((line) => (
                 line.kind === "plot" ? (
                   <figure key={line.id} className="my-4 overflow-hidden rounded-md border border-slate-700 bg-white p-2">
                     {/* Generated figures are in-memory data URLs, so Next image optimization does not apply. */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={line.imageDataUrl} alt={`Python plot ${line.figureNumber}`} className="mx-auto h-auto max-w-full" />
-                    <figcaption className="px-2 pt-2 font-mono text-[10px] text-slate-500">FIGURE {line.figureNumber}</figcaption>
+                    <figcaption className="px-2 pt-2 font-mono text-xs text-slate-500">FIGURE {line.figureNumber}</figcaption>
                   </figure>
                 ) : (
                   <pre

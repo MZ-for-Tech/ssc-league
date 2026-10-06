@@ -18,7 +18,7 @@ export default function PromptContent({ prompt }: { prompt: string }) {
         return paragraphs.map((paragraph, paragraphIndex) => (
           <p key={`${index}-${paragraphIndex}`} className="whitespace-pre-wrap">
             {paragraph.split(/(`[^`]+`)/g).map((segment, segmentIndex) => segment.startsWith("`") && segment.endsWith("`")
-              ? <code key={segmentIndex} className="rounded bg-background px-1.5 py-0.5 font-mono text-[0.9em] text-cyan-200">{segment.slice(1, -1)}</code>
+              ? <code key={segmentIndex} className="rounded bg-background px-1.5 py-0.5 font-mono text-cyan-200">{segment.slice(1, -1)}</code>
               : segment)}
           </p>
         ));

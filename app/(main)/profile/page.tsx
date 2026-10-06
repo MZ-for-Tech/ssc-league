@@ -1,5 +1,5 @@
 import React from "react";
-import { Mail, Award, Zap, Shield, Target, Percent, Activity, IdCard, BadgeCheck, User, Terminal, Crown, Star, Crosshair, Cpu, ShieldCheck } from "lucide-react";
+import { Mail, Award, Zap, Target, Activity, IdCard, BadgeCheck, Terminal, Crown, Star, Crosshair, Cpu, ShieldCheck, CalendarDays, Medal, Trophy } from "lucide-react";
 import ActivityHeatmap from "@/components/profile/ActivityHeatmap";
 import Badge from "@/components/profile/Badge"; 
 import ActivityFeed from "@/components/profile/ActivityFeed";
@@ -8,7 +8,6 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getImpersonatedStudentId } from "@/lib/auth/impersonation";
 import { redirect } from "next/navigation";
 import { getActiveSeasonId, getSelectedSeasonId } from "@/lib/seasons";
-import PageHeader from "@/components/PageHeader";
 import Image from "next/image";
 
 export const revalidate = 0;
@@ -41,7 +40,7 @@ export default async function ProfilePage() {
   if (!user) return <div className="text-red-500 p-10">Access Denied.</div>;
 
   const { data: adminProfile } = await supabase.from("Admin").select("id").eq("auth_id", user.id).maybeSingle();
-  if (adminProfile && !impersonateId) redirect("/dashboard");
+  if (adminProfile && !impersonateId) redirect("/admin");
   const seasonId = await getSelectedSeasonId(supabase, activeSeasonId, Boolean(adminProfile));
 
   let targetId = user.id; 
@@ -63,11 +62,13 @@ export default async function ProfilePage() {
   if (error || !student) return <div className="p-10 text-center text-yellow-500">Dossier Not Found</div>;
 
   const [
+    { data: season },
     { data: transactions },
     { data: quizAnswers },
     { data: rankHistory },
     { data: attendanceRecords }
   ] = await Promise.all([
+    supabase.from("Season").select("name, starts_on").eq("id", seasonId).maybeSingle(),
     supabase.from("XPTransaction").select("*").eq("student_id", student.id).eq("season_id", seasonId),
     supabase.from("StudentAnswer").select("id, attempted_at, is_correct, Question(text, points, Topic(name))").eq("student_id", student.id).eq("season_id", seasonId),
     supabase.from("WeeklyRankHistory").select("rank").eq("student_id", student.id).eq("season_id", seasonId),
@@ -89,24 +90,27 @@ export default async function ProfilePage() {
   (quizAnswers as QuizAnswer[] | null)?.forEach((q) => addActivity(q.attempted_at, 1));
   (transactions as XPTransaction[] | null)?.forEach((t) => addActivity(t.created_at, 1));
 
+  const earliestRecordedActivity = Object.keys(heatmapData).sort()[0];
+  // Season start dates are optional in the database; use the first real season event as a fallback.
+  const heatmapStartDate = season?.starts_on || earliestRecordedActivity || new Date().toISOString().slice(0, 10);
+
   const unifiedLog = [
     ...((transactions || []) as XPTransaction[]).map((t) => ({
       id: t.id,
-      type: 'XP Award', 
-      title: t.action_type === 'MANUAL_ENTRY' ? 'Manual Adjustment' : t.action_type,
+      type: 'reward' as const,
+      title: t.action_type === 'MANUAL_ENTRY' ? 'Manual adjustment' : t.action_type.replaceAll('_', ' ').toLowerCase(),
       desc: t.description || "",
       xp: t.amount,
       date: new Date(t.created_at),
-      status: 'success'
     })),
     ...((quizAnswers || []) as QuizAnswer[]).map((q) => ({
       id: q.id,
-      type: 'quiz',
-      title: q.Question[0]?.text || "Unknown Challenge",
+      type: 'practice' as const,
+      title: q.is_correct ? "Question solved" : "Question attempted",
       desc: q.Question[0]?.Topic[0]?.name || "General Module",
       xp: q.is_correct ? 2 : 1,
       date: new Date(q.attempted_at),
-      status: q.is_correct ? 'success' : 'failure'
+      isCorrect: q.is_correct,
     }))
   ].sort((a, b) => b.date.getTime() - a.date.getTime());
 
@@ -119,9 +123,10 @@ export default async function ProfilePage() {
   const xpNeededForLevel = nextLevelDef.min - levelDef.min;
   const progressPercent = Math.min(100, Math.max(0, (xpInLevel / xpNeededForLevel) * 100));
 
-  const totalSessions = attendanceRecords?.length || 0;
+  const countedAttendanceRecords = ((attendanceRecords as AttendanceRecord[] | null) || []).filter((record) => record.status !== "VACATION");
+  const totalSessions = countedAttendanceRecords.length;
   const attendanceRate = totalSessions > 0 
-    ? Math.round(((attendanceRecords as AttendanceRecord[] | null)?.filter((a) => ['PRESENT', 'TARDY'].includes(a.status)).length || 0) / totalSessions * 100)
+    ? Math.round((countedAttendanceRecords.filter((a) => ['PRESENT', 'TARDY'].includes(a.status)).length || 0) / totalSessions * 100)
     : 0;
   
   const bestRank = rankHistory && rankHistory.length > 0 ? Math.min(...(rankHistory as RankRecord[]).map((h) => h.rank)) : 0;
@@ -156,130 +161,126 @@ export default async function ProfilePage() {
   };
 
   return (
-    <div className="w-full space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20">
-      
-      {/* --- HEADER --- */}
-      <PageHeader
-        title="Agent Dossier"
-        description="Identity, stats, and performance metrics."
-        icon={<User size={28} />}
-        actions={impersonateId ? (
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-xs font-bold uppercase tracking-wider animate-pulse">
-            <Shield size={14} /> Impersonating
+    <div className="w-full space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20">
+      <section className="instrument-panel relative isolate overflow-hidden rounded-[1.75rem] border border-cyan-200/15 bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] p-4 shadow-2xl shadow-black/15 sm:p-5">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-dot-grid opacity-[0.08] [mask-image:linear-gradient(90deg,black,transparent)]" />
+        <svg aria-hidden="true" viewBox="0 0 480 360" className="pointer-events-none absolute -right-20 -top-28 -z-10 h-[420px] w-[560px] opacity-20">
+          <path d="M240 12 468 348H12L240 12Z" fill="none" stroke="rgb(var(--primary))" strokeWidth="1.5" />
+          <path d="m240 86 177 262H63L240 86Z" fill="none" stroke="rgb(var(--cyan-200))" strokeOpacity=".55" />
+          <path d="M240 12v336M12 348h456M126 180h228" stroke="rgb(var(--primary))" strokeOpacity=".42" strokeDasharray="4 9" />
+        </svg>
+        <div className="relative flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
+          <div className="flex min-w-0 flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
+            <div className="relative shrink-0">
+              <div className="relative h-24 w-24 rounded-full bg-gradient-to-br from-cyan-300 via-primary to-indigo-500 p-[3px] shadow-[0_0_30px_rgb(var(--primary)/0.18)] sm:h-28 sm:w-28">
+                <div aria-hidden="true" className="absolute -inset-2 rounded-full border border-dashed border-cyan-200/20" />
+                <Image unoptimized width={112} height={112} src={student.avatar_url || `https://api.dicebear.com/9.x/avataaars/svg?seed=${displayName}`} alt={`${displayName}'s avatar`} className="h-full w-full rounded-full border-[3px] border-[rgb(var(--surface-deep))] bg-[rgb(var(--surface-deep))] object-cover" />
+              </div>
+              <div className="absolute -bottom-1 -right-1 flex items-center gap-1.5 rounded-full border border-cyan-200/20 bg-[rgb(var(--surface-deep))] px-2.5 py-1 shadow-lg">
+                <BadgeCheck size={14} className="text-emerald-300" />
+                <span className="font-mono text-xs font-bold text-foreground">LV {levelDef.level}</span>
+              </div>
+            </div>
+            <div className="min-w-0">
+              <div className="mb-2 flex flex-wrap items-center gap-2 font-mono">
+                <span className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Student dossier</span>
+                <span className="text-xs text-muted/50">/</span>
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted"><CalendarDays size={11} /> {season?.name || "League season"}</span>
+                {impersonateId && <span className="rounded-full border border-warning/20 bg-warning/10 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-warning">Admin preview</span>}
+              </div>
+              <h1 className="truncate text-3xl font-black tracking-tight text-foreground sm:text-4xl">{displayName}</h1>
+              <p className="mt-0.5 text-sm text-muted">{student.full_name}</p>
+              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs text-slate-300/80">
+                <span className="inline-flex items-center gap-1.5"><IdCard size={13} className="text-primary" /> {student.student_id}</span>
+                <span className="inline-flex items-center gap-1.5"><Target size={13} className="text-primary" /> Group {student.group_id || "G1"}</span>
+                {student.email && <span className="inline-flex items-center gap-1.5"><Mail size={13} className="text-primary" /> {student.email}</span>}
+              </div>
+            </div>
           </div>
-        ) : undefined}
-      />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        {/* LEFT COL: Identity Card */}
-        <div className="lg:col-span-1 space-y-6">
-            <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/50 relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-transparent opacity-50" />
-                
-                <div className="relative flex flex-col items-center text-center z-10">
-                    <div className="relative mb-4">
-                        <div className="w-32 h-32 rounded-full p-1 border-2 border-slate-800 bg-slate-950 shadow-xl">
-                            <Image unoptimized width={128} height={128} src={student.avatar_url || `https://api.dicebear.com/9.x/avataaars/svg?seed=${displayName}`} alt="Avatar" className="h-full w-full rounded-full object-cover" />
-                        </div>
-                        <div className="absolute bottom-0 right-0 bg-slate-950 rounded-full p-1 border border-slate-800 shadow-sm">
-                            <BadgeCheck className="w-6 h-6 text-emerald-500" />
-                        </div>
-                    </div>
-                    <h2 className="text-2xl font-bold text-white">{displayName}</h2>
-                    <p className="text-slate-500 text-xs uppercase tracking-widest mt-1 mb-6 border-b border-slate-800 pb-4 w-full text-center">{student.full_name}</p>
-                    
-                    {/* XP Progress Bar */}
-                    <div className="w-full mb-6">
-                        <div className="flex justify-between text-[10px] uppercase font-bold text-slate-500 mb-1">
-                            <span>Lvl {levelDef.level}</span>
-                            <span className="text-cyan-400">{Math.round(progressPercent)}%</span>
-                            <span>Lvl {levelDef.level + 1}</span>
-                        </div>
-                        <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden border border-slate-800 relative">
-                            <div style={{ width: `${progressPercent}%` }} className="h-full bg-cyan-400 shadow-[0_0_10px_rgb(var(--primary)/0.5)] transition-all duration-1000" />
-                        </div>
-                        <div className="text-center text-[10px] text-slate-500 mt-1 font-mono">{xpInLevel} / {xpNeededForLevel} XP to rank up</div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3 w-full">
-                        <div className="p-3 rounded-xl bg-slate-900/50 border border-slate-800 text-center">
-                            <div className="text-[10px] text-slate-500 uppercase font-mono mb-1">Level</div>
-                            <div className="text-xl font-bold text-cyan-400">{levelDef.level}</div>
-                        </div>
-                        <div className="p-3 rounded-xl bg-slate-900/50 border border-slate-800 text-center">
-                            <div className="text-[10px] text-slate-500 uppercase font-mono mb-1">Streak</div>
-                            <div className="text-xl font-bold text-yellow-500 flex items-center justify-center gap-1"><Zap size={14} fill="currentColor" /> {currentStreak}</div>
-                        </div>
-                        <div className="p-3 rounded-xl bg-slate-900/50 border border-slate-800 text-center">
-                            <div className="text-[10px] text-slate-500 uppercase font-mono mb-1">Attendance</div>
-                            <div className={`text-xl font-bold flex items-center justify-center gap-1 ${attendanceRate >= 80 ? "text-emerald-500" : "text-rose-500"}`}><Percent size={14} /> {attendanceRate}</div>
-                        </div>
-                        <div className="p-3 rounded-xl bg-slate-900/50 border border-slate-800 text-center">
-                            <div className="text-[10px] text-slate-500 uppercase font-mono mb-1">Best Rank</div>
-                            <div className="text-xl font-bold text-purple-400 flex items-center justify-center gap-1"><Target size={14} /> {bestRank > 0 ? `#${bestRank}` : "-"}</div>
-                        </div>
-                    </div>
-                    {seasonId === activeSeasonId ? <EditProfileModal student={studentForEdit} /> : <p className="mt-4 text-xs font-semibold text-amber-300">Archived record · read only</p>}
-                </div>
-
-                <div className="mt-8 space-y-3 relative z-10">
-                    <div className="flex items-center text-xs text-slate-500 py-2 border-t border-slate-800"><Mail size={14} className="mr-3 text-slate-600" /><span className="opacity-80">E-Mail: <span className="text-white font-bold">{student.email || "No email linked"}</span></span></div>
-                    <div className="flex items-center text-xs text-slate-500 py-2 border-t border-slate-800"><IdCard size={14} className="mr-3 text-slate-600" /><span className="opacity-80">ID: <span className="text-white font-bold">{student.student_id}</span></span></div>
-                    <div className="flex items-center text-xs text-slate-500 py-2 border-t border-slate-800"><Shield size={14} className="mr-3 text-slate-600" /><span className="opacity-80">Group: <span className="text-white font-bold">{student.group_id || "G1"}</span></span></div>
-                </div>
+          <div className="instrument-panel w-full max-w-sm rounded-2xl border border-cyan-100/10 bg-[rgb(var(--surface-deep))]/65 p-3 backdrop-blur-sm sm:p-4 xl:w-[300px] xl:shrink-0">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold text-foreground">Level {levelDef.level}</p>
+                <p className="mt-2 font-mono text-3xl font-bold tabular-nums text-foreground"><span className="text-primary">{currentXP.toLocaleString()}</span><span className="ml-2 text-sm font-semibold text-muted">XP</span></p>
+              </div>
+              <div className="grid h-10 w-10 place-items-center rounded-lg border border-primary/20 bg-primary/10 text-primary"><Zap size={20} /></div>
             </div>
+            <div className="mt-3 flex items-center justify-between font-mono text-xs font-bold text-muted">
+              <span>LV {levelDef.level}</span><span className="text-cyan-200">LV {Math.min(levelDef.level + 1, 6)}</span>
+            </div>
+            <div className="mt-1.5 h-2 overflow-hidden rounded-full border border-cyan-100/10 bg-slate-950/70">
+              <div style={{ width: `${progressPercent}%` }} className="h-full rounded-full bg-gradient-to-r from-cyan-400 via-primary to-indigo-400 shadow-[0_0_14px_rgb(var(--primary)/0.4)] transition-[width] duration-700" />
+            </div>
+            <p className="mt-1.5 text-right font-mono text-xs tabular-nums text-muted">{xpInLevel.toLocaleString()} / {xpNeededForLevel.toLocaleString()} XP</p>
+            <div className="mt-3 flex justify-end border-t border-border/70 pt-2">
+              {seasonId === activeSeasonId && !impersonateId
+                ? <EditProfileModal student={studentForEdit} />
+                : <p className="text-xs font-semibold text-amber-300">{seasonId !== activeSeasonId ? "Archived record · read only" : "Admin preview · read only"}</p>}
+            </div>
+          </div>
         </div>
+      </section>
 
-        {/* RIGHT COL: Main Content - RESTRUCTURED */}
-        <div className="lg:col-span-2 flex flex-col gap-6">
-            
-            {/* 1. ACTIVITY FEED (Full Width Top) */}
-            <div className="h-[400px]">
-                <ActivityFeed activities={unifiedLog} />
-            </div>
-            
-            {/* 2. BOTTOM SPLIT */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
-                {/* ACHIEVEMENTS (Wide) */}
-                <div className="md:col-span-2 p-6 rounded-2xl border border-slate-800 bg-slate-900/50 flex flex-col">
-                    <div className="flex items-center justify-between mb-6">
-                        <h3 className="text-sm font-bold uppercase text-slate-400 flex items-center gap-2">
-                            <Award size={16} /> Service Medals
-                        </h3>
-                        <div className="text-[10px] bg-slate-950 border border-slate-800 px-2 py-1 rounded text-slate-500 font-mono">
-                            {Object.values(badges).filter(Boolean).length}/8
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {/* New Tactical Achievements */}
-                        <Badge icon={Terminal} name="Neuro-Link" description="System connection established" unlocked={badges.neuro_link} color="text-slate-200" />
-                        <Badge icon={Zap} name="Signal Lock" description="3-session attendance streak" unlocked={badges.signal_lock} color="text-yellow-500" />
-                        <Badge icon={Crosshair} name="Sniper Grade" description=">80% Mission Accuracy" unlocked={badges.sniper_grade} color="text-rose-500" />
-                        <Badge icon={ShieldCheck} name="Grid Reliability" description=">90% Attendance Rate" unlocked={badges.grid_reliability} color="text-emerald-500" />
-                        <Badge icon={Star} name="Senior Operative" description="Promoted to Level 5" unlocked={badges.senior_operative} color="text-purple-400" />
-                        <Badge icon={Crown} name="High Command" description="Reached Global Top 10" unlocked={badges.high_command} color="text-yellow-400" />
-                        <Badge icon={Activity} name="Unbroken Stream" description="7-session mega streak" unlocked={badges.unbroken_stream} color="text-cyan-400" />
-                        <Badge icon={Cpu} name="Data Warlord" description="Accumulated 500+ XP" unlocked={badges.data_warlord} color="text-orange-500" />
-                    </div>
-                </div>
+      <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1.6fr)_minmax(18rem,0.8fr)]">
+        <section className="instrument-panel rounded-2xl border border-border bg-surface/45 p-4 sm:p-5">
+          <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
+            <h2 className="console-section-heading"><Activity size={15} className="text-primary" /> Season activity</h2>
+          </div>
+          <ActivityHeatmap activityData={heatmapData} startDate={heatmapStartDate} />
+        </section>
 
-                {/* ACTIVITY HEATMAP */}
-                <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/50">
-                    <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-sm font-bold uppercase text-slate-400 flex items-center gap-2">
-                            <Activity size={16} /> Frequency
-                        </h3>
-                    </div>
-                    <div className="flex justify-center">
-                        <ActivityHeatmap activityData={heatmapData} startDate="2025-09-27" />
-                    </div>
-                </div>
+        <aside className="instrument-panel rounded-2xl border border-border bg-surface/45 p-4 sm:p-5" aria-label="Season record">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <h2 className="console-section-heading"><Activity size={15} className="text-primary" /> Season record</h2>
+            <span className="font-mono text-xs uppercase tracking-wider text-muted">{seasonId === activeSeasonId ? "Current" : "Archived"}</span>
+          </div>
+          <div className="grid grid-cols-2 gap-2.5">
+            <ProfileStat icon={Trophy} label="Best standing" value={bestRank > 0 ? `#${bestRank}` : "—"} tone="text-amber-300" />
+            <ProfileStat icon={Crosshair} label="Quiz accuracy" value={`${quizAccuracy}%`} tone="text-rose-300" />
+            <ProfileStat icon={CalendarDays} label="Attendance" value={`${attendanceRate}%`} tone="text-emerald-300" />
+            <ProfileStat icon={Medal} label="Medals earned" value={`${Object.values(badges).filter(Boolean).length}/8`} tone="text-violet-300" />
+          </div>
+          <div className="mt-3 flex items-center justify-between border-t border-border/70 pt-3 font-mono text-xs uppercase tracking-wider text-muted">
+            <span>Attendance streak</span>
+            <span className="font-bold text-primary">{currentStreak} sections</span>
+          </div>
+        </aside>
+      </div>
 
-            </div>
+      <div className="grid items-start gap-5 xl:grid-cols-[minmax(17rem,0.75fr)_minmax(0,1.35fr)]">
+        <ActivityFeed activities={unifiedLog} />
+
+        <section className="instrument-panel rounded-2xl border border-border bg-surface/45 p-4 sm:p-5">
+        <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 className="console-section-heading"><Award size={15} className="text-amber-300" /> Service medals</h2>
+          </div>
+          <div className="rounded-lg border border-border bg-background/40 px-3 py-2 font-mono text-xs font-bold tabular-nums text-foreground">{Object.values(badges).filter(Boolean).length}<span className="text-muted"> / 8</span></div>
         </div>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <Badge icon={Terminal} name="Neuro-Link" description="System connection established" unlocked={badges.neuro_link} color="text-cyan-200" />
+          <Badge icon={Zap} name="Signal Lock" description="3-session attendance streak" unlocked={badges.signal_lock} color="text-yellow-300" />
+          <Badge icon={Crosshair} name="Sniper Grade" description=">80% quiz accuracy" unlocked={badges.sniper_grade} color="text-rose-300" />
+          <Badge icon={ShieldCheck} name="Grid Reliability" description=">90% attendance rate" unlocked={badges.grid_reliability} color="text-emerald-300" />
+          <Badge icon={Star} name="Senior Operative" description="Reach level 5" unlocked={badges.senior_operative} color="text-violet-300" />
+          <Badge icon={Crown} name="High Command" description="Reach the global top 10" unlocked={badges.high_command} color="text-amber-300" />
+          <Badge icon={Activity} name="Unbroken Stream" description="7-session attendance streak" unlocked={badges.unbroken_stream} color="text-cyan-300" />
+          <Badge icon={Cpu} name="Data Warlord" description="Accumulate 500 XP" unlocked={badges.data_warlord} color="text-orange-300" />
+        </div>
+        </section>
+      </div>
+    </div>
+  );
+}
 
+function ProfileStat({ icon: Icon, label, value, tone }: { icon: typeof Trophy; label: string; value: string; tone: string }) {
+  return (
+    <div className="instrument-panel flex items-center gap-3 rounded-2xl border border-border bg-surface/55 p-3 sm:gap-4 sm:p-3.5">
+      <div className={`grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-current/15 bg-background/35 ${tone}`}><Icon size={17} /></div>
+      <div className="min-w-0">
+        <p className="font-mono text-lg font-bold tabular-nums text-foreground sm:text-xl">{value}</p>
+        <p className="mt-0.5 truncate text-xs font-semibold uppercase tracking-wider text-muted">{label}</p>
       </div>
     </div>
   );

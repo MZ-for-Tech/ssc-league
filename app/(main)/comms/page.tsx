@@ -58,7 +58,6 @@ export default async function CommsPage() {
       {/* --- HEADER --- */}
       <PageHeader
         title="Comms Relay"
-        description="Secure transmission feed from field operatives."
         icon={<Radio size={28} />}
       />
 
@@ -96,7 +95,7 @@ export default async function CommsPage() {
                                 className="w-12 h-12 rounded-full bg-slate-950 object-cover border-2 border-slate-700 group-hover:border-slate-500 transition-colors"
                                 alt="Sender"
                             />
-                            <div className="absolute -bottom-1 -right-1 bg-slate-900 text-slate-300 text-[9px] font-bold px-1.5 py-0.5 rounded border border-slate-700">
+                            <div className="absolute -bottom-1 -right-1 bg-slate-900 text-slate-300 text-xs font-bold px-1.5 py-0.5 rounded border border-slate-700">
                                {ping.sender ? `L${ping.sender.current_level}` : "CMD"}
                             </div>
                         </div>
@@ -115,13 +114,13 @@ export default async function CommsPage() {
 
                             <div className="flex items-center justify-between pt-3 border-t border-slate-800/50">
                                 <span className={clsx(
-                                    "text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5",
+                                    "text-xs font-bold uppercase tracking-wider flex items-center gap-1.5",
                                     !ping.is_read ? "text-rose-500" : "text-slate-500"
                                 )}>
                                     <Crosshair size={12} />
                                     Rivalry Ping
                                 </span>
-                                <span className="text-[10px] text-slate-600 flex items-center gap-1 font-mono">
+                                <span className="text-xs text-slate-600 flex items-center gap-1 font-mono">
                                     <Clock size={10} />
                                     {new Date(ping.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                                 </span>

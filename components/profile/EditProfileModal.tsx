@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
-import { X, Save, Loader2, RefreshCw, User, Users, Upload, Camera, Check, Pencil } from "lucide-react";
+import { X, Save, Loader2, RefreshCw, Upload, Camera, Check, Pencil, UserRound } from "lucide-react";
 import { updateStudentProfile } from "@/app/actions/profile-actions";
 import { useRouter } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
@@ -22,239 +23,152 @@ export default function EditProfileModal({ student }: { student: Student }) {
   const [isSaving, setIsSaving] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [avatarUrl, setAvatarUrl] = useState(
-    student.avatar_url || `https://api.dicebear.com/9.x/avataaars/svg?seed=${student.preferred_name}`
+    student.avatar_url || `https://api.dicebear.com/9.x/avataaars/svg?seed=${student.preferred_name || student.full_name}`,
   );
-
   const router = useRouter();
-  
   const supabase = createSupabaseBrowserClient();
 
-  // 1. Handle File Upload
+  useEffect(() => {
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && !isSaving && !isUploading) setIsOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, isSaving, isUploading]);
+
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files || event.target.files.length === 0) return;
-    
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setErrorMessage(null);
     setIsUploading(true);
-
-    // Get the actual Auth User ID for RLS policies
     const { data: { user } } = await supabase.auth.getUser();
-
     if (!user) {
-        alert("Security Error: User session not found.");
-        setIsUploading(false);
-        return;
+      setErrorMessage("Your session expired. Refresh the page and try again.");
+      setIsUploading(false);
+      return;
     }
 
-    const file = event.target.files[0];
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Date.now()}.${fileExt}`;
-    
-    // Construct path: "auth_user_id/filename.jpg"
-    const filePath = `${user.id}/${fileName}`;
-
+    const fileExt = file.name.split(".").pop() || "png";
+    const filePath = `${user.id}/${Date.now()}.${fileExt}`;
     try {
-      const { error: uploadError } = await supabase.storage
-        .from('avatars')
-        .upload(filePath, file, {
-            upsert: true
-        });
-
+      const { error: uploadError } = await supabase.storage.from("avatars").upload(filePath, file, { upsert: true });
       if (uploadError) throw uploadError;
-
-      const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
-      setAvatarUrl(data.publicUrl);
-
+      setAvatarUrl(supabase.storage.from("avatars").getPublicUrl(filePath).data.publicUrl);
     } catch (error: unknown) {
       console.error("Upload failed:", error);
-      alert("Error uploading image: " + (error instanceof Error ? error.message : "Please try again."));
+      setErrorMessage(error instanceof Error ? error.message : "Photo upload failed. Please try again.");
     } finally {
       setIsUploading(false);
+      event.target.value = "";
     }
   };
 
-  // 2. Handle Randomize
   const handleRandomizeAvatar = () => {
     const randomSeed = Math.random().toString(36).substring(7);
     setAvatarUrl(`https://api.dicebear.com/9.x/avataaars/svg?seed=${randomSeed}`);
   };
 
-  // 3. Handle Form Submit
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setErrorMessage(null);
     setIsSaving(true);
-    
     try {
-      const formData = new FormData(e.currentTarget);
+      const formData = new FormData(event.currentTarget);
       formData.set("avatar_url", avatarUrl);
-
       await updateStudentProfile(formData);
-      
-      setIsSaving(false);
       setIsSuccess(true);
       router.refresh();
-      
-      setTimeout(() => {
+      window.setTimeout(() => {
         setIsOpen(false);
         setIsSuccess(false);
-      }, 1500);
-
+      }, 900);
     } catch {
-      alert("Something went wrong saving your profile.");
+      setErrorMessage("Your changes couldn’t be saved. Please try again.");
+    } finally {
       setIsSaving(false);
     }
   };
 
-  // --- RENDER LOGIC: Button vs Modal ---
+  const editor = isOpen ? createPortal(
+    <div
+      className="fixed inset-0 z-[200] flex items-center justify-center bg-slate-950/75 p-4 backdrop-blur-md"
+      onMouseDown={(event) => { if (event.target === event.currentTarget && !isSaving && !isUploading) setIsOpen(false); }}
+    >
+      <section role="dialog" aria-modal="true" aria-labelledby="edit-profile-title" className="flex max-h-[90vh] w-full max-w-xl flex-col overflow-hidden rounded-2xl border border-cyan-200/15 bg-[rgb(var(--surface-deep))] shadow-[0_24px_100px_rgb(0_0_0/.55)]">
+        <header className="flex items-center justify-between border-b border-border bg-surface/60 px-5 py-4 sm:px-6">
+          <div className="flex items-center gap-3">
+            <div className="grid h-10 w-10 place-items-center rounded-xl border border-primary/20 bg-primary/10 text-primary"><UserRound size={19} /></div>
+            <h2 id="edit-profile-title" className="text-lg font-bold text-foreground">Edit profile</h2>
+          </div>
+          <button ref={closeButtonRef} type="button" onClick={() => setIsOpen(false)} disabled={isSaving || isUploading} aria-label="Close profile editor" className="grid h-9 w-9 place-items-center rounded-lg border border-border text-muted transition hover:border-primary/30 hover:text-foreground disabled:opacity-50">
+            <X size={17} />
+          </button>
+        </header>
 
-  // If closed, show the trigger button
-  if (!isOpen) {
-    return (
-      <button 
-        onClick={() => setIsOpen(true)}
-        className="w-full mt-6 py-2 rounded-lg border border-primary/20 bg-primary/5 text-primary text-xs font-bold uppercase tracking-wider hover:bg-primary/10 transition-colors flex items-center justify-center gap-2"
-      >
-        <Pencil size={14} /> Edit Identity
-      </button>
-    );
-  }
+        <form onSubmit={handleSubmit} className="flex min-h-0 flex-col">
+          <input type="hidden" name="id" value={student.id} />
+          <input type="hidden" name="group_id" value={student.group_id} />
+          <div className="min-h-0 space-y-6 overflow-y-auto p-5 sm:p-6">
+            <div className="flex flex-col items-center gap-4 rounded-xl border border-border bg-background/30 p-4 sm:flex-row sm:items-center sm:gap-5">
+              <div className="group relative h-20 w-20 shrink-0 overflow-hidden rounded-full border-2 border-primary/35 bg-background shadow-[0_0_28px_rgb(var(--primary)/0.12)]">
+                {isUploading ? (
+                  <div className="grid h-full place-items-center"><Loader2 className="animate-spin text-primary" size={24} /></div>
+                ) : (
+                  <>
+                    <Image unoptimized width={160} height={160} src={avatarUrl} className="h-full w-full object-cover" alt="Profile photo preview" />
+                    <button type="button" onClick={() => fileInputRef.current?.click()} aria-label="Upload a profile photo" className="absolute inset-0 grid place-items-center bg-slate-950/55 text-white opacity-0 transition group-hover:opacity-100 focus:opacity-100"><Camera size={20} /></button>
+                  </>
+                )}
+              </div>
+              <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*" />
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:justify-start">
+                <button type="button" onClick={() => fileInputRef.current?.click()} disabled={isUploading} className="inline-flex items-center gap-2 rounded-lg bg-primary px-3.5 py-2.5 text-xs font-bold text-background transition hover:bg-primary-dim disabled:opacity-50"><Upload size={14} /> Upload photo</button>
+                <button type="button" onClick={handleRandomizeAvatar} disabled={isUploading} className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface/60 px-3.5 py-2.5 text-xs font-semibold text-muted transition hover:border-primary/30 hover:text-foreground disabled:opacity-50"><RefreshCw size={14} /> Randomize</button>
+              </div>
+            </div>
 
-  // If open, show the modal overlay
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
-      <div className="bg-surface border border-border w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95">
-        
-        {/* Header */}
-        <div className="px-6 py-4 border-b border-border flex justify-between items-center bg-surface/50">
-            <h3 className="text-foreground font-bold flex items-center gap-2">
-                <User size={18} className="text-primary" /> Update Personnel Record
-            </h3>
-            <button onClick={() => setIsOpen(false)} className="text-muted hover:text-foreground">
-                <X size={20} />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <label className="block space-y-2 text-xs font-semibold text-muted">
+                Full name
+                <input name="full_name" defaultValue={student.full_name} autoComplete="name" className="w-full rounded-xl border border-border bg-background/70 px-3.5 py-3 text-sm text-foreground outline-none transition placeholder:text-muted/60 focus:border-primary/60 focus:ring-2 focus:ring-primary/10" required />
+              </label>
+              <label className="block space-y-2 text-xs font-semibold text-muted">
+                Preferred name
+                <input name="preferred_name" defaultValue={student.preferred_name} autoComplete="nickname" className="w-full rounded-xl border border-border bg-background/70 px-3.5 py-3 text-sm text-foreground outline-none transition placeholder:text-muted/60 focus:border-primary/60 focus:ring-2 focus:ring-primary/10" required />
+              </label>
+            </div>
+            {errorMessage && <p role="alert" className="rounded-lg border border-danger/20 bg-danger/5 px-3 py-2.5 text-sm text-rose-200">{errorMessage}</p>}
+          </div>
+
+          <footer className="flex items-center justify-end gap-2 border-t border-border bg-surface/40 px-5 py-4 sm:px-6">
+            <button type="button" onClick={() => setIsOpen(false)} disabled={isSaving || isUploading} className="rounded-lg px-4 py-2.5 text-sm font-semibold text-muted transition hover:text-foreground disabled:opacity-50">Cancel</button>
+            <button type="submit" disabled={isSaving || isUploading || isSuccess} className={`inline-flex min-w-36 items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition disabled:cursor-wait disabled:opacity-60 ${isSuccess ? "bg-emerald-400 text-slate-950" : "bg-primary text-background hover:bg-primary-dim"}`}>
+              {isSaving ? <><Loader2 className="animate-spin" size={16} /> Saving</> : isSuccess ? <><Check size={16} /> Saved</> : <><Save size={16} /> Save changes</>}
             </button>
-        </div>
-
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
-            <input type="hidden" name="id" value={student.id} />
-
-            {/* --- AVATAR SECTION --- */}
-            <div className="flex flex-col items-center gap-4">
-                <div 
-                    onClick={() => fileInputRef.current?.click()}
-                    className="relative w-32 h-32 rounded-full border-2 border-dashed border-surface-light flex items-center justify-center bg-background group cursor-pointer hover:border-primary transition-colors overflow-hidden"
-                >
-                    {isUploading ? (
-                         <Loader2 className="animate-spin text-primary w-8 h-8" />
-                    ) : (
-                        <>
-                            <Image unoptimized width={256} height={256}
-                                src={avatarUrl} 
-                                className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
-                                alt="Avatar Preview"
-                            />
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <Camera className="text-white w-8 h-8 drop-shadow-md" />
-                            </div>
-                        </>
-                    )}
-                </div>
-
-                <input 
-                    type="file" 
-                    ref={fileInputRef} 
-                    onChange={handleFileChange} 
-                    className="hidden" 
-                    accept="image/*"
-                />
-
-                <div className="flex gap-3">
-                    <button 
-                        type="button"
-                        onClick={() => fileInputRef.current?.click()}
-                        className="text-xs font-bold text-primary hover:text-primary-dim flex items-center gap-1"
-                    >
-                        <Upload size={12} /> Upload Photo
-                    </button>
-                    <span className="text-border">|</span>
-                    <button 
-                        type="button"
-                        onClick={handleRandomizeAvatar}
-                        className="text-xs font-bold text-muted hover:text-foreground flex items-center gap-1"
-                    >
-                        <RefreshCw size={12} /> Randomize
-                    </button>
-                </div>
-            </div>
-
-            {/* --- EDITABLE FIELDS --- */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                    <label className="text-xs font-bold text-muted uppercase">Full Name</label>
-                    <input name="full_name" defaultValue={student.full_name} className="w-full bg-background border border-border rounded-lg p-3 text-foreground text-sm focus:border-primary outline-none" required />
-                </div>
-                <div className="space-y-2">
-                    <label className="text-xs font-bold text-muted uppercase">Callsign / Preferred</label>
-                    <input name="preferred_name" defaultValue={student.preferred_name} className="w-full bg-background border border-border rounded-lg p-3 text-foreground text-sm focus:border-primary outline-none" required />
-                </div>
-            </div>
-
-            {/* --- READ ONLY FIELDS --- */}
-            <div className="grid grid-cols-2 gap-4 pt-2">
-                
-                {/* Group (Locked) */}
-                <div className="p-3 bg-surface-light/20 rounded-lg border border-border/50 opacity-75">
-                    <label className="text-[10px] font-bold text-muted uppercase block mb-1">Group (Locked)</label>
-                    <div className="text-muted font-mono text-sm flex items-center gap-2">
-                        <Users size={14} /> {student.group_id}
-                    </div>
-                    <input type="hidden" name="group_id" value={student.group_id} />
-                </div>
-
-                {/* Student ID (Locked) */}
-                <div className="p-3 bg-surface-light/20 rounded-lg border border-border/50 opacity-75">
-                    <label className="text-[10px] font-bold text-muted uppercase block mb-1">Student ID (Locked)</label>
-                    <div className="text-muted font-mono text-sm">{student.student_id}</div>
-                </div>
-
-                {/* Email (Locked) */}
-                <div className="p-3 bg-surface-light/20 rounded-lg border border-border/50 opacity-75 col-span-2">
-                    <label className="text-[10px] font-bold text-muted uppercase block mb-1">Email (Locked)</label>
-                    <div className="text-muted font-mono text-sm truncate">{student.email}</div>
-                </div>
-            </div>
-
-            <div className="pt-4 border-t border-border flex justify-end gap-3">
-                <button type="button" onClick={() => setIsOpen(false)} className="px-4 py-2 text-muted hover:text-foreground text-sm font-bold">Cancel</button>
-                <button 
-                    type="submit" 
-                    disabled={isSaving || isUploading || isSuccess} 
-                    className={`
-                        px-6 py-2 font-bold rounded-lg flex items-center gap-2 transition-all duration-300
-                        ${isSuccess 
-                            ? "bg-green-500 text-white"   // Success State
-                            : "bg-primary hover:bg-primary-dim text-background" // Normal State
-                        }
-                    `}
-                >
-                    {isSaving ? (
-                        <>
-                            <Loader2 className="animate-spin" size={16} /> Saving...
-                        </>
-                    ) : isSuccess ? (
-                        <>
-                            <Check size={16} /> Saved!
-                        </>
-                    ) : (
-                        <>
-                            <Save size={16} /> Save Changes
-                        </>
-                    )}
-                </button>
-            </div>
+          </footer>
         </form>
-      </div>
-    </div>
+      </section>
+    </div>,
+    document.body,
+  ) : null;
+
+  return (
+    <>
+      <button type="button" onClick={() => setIsOpen(true)} className="inline-flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3.5 py-2 text-xs font-bold text-primary transition hover:border-primary/40 hover:bg-primary/10">
+        <Pencil size={13} /> Edit profile
+      </button>
+      {editor}
+    </>
   );
 }

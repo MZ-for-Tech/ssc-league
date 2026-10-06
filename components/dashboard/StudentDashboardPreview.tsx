@@ -16,7 +16,7 @@ export default function StudentDashboardPreview() {
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">Student view · Preview mode</p>
           <p className="mt-1 text-sm text-muted">No student is selected, so personal progress and activity are hidden.</p>
         </div>
-        <Link href="/dashboard?view=admin" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40">
+        <Link href="/admin" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40">
           <ArrowLeft size={16} /> Admin dashboard
         </Link>
       </div>

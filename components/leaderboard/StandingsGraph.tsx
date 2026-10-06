@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { Search, ChevronDown, X, UserPlus, Users } from "lucide-react";
 import clsx from "clsx";
+import Dropdown from "@/components/ui/Dropdown";
 
 interface HistoryPoint {
   week: number;
@@ -24,9 +25,7 @@ interface StandingsGraphProps {
 
 export default function StandingsGraph({ students, myId }: StandingsGraphProps) {
   const [rivalId, setRivalId] = useState<string | null>(null);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   // --- 1. Prepare Chart Data ---
   const chartData = useMemo(() => {
@@ -63,17 +62,6 @@ export default function StandingsGraph({ students, myId }: StandingsGraphProps) 
   const maxRank = students.length || 50;
   const selectedRivalName = students.find(s => s.id === rivalId)?.preferred_name || "Rival";
 
-  // Close dropdown on click outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   const filteredStudents = students.filter(s =>
     s.id !== myId &&
     (s.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -101,38 +89,45 @@ export default function StandingsGraph({ students, myId }: StandingsGraphProps) 
                 )}
             </div>
 
-            <div className="relative" ref={dropdownRef}>
-                <button
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className={clsx(
-                        "flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors border shadow-sm",
-                        rivalId
-                            ? "bg-amber-950/30 text-amber-400 border-amber-500/30 hover:border-amber-500/50"
-                            : "bg-slate-800 text-slate-300 border-slate-700 hover:text-white hover:border-slate-600"
-                    )}
-                >
-                    {rivalId ? (
-                        <>
-                            <Users size={14} />
-                            Vs. {selectedRivalName}
-                            <div
-                                className="ml-1 p-0.5 rounded-full hover:bg-amber-500/20"
-                                onClick={(e) => { e.stopPropagation(); setRivalId(null); }}
-                            >
-                                <X size={12} />
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <UserPlus size={14} /> Compare Agent
-                            <ChevronDown size={12} />
-                        </>
-                    )}
-                </button>
-
-                {/* Dropdown Menu */}
-                {isDropdownOpen && (
-                    <div className="absolute right-0 top-full mt-2 w-64 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl z-50 overflow-hidden ring-1 ring-slate-800">
+            <Dropdown
+                panelRole="dialog"
+                panelClassName="w-64 ring-1 ring-slate-800"
+                trigger={({ open, toggle, panelId }) => (
+                    <button
+                        type="button"
+                        onClick={toggle}
+                        aria-haspopup="dialog"
+                        aria-expanded={open}
+                        aria-controls={panelId}
+                        className={clsx(
+                            "flex items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-bold shadow-sm transition-colors",
+                            rivalId
+                                ? "border-amber-500/30 bg-amber-950/30 text-amber-400 hover:border-amber-500/50"
+                                : "border-slate-700 bg-slate-800 text-slate-300 hover:border-slate-600 hover:text-white",
+                        )}
+                    >
+                        {rivalId ? (
+                            <>
+                                <Users size={14} />
+                                Vs. {selectedRivalName}
+                                <span
+                                    className="ml-1 rounded-full p-0.5 hover:bg-amber-500/20"
+                                    onClick={(event) => { event.stopPropagation(); setRivalId(null); }}
+                                >
+                                    <X size={12} />
+                                </span>
+                            </>
+                        ) : (
+                            <>
+                                <UserPlus size={14} /> Compare Agent
+                                <ChevronDown size={12} className={clsx("transition-transform", open && "rotate-180")} />
+                            </>
+                        )}
+                    </button>
+                )}
+            >
+                {({ close }) => (
+                    <>
                         <div className="p-2 border-b border-slate-800">
                             <div className="relative">
                                 <Search size={12} className="absolute left-2 top-1/2 -translate-y-1/2 text-slate-500" />
@@ -150,12 +145,12 @@ export default function StandingsGraph({ students, myId }: StandingsGraphProps) 
                             {filteredStudents.map(student => (
                                 <button
                                     key={student.id}
-                                    onClick={() => { setRivalId(student.id); setIsDropdownOpen(false); }}
+                                    onClick={() => { setRivalId(student.id); close(); }}
                                     className="w-full text-left px-3 py-2 text-xs text-slate-300 hover:bg-slate-800 hover:text-white flex justify-between items-center transition-colors border-b border-slate-800/50 last:border-0"
                                 >
                                     <div className="flex flex-col">
                                         <span className="font-bold text-slate-200">{student.preferred_name}</span>
-                                        <span className="text-[10px] text-slate-500">{student.full_name}</span>
+                                        <span className="text-xs text-slate-500">{student.full_name}</span>
                                     </div>
                                 </button>
                             ))}
@@ -163,9 +158,9 @@ export default function StandingsGraph({ students, myId }: StandingsGraphProps) 
                                 <div className="p-4 text-center text-xs text-slate-500 italic">No agents found.</div>
                             )}
                         </div>
-                    </div>
+                    </>
                 )}
-            </div>
+            </Dropdown>
         </div>
 
         {/* Chart Container */}

@@ -132,23 +132,23 @@ export default function EditUserModal({ user, onClose, onRefresh }: EditUserModa
             {activeTab === "profile" && (
                 <form onSubmit={handleProfileSubmit} className="space-y-4">
                     <div className="space-y-1.5">
-                        <label className="text-[10px] uppercase font-bold text-slate-500">Full Name</label>
+                        <label className="text-xs uppercase font-bold text-slate-500">Full Name</label>
                         <input className="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-white focus:border-cyan-500 outline-none transition-colors" value={formData.full_name} onChange={e => setFormData({...formData, full_name: e.target.value})} />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-1.5">
-                            <label className="text-[10px] uppercase font-bold text-slate-500">Student ID</label>
+                            <label className="text-xs uppercase font-bold text-slate-500">Student ID</label>
                             <input className="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-white focus:border-cyan-500 outline-none transition-colors" value={formData.student_id} onChange={e => setFormData({...formData, student_id: e.target.value})} />
                         </div>
                         <div className="space-y-1.5">
-                            <label className="text-[10px] uppercase font-bold text-slate-500">Group Sector</label>
+                            <label className="text-xs uppercase font-bold text-slate-500">Group Sector</label>
                             <input className="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-white focus:border-cyan-500 outline-none transition-colors" value={formData.group_id} onChange={e => setFormData({...formData, group_id: e.target.value})} />
                         </div>
                     </div>
                     <div className="space-y-1.5">
-                        <label className="text-[10px] uppercase font-bold text-slate-500">Manual XP Override</label>
+                        <label className="text-xs uppercase font-bold text-slate-500">Manual XP Override</label>
                         <input type="number" className="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-white focus:border-cyan-500 outline-none transition-colors" value={formData.current_xp} onChange={e => setFormData({...formData, current_xp: parseInt(e.target.value)})} />
-                        <p className="text-[10px] text-slate-600">Warning: Direct override. Use &apos;Logistics&apos; tab for transactions.</p>
+                        <p className="text-xs text-slate-600">Warning: Direct override. Use &apos;Logistics&apos; tab for transactions.</p>
                     </div>
                     
                     <button disabled={loading} className="w-full py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-xl flex items-center justify-center gap-2 mt-4 transition-all shadow-lg shadow-cyan-500/20 disabled:opacity-50">
@@ -172,11 +172,11 @@ export default function EditUserModal({ user, onClose, onRefresh }: EditUserModa
 
                     <div className="space-y-4">
                         <div className="space-y-1.5">
-                            <label className="text-[10px] uppercase font-bold text-slate-500">Adjustment Amount (+/-)</label>
+                            <label className="text-xs uppercase font-bold text-slate-500">Adjustment Amount (+/-)</label>
                             <input type="number" className="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-lg font-mono text-white focus:border-yellow-500 outline-none transition-colors" value={xpAmount} onChange={e => setXpAmount(parseInt(e.target.value))} />
                         </div>
                         <div className="space-y-1.5">
-                            <label className="text-[10px] uppercase font-bold text-slate-500">Transaction Reason</label>
+                            <label className="text-xs uppercase font-bold text-slate-500">Transaction Reason</label>
                             <input type="text" placeholder="e.g. Correction, Bonus Mission, Penalty" className="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-white focus:border-yellow-500 outline-none transition-colors" value={xpReason} onChange={e => setXpReason(e.target.value)} />
                         </div>
                     </div>
@@ -214,7 +214,7 @@ export default function EditUserModal({ user, onClose, onRefresh }: EditUserModa
                             <RotateCcw size={16} className="group-hover:-rotate-180 transition-transform duration-500" /> 
                             Reset Password
                         </button>
-                        <p className="text-[10px] text-slate-500">
+                        <p className="text-xs text-slate-500">
                             Action logged in Admin Audit Trail.
                         </p>
                     </div>

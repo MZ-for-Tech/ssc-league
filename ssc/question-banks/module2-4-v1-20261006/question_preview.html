@@ -11,7 +11,7 @@
 <pre><code>def add(a, b):
     return a + b</code></pre>
 <ol type='A'><li>The function calls</li><li>The module aliases</li><li>Formal parameter names</li><li>The returned values produced by a call</li></ol></article>
-<article><h3>M2L4-004</h3><p>What does `print_hello()` do in the lesson&#x27;s example when called three times?</p>
+<article><h3>M2L4-004</h3><p>What does `print_hello()` do when called three times?</p>
 <pre><code>def print_hello():
     print(&#x27;Good Morning FEPS&#x27;)
 
@@ -19,7 +19,7 @@ print_hello()
 print_hello()
 print_hello()</code></pre>
 <ol type='A'><li>It defines three separate functions</li><li>It returns the greeting once and stores it</li><li>It prints the function&#x27;s docstring three times</li><li>It displays the greeting three times</li></ol></article>
-<article><h3>M2L4-005</h3><p>What does `add(5, 7)` return in the lesson&#x27;s example?</p>
+<article><h3>M2L4-005</h3><p>What does `add(5, 7)` return?</p>
 <pre><code>def add(a, b):
     s = a + b
     return s
@@ -71,7 +71,7 @@ print(my_avg(10, 20))</code></pre>
 <article><h3>M2L4-012</h3><p>A function receives three scores, calculates their mean, and divides the sum of squared deviations by 3. Which variance convention is it using?</p>
 <pre><code>v = ((x-m)**2 + (y-m)**2 + (z-m)**2) / 3</code></pre>
 <ol type='A'><li>Sample variance using n minus one after squaring deviations</li><li>Standard deviation, taking a square root</li><li>Range, subtracting the minimum from the maximum</li><li>Population variance, dividing squared deviations by n</li></ol></article>
-<article><h3>M2L4-013</h3><p>If both default parameters are omitted in the lesson&#x27;s `generate_full_name` example, what name is returned?</p>
+<article><h3>M2L4-013</h3><p>If both default parameters are omitted from `generate_full_name`, what name is returned?</p>
 <pre><code>def generate_full_name(first_name=&#x27;Arwa&#x27;, last_name=&#x27;Mohammed&#x27;):
     return first_name + &#x27; &#x27; + last_name
 
@@ -137,7 +137,7 @@ print(x)</code></pre>
 
 countdown(2)</code></pre>
 <ol type='A'><li>Python resets `n` to its original value</li><li>At zero, the condition fails and recursion stops</li><li>Python uses `break` to exit the recursive function</li><li>The `print` statement returns zero</li></ol></article>
-<article><h3>M2L4-023</h3><p>What does `fact(4)` return for the recursive definition in the lesson?</p>
+<article><h3>M2L4-023</h3><p>What does `fact(4)` return for this recursive definition?</p>
 <pre><code>def fact(n):
     if n &lt;= 1:
         return 1
@@ -147,9 +147,9 @@ print(fact(4))</code></pre>
 <ol type='A'><li>16</li><li>4</li><li>24</li><li>10</li></ol></article>
 <article><h3>M2L4-024</h3><p>What is a likely result of a recursive function whose calls never reach a base case?</p>
 <ol type='A'><li>It automatically converts itself into a loop</li><li>It returns `None` after one call</li><li>It exits normally at the end of the module</li><li>Python eventually raises `RecursionError`</li></ol></article>
-<article><h3>M2L4-025</h3><p>Which practice best follows the lesson&#x27;s clean-code guidance?</p>
+<article><h3>M2L4-025</h3><p>Which practice follows clean-code principles?</p>
 <ol type='A'><li>Use focused functions with meaningful, descriptive names</li><li>Use short names such as `x` and `y` everywhere</li><li>Add a comment that repeats every line of code</li><li>Group the whole program in one function with short generic names</li></ol></article>
-<article><h3>M2L4-026</h3><p>What is a Python module in the lecture&#x27;s definition?</p>
+<article><h3>M2L4-026</h3><p>What is a Python module?</p>
 <ol type='A'><li>A variable that stores imported package versions</li><li>A `.py` file grouping related definitions</li><li>A folder containing only installed third-party packages</li><li>A function that calls another function</li></ol></article>
 <article><h3>M2L4-027</h3><p>After `import Module_test`, how does the example call `generate_full_name` from that module?</p>
 <pre><code>import Module_test
@@ -161,16 +161,16 @@ print(Module_test.generate_full_name(&#x27;Mona&#x27;, &#x27;Ahmed&#x27;))</code
 <pre><code>import math
 print(math.sqrt(2))</code></pre>
 <ol type='A'><li>Import the `math` module</li><li>`from math import sqrt as math`</li><li>`import math.sqrt as 2`</li><li>`from math import * as sqrt`</li></ol></article>
-<article><h3>M2L4-030</h3><p>The PDF imports `random` and `randint` directly, then calls `random.choice(items)`. Which edit gives a valid choice call?</p>
+<article><h3>M2L4-030</h3><p>A program imports `random` and `randint` directly, then calls `random.choice(items)`. Which edit gives a valid random-choice call?</p>
 <ol type='A'><li>Import `choice` and call `random.choice(items)`</li><li>Import `choice` and call `choice(items)`</li><li>Import `randint` and call `randint(items)`</li><li>Import `random` and call `random(items)`</li></ol></article>
-<article><h3>M2L4-031</h3><p>Which statement best describes a Python package in the lesson?</p>
+<article><h3>M2L4-031</h3><p>Which statement best describes a Python package?</p>
 <ol type='A'><li>A built-in function that installs modules</li><li>A list of all functions in the standard library</li><li>A folder grouping related modules together</li><li>A single function stored in a variable</li></ol></article>
-<article><h3>M2L4-032</h3><p>Which alias is conventionally used for `matplotlib.pyplot` in the lesson?</p>
+<article><h3>M2L4-032</h3><p>Which alias is conventionally used for `matplotlib.pyplot`?</p>
 <pre><code>import matplotlib.pyplot as plt</code></pre>
 <ol type='A'><li>`mp`</li><li>`sns`</li><li>`pd`</li><li>`plt`</li></ol></article>
-<article><h3>M2L4-033</h3><p>Which package family includes pandas and NumPy in the PDF&#x27;s data-science grouping?</p>
+<article><h3>M2L4-033</h3><p>Which package family includes pandas, NumPy, and SymPy for data preparation and numerical analysis?</p>
 <ol type='A'><li>Operational packages prepare data for analysis</li><li>Data-visualization packages for plotting</li><li>Machine-learning packages for predictive models</li><li>Operating-system packages for file management</li></ol></article>
-<article><h3>M2L4-034</h3><p>What does software deprecation mean in the lecture?</p>
+<article><h3>M2L4-034</h3><p>What does software deprecation mean?</p>
 <ol type='A'><li>An imported module member is renamed to fit a new alias</li><li>A feature becomes outdated and may be removed later</li><li>A function has completed its return statement</li><li>A package has been installed successfully</li></ol></article>
 <article><h3>M2L4-035</h3><p>In the reusable `growth_model`, why can the same function handle population growth, inflation, interest, and depreciation?</p>
 <pre><code>def growth_model(label, start_value=10000, growth_rate=0.05, n=5):
@@ -193,7 +193,7 @@ else:
 <ol type='A'><li>1,100</li><li>1,102.50</li><li>1,050</li><li>1,025</li></ol></article>
 <article><h3>M2L4-038</h3><p>For the same 1,000 principal, 5% annual rate, and 2 years, what is the compound amount using `P*(1+r)^t`, rounded to two decimals?</p>
 <ol type='A'><li>1,050.00</li><li>1,102.50</li><li>1,100.00</li><li>1,105.00</li></ol></article>
-<article><h3>M2L4-039</h3><p>The PDF assigns the principal input to `P` but later calls `Deposite_simple_interest(p, r, t)`. Why does that name reference fail?</p>
+<article><h3>M2L4-039</h3><p>The code assigns the principal input to `P` but later calls `Deposite_simple_interest(p, r, t)`. Why does that name reference fail?</p>
 <pre><code>P = int(input(&#x27;Principal investment: &#x27;))
 r = float(input(&#x27;Annual interest rate (0-1): &#x27;))
 t = int(input(&#x27;Time in years: &#x27;))
@@ -218,7 +218,7 @@ b = gives(5)</code></pre>
 </article>
 <article><h3>M2L4-E04 · 5 marks</h3><p>Compare positional arguments, default parameters, keyword arguments, and `*args`. Use `generate_full_name(first_name=&#x27;Arwa&#x27;, last_name=&#x27;Mohammed&#x27;)` to show what `generate_full_name(last_name=&#x27;Saber&#x27;)` returns, then explain what `*nums` receives in `sum_all_nums(2, 3, 5)`.</p>
 </article>
-<article><h3>M2L4-E05 · 5 marks</h3><p>Trace `get_power(square_number(5), 3)` from the PDF. Show the value produced by each call and clarify whether `get_power` receives the function object `square_number` or the result of calling it.</p>
+<article><h3>M2L4-E05 · 5 marks</h3><p>Trace `get_power(square_number(5), 3)`. Show the value produced by each call and clarify whether `get_power` receives the function object `square_number` or the result of calling it.</p>
 <pre><code>def square_number(n):
     return n * n
 
@@ -237,6 +237,6 @@ result = get_power(square_number(5), 3)</code></pre>
 
 print(fact(4))</code></pre>
 </article>
-<article><h3>M2L4-E08 · 5 marks</h3><p>A PDF exercise asks for a module containing simple- and compound-interest functions, then imports it into a main program. Describe how a module supports reuse, distinguish `import interest_growth` from importing a function directly, and identify and correct the variable-name case error in the provided main-program call (`P` is assigned from input but `p` is passed).</p>
+<article><h3>M2L4-E08 · 5 marks</h3><p>Write a Python module with simple- and compound-interest functions, then import it into a main program. Describe how a module supports reuse, distinguish `import interest_growth` from importing a function directly, and correct the variable-name case error in the call (`P` is assigned from input but `p` is passed).</p>
 </article>
 </body></html>

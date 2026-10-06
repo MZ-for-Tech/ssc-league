@@ -74,7 +74,7 @@ export default function ModuleNode({
                         {moduleNumber && lessonNumber ? `Lesson ${moduleNumber}.${lessonNumber}` : `Mission ${missionId}`}
                     </span>
                     {status === "completed" && (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">
+                        <span className="px-2 py-0.5 rounded text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">
                             COMPLETE
                         </span>
                     )}
@@ -95,7 +95,7 @@ export default function ModuleNode({
                                 key={idx} 
                                 href={res.url} 
                                 target="_blank"
-                                className="flex items-center gap-1 text-[10px] px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors"
+                                className="flex items-center gap-1 text-xs px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors"
                             >
                                 <FileText size={10} /> {res.type}
                             </a>

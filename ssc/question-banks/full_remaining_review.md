@@ -44,3 +44,11 @@ The checks confirm file structure and references; they do not replace an instruc
 ## Review limitation
 
 This was a same-session AI review informed by the paired course sources. The earlier metadata-hidden passes are not independent blind reviews because the reviewer had already seen the answer-bearing drafts. A separate instructor or reviewer would provide a genuinely independent quality check.
+
+## Supplemental quality pass after synchronization (2026-10-06)
+
+Rechecked all 560 MCQs and 112 essays in the current answer-bearing files for required fields, four distinct choices, key/expected-answer alignment, option-feedback alignment, non-empty essay justifications, and rubric totals. Scanned every learner-facing prompt, choice, explanation, justification, rubric, and code stimulus for references that ask students to rely on a lesson, lecture, PDF, or course source; no candidates remain.
+
+This pass found and corrected leftover source-referential wording in the pandas plotting explanation and four essay rubric criteria. It also changed a displayed code comment from “PDF version” to “Original approach,” and tightened two hardware/language rubrics. Generation sources and feedback overrides were updated alongside the bank. The importer completed, then all 560 question records, 2,240 options, and 112 essay records were compared with the local banks; all matched. `git diff --check` passed.
+
+This supplemental scan focused on post-edit consistency and learner-facing wording. It does not replace the documented same-session review limitation or independent instructor validation.

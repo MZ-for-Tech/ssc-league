@@ -382,7 +382,6 @@ export default function AdminUsersView({ seasonId, activeSeasonId, seasons }: { 
       <div className="w-full space-y-6 animate-in fade-in pb-16">
         <PageHeader
           title="Import students"
-          description="Add student accounts to the selected season."
           icon={<FileSpreadsheet size={28} />}
           actions={<button type="button" onClick={() => setShowImportView(false)} className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-semibold text-muted transition hover:text-foreground"><ArrowLeft size={16} /> Back to roster</button>}
         />
@@ -399,11 +398,11 @@ export default function AdminUsersView({ seasonId, activeSeasonId, seasons }: { 
               <h3 className="text-sm font-bold text-foreground">Before you import</h3>
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
                 <div className="rounded-lg border border-border/70 bg-background/50 p-3">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-primary">Required for every student</p>
+                  <p className="text-xs font-bold uppercase tracking-wider text-primary">Required for every student</p>
                   <p className="mt-1 text-sm font-semibold text-foreground">Email · Full name · Student ID</p>
                 </div>
                 <div className="rounded-lg border border-border/70 bg-background/50 p-3">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-muted">Optional</p>
+                  <p className="text-xs font-bold uppercase tracking-wider text-muted">Optional</p>
                   <p className="mt-1 text-sm text-foreground">Group defaults to <span className="font-semibold">G1</span> when omitted.</p>
                 </div>
               </div>
@@ -499,40 +498,40 @@ export default function AdminUsersView({ seasonId, activeSeasonId, seasons }: { 
       {/* Header */}
       <PageHeader
         title="Agent Roster"
-        description="Manage personnel, clearance, and accounts."
         icon={<Users size={28} />}
-        actions={<div className="flex w-full flex-col gap-3 md:w-auto">
-            <AdminSeasonToolbar seasons={seasons} seasonId={seasonId} />
-            <div className="flex gap-3">
-            <div className="relative flex-1 md:w-64">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
-                <input type="text" placeholder="Search..." className="w-full bg-slate-900 border border-slate-800 rounded-xl py-2 pl-10 pr-4 text-sm text-white focus:border-cyan-500 outline-none" value={search} onChange={e => setSearch(e.target.value)} />
+        actions={<div className="flex w-full flex-col gap-3 xl:w-auto xl:items-end">
+          <AdminSeasonToolbar seasons={seasons} seasonId={seasonId} />
+          <div className="flex flex-wrap gap-2 sm:gap-3">
+            <div className="relative min-w-0 flex-1 sm:flex-none sm:w-64">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" size={16} />
+              <input type="text" placeholder="Search..." className="w-full rounded-xl border border-border bg-background/70 py-2 pl-10 pr-4 text-sm text-foreground outline-none transition placeholder:text-muted/65 focus:border-primary/60 focus:ring-2 focus:ring-primary/10" value={search} onChange={e => setSearch(e.target.value)} />
             </div>
-
             <ExportButton data={users.map(u => ({...u}))} />
-            {!readOnly && <button onClick={() => { setFormState(null); setGeneratedCredentials([]); setCompletedImportCount(null); setImportAttempted(false); setCredentialsCopied(false); setShowImportView(true); }} className="flex items-center gap-2 rounded-xl border border-border bg-surface px-4 py-2 text-xs font-bold uppercase tracking-wider text-foreground transition hover:border-primary/40"><Upload size={16} /> Import students</button>}
-            {!readOnly && <button onClick={() => setModalMode("admin")} className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/20 transition-all text-xs uppercase tracking-wider"><Shield size={16} /> Admin</button>}
-            </div>
+            {!readOnly && <button onClick={() => { setFormState(null); setGeneratedCredentials([]); setCompletedImportCount(null); setImportAttempted(false); setCredentialsCopied(false); setShowImportView(true); }} className="inline-flex items-center gap-2 rounded-xl border border-primary/20 bg-background/55 px-4 py-2 text-xs font-bold uppercase tracking-wider text-foreground transition hover:border-primary/50 hover:bg-primary/5"><Upload size={16} /> Import students</button>}
+            {!readOnly && <button onClick={() => setModalMode("admin")} className="inline-flex items-center gap-2 rounded-xl border border-success/25 bg-success/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-success shadow-[0_0_18px_rgb(var(--success)/0.08)] transition hover:border-success/50 hover:bg-success/15"><Shield size={16} /> Admin</button>}
+          </div>
         </div>}
       />
 
       {/* Bulk Delete Bar */}
       {!readOnly && selectedIds.size > 0 && (
-          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-slate-900 border border-rose-500/50 rounded-full shadow-2xl px-6 py-3 flex items-center gap-6 animate-in slide-in-from-bottom-10">
-              <div className="text-sm font-bold text-white"><span className="text-rose-400">{selectedIds.size}</span> Selected</div>
-              <div className="h-6 w-px bg-slate-800" />
-              <button onClick={handleBulkDelete} disabled={isSubmitting} className="flex items-center gap-2 text-xs font-bold text-rose-400 hover:text-rose-300 uppercase tracking-wider"><Trash2 size={16} /> Delete Selected</button>
-              <button onClick={() => setSelectedIds(new Set())} className="p-1 hover:bg-slate-800 rounded-full text-slate-500"><X size={14} /></button>
+          <div className="fixed inset-x-3 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 mx-auto flex max-w-max flex-wrap items-center justify-center gap-x-4 gap-y-2 rounded-2xl border border-danger/40 bg-background/95 px-4 py-3 shadow-2xl shadow-black/50 backdrop-blur-md animate-in slide-in-from-bottom-10 sm:inset-x-auto sm:bottom-6 sm:left-1/2 sm:-translate-x-1/2 sm:flex-nowrap sm:gap-6 sm:rounded-full sm:px-6">
+              <div className="text-sm font-bold text-foreground"><span className="text-danger">{selectedIds.size}</span> Selected</div>
+              <div className="h-6 w-px bg-border" />
+              <button onClick={handleBulkDelete} disabled={isSubmitting} className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-danger hover:text-danger/80"><Trash2 size={16} /> Delete Selected</button>
+              <button onClick={() => setSelectedIds(new Set())} className="rounded-full p-1 text-muted transition hover:bg-surface hover:text-foreground"><X size={14} /></button>
           </div>
       )}
 
       {/* Table */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+      <div className="instrument-panel relative isolate overflow-hidden rounded-2xl border border-border bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] shadow-xl shadow-black/25">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+        <p className="px-4 pt-3 text-xs text-muted md:hidden">Swipe the roster to see student details and actions.</p>
         <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
+            <table className="w-full min-w-[760px] text-left text-sm">
                 <thead>
-                    <tr className="border-b border-slate-800 bg-slate-950/50 text-xs uppercase tracking-wider text-slate-400">
-                        <th className="p-4 w-10">{!readOnly && <button onClick={handleSelectAll} className="text-slate-500 hover:text-white">{selectedIds.size > 0 && selectedIds.size === filteredUsers.length ? <CheckSquare size={16} /> : <Square size={16} />}</button>}</th>
+                    <tr className="border-b border-border bg-background/55 font-mono text-xs uppercase tracking-wider text-muted">
+                        <th className="w-10 p-4">{!readOnly && <button onClick={handleSelectAll} className="text-muted transition hover:text-primary">{selectedIds.size > 0 && selectedIds.size === filteredUsers.length ? <CheckSquare size={16} /> : <Square size={16} />}</button>}</th>
                         <th aria-sort={sortKey === "identity" ? sortDirection === "asc" ? "ascending" : "descending" : "none"} className="p-4">{sortHeader("Identity", "identity")}</th>
                         <th aria-sort={sortKey === "details" ? sortDirection === "asc" ? "ascending" : "descending" : "none"} className="p-4">{sortHeader("Details", "details")}</th>
                         <th aria-sort={sortKey === "stats" ? sortDirection === "asc" ? "ascending" : "descending" : "none"} className="p-4 text-right">{sortHeader("Stats", "stats")}</th>
@@ -540,27 +539,36 @@ export default function AdminUsersView({ seasonId, activeSeasonId, seasons }: { 
                         <th className="p-4 font-bold text-right">Actions</th>
                     </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800">
-                    {loading ? (<tr><td colSpan={6} className="p-8 text-center text-slate-500">Scanning...</td></tr>) : sortedFilteredUsers.map(user => {
+                <tbody aria-busy={loading} className="divide-y divide-border/70">
+                    {loading ? Array.from({ length: 8 }, (_, index) => (
+                        <tr key={`loading-${index}`} aria-hidden="true" className="animate-pulse">
+                            <td className="p-4"><div className="h-4 w-4 rounded bg-surface-light/20" /></td>
+                            <td className="p-4"><div className="flex min-w-52 items-center gap-3"><div className="h-10 w-10 shrink-0 rounded-full border border-border bg-surface-light/25" /><div className="h-4 w-36 max-w-full rounded bg-surface-light/30" /></div></td>
+                            <td className="p-4"><div className="space-y-2"><div className="h-3 w-20 rounded bg-surface-light/30" /><div className="h-3 w-10 rounded bg-surface-light/20" /></div></td>
+                            <td className="p-4"><div className="ml-auto space-y-2 text-right"><div className="ml-auto h-4 w-16 rounded bg-primary/20" /><div className="ml-auto h-3 w-10 rounded bg-surface-light/20" /></div></td>
+                            <td className="p-4"><div className="mx-auto h-6 w-14 rounded border border-success/15 bg-success/10" /></td>
+                            <td className="p-4"><div className="flex justify-end gap-2"><div className="h-9 w-9 rounded-lg border border-border bg-surface-light/15" /><div className="h-9 w-9 rounded-lg border border-border bg-surface-light/15" /><div className="h-9 w-9 rounded-lg border border-border bg-surface-light/15" /></div></td>
+                        </tr>
+                    )) : sortedFilteredUsers.map(user => {
                         const isAdmin = admins.has(user.auth_id);
                         return (
-                        <tr key={user.id} className={clsx("transition-colors group", selectedIds.has(user.id) ? "bg-rose-500/5" : "hover:bg-slate-800/30")}>
-                            <td className="p-4">{!readOnly && <button onClick={() => handleSelectOne(user.id)} className={clsx(selectedIds.has(user.id) ? "text-rose-500" : "text-slate-600 hover:text-slate-400")}>{selectedIds.has(user.id) ? <CheckSquare size={16} /> : <Square size={16} />}</button>}</td>
-                            <td className="p-4"><div className="w-10 h-10 rounded-full bg-slate-800 overflow-hidden"><Image unoptimized width={40} height={40} src={user.avatar_url || `https://api.dicebear.com/9.x/avataaars/svg?seed=${user.full_name}`} alt="" className="h-full w-full object-cover" /></div><div className="font-bold text-white">{user.full_name}</div></td>
-                            <td className="p-4"><div className="flex flex-col"><span className="text-xs text-white font-mono">{user.student_id}</span><span className="text-[10px] text-slate-500">{user.group_id}</span></div></td>
-                            <td className="p-4 text-right"><div className="font-mono font-bold text-cyan-400">{user.current_xp?.toLocaleString()}</div><div className="text-[10px] text-slate-500">Lvl {user.current_level}</div></td>
-                            <td className="p-4 text-center">{isAdmin ? <span className="inline-flex items-center gap-1 px-2 py-1 rounded bg-rose-500/10 border border-rose-500/20 text-rose-400 text-[10px] font-bold uppercase tracking-wider"><Shield size={10} /> CMD</span> : <span className="inline-flex items-center gap-1 px-2 py-1 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-bold uppercase tracking-wider"><Users size={10} /> AGT</span>}</td>
+                        <tr key={user.id} className={clsx("group transition-colors", selectedIds.has(user.id) ? "bg-danger/10" : "hover:bg-primary/[0.035]")}>
+                            <td className="p-4">{!readOnly && <button onClick={() => handleSelectOne(user.id)} className={clsx("transition-colors", selectedIds.has(user.id) ? "text-danger" : "text-muted/60 hover:text-primary")}>{selectedIds.has(user.id) ? <CheckSquare size={16} /> : <Square size={16} />}</button>}</td>
+                            <td className="p-4"><div className="flex min-w-52 items-center gap-3"><div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border border-border bg-surface shadow-[0_0_16px_rgb(var(--primary)/0.08)] transition group-hover:border-primary/40"><Image unoptimized width={40} height={40} src={user.avatar_url || `https://api.dicebear.com/9.x/avataaars/svg?seed=${user.full_name}`} alt="" className="h-full w-full object-cover" /></div><div className="min-w-0 truncate font-semibold text-foreground">{user.full_name}</div></div></td>
+                            <td className="p-4"><div className="flex flex-col"><span className="font-mono text-xs text-foreground">{user.student_id}</span><span className="text-xs text-muted">{user.group_id}</span></div></td>
+                            <td className="p-4 text-right"><div className="font-mono font-bold text-primary">{user.current_xp?.toLocaleString()}</div><div className="text-xs text-muted">Lvl {user.current_level}</div></td>
+                            <td className="p-4 text-center">{isAdmin ? <span className="inline-flex items-center gap-1 rounded border border-danger/20 bg-danger/10 px-2 py-1 text-xs font-bold uppercase tracking-wider text-danger"><Shield size={12} /> CMD</span> : <span className="inline-flex items-center gap-1 rounded border border-success/20 bg-success/10 px-2 py-1 text-xs font-bold uppercase tracking-wider text-success"><Users size={12} /> AGT</span>}</td>
                             <td className="p-4 text-right">
-                                <div className="flex items-center justify-end gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                                    {!readOnly && <button onClick={() => setEditingUser(user)} className="p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-all" title="Edit"><Edit2 size={16} /></button>}
-                                    {!readOnly && <button onClick={() => handleImpersonate(user.id)} className="p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-cyan-400 hover:bg-cyan-950 transition-all" title="Impersonate"><Eye size={16} /></button>}
+                                <div className="flex items-center justify-end gap-2 opacity-80 transition-opacity sm:opacity-60 sm:group-hover:opacity-100">
+                                    {!readOnly && <button onClick={() => setEditingUser(user)} className="rounded-lg border border-border bg-background/60 p-2 text-muted transition-all hover:border-primary/40 hover:text-foreground" title="Edit"><Edit2 size={16} /></button>}
+                                    {!readOnly && <button onClick={() => handleImpersonate(user.id)} className="rounded-lg border border-border bg-background/60 p-2 text-muted transition-all hover:border-primary/40 hover:text-primary" title="Impersonate"><Eye size={16} /></button>}
                                     {!readOnly && <>
                                     {isAdmin ? (
-                                        <button onClick={() => handleDemote(user)} className="p-2 rounded-lg bg-slate-800 text-rose-400 hover:bg-rose-600 hover:text-white transition-all"><ShieldOff size={16} /></button>
+                                        <button onClick={() => handleDemote(user)} className="rounded-lg border border-border bg-background/60 p-2 text-danger transition-all hover:border-danger/40 hover:bg-danger/10"><ShieldOff size={16} /></button>
                                     ) : (
-                                        <button onClick={() => handlePromote(user)} className="p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-emerald-400 hover:bg-emerald-950 transition-all"><Shield size={16} /></button>
+                                        <button onClick={() => handlePromote(user)} className="rounded-lg border border-border bg-background/60 p-2 text-muted transition-all hover:border-success/40 hover:bg-success/10 hover:text-success"><Shield size={16} /></button>
                                     )}
-                                    <button onClick={() => handleDeleteSingle(user)} className="p-2 rounded-lg bg-slate-800 text-slate-500 hover:text-red-500 hover:bg-red-950/50 transition-all"><Trash2 size={16} /></button>
+                                    <button onClick={() => handleDeleteSingle(user)} className="rounded-lg border border-border bg-background/60 p-2 text-muted transition-all hover:border-danger/40 hover:bg-danger/10 hover:text-danger"><Trash2 size={16} /></button>
                                     </>}
                                 </div>
                             </td>
@@ -572,17 +580,17 @@ export default function AdminUsersView({ seasonId, activeSeasonId, seasons }: { 
       </div>
 
       {!readOnly && modalMode === "admin" && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-              <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative">
-                  <button onClick={() => { setModalMode(null); setFormState(null); }} className="absolute top-4 right-4 text-slate-500 hover:text-white"><X size={20} /></button>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 p-4 backdrop-blur-sm animate-in fade-in duration-200">
+              <div className="instrument-panel relative w-full max-w-lg overflow-hidden rounded-2xl border border-border bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] shadow-2xl">
+                  <button onClick={() => { setModalMode(null); setFormState(null); }} className="absolute right-4 top-4 text-muted transition hover:text-foreground"><X size={20} /></button>
                       <form onSubmit={handleCreateAdminSubmit} className="p-6 space-y-4">
-                          <div className="mb-6"><h3 className="text-xl font-bold text-white flex items-center gap-2"><Shield className="text-emerald-500" /> Recruit Admin</h3><p className="text-sm text-slate-400">Create system administrator.</p></div>
-                          <input name="fullName" type="text" required placeholder="Name" className="w-full bg-slate-950 border border-slate-700 rounded-xl py-3 px-4 text-sm text-white focus:border-emerald-500 outline-none" />
-                          <input name="email" type="email" required placeholder="Email" className="w-full bg-slate-950 border border-slate-700 rounded-xl py-3 px-4 text-sm text-white focus:border-emerald-500 outline-none" />
-                          <input name="password" type="password" required placeholder="Password" className="w-full bg-slate-950 border border-slate-700 rounded-xl py-3 px-4 text-sm text-white focus:border-emerald-500 outline-none" />
-                          {formState?.error && <div className="text-xs text-rose-400 bg-rose-500/10 p-3 rounded">{formState.error}</div>}
-                          {formState?.message && <div className="text-xs text-emerald-400 bg-emerald-500/10 p-3 rounded">{formState.message}</div>}
-                          <button type="submit" disabled={isSubmitting} className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition-all disabled:opacity-50">{isSubmitting ? "Processing..." : "Grant Access"}</button>
+                          <div className="mb-6"><h3 className="flex items-center gap-2 text-xl font-bold text-foreground"><Shield className="text-primary" /> Recruit Admin</h3><p className="text-sm text-muted">Create system administrator.</p></div>
+                          <input name="fullName" type="text" required placeholder="Name" className="w-full rounded-xl border border-border bg-background/70 px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted/60 focus:border-primary" />
+                          <input name="email" type="email" required placeholder="Email" className="w-full rounded-xl border border-border bg-background/70 px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted/60 focus:border-primary" />
+                          <input name="password" type="password" required placeholder="Password" className="w-full rounded-xl border border-border bg-background/70 px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted/60 focus:border-primary" />
+                          {formState?.error && <div className="rounded border border-danger/20 bg-danger/10 p-3 text-xs text-danger">{formState.error}</div>}
+                          {formState?.message && <div className="rounded border border-success/20 bg-success/10 p-3 text-xs text-success">{formState.message}</div>}
+                          <button type="submit" disabled={isSubmitting} className="w-full rounded-xl bg-primary py-3 font-bold text-background transition hover:bg-primary-dim disabled:opacity-50">{isSubmitting ? "Processing..." : "Grant Access"}</button>
                       </form>
               </div>
           </div>

@@ -24,19 +24,56 @@ export default function MainLayoutShell({ children, isAdmin, isImpersonating, se
     <LeagueSeasonProvider seasonId={selectedSeasonId}>
     <div className="flex min-h-screen relative font-sans text-foreground selection:bg-primary/30 bg-background">
        
-       {/* 1. Living Background */}
-       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="absolute inset-0 bg-background" />
-          <div className="absolute inset-0 opacity-[0.15] bg-dot-grid" />
-          <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-primary/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob" />
-          <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-primary-dim/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob" style={{ animationDelay: "4s" }} />
-          <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+       {/* Shared SSC2 training-arena environment */}
+       <div className="ssc-arena-backdrop fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          <div className="ssc-arena-atmosphere absolute inset-0" />
+          <div className="ssc-arena-grid absolute inset-0" />
+          <svg className="ssc-arena-map absolute -right-[22rem] -top-[17rem] h-[min(1120px,115vh)] w-[min(1120px,115vh)]" viewBox="0 0 1000 1000" fill="none" aria-hidden="true">
+             <defs>
+                <linearGradient id="arena-triangle" x1="500" y1="95" x2="500" y2="865" gradientUnits="userSpaceOnUse">
+                   <stop stopColor="rgb(var(--primary))" />
+                   <stop offset="1" stopColor="rgb(var(--retro-pink))" />
+                </linearGradient>
+                <radialGradient id="arena-beacon">
+                   <stop stopColor="rgb(var(--primary))" stopOpacity=".14" />
+                   <stop offset="1" stopColor="rgb(var(--primary))" stopOpacity="0" />
+                </radialGradient>
+             </defs>
+             <circle cx="690" cy="320" r="350" fill="url(#arena-beacon)" />
+             <g className="ssc-arena-orbits" stroke="rgb(var(--cyan-200))" strokeOpacity=".12">
+                <circle cx="690" cy="320" r="150" />
+                <circle cx="690" cy="320" r="225" strokeDasharray="2 12" />
+                <circle cx="690" cy="320" r="300" strokeDasharray="1 18" />
+             </g>
+             <g stroke="url(#arena-triangle)" strokeOpacity=".17" strokeWidth="1.4">
+                <path d="M500 95 930 850H70L500 95Z" />
+                <path d="m500 205 335 585H165l335-585Z" strokeOpacity=".11" />
+                <path d="m500 315 240 420H260l240-420Z" strokeOpacity=".09" />
+                <path d="M70 850 500 535 930 850M165 790l335-255 335 255M260 735l240-200 240 200" strokeOpacity=".09" />
+             </g>
+             <g stroke="rgb(var(--cyan-200))" strokeOpacity=".12" strokeWidth="1">
+                <path d="M500 95v755M70 850h860M285 472h430M392 284h216M178 660h644" strokeDasharray="3 11" />
+                <path d="m500 95 430 755M500 95 70 850" strokeDasharray="1 15" />
+             </g>
+             <g fill="rgb(var(--primary))" fillOpacity=".55">
+                <circle cx="500" cy="95" r="3" />
+                <circle cx="70" cy="850" r="3" />
+                <circle cx="930" cy="850" r="3" />
+                <circle cx="690" cy="320" r="4" />
+             </g>
+          </svg>
+          <div className="ssc-arena-vignette absolute inset-0" />
        </div>
 
        {/* 2. Mobile Header */}
        <header className="lg:hidden fixed top-0 left-0 right-0 h-16 px-4 bg-surface/80 backdrop-blur-md border-b border-border z-40 flex items-center justify-between">
           <button 
-            onClick={() => setIsMobileOpen(true)} 
+            onClick={() => {
+              setIsCollapsed(false);
+              setIsMobileOpen(true);
+            }}
+            aria-label="Open navigation"
+            aria-expanded={isMobileOpen}
             className="p-2 -ml-2 text-muted hover:text-primary transition-colors"
           >
              <Menu size={24} />

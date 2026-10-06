@@ -47,10 +47,10 @@ export default function Logo({ compact = false }: { compact?: boolean }) {
         >
           SSC2
         </h1>
-        <span className="text-[0.6rem] font-sans font-bold text-primary/80 tracking-[0.3em] uppercase ml-1">
+        <span className="text-xs font-sans font-bold text-primary/80 tracking-[0.3em] uppercase ml-1">
           League
         </span>
-        <span className="ml-1 mt-1 text-[9px] font-sans font-semibold leading-none tracking-[0.2em] text-amber-400/80 uppercase">
+        <span className="ml-1 mt-1 text-xs font-sans font-semibold leading-none tracking-[0.2em] text-amber-400/80 uppercase">
           Season One
         </span>
       </div>}

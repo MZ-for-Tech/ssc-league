@@ -146,7 +146,6 @@ export default async function LeaderboardPage({
       <div className="mb-8">
       <PageHeader
         title="Global Rankings"
-        description="Live operative performance and tactical standings."
         icon={<Trophy size={28} />}
         actions={<div className="flex flex-wrap items-center gap-4">
              {/* Archive Indicator */}
@@ -158,7 +157,7 @@ export default async function LeaderboardPage({
 
              {/* Trend & Selector */}
              <div className="flex items-center gap-3 pl-4 border-l border-slate-800">
-                <div className="hidden md:block text-[10px] text-slate-500 font-mono text-right">
+                <div className="hidden md:block text-xs text-slate-500 font-mono text-right">
                     <div>COMPARED TO</div>
                     <div>WEEK {displayWeekPrev}</div>
                 </div>

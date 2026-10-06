@@ -182,7 +182,7 @@ async function insertQuestion(
 export async function createQuestionWithOptions(question: QuestionDraft) {
   const { adminClient, activeSeasonId } = await requireAdmin();
   await insertQuestion(adminClient, question, activeSeasonId);
-  revalidatePath("/dashboard");
+  revalidatePath("/admin/questions");
   return { success: true };
 }
 
@@ -200,6 +200,6 @@ export async function createQuestionsBulk(questions: QuestionDraft[]) {
     }
   }
 
-  revalidatePath("/dashboard");
+  revalidatePath("/admin/questions");
   return result;
 }

@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { Zap, Send, Users, AlertCircle, CheckCircle, Loader2 } from "lucide-react";
 import { awardBulkXP } from "@/app/actions/admin-actions";
 import clsx from "clsx";
+import DropdownSelect from "@/components/ui/DropdownSelect";
+import OperationsCardHeader from "@/components/admin/OperationsCardHeader";
 
 export default function BulkXPWidget() {
   const [amount, setAmount] = useState(10);
@@ -33,45 +35,36 @@ export default function BulkXPWidget() {
   };
 
   return (
-    <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 h-full flex flex-col">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-          <Zap size={16} className="text-yellow-400" /> Logistics
-        </h3>
-        <span className="text-[10px] text-slate-500 font-mono">XP_INJECTION</span>
+    <section className="instrument-panel relative isolate flex h-full flex-col overflow-hidden border border-primary/20 bg-[linear-gradient(145deg,rgba(13,31,49,.94),rgba(12,22,40,.94))] p-5 sm:p-6">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_85%_0%,rgb(var(--warning)/0.08),transparent_48%)]" />
+      <div className="relative z-10">
+        <OperationsCardHeader id="additional-xp-title" title="Additional XP" headingLevel="h3" icon={<Zap size={16} className="text-warning" />} />
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4 flex-1">
+      <form onSubmit={handleSubmit} className="relative z-10 flex min-h-0 flex-1 flex-col gap-4">
         
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="text-[10px] font-bold text-slate-500 uppercase">Target</label>
-            <div className="relative">
-              <Users className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={14} />
-              <select 
-                className="w-full bg-slate-950 border border-slate-700 rounded-xl py-2 pl-9 pr-3 text-xs text-white focus:border-yellow-500 outline-none appearance-none"
+            <label className="mb-2 block font-mono font-bold uppercase tracking-wider text-muted text-xs">Target group</label>
+              <DropdownSelect
+                leadingIcon={<Users size={14} />}
                 value={group}
-                onChange={(e) => setGroup(e.target.value)}
-              >
-                <option value="ALL">All Agents</option>
-                <option value="G1">Sector G1</option>
-                <option value="G2">Sector G2</option>
-                <option value="G3">Sector G3</option>
-                <option value="G4">Sector G4</option>
-                <option value="G5">Sector G5</option>
-                <option value="G6">Sector G6</option>
-                <option value="G7">Sector G7</option>
-              </select>
-            </div>
+                onChange={setGroup}
+                ariaLabel="XP award target group"
+                options={[
+                  { value: "ALL", label: "All Agents" },
+                  ...["G1", "G2", "G3", "G4", "G5", "G6", "G7"].map((sector) => ({ value: sector, label: `Sector ${sector}` })),
+                ]}
+              />
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-bold text-slate-500 uppercase">Amount</label>
+            <label className="mb-2 block font-mono font-bold uppercase tracking-wider text-muted text-xs">XP amount</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-yellow-500 text-xs font-bold">+</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 font-mono font-bold text-warning">+</span>
               <input 
                 type="number" 
-                className="w-full bg-slate-950 border border-slate-700 rounded-xl py-2 pl-7 pr-3 text-xs text-white focus:border-yellow-500 outline-none font-mono"
+                className="console-control w-full border border-border bg-background/75 py-2.5 pl-7 pr-3 font-mono text-foreground outline-none focus:border-primary/70 focus:ring-1 focus:ring-primary/30 text-sm"
                 value={amount}
                 onChange={(e) => setAmount(Number(e.target.value))}
               />
@@ -80,11 +73,11 @@ export default function BulkXPWidget() {
         </div>
 
         <div className="space-y-2">
-            <label className="text-[10px] font-bold text-slate-500 uppercase">Justification</label>
+            <label className="mb-2 block font-mono font-bold uppercase tracking-wider text-muted text-xs">Reason</label>
             <input 
               type="text" 
-              placeholder="e.g. In-Class Bonus"
-              className="w-full bg-slate-950 border border-slate-700 rounded-xl py-2 px-3 text-xs text-white focus:border-yellow-500 outline-none"
+              placeholder="e.g. Class participation"
+              className="console-control w-full border border-border bg-background/75 px-3 py-2.5 text-foreground outline-none placeholder:text-muted/70 focus:border-primary/70 focus:ring-1 focus:ring-primary/30 text-sm"
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               required
@@ -92,25 +85,25 @@ export default function BulkXPWidget() {
         </div>
 
         {status && (
-          <div className={clsx("p-3 rounded-lg flex items-center gap-2 text-xs", 
-            status.type === 'success' ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" : "bg-rose-500/10 text-rose-400 border border-rose-500/20"
+          <div role="status" className={clsx("flex items-center gap-2 border p-3 ",
+            status.type === 'success' ? "border-emerald-400/20 bg-emerald-400/[.07] text-emerald-300" : "border-rose-400/20 bg-rose-400/[.07] text-rose-300"
           )}>
             {status.type === 'success' ? <CheckCircle size={14} /> : <AlertCircle size={14} />}
             {status.msg}
           </div>
         )}
 
-        <div className="pt-2 mt-auto">
+        <div className="mt-auto border-t border-border/70 pt-4">
             <button 
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl shadow-lg shadow-yellow-500/20 transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale"
+            className="console-control flex min-h-12 w-full items-center justify-center gap-2 bg-warning px-4 py-3 font-black uppercase tracking-wider text-background shadow-lg shadow-warning/15 transition hover:brightness-110 disabled:cursor-wait disabled:opacity-50 text-sm"
             >
-            {isSubmitting ? <Loader2 size={14} className="animate-spin" /> : <><Send size={14} /> Distribute</>}
+            {isSubmitting ? <Loader2 size={14} className="animate-spin" /> : <><Send size={14} /> Award XP</>}
             </button>
         </div>
 
       </form>
-    </div>
+    </section>
   );
 }

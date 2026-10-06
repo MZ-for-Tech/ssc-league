@@ -8,9 +8,9 @@ interface RecentActivityProps {
 
 export default function RecentActivity({ activity }: RecentActivityProps) {
   return (
-    <section className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 relative overflow-hidden">
-      <div className="absolute top-0 right-0 p-4 opacity-10"><Radio size={100} /></div>
-      <h3 className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-6 flex items-center gap-2">
+    <section className="instrument-panel bg-slate-900/50 border border-slate-800 rounded-2xl p-6 relative overflow-hidden">
+      <div className="absolute right-5 top-5 opacity-[0.06]"><Radio size={64} /></div>
+      <h3 className="relative z-10 text-slate-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
         <Terminal size={14} /> Recent Intel
       </h3>
       <div className="space-y-4 relative z-10">
@@ -25,19 +25,21 @@ export default function RecentActivity({ activity }: RecentActivityProps) {
                 {item.is_correct ? "Mission Success" : "Mission Failed"} <span className="text-slate-500 mx-1">•</span>{" "}
                 <span className="text-cyan-400 font-bold">{item.Question?.Topic?.name}</span>
               </div>
-              <div className="text-[10px] text-slate-500 mt-1 flex items-center gap-2 font-mono">
+              <div className="text-xs text-slate-500 mt-1 flex items-center gap-2 font-mono">
                 <span>{new Date(item.attempted_at).toLocaleDateString()}</span>
                 {item.is_correct && <span className="bg-emerald-500/10 border border-emerald-500/20 px-1.5 rounded text-emerald-400">+{item.Question?.points} XP</span>}
               </div>
             </div>
           </div>
         )) : (
-          <div className="rounded-xl border border-dashed border-slate-800/80 bg-slate-900/20 px-5 py-8 text-center">
-            <div className="mx-auto mb-3 grid h-10 w-10 place-items-center rounded-full border border-slate-700/70 bg-slate-800/50 text-slate-500">
+          <div className="flex items-center gap-3 rounded-xl border border-dashed border-slate-800/80 bg-slate-900/20 px-4 py-4">
+            <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-slate-700/70 bg-slate-800/50 text-slate-500">
               <Radio size={17} />
             </div>
-            <p className="text-sm font-medium text-slate-300">No recent activity yet</p>
-            <p className="mt-1 text-xs text-slate-500">Your completed question attempts will show up here.</p>
+            <div>
+              <p className="text-sm font-medium text-slate-300">No recent activity yet</p>
+              <p className="mt-1 text-xs text-slate-500">Your question attempts will show up here.</p>
+            </div>
           </div>
         )}
       </div>

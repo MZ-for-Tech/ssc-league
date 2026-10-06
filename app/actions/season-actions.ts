@@ -31,3 +31,9 @@ export async function setLeagueSeason(seasonId: string) {
 
   return { success: true };
 }
+
+export async function resetLeagueSeasonSelection() {
+  const cookieStore = await cookies();
+  cookieStore.delete(SELECTED_SEASON_COOKIE);
+  return { success: true };
+}

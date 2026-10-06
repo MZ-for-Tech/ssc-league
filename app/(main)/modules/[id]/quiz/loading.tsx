@@ -6,24 +6,14 @@ export default function QuizLoading() {
       
       {/* 1. Header Skeleton */}
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-            {/* Badge (M-ID) */}
-            <div className="h-6 w-16 bg-surface-light/50 rounded" />
-            {/* Title (Active Mission) */}
-            <div className="h-8 w-48 bg-surface-light/30 rounded-lg" />
-        </div>
-        {/* Right Label (Hidden on mobile usually, but good for skeleton) */}
-        <div className="hidden md:flex items-center gap-2">
-            <div className="h-5 w-5 rounded-full bg-surface-light/30" />
-            <div className="h-4 w-24 bg-surface-light/30 rounded" />
-        </div>
+        <div className="h-8 w-24 rounded-lg bg-surface-light/30" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* LEFT COL: Main Question Card */}
         <div className="lg:col-span-2 space-y-6">
-            <div className="bg-surface/50 border border-border rounded-2xl p-6 md:p-8 relative overflow-hidden h-[600px] flex flex-col">
+            <div className="bg-surface/80 border border-border rounded-2xl p-6 md:p-8 relative overflow-hidden min-h-[34rem] flex flex-col backdrop-blur-sm">
                 
                 {/* Progress Bar Line */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-surface-light/30" />

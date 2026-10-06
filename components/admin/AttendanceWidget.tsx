@@ -1,24 +1,34 @@
 "use client";
 
 import React, { useState } from "react";
-import { ClipboardCheck, CheckCircle2, XCircle } from "lucide-react";
+import { ClipboardCheck } from "lucide-react";
 import { markGroupAttendance } from "@/app/actions/admin-actions";
+import { formatAttendanceDate } from "@/lib/attendance-date";
 import clsx from "clsx";
+import OperationsCardHeader from "@/components/admin/OperationsCardHeader";
+
+const attendanceStatuses = [
+  { value: "PRESENT", label: "Present", code: "P", color: "border-emerald-400/25 bg-emerald-400/[.07] text-emerald-300 hover:border-emerald-300/50" },
+  { value: "TARDY", label: "Tardy", code: "T", color: "border-amber-400/25 bg-amber-400/[.07] text-amber-300 hover:border-amber-300/50" },
+  { value: "EXCUSED", label: "Excused", code: "E", color: "border-sky-400/25 bg-sky-400/[.07] text-sky-300 hover:border-sky-300/50" },
+  { value: "ABSENT", label: "Absent", code: "A", color: "border-rose-400/25 bg-rose-400/[.07] text-rose-300 hover:border-rose-300/50" },
+  { value: "VACATION", label: "Vacation", code: "V", color: "border-violet-400/25 bg-violet-400/[.07] text-violet-300 hover:border-violet-300/50" },
+] as const;
 
 export default function AttendanceWidget() {
   const [group, setGroup] = useState("G1");
   const [loading, setLoading] = useState(false);
   const [lastAction, setLastAction] = useState<string | null>(null);
 
-  const handleMark = async (status: 'PRESENT' | 'ABSENT') => {
-    if (!confirm(`Mark entire ${group} as ${status} for today?`)) return;
+  const handleMark = async (status: typeof attendanceStatuses[number]["value"], label: string) => {
+    if (!confirm(`Mark entire ${group} as ${label} for today?`)) return;
 
     setLoading(true);
     const res = await markGroupAttendance(group, status);
     setLoading(false);
 
     if (res.success) {
-        setLastAction(`${status} logged for ${res.count} agents in ${group}.`);
+        setLastAction(`${label} logged for ${res.count} agents in ${group}.`);
         setTimeout(() => setLastAction(null), 4000);
     } else {
         alert(res.message);
@@ -26,62 +36,51 @@ export default function AttendanceWidget() {
   };
 
   return (
-    <div className="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl h-full flex flex-col">
-        <div className="flex items-center justify-between mb-6">
-            <h3 className="text-white font-bold flex items-center gap-2 uppercase tracking-wider text-sm">
-                <ClipboardCheck className="text-emerald-400" size={18} /> Quick Muster
-            </h3>
-            <span className="text-[9px] text-slate-500 font-mono border border-slate-800 px-1.5 py-0.5 rounded">
-                {new Date().toLocaleDateString()}
-            </span>
-        </div>
+    <section className="instrument-panel relative isolate h-full overflow-hidden border border-primary/20 bg-[linear-gradient(145deg,rgba(13,31,49,.94),rgba(12,22,40,.94))] p-5 sm:p-6">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_85%_0%,rgb(var(--primary)/0.1),transparent_48%)]" />
+        <OperationsCardHeader
+            id="quick-muster-title"
+            title="Quick muster"
+            headingLevel="h3"
+            icon={<ClipboardCheck className="text-primary" size={18} />}
+            actions={<span className="border border-primary/15 bg-background/40 px-2 py-1 font-mono text-xs text-muted">
+                {formatAttendanceDate()}
+            </span>}
+        />
 
-        <div className="flex-1 space-y-4">
+        <div className="relative z-10 space-y-5">
             <div>
-                <label className="text-[10px] font-bold text-slate-500 uppercase mb-1 block">Select Sector</label>
-                <div className="grid grid-cols-4 gap-2">
-                    {['G1','G2','G3','G4','G5','G6','G7'].map(g => (
-                        <button
-                            key={g}
-                            onClick={() => setGroup(g)}
-                            className={clsx(
-                                "py-2 rounded-lg text-xs font-bold font-mono border transition-all",
-                                group === g
-                                    ? "bg-emerald-500 text-white border-emerald-400 shadow-[0_0_10px_rgb(var(--emerald-500)/0.3)]"
-                                    : "bg-slate-950 border-slate-700 text-slate-400 hover:border-slate-500"
-                            )}
-                        >
-                            {g}
-                        </button>
-                    ))}
-                </div>
+                <label className="mb-2 block font-mono font-bold uppercase tracking-wider text-muted text-xs">Select sector</label>
+                <input
+                    value={group}
+                    onChange={(event) => setGroup(event.target.value.toUpperCase().trim())}
+                    placeholder="e.g. G1"
+                    maxLength={32}
+                    aria-label="Group identifier"
+                    className={clsx("console-control min-h-10 w-full border border-border bg-background/60 px-3 py-2 font-mono  font-bold text-foreground outline-none transition focus:border-primary/60 focus-visible:ring-2 focus-visible:ring-primary/30")}
+                />
             </div>
 
-            <div className="grid grid-cols-2 gap-3 pt-2">
-                <button
-                    onClick={() => handleMark('PRESENT')}
-                    disabled={loading}
-                    className="flex flex-col items-center justify-center gap-2 py-4 bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400 rounded-xl transition-all disabled:opacity-50"
-                >
-                    <CheckCircle2 size={20} />
-                    <span className="text-xs font-bold uppercase">Mark Present</span>
-                </button>
-                <button
-                    onClick={() => handleMark('ABSENT')}
-                    disabled={loading}
-                    className="flex flex-col items-center justify-center gap-2 py-4 bg-rose-500/10 border border-rose-500/30 hover:bg-rose-500/20 text-rose-400 rounded-xl transition-all disabled:opacity-50"
-                >
-                    <XCircle size={20} />
-                    <span className="text-xs font-bold uppercase">Mark Absent</span>
-                </button>
+            <div className="grid grid-cols-3 gap-2 border-t border-border/70 pt-5">
+                {attendanceStatuses.map((status) => (
+                  <button
+                    key={status.value}
+                    onClick={() => handleMark(status.value, status.label)}
+                    disabled={loading || !group}
+                    className={clsx("console-control flex min-h-14 flex-col items-center justify-center gap-1 border px-2 py-2 transition disabled:opacity-50", status.color)}
+                  >
+                    <span className="font-mono font-black">{status.code}</span>
+                    <span className="font-bold uppercase">{status.label}</span>
+                  </button>
+                ))}
             </div>
 
             {lastAction && (
-                <div className="text-[10px] text-center text-slate-400 bg-slate-950 p-2 rounded-lg border border-slate-800 animate-in fade-in slide-in-from-bottom-2">
+                <div role="status" className="border border-primary/20 bg-primary/[.06] p-2 text-center text-primary animate-in fade-in slide-in-from-bottom-2">
                     {lastAction}
                 </div>
             )}
         </div>
-    </div>
+    </section>
   );
 }

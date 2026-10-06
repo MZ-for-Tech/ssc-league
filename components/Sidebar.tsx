@@ -9,9 +9,8 @@ import {
   Terminal, Users, FileText, ClipboardCheck
 } from "lucide-react";
 import clsx from "clsx";
-import { useSearchParams } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import { stopImpersonation } from "@/app/actions/admin-actions";
+import { clearImpersonationCookie } from "@/app/actions/admin-actions";
 import SidebarLogo from "./Logo";
 
 const studentNavGroups = [
@@ -43,7 +42,7 @@ const adminNavGroups = [
   {
     name: "Teaching",
     items: [
-      { name: "Dashboard", href: "/dashboard?view=admin", icon: LayoutDashboard },
+      { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
       { name: "Modules", href: "/modules", icon: BookOpen },
       { name: "Playground", href: "/playground", icon: Terminal },
     ],
@@ -58,9 +57,9 @@ const adminNavGroups = [
   {
     name: "Manage",
     items: [
-      { name: "Students", href: "/dashboard?view=users", icon: Users },
-      { name: "Question bank", href: "/dashboard?view=questions", icon: FileText },
-      { name: "Operations", href: "/dashboard?view=operations", icon: ClipboardCheck },
+      { name: "Students", href: "/admin/users", icon: Users },
+      { name: "Question bank", href: "/admin/questions", icon: FileText },
+      { name: "Operations", href: "/admin/operations", icon: ClipboardCheck },
     ],
   },
   {
@@ -80,7 +79,6 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen = false, onClose, isCollapsed, toggleCollapse, isAdmin, isImpersonating }: SidebarProps) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const router = useRouter();
   const [isSigningOut, setIsSigningOut] = useState(false);
 
@@ -93,13 +91,18 @@ export default function Sidebar({ isOpen = false, onClose, isCollapsed, toggleCo
     try {
         setIsSigningOut(true);
         
-        // Kill the "God Mode" cookie first
-        await stopImpersonation(); 
+        // Clear any stale impersonation state without requiring admin access.
+        try {
+          await clearImpersonationCookie();
+        } catch (error) {
+          console.error("Error clearing impersonation state:", error);
+        }
 
         // Then kill the Supabase session
-        await supabase.auth.signOut();
+        const { error } = await supabase.auth.signOut();
+        if (error) throw error;
         
-        router.push("/login");
+        router.replace("/login");
         router.refresh();
     } catch (error) {
         console.error("Error signing out:", error);
@@ -123,7 +126,7 @@ export default function Sidebar({ isOpen = false, onClose, isCollapsed, toggleCo
           // THEME: 'bg-background', 'border-border'
           "fixed top-0 left-0 h-full bg-background border-r border-border z-50 transition-all duration-300 ease-in-out flex flex-col",
           isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
-          isCollapsed ? "w-20" : "w-64"
+          isCollapsed ? "w-64 lg:w-20" : "w-64"
         )}
       >
         
@@ -153,26 +156,13 @@ export default function Sidebar({ isOpen = false, onClose, isCollapsed, toggleCo
           {navGroups.map((group) => (
             <div key={group.name || "main"} className="mb-5 last:mb-0">
               {!isCollapsed && group.name && (
-                <p className="mb-2 px-4 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">{group.name}</p>
+                <p className="mb-2 px-4 text-xs font-bold uppercase tracking-[0.18em] text-slate-500">{group.name}</p>
               )}
               <div className="space-y-1.5">
                 {group.items.map((item) => {
                   const Icon = item.icon;
-                  const [itemPath, itemQuery] = item.href.split("?");
-                  const itemParams = new URLSearchParams(itemQuery || "");
-                  const itemView = itemParams.get("view");
-                  const currentView = searchParams.get("view");
-                  const seasonId = searchParams.get("season");
-                  if (isAdmin && seasonId && itemPath === "/dashboard" && itemView) {
-                    itemParams.set("season", seasonId);
-                  }
-                  const itemSearch = itemParams.toString();
-                  const href = itemSearch ? `${itemPath}?${itemSearch}` : item.href;
-                  const isActive = pathname === itemPath && (
-                    itemView
-                      ? currentView === itemView || (!currentView && itemView === "admin")
-                      : !currentView
-                  );
+                  const href = item.href;
+                  const isActive = pathname === item.href;
 
                   return (
                     <Link
@@ -181,7 +171,7 @@ export default function Sidebar({ isOpen = false, onClose, isCollapsed, toggleCo
                       onClick={onClose}
                       title={isCollapsed ? item.name : ""}
                       className={clsx(
-                        "flex items-center rounded-xl transition-all duration-200 group font-medium text-sm relative overflow-hidden",
+                        "instrument-nav-link flex items-center rounded-xl transition-all duration-200 group font-medium text-sm relative overflow-hidden",
                         isActive
                           ? "text-primary bg-primary/10 border border-primary/20"
                           : "text-muted hover:bg-surface hover:text-foreground border border-transparent",
@@ -224,7 +214,7 @@ export default function Sidebar({ isOpen = false, onClose, isCollapsed, toggleCo
           {/* Status Footer */}
           {!isCollapsed && (
               <div className="mt-2 flex items-center justify-between px-2 animate-in fade-in slide-in-from-bottom-2">
-                 <span className="text-[10px] text-slate-600 font-mono uppercase">v1.0.0 Stable</span>
+                 <span className="text-xs text-slate-600 font-mono uppercase">v1.0.0 Stable</span>
               </div>
           )}
         </div>

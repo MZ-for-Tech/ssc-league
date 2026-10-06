@@ -1,42 +1,42 @@
 <!doctype html><html lang='en'><meta charset='utf-8'><meta name='viewport' content='width=device-width'><title>Module 3 Lesson 5 — Titanic Case Study</title>
 <style>body{font:16px/1.55 system-ui,sans-serif;max-width:1000px;margin:2rem auto;padding:0 1rem;color:#18212b}article{border:1px solid #ccd3da;border-radius:10px;padding:1rem 1.2rem;margin:1rem 0}figure{margin:1rem 0}img{display:block;max-width:100%;height:auto;margin:auto;border:1px solid #e1e5e9}figcaption{font-size:.88rem;color:#52647a;text-align:center}pre{overflow:auto;background:#f3f5f7;padding:1rem;border-radius:8px}ol{padding-left:1.5rem}</style><body><h1>Module 3 — Titanic case study</h1><p>40 MCQs and 8 structured responses. Figures use the lesson's Titanic dataset and cleaning steps. All rates shown after cleaning refer to the 670-row sample unless the caption states otherwise.</p><h2>Multiple-choice questions</h2>
-<article><h3>M3L5-001</h3><p>Which library is used in the lesson to load its example Titanic dataset?</p>
+<article><h3>M3L5-001</h3><p>Which library loads the example Titanic dataset?</p>
 <ol type='A'><li>Seaborn</li><li>Matplotlib</li><li>NumPy</li><li>Bokeh</li></ol></article>
-<article><h3>M3L5-002</h3><p>What does `df.shape` report for the full Titanic table in the lesson?</p>
+<article><h3>M3L5-002</h3><p>What does `df.shape` report for the full Titanic table?</p>
 <ol type='A'><li>714 rows and 5 columns</li><li>891 rows and 15 columns</li><li>670 rows and 15 columns</li><li>891 rows and 5 columns</li></ol></article>
 <article><h3>M3L5-003</h3><p>Which pair of calls previews records and reports column types and non-null counts?</p>
 <ol type='A'><li>`df.describe()` and `df.mean()`</li><li>`df.value_counts()` and `df.corr()`</li><li>`df.head()` and `df.info()`</li><li>`df.plot()` and `df.shape`</li></ol></article>
-<article><h3>M3L5-004</h3><p>Which five variables does the lesson retain for its focused analysis?</p>
+<article><h3>M3L5-004</h3><p>Which five variables are retained for the focused analysis?</p>
 <ol type='A'><li>sex, age, cabin, ticket, and embarked</li><li>name, age, fare, deck, and alive</li><li>pclass, sibsp, parch, deck, and class</li><li>sex, age, pclass, survived, and fare</li></ol></article>
 <article><h3>M3L5-005</h3><p>What does `df_cleaned.isnull().sum()` help identify?</p>
 <ol type='A'><li>The number of missing values in each selected column</li><li>The number of duplicate rows in every column</li><li>The mean of each numerical column</li><li>The number of survivors by class</li></ol></article>
 <article><h3>M3L5-006</h3><p>After selecting the five fields, which step produces the 714-row table?</p>
 <figure><img src='charts/cleaning_flow.svg' alt='Bar chart showing 891 full rows, 714 after missing-age removal, and 670 after duplicate removal.'><figcaption>Bar chart showing 891 full rows, 714 after missing-age removal, and 670 after duplicate removal.</figcaption></figure>
 <ol type='A'><li>Drop all rows with any repeated value</li><li>Drop rows with missing `age`</li><li>Keep only first-class passengers</li><li>Remove passengers who did not survive</li></ol></article>
-<article><h3>M3L5-007</h3><p>How many rows does the lesson report after removing duplicate rows from the 714 age-complete records?</p>
+<article><h3>M3L5-007</h3><p>How many rows remain after removing duplicates from the 714 age-complete records?</p>
 <figure><img src='charts/cleaning_flow.svg' alt='Bar chart showing 891 full rows, 714 after missing-age removal, and 670 after duplicate removal.'><figcaption>Bar chart showing 891 full rows, 714 after missing-age removal, and 670 after duplicate removal.</figcaption></figure>
 <ol type='A'><li>891</li><li>714</li><li>670</li><li>44</li></ol></article>
-<article><h3>M3L5-008</h3><p>Two passengers match on all five selected fields. What is the lesson&#x27;s key caution before treating them as the same person?</p>
+<article><h3>M3L5-008</h3><p>Two passengers match on all five selected fields. Why does this not prove they are the same person?</p>
 <ol type='A'><li>Pandas cannot compare rows for equality</li><li>A duplicate row proves one passenger survived twice</li><li>A matching fare means their ages must be missing</li><li>Distinct passengers can have identical values on the fields being compared</li></ol></article>
 <article><h3>M3L5-009</h3><p>Which statement best describes the 670-row analysis table?</p>
 <ol type='A'><li>It contains passengers with recorded age after duplicate removal on the five selected fields</li><li>It contains every passenger from the original table</li><li>It contains only people who survived</li><li>It contains all 714 age-complete rows</li></ol></article>
-<article><h3>M3L5-010</h3><p>About what percentage of the original 891 rows remains after the lesson&#x27;s two row-removal steps?</p>
+<article><h3>M3L5-010</h3><p>About what percentage of the original 891 rows remains after the two row-removal steps?</p>
 <figure><img src='charts/cleaning_flow.svg' alt='Bar chart showing 891 full rows, 714 after missing-age removal, and 670 after duplicate removal.'><figcaption>Bar chart showing 891 full rows, 714 after missing-age removal, and 670 after duplicate removal.</figcaption></figure>
 <ol type='A'><li>19.9%</li><li>75.2%</li><li>24.8%</li><li>80.1%</li></ol></article>
 <article><h3>M3L5-011</h3><p>In `df_cleaned[&#x27;age&#x27;].describe()`, which statistic is shown at `50%`?</p>
 <ol type='A'><li>The mean age</li><li>The maximum age</li><li>The median age</li><li>The number of unique ages</li></ol></article>
-<article><h3>M3L5-012</h3><p>What is the median age in the lesson&#x27;s cleaned 670-row sample?</p>
+<article><h3>M3L5-012</h3><p>What is the median age in the cleaned 670-row sample?</p>
 <ol type='A'><li>29.82 years</li><li>20 years</li><li>39 years</li><li>28.25 years</li></ol></article>
-<article><h3>M3L5-013</h3><p>Which variable is treated as numerical in the lesson&#x27;s descriptive-statistics step?</p>
+<article><h3>M3L5-013</h3><p>Which variable is numerical in this descriptive-statistics analysis?</p>
 <ol type='A'><li>age</li><li>sex</li><li>pclass</li><li>survived</li></ol></article>
 <article><h3>M3L5-014</h3><p>What does `df_cleaned[&#x27;sex&#x27;].value_counts()` produce?</p>
 <ol type='A'><li>The survival proportion within each sex</li><li>The number of retained records in each sex category</li><li>The mean age for each sex</li><li>The percentage of missing ages by sex</li></ol></article>
 <article><h3>M3L5-015</h3><p>After age and duplicate cleaning, how many third-class passengers are in the sample?</p>
 <figure><img src='charts/passenger_counts_by_class.svg' alt='Bar chart showing 184 class 1, 155 class 2, and 331 class 3 passengers in the cleaned sample.'><figcaption>Bar chart showing 184 class 1, 155 class 2, and 331 class 3 passengers in the cleaned sample.</figcaption></figure>
 <ol type='A'><li>155</li><li>184</li><li>331</li><li>491</li></ol></article>
-<article><h3>M3L5-016</h3><p>How does the lesson calculate the overall survival rate from a 0/1 `survived` column?</p>
+<article><h3>M3L5-016</h3><p>How can the overall survival rate be calculated from a 0/1 `survived` column?</p>
 <ol type='A'><li>Count the number of unique `survived` values</li><li>Divide the mean age by the row count</li><li>Use `value_counts()` without selecting an outcome</li><li>Take the mean of `survived` and convert it to a percentage</li></ol></article>
-<article><h3>M3L5-017</h3><p>Which pair of variable types is appropriate for the lesson&#x27;s survival crosstab?</p>
+<article><h3>M3L5-017</h3><p>Which pair of variable types is appropriate for a survival crosstab?</p>
 <ol type='A'><li>A categorical grouping variable and the categorical/binary survival outcome</li><li>Two numerical measurements only</li><li>A date and a continuous time series</li><li>A numerical distribution and its histogram bins</li></ol></article>
 <article><h3>M3L5-018</h3><p>In `pd.crosstab(group, survived, normalize=&#x27;index&#x27;)`, what does each row represent?</p>
 <figure><img src='charts/survival_by_sex.svg' alt='100%-stacked bars show within-sex survival proportions; each sex bar totals 100%.'><figcaption>100%-stacked bars show within-sex survival proportions; each sex bar totals 100%.</figcaption></figure>
@@ -47,19 +47,19 @@
 <article><h3>M3L5-020</h3><p>The cleaned-sample survival rates are about 75% for women and 22% for men. What is a careful numerical description?</p>
 <figure><img src='charts/survival_by_sex.svg' alt='100%-stacked bars show 75% survival among women and 22% among men in the cleaned sample.'><figcaption>100%-stacked bars show 75% survival among women and 22% among men in the cleaned sample.</figcaption></figure>
 <ol type='A'><li>The rates differ by exactly 75 percentage points</li><li>The data prove sex alone caused the outcome</li><li>The men&#x27;s rate is three times the women&#x27;s rate</li><li>The women&#x27;s observed rate is a little over three times the men&#x27;s rate</li></ol></article>
-<article><h3>M3L5-021</h3><p>Which cleaned-sample survival proportions by passenger class match the lesson, in class order 1, 2, 3?</p>
+<article><h3>M3L5-021</h3><p>Which cleaned-sample survival proportions by passenger class are correct, in class order 1, 2, 3?</p>
 <figure><img src='charts/survival_by_class.svg' alt='100%-stacked bars show 66%, 50%, and 25% survival in classes 1, 2, and 3.'><figcaption>100%-stacked bars show 66%, 50%, and 25% survival in classes 1, 2, and 3.</figcaption></figure>
 <ol type='A'><li>66%, 50%, 25%</li><li>25%, 50%, 66%</li><li>96%, 91%, 45%</li><li>40%, 17%, 16%</li></ol></article>
 <article><h3>M3L5-022</h3><p>A 100%-stacked bar chart is used for the survival crosstabs. What does that normalization make easy to compare?</p>
 <figure><img src='charts/survival_by_class.svg' alt='100%-stacked bars show 66%, 50%, and 25% survival in classes 1, 2, and 3.'><figcaption>100%-stacked bars show 66%, 50%, and 25% survival in classes 1, 2, and 3.</figcaption></figure>
 <ol type='A'><li>Absolute passenger counts in each group</li><li>Outcome proportions across groups with different sizes</li><li>The order of individual passengers</li><li>Missing ages in every original row</li></ol></article>
-<article><h3>M3L5-023</h3><p>Why do the lesson&#x27;s class counts use `.sort_index()` before plotting?</p>
+<article><h3>M3L5-023</h3><p>Why use `.sort_index()` on class counts before plotting?</p>
 <figure><img src='charts/passenger_counts_by_class.svg' alt='Bar chart displays passenger classes in natural order 1, 2, 3, with counts 184, 155, and 331.'><figcaption>Bar chart displays passenger classes in natural order 1, 2, 3, with counts 184, 155, and 331.</figcaption></figure>
 <ol type='A'><li>To remove missing ages</li><li>To sort passengers by fare</li><li>To show class labels in their meaningful order 1, 2, 3</li><li>To change frequency counts into rates</li></ol></article>
 <article><h3>M3L5-024</h3><p>What does a histogram of `age` with `bins=20` show?</p>
 <figure><img src='charts/age_histogram.svg' alt='Histogram of age for 670 cleaned records with recorded age, using 20 bins.'><figcaption>Histogram of age for 670 cleaned records with recorded age, using 20 bins.</figcaption></figure>
 <ol type='A'><li>Survival rates across 20 passenger classes</li><li>The relationship between age and fare</li><li>The exact age of each passenger in row order</li><li>How the recorded ages are distributed across 20 intervals</li></ol></article>
-<article><h3>M3L5-025</h3><p>What is the correct reading of the lesson&#x27;s age-versus-fare scatter plot?</p>
+<article><h3>M3L5-025</h3><p>What is the correct interpretation of an age-versus-fare scatter plot?</p>
 <figure><img src='charts/age_fare_scatter.svg' alt='Scatter plot of age and fare for the 670-row cleaned sample; no strong age-fare pattern is apparent.'><figcaption>Scatter plot of age and fare for the 670-row cleaned sample; no strong age-fare pattern is apparent.</figcaption></figure>
 <ol type='A'><li>It displays paired age and fare values to inspect whether the numerical variables vary together</li><li>It compares survival composition by class</li><li>It bins ages and counts each interval</li><li>It reports the median fare for each survival group</li></ol></article>
 <article><h3>M3L5-026</h3><p>Which conclusion should a student avoid drawing from an age–fare scatter plot alone?</p>
@@ -74,7 +74,7 @@
 <article><h3>M3L5-029</h3><p>What does the fare box plot show beyond the difference between the medians?</p>
 <figure><img src='charts/fare_boxplot_by_survival.svg' alt='Fare box plot grouped by survived 0 or 1; the median for 1 is higher, with overlapping distributions.'><figcaption>Fare box plot grouped by survived 0 or 1; the median for 1 is higher, with overlapping distributions.</figcaption></figure>
 <ol type='A'><li>The two fare distributions overlap</li><li>Every survivor paid more than every non-survivor</li><li>Fare is recorded only for survivors</li><li>The groups have identical ranges and quartiles</li></ol></article>
-<article><h3>M3L5-030</h3><p>What does `df_cleaned.boxplot(column=&#x27;fare&#x27;, by=&#x27;survived&#x27;, sym=&#x27;&#x27;)` do in the lesson?</p>
+<article><h3>M3L5-030</h3><p>What does `df_cleaned.boxplot(column=&#x27;fare&#x27;, by=&#x27;survived&#x27;, sym=&#x27;&#x27;)` do?</p>
 <pre><code>df_cleaned.boxplot(column=&#x27;fare&#x27;, by=&#x27;survived&#x27;, sym=&#x27;&#x27;)</code></pre>
 <ol type='A'><li>Removes every passenger with an unusual fare</li><li>Compares fare distributions across survival groups while hiding outlier markers</li><li>Plots survival proportions as stacked bars</li><li>Calculates a fare mean for each class</li></ol></article>
 <article><h3>M3L5-031</h3><p>In the two-variable grouping, what does `groupby([&#x27;sex&#x27;, &#x27;pclass&#x27;])[&#x27;survived&#x27;].mean()` summarize?</p>
@@ -86,7 +86,7 @@
 <article><h3>M3L5-033</h3><p>Which sex-and-class cell has the largest count in the cleaned sample?</p>
 <figure><img src='charts/group_sizes_by_sex_class.svg' alt='Grouped bars show the six sex-by-class counts; the largest is 231 men in class 3.'><figcaption>Grouped bars show the six sex-by-class counts; the largest is 231 men in class 3.</figcaption></figure>
 <ol type='A'><li>Men in third class, 231</li><li>Women in third class, 100</li><li>Men in first class, 100</li><li>Women in first class, 84</li></ol></article>
-<article><h3>M3L5-034</h3><p>Why does the lesson print group sizes next to rates in the combined analysis?</p>
+<article><h3>M3L5-034</h3><p>Why include group sizes next to rates in a combined analysis?</p>
 <figure><img src='charts/group_sizes_by_sex_class.svg' alt='Grouped bars show passenger counts for each sex-by-class rate group.'><figcaption>Grouped bars show passenger counts for each sex-by-class rate group.</figcaption></figure>
 <ol type='A'><li>Group sizes convert the rate into a median</li><li>A rate from a very small cell can be unstable despite having precise-looking decimals</li><li>Rates cannot be calculated without group sizes</li><li>Small groups always have a survival rate of zero</li></ol></article>
 <article><h3>M3L5-035</h3><p>The cleaned sample&#x27;s average fare is higher among survivors. What does that comparison establish by itself?</p>
@@ -98,17 +98,17 @@
 <article><h3>M3L5-037</h3><p>Why can dropping every row with missing age change the population represented by later results?</p>
 <figure><img src='charts/missing_age_by_class.svg' alt='Before cleaning, age is missing for 13.9% in class 1, 6.0% in class 2, and 27.7% in class 3.'><figcaption>Before cleaning, age is missing for 13.9% in class 1, 6.0% in class 2, and 27.7% in class 3.</figcaption></figure>
 <ol type='A'><li>Missing ages are concentrated differently across passenger classes, so the removed rows may not be representative</li><li>Dropping ages changes every recorded survival value</li><li>All classes lose exactly the same share of rows</li><li>Missing values are automatically replaced by the mean</li></ol></article>
-<article><h3>M3L5-038</h3><p>Which write-up is best supported after the lesson&#x27;s cleaning steps?</p>
+<article><h3>M3L5-038</h3><p>Which write-up is best supported after these cleaning steps?</p>
 <ol type='A'><li>Sex and class alone caused the outcomes for every passenger</li><li>Among passengers with recorded age retained after selected-field duplicate removal, the observed survival rates differed by sex and class</li><li>The analysis includes every one of the original 891 passengers</li><li>Removing duplicate rows proves the remaining observations are unique people</li></ol></article>
-<article><h3>M3L5-039</h3><p>Which order best matches the lesson&#x27;s end-to-end exploratory analysis?</p>
+<article><h3>M3L5-039</h3><p>Which order best describes an end-to-end exploratory analysis?</p>
 <ol type='A'><li>Plot first, delete missing outcomes, fit a model, then inspect columns</li><li>Remove all repeated values before deciding which fields matter, then infer causes</li><li>Load and inspect, select and clean, describe, cross-tabulate, visualize, then examine groups together</li><li>Calculate correlations, discard small groups, and report only the highest rate</li></ol></article>
-<article><h3>M3L5-040</h3><p>What is the overall survival rate in the lesson&#x27;s cleaned 670-row sample?</p>
+<article><h3>M3L5-040</h3><p>What is the overall survival rate in the cleaned 670-row sample?</p>
 <ol type='A'><li>About 25.0%</li><li>About 50.0%</li><li>About 75.2%</li><li>About 41.9%</li></ol></article>
 <h2>Structured-response questions</h2>
-<article><h3>M3L5-E01 · 5 marks</h3><p>Describe the lesson&#x27;s cleaning pipeline from the full table to the analysis table. Give the row counts at each stage, calculate the approximate percentage retained, and explain why the final results must be described as applying to a restricted sample.</p>
+<article><h3>M3L5-E01 · 5 marks</h3><p>Describe the cleaning pipeline from the full table to the analysis table. Give the row counts at each stage, calculate the approximate percentage retained, and explain why the final results apply to a restricted sample.</p>
 <figure><img src='charts/cleaning_flow.svg' alt='Bar chart showing the successive 891, 714, and 670 row totals.'><figcaption>Bar chart showing the successive 891, 714, and 670 row totals.</figcaption></figure>
 </article>
-<article><h3>M3L5-E02 · 5 marks</h3><p>The lesson removes 44 duplicate rows after selecting five fields. Explain why matching values do not prove that two rows are the same passenger. Recommend a cautious next step and describe one way this decision could affect later summaries.</p>
+<article><h3>M3L5-E02 · 5 marks</h3><p>After 44 duplicate rows are removed based on five selected fields, explain why matching values do not prove that two rows represent the same passenger. Recommend a cautious next step and describe one way this decision could affect later summaries.</p>
 </article>
 <article><h3>M3L5-E03 · 5 marks</h3><p>Use the survival-by-sex and survival-by-class charts. Report the approximate survival proportion for women, men, and each passenger class. Explain how `normalize=&#x27;index&#x27;` creates those proportions, then give one careful interpretation and one limitation.</p>
 <figure><img src='charts/survival_by_sex.svg' alt='100%-stacked bars show 75% survival among women and 22% among men in the cleaned sample.'><figcaption>100%-stacked bars show 75% survival among women and 22% among men in the cleaned sample.</figcaption></figure>
@@ -127,10 +127,10 @@
 <figure><img src='charts/age_fare_scatter.svg' alt='Scatter plot of age and fare for the 670-row cleaned sample; no strong age-fare pattern is apparent.'><figcaption>Scatter plot of age and fare for the 670-row cleaned sample; no strong age-fare pattern is apparent.</figcaption></figure>
 <figure><img src='charts/fare_boxplot_by_survival.svg' alt='Fare box plot grouped by survived 0 or 1; the median for 1 is higher, with overlapping distributions.'><figcaption>Fare box plot grouped by survived 0 or 1; the median for 1 is higher, with overlapping distributions.</figcaption></figure>
 </article>
-<article><h3>M3L5-E07 · 5 marks</h3><p>The lesson notes that age was missing more often for third-class passengers. Use the missing-age chart to quantify the pattern and explain why dropping all missing ages could make later results less representative. Suggest one sensitivity check that stays within the lesson&#x27;s exploratory-analysis level.</p>
+<article><h3>M3L5-E07 · 5 marks</h3><p>Age is missing more often for third-class passengers. Use the missing-age chart to quantify the pattern and explain why dropping all missing ages could make later results less representative. Suggest one sensitivity check suitable for exploratory analysis.</p>
 <figure><img src='charts/missing_age_by_class.svg' alt='Before cleaning, age is missing for 13.9% in class 1, 6.0% in class 2, and 27.7% in class 3.'><figcaption>Before cleaning, age is missing for 13.9% in class 1, 6.0% in class 2, and 27.7% in class 3.</figcaption></figure>
 </article>
-<article><h3>M3L5-E08 · 5 marks</h3><p>Plan the lesson&#x27;s exploratory analysis for a new passenger-like CSV. Write a compact pandas workflow to load and inspect it, select fields, quantify and handle missing age, summarize numerical and categorical variables, compute survival proportions by two categorical fields, and create one appropriate plot. Include a sentence explaining how you would report the cost of cleaning.</p>
+<article><h3>M3L5-E08 · 5 marks</h3><p>Plan an exploratory analysis for a new passenger-like CSV. Write a compact pandas workflow to load and inspect it, select fields, quantify and handle missing age, summarize numerical and categorical variables, compute survival proportions by two categorical fields, and create one appropriate plot. Include a sentence explaining how you would report the cost of cleaning.</p>
 <pre><code>df = pd.read_csv(&#x27;passengers.csv&#x27;)
 print(df.shape)
 df.info()

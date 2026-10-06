@@ -80,10 +80,120 @@ body {
   @apply bg-background text-foreground;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 29;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: color;
+  background-color: rgb(34 105 210);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  opacity: 0.055;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+}
+
 @layer components {
   .app-content {
     @apply mx-auto w-full max-w-7xl px-4 py-6 md:px-8 md:py-8;
   }
+
+  .ssc-arena-atmosphere {
+    background:
+      radial-gradient(ellipse 54% 65% at 78% 13%, rgb(var(--primary) / 0.19), transparent 70%),
+      radial-gradient(ellipse 42% 48% at 76% 78%, rgb(var(--retro-pink) / 0.1), transparent 72%),
+      radial-gradient(ellipse 55% 43% at 19% 96%, rgb(var(--cyan-700) / 0.18), transparent 70%),
+      linear-gradient(132deg, rgb(var(--surface-shade)) 0%, rgb(var(--background)) 48%, rgb(var(--surface-deep)) 100%);
+  }
+
+  .ssc-arena-grid {
+    opacity: 0.7;
+    background-image:
+      linear-gradient(to right, rgb(var(--cyan-200) / 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--cyan-200) / 0.055) 1px, transparent 1px),
+      linear-gradient(32deg, transparent 49.9%, rgb(var(--primary) / 0.035) 50%, transparent 50.1%);
+    background-size: 84px 84px, 84px 84px, 240px 240px;
+    mask-image: radial-gradient(ellipse at 70% 20%, #000 0%, rgb(0 0 0 / 0.62) 42%, transparent 88%);
+  }
+
+  .ssc-arena-map {
+    opacity: 0.75;
+    filter: drop-shadow(0 0 38px rgb(var(--primary) / 0.06));
+  }
+
+  .ssc-arena-vignette {
+    background:
+      linear-gradient(90deg, rgb(var(--surface-deep) / 0.24), transparent 24%, transparent 76%, rgb(2 6 23 / 0.2)),
+      radial-gradient(ellipse at 54% 42%, transparent 32%, rgb(2 6 23 / 0.25) 100%);
+  }
+
+  .instrument-panel {
+    position: relative;
+    clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px);
+  }
+  .instrument-panel::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    pointer-events: none;
+    opacity: 0.5;
+    background:
+      linear-gradient(rgb(var(--primary) / 0.65), rgb(var(--primary) / 0.65)) left top / 13px 1px no-repeat,
+      linear-gradient(rgb(var(--primary) / 0.65), rgb(var(--primary) / 0.65)) left top / 1px 13px no-repeat,
+      linear-gradient(rgb(var(--primary) / 0.65), rgb(var(--primary) / 0.65)) right top / 13px 1px no-repeat,
+      linear-gradient(rgb(var(--primary) / 0.65), rgb(var(--primary) / 0.65)) right top / 1px 13px no-repeat,
+      linear-gradient(rgb(var(--primary) / 0.65), rgb(var(--primary) / 0.65)) left bottom / 13px 1px no-repeat,
+      linear-gradient(rgb(var(--primary) / 0.65), rgb(var(--primary) / 0.65)) left bottom / 1px 13px no-repeat,
+      linear-gradient(rgb(var(--primary) / 0.65), rgb(var(--primary) / 0.65)) right bottom / 13px 1px no-repeat,
+      linear-gradient(rgb(var(--primary) / 0.65), rgb(var(--primary) / 0.65)) right bottom / 1px 13px no-repeat;
+  }
+
+  .instrument-nav-link {
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  }
+
+  .console-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 2.4rem;
+    padding: 0.55rem 0.8rem;
+    border-left: 2px solid rgb(var(--primary) / 0.85);
+    background: rgb(var(--background) / 0.62);
+    color: rgb(var(--foreground));
+    @apply text-xs;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  }
+
+  .console-control {
+    clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 0 100%);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .console-control[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 640px) {
+  .ssc-arena-grid { opacity: 0.4; }
+  .ssc-arena-map { opacity: 0.42; }
 }
 
 /* --- 4. TACTICAL SCROLLBAR (NEW) --- */

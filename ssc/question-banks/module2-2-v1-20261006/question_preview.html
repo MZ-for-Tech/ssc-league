@@ -4,7 +4,7 @@
 <ol type='A'><li>Sequentially, from top to bottom</li><li>By selecting a branch at random</li><li>By repeating each statement until it is false</li><li>By executing only indented statements</li></ol></article>
 <article><h3>M2L2-002</h3><p>What does conditional execution allow a program to do?</p>
 <ol type='A'><li>Store a value in a named variable</li><li>Run a block only when its condition is true</li><li>Translate all code before it runs</li><li>Repeat a block while its condition remains true</li></ol></article>
-<article><h3>M2L2-003</h3><p>Which pair names the two ways the lesson says to alter sequential flow?</p>
+<article><h3>M2L2-003</h3><p>Which pair of constructs changes sequential control flow?</p>
 <ol type='A'><li>Compilation and interpretation</li><li>Assignment and comparison</li><li>Selection and repetition</li><li>Input and output</li></ol></article>
 <article><h3>M2L2-004</h3><p>Which line has the correct basic Python conditional form?</p>
 <ol type='A'><li>`if score &gt;= 50`</li><li>`if (score &gt;= 50);`</li><li>`IF score &gt;= 50:`</li><li>`if score &gt;= 50:`</li></ol></article>
@@ -37,7 +37,7 @@ if x % 2 == 0:
 else:
     print(&#x27;odd&#x27;)</code></pre>
 <ol type='A'><li>Both branches print</li><li>Else prints that x is odd</li><li>The if branch prints that x is even</li><li>Neither branch runs</li></ol></article>
-<article><h3>M2L2-011</h3><p>Which pair of mistakes does the lesson identify as syntax errors in a conditional header?</p>
+<article><h3>M2L2-011</h3><p>Which pair of mistakes causes syntax errors in a conditional header?</p>
 <ol type='A'><li>Using `and`, or indenting a block</li><li>Using `else`, or comparing integers</li><li>One `=` used for comparison or no colon</li><li>Using `==` instead of `=`, or adding a colon</li></ol></article>
 <article><h3>M2L2-012</h3><p>When comparing two numbers with `if x &gt; y`, `elif y &gt; x`, and `else`, what does the final else represent?</p>
 <pre><code>if x &gt; y:
@@ -82,20 +82,20 @@ elif a &lt; 0 and a % 2 == 0:
 else:
     kind = &#x27;negative odd&#x27;</code></pre>
 <ol type='A'><li>Even positive number</li><li>Even negative number</li><li>Zero</li><li>Odd negative number</li></ol></article>
-<article><h3>M2L2-019</h3><p>Which Boolean condition exactly implements the leap-year rule described in the lesson?</p>
+<article><h3>M2L2-019</h3><p>Which Boolean condition exactly implements the leap-year rule?</p>
 <ol type='A'><li>`year % 400 == 0 and (year % 4 == 0 or year % 100 != 0)`</li><li>`year % 4 == 0 or year % 100 != 0`</li><li>`year % 400 == 0 or (year % 4 == 0 and year % 100 != 0)`</li><li>`year % 100 == 0 and year % 400 != 0`</li></ol></article>
-<article><h3>M2L2-020</h3><p>According to the leap-year rule, is 1900 a leap year?</p>
+<article><h3>M2L2-020</h3><p>Under the standard leap-year rule, is 1900 a leap year?</p>
 <pre><code>year = 1900
 if year % 400 == 0 or (year % 4 == 0 and year % 100 != 0):
     result = &#x27;leap year&#x27;
 else:
     result = &#x27;not a leap year&#x27;</code></pre>
 <ol type='A'><li>Yes; every year divisible by 4 is a leap year</li><li>Yes; every century year is a leap year</li><li>No; it is not divisible by 4</li><li>No; it is divisible by 100 but not by 400</li></ol></article>
-<article><h3>M2L2-021</h3><p>According to the same rule, is 2000 a leap year?</p>
+<article><h3>M2L2-021</h3><p>Under the standard leap-year rule, is 2000 a leap year?</p>
 <ol type='A'><li>Yes; it is divisible by 400</li><li>No; it is a century year</li><li>No; century years are never leap years</li><li>Yes; it is divisible by 100 only</li></ol></article>
 <article><h3>M2L2-022</h3><p>A loan applicant must be at least 21 and earn at least 25,000. Which expression tests eligibility?</p>
 <ol type='A'><li>`age &gt;= 21 or income &gt;= 25000`</li><li>`age &gt;= 21 and income &gt;= 25000`</li><li>`age == 21 and income == 25000`</li><li>`age &gt; 21 or income &gt; 25000`</li></ol></article>
-<article><h3>M2L2-023</h3><p>An applicant is age 26 and earns 24,999. Under the lesson&#x27;s loan rule, what is the result?</p>
+<article><h3>M2L2-023</h3><p>An applicant is age 26 and earns 24,999. Under a loan rule requiring age at least 21 and income at least 25,000, what is the result?</p>
 <ol type='A'><li>Not qualified, because age is above 21</li><li>Qualified, because income is rounded to 25,000</li><li>No; income is below the minimum</li><li>Age alone qualifies</li></ol></article>
 <article><h3>M2L2-024</h3><p>At what point in the tariff chain does a unit count of 450 reach the selected band?</p>
 <pre><code>units = 450
@@ -108,7 +108,7 @@ elif units &lt;= 500:
 else:
     rate = 0.25</code></pre>
 <ol type='A'><li>The branch for values up to 100</li><li>The branch for values up to 300</li><li>The final above-500 branch</li><li>The branch for values up to 500</li></ol></article>
-<article><h3>M2L2-025</h3><p>Using the lesson&#x27;s tariff code, what bill is calculated for 400 units if the selected rate is multiplied by all units?</p>
+<article><h3>M2L2-025</h3><p>Using the tariff code, what bill is calculated for 400 units if the selected rate is multiplied by all units?</p>
 <pre><code>units = 400
 if units &lt;= 100:
     bill = units * 0.10
@@ -128,7 +128,7 @@ print(bill)</code></pre>
 <ol type='A'><li>0.10 per unit</li><li>0.15 per unit</li><li>0.20 per unit</li><li>0.25 per unit</li></ol></article>
 <article><h3>M2L2-029</h3><p>What does nesting mean for conditional statements?</p>
 <ol type='A'><li>Placing one conditional inside the block of another</li><li>Writing two conditions on one line without indentation</li><li>Repeating the same if until it becomes false</li><li>Putting an else before the if</li></ol></article>
-<article><h3>M2L2-030</h3><p>Why does the lesson caution that deeply nested conditions can be hard to read?</p>
+<article><h3>M2L2-030</h3><p>Why can deeply nested conditions be hard to read?</p>
 <ol type='A'><li>Nested conditions cannot contain comparisons</li><li>Deep nesting makes the flow harder to trace</li><li>Python does not allow nested else blocks</li><li>Python evaluates every nested condition before choosing a branch</li></ol></article>
 <article><h3>M2L2-031</h3><p>The code first tests `x &gt; 0`, then `x &gt; 10`. For x=12, which branch runs?</p>
 <pre><code>if x &gt; 0:
@@ -160,7 +160,7 @@ else:
 <pre><code>if x &gt; 0:
 print(&#x27;positive&#x27;)</code></pre>
 <ol type='A'><li>No error; indentation never affects Python</li><li>A ZeroDivisionError</li><li>An indentation or block-structure error</li><li>A NameError because all variables disappear</li></ol></article>
-<article><h3>M2L2-036</h3><p>A program reads `x = input(...)` and immediately tests `x &gt; 0`. What lesson step is needed when input should be numeric?</p>
+<article><h3>M2L2-036</h3><p>A program reads `x = input(...)` and immediately tests `x &gt; 0`. What step is needed when the input should be numeric?</p>
 <pre><code>x = input(&#x27;Enter a number: &#x27;)
 if x &gt; 0:
     print(&#x27;positive&#x27;)</code></pre>
@@ -181,15 +181,15 @@ print(&#x27;Done.&#x27;)</code></pre>
 </article>
 <article><h3>M2L2-E02 · 5 marks</h3><p>Design an if/elif/else chain that compares two numbers and reports whether the first is greater, the second is greater, or they are equal. Explain why the final case can safely be treated as equality.</p>
 </article>
-<article><h3>M2L2-E03 · 5 marks</h3><p>Use the lesson&#x27;s leap-year rule to classify 2000, 1900, 2024, and 2023. State the condition and explain why the two century examples differ.</p>
+<article><h3>M2L2-E03 · 5 marks</h3><p>Use the leap-year rule to classify 2000, 1900, 2024, and 2023. State the condition and explain why the two century examples differ.</p>
 </article>
 <article><h3>M2L2-E04 · 5 marks</h3><p>A chained classification should report above 10, positive, or not positive. The draft tests x&gt;0 before x&gt;10. Explain the bug for x=12 and rewrite the conditions in an order that makes all three outcomes reachable.</p>
 </article>
 <article><h3>M2L2-E05 · 5 marks</h3><p>An applicant qualifies for a loan only if age is at least 21 and annual income is at least 25,000. Write the Boolean condition and classify these cases: (20, 30000), (21, 25000), (30, 24999), and (21, 26000).</p>
 </article>
-<article><h3>M2L2-E06 · 5 marks</h3><p>Using the lesson&#x27;s electricity tariff code, select the rate and calculate the bill for 50, 250, 400, and 800 units. Explain how the order of the branches creates the lower end of each later band.</p>
+<article><h3>M2L2-E06 · 5 marks</h3><p>Using the electricity tariff code, select the rate and calculate the bill for 50, 250, 400, and 800 units. Explain how the order of the branches creates the lower end of each later band.</p>
 </article>
-<article><h3>M2L2-E07 · 5 marks</h3><p>The lesson classifies a number as positive even, positive odd, zero, negative even, or negative odd. Write an ordered condition outline and show the resulting category for 8, 3, 0, -6, and -7.</p>
+<article><h3>M2L2-E07 · 5 marks</h3><p>Classify a number as positive even, positive odd, zero, negative even, or negative odd. Write an ordered condition outline and show the resulting category for 8, 3, 0, -6, and -7.</p>
 </article>
 <article><h3>M2L2-E08 · 5 marks</h3><p>Rewrite the nested comparison below as a single if/elif/else chain with the same outcomes. Explain one readability advantage and confirm the output for x=4, y=9.</p>
 <pre><code>if x == y:

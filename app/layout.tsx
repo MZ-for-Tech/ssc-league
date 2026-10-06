@@ -12,7 +12,7 @@ const publicSiteUrl =
 export const metadata: Metadata = {
   ...(publicSiteUrl
     ? { metadataBase: new URL(publicSiteUrl.startsWith("http") ? publicSiteUrl : `https://${publicSiteUrl}`) }
-    : {}),
+    : { metadataBase: new URL("https://ssc-league.vercel.app") }),
   applicationName: "SSC2 League",
   title: {
     default: "SSC2 League | Programming & Data Science",
@@ -34,12 +34,14 @@ export const metadata: Metadata = {
     description:
       "Learn programming and data science, complete course challenges, and track your progress in the SSC2 League.",
     locale: "en_US",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "SSC2 League — Programming and Data Science" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "SSC2 League | Programming & Data Science",
     description:
       "Learn programming and data science, complete course challenges, and track your progress in the SSC2 League.",
+    images: [{ url: "/twitter-image", alt: "SSC2 League — Programming and Data Science" }],
   },
 };
 

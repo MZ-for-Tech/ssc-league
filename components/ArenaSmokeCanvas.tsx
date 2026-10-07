@@ -33,6 +33,8 @@ function RisingSmoke() {
     particles.current = smokeMeshes;
   }, []);
 
+  // Three.js animation updates mesh and velocity objects imperatively each frame.
+  /* eslint-disable react-hooks/immutability */
   useFrame(() => {
     for (const particle of particles.current) {
       if (particle.position.y < MAX_Y - 1) continue;
@@ -46,6 +48,7 @@ function RisingSmoke() {
       velocity.z = 0;
     }
   }, -1);
+  /* eslint-enable react-hooks/immutability */
 
   return (
     <group ref={smokeGroup}>

@@ -132,10 +132,8 @@ export default function CourseCodeTerminal() {
       </div>
       <pre ref={viewportRef} className="h-44 overflow-y-auto whitespace-pre-wrap break-words px-4 py-3 font-mono text-xs leading-6 text-slate-200 sm:h-48 sm:px-5 sm:py-4 sm:text-sm sm:leading-7"><code>{visibleLines.map((line, index) => <span key={index} className="block"><span className="mr-4 inline-block w-5 select-none text-right text-muted/45">{index + 1}</span>{highlightPython(line) || " "}{index === visibleLines.length - 1 && <span aria-hidden="true" className="ml-1 inline-block h-4 w-1 animate-pulse bg-primary align-middle" />}</span>)}</code></pre>
       <div className="flex items-center justify-between border-t border-border/70 px-4 py-2.5 font-mono text-[9px] font-bold uppercase tracking-[0.15em] text-muted/65 sm:px-5 sm:text-[10px]">
-        <span>One script · live scrollback</span>
         <span className="flex items-center gap-2 text-success"><i className="h-1.5 w-1.5 bg-success shadow-[0_0_8px_rgb(var(--success)/0.8)]" /> Ready</span>
       </div>
     </div>
   );
 }
-

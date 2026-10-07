@@ -1,4 +1,5 @@
 const PYODIDE_VERSION = "0.23.4";
+const PACKAGE_CACHE_NAME = `ssc-python-assets-v${PYODIDE_VERSION}`;
 const IMPORT_TO_PACKAGE = {
   numpy: "numpy",
   scipy: "scipy",
@@ -19,6 +20,49 @@ const SEABORN_VERSION = "0.13.2";
 let runtime = null;
 let activeRunId = null;
 let seabornInstalled = false;
+
+async function enablePersistentPackageCache() {
+  if (!self.caches || typeof self.fetch !== "function") return;
+
+  try {
+    const cache = await self.caches.open(PACKAGE_CACHE_NAME);
+    const fetchFromNetwork = self.fetch.bind(self);
+
+    self.fetch = async (input, init) => {
+      const request = new Request(input, init);
+      const url = new URL(request.url);
+      const isPyodideAsset =
+        url.origin === "https://cdn.jsdelivr.net" &&
+        url.pathname.startsWith(`/pyodide/v${PYODIDE_VERSION}/full/`);
+      const isPythonWheel =
+        url.origin === "https://files.pythonhosted.org" &&
+        url.pathname.endsWith(".whl");
+
+      if (request.method !== "GET" || (!isPyodideAsset && !isPythonWheel)) {
+        return fetchFromNetwork(request);
+      }
+
+      try {
+        const cached = await cache.match(request);
+        if (cached) return cached;
+      } catch {
+        // A cache read failure should not prevent Python from loading online.
+      }
+
+      const response = await fetchFromNetwork(request);
+      if (response.ok && response.type !== "opaque") {
+        try {
+          await cache.put(request, response.clone());
+        } catch {
+          // Quota limits or browser storage restrictions should not block a run.
+        }
+      }
+      return response;
+    };
+  } catch {
+    // CacheStorage is optional; the browser's regular HTTP cache remains usable.
+  }
+}
 
 function getImportedPackages(code) {
   const getImports = runtime.globals.get("_ssc_get_imports");
@@ -88,6 +132,7 @@ async function postFigures(runId) {
 async function initializeRuntime() {
   try {
     const indexURL = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`;
+    await enablePersistentPackageCache();
     importScripts(`${indexURL}pyodide.js`);
     runtime = await loadPyodide({ indexURL });
 

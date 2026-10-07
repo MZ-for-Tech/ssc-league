@@ -1,5 +1,4 @@
 import DashboardView from "@/components/dashboard/DashboardView";
-import StudentDashboardPreview from "@/components/dashboard/StudentDashboardPreview";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getImpersonatedStudentId } from "@/lib/auth/impersonation";
 import { getActiveSeasonId, getSelectedSeasonId } from "@/lib/seasons";
@@ -11,11 +10,7 @@ export const revalidate = 0;
 export const dynamic = "force-dynamic";
 export const metadata = createPageMetadata("Dashboard", "See your SSC2 League progress, current objectives, and recent activity.");
 
-interface DashboardPageProps {
-  searchParams?: Promise<{ view?: string }>;
-}
-
-export default async function DashboardPage({ searchParams }: DashboardPageProps) {
+export default async function DashboardPage() {
   const supabase = await createSupabaseServerClient();
   const activeSeasonId = await getActiveSeasonId(supabase);
 
@@ -32,12 +27,10 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
     supabase.from("Admin").select("id").eq("auth_id", user.id).maybeSingle(),
     getImpersonatedStudentId(),
   ]);
-  const params = searchParams ? await searchParams : {};
   const isAdmin = Boolean(adminProfile);
   const selectedSeasonId = await getSelectedSeasonId(supabase, activeSeasonId, isAdmin);
   const dashboardSeasonId = isAdmin ? selectedSeasonId : activeSeasonId;
 
-  if (isAdmin && params.view === "student" && !impersonateId) return <StudentDashboardPreview />;
   if (isAdmin && !impersonateId) redirect("/admin");
 
   let targetId = user.id;

@@ -33,7 +33,8 @@ export function QuestionBankSkeleton() {
           </header>
           <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             {[0, 1, 2].map((lesson) => (
-              <article key={lesson} className="min-h-44 rounded-xl border border-border bg-surface/55 p-5">
+              <article key={lesson} className="instrument-panel relative isolate min-h-44 overflow-hidden rounded-xl border border-border bg-[linear-gradient(135deg,rgb(var(--surface-hero)),rgb(var(--surface))_62%,rgb(var(--surface-node)))] p-5 shadow-lg shadow-black/10">
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
                 <div className="flex items-start gap-3">
                   <div className="h-10 w-10 shrink-0 rounded-lg border border-primary/15 bg-primary/10" />
                   <div className="min-w-0 flex-1 space-y-3">

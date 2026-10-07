@@ -29,6 +29,7 @@ export default function AdminDashboardView({
   activeSeasonId,
   seasons,
   welcomeName,
+  welcomeUserId,
   welcomeAvatarUrl,
   view = "admin",
 }: AdminDashboardViewProps) {
@@ -46,11 +47,7 @@ export default function AdminDashboardView({
               <Link href="/dashboard" className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-2.5 font-semibold text-amber-300 transition hover:bg-amber-500/15 sm:w-auto">
                 Return to student view <ArrowRight size={16} />
               </Link>
-            ) : (
-              <Link href="/dashboard?view=student" className="console-control inline-flex min-h-11 w-full items-center justify-center gap-2 border border-primary/20 bg-background/55 px-4 py-2.5 font-semibold text-foreground transition hover:border-primary/50 hover:bg-primary/5 sm:w-auto">
-                <Users size={16} /> Student view
-              </Link>
-            )}
+            ) : null}
             <AdminSeasonToolbar seasons={seasons} seasonId={seasonId} />
           </div>}
         />
@@ -61,7 +58,7 @@ export default function AdminDashboardView({
 
   return (
     <div className="app-page-stack pb-16">
-      <WelcomeScreen name={(welcomeName || "Agent").toUpperCase()} storageKey="has_seen_admin_welcome" />
+      <WelcomeScreen name={(welcomeName || "Agent").toUpperCase()} storageKey="has_seen_admin_welcome" userId={welcomeUserId} />
 
       <header className="instrument-panel relative isolate overflow-hidden rounded-2xl border border-border bg-surface/70 shadow-xl shadow-black/30">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_82%_0%,rgb(var(--primary)/0.14),transparent_45%)]" />
@@ -88,11 +85,7 @@ export default function AdminDashboardView({
               <Link href="/dashboard" className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-2.5 text-sm font-semibold text-amber-300 transition hover:bg-amber-500/15 sm:w-auto">
                 Return to student view <ArrowRight size={16} />
               </Link>
-            ) : (
-              <Link href="/dashboard?view=student" className="console-control inline-flex min-h-11 w-full items-center justify-center gap-2 border border-primary/20 bg-background/55 px-4 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/50 hover:bg-primary/5 sm:w-auto">
-                <Users size={16} /> Student view
-              </Link>
-            )}
+            ) : null}
             <AdminSeasonToolbar seasons={seasons} seasonId={seasonId} />
           </div>
         </div>

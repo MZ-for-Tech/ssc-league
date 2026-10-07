@@ -16,6 +16,7 @@ export interface AdminDashboardViewProps {
   activeSeasonId: string;
   seasons: SeasonRecord[];
   welcomeName?: string;
+  welcomeUserId: string;
   welcomeAvatarUrl?: string | null;
   view?: "admin" | "operations";
 }

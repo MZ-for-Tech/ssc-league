@@ -33,6 +33,7 @@ export default async function AdminOperationsPage() {
       activeSeasonId={activeSeasonId}
       seasons={seasons || []}
       welcomeName={welcomeName}
+      welcomeUserId={user.id}
       welcomeAvatarUrl={user.user_metadata?.avatar_url || user.user_metadata?.picture || null}
       view="operations"
     />

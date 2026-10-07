@@ -34,22 +34,22 @@ export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
   };
 
   return (
-    <div className="p-3 border-t border-border bg-surface/30 flex flex-col gap-2">
+    <div className="flex items-center justify-between gap-2 border-t border-border bg-surface/30 p-3">
       <button
         onClick={handleSignOut}
         disabled={isSigningOut}
         title="Disconnect"
         className={clsx(
           "flex items-center rounded-xl transition-all group border border-transparent hover:border-danger/20 text-muted hover:text-danger hover:bg-danger/10",
-          isCollapsed ? "justify-center p-3" : "w-full px-4 py-3",
+          isCollapsed ? "justify-center p-3" : "min-w-0 flex-1 px-2 py-2.5",
         )}
       >
         {isSigningOut ? <Loader2 size={18} className="animate-spin" /> : <LogOut size={18} className={clsx(!isCollapsed && "mr-3")} />}
         {!isCollapsed && <span className="text-sm font-medium">{isSigningOut ? "..." : "Disconnect"}</span>}
       </button>
       {!isCollapsed && (
-        <div className="mt-2 flex items-center justify-between px-2 animate-in fade-in slide-in-from-bottom-2">
-          <span className="text-xs text-slate-600 font-mono uppercase">v1.0.0 Stable</span>
+        <div className="shrink-0 animate-in fade-in slide-in-from-bottom-2">
+          <span className="whitespace-nowrap font-mono text-[10px] uppercase text-slate-600 sm:text-xs">v1.0.0 Stable</span>
         </div>
       )}
     </div>

@@ -5,7 +5,15 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Terminal } from "lucide-react";
 
-export default function WelcomeScreen({ name, storageKey = "has_seen_welcome" }: { name: string; storageKey?: string }) {
+export default function WelcomeScreen({
+  name,
+  storageKey = "has_seen_welcome",
+  userId,
+}: {
+  name: string;
+  storageKey?: string;
+  userId: string;
+}) {
   const [show, setShow] = useState(false);
   const [decryptedName, setDecryptedName] = useState("");
   const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
@@ -14,15 +22,17 @@ export default function WelcomeScreen({ name, storageKey = "has_seen_welcome" }:
   useEffect(() => {
     const timer = window.setTimeout(() => {
       const loginWelcome = sessionStorage.getItem("ssc_show_welcome_after_login") === "true";
-      if (loginWelcome) sessionStorage.removeItem("ssc_show_welcome_after_login");
+      if (!loginWelcome) return;
+      sessionStorage.removeItem("ssc_show_welcome_after_login");
 
-      if (loginWelcome || !sessionStorage.getItem(storageKey)) {
-        sessionStorage.setItem(storageKey, "true");
-        setShow(true);
-      }
+      const seenKey = `ssc_welcome_seen:${storageKey}:${userId}`;
+      if (localStorage.getItem(seenKey)) return;
+
+      localStorage.setItem(seenKey, "true");
+      setShow(true);
     }, 0);
     return () => window.clearTimeout(timer);
-  }, [storageKey]);
+  }, [storageKey, userId]);
 
   // 2. Decryption & Timer Logic
   useEffect(() => {

@@ -41,7 +41,7 @@ export default function DashboardView({
 }: DashboardViewProps) {
   return (
     <div className="app-page-stack w-full animate-in fade-in slide-in-from-bottom-4">
-      <WelcomeScreen name={firstName.toUpperCase()} />
+      <WelcomeScreen name={firstName.toUpperCase()} userId={student.id} />
 
       <DashboardHero
         student={student}

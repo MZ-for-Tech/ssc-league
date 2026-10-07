@@ -24,6 +24,7 @@ export default async function AdminHomePage() {
       seasonId={seasonId}
       activeSeasonId={activeSeasonId}
       welcomeName={welcomeName}
+      welcomeUserId={user.id}
       welcomeAvatarUrl={welcomeAvatarUrl}
     />
   );

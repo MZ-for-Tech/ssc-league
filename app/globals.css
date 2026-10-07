@@ -196,10 +196,10 @@ body::after {
 
   .ssc-arena-atmosphere {
     background:
-      radial-gradient(ellipse 54% 65% at 78% 13%, rgb(var(--primary) / 0.14), transparent 70%),
-      radial-gradient(ellipse 42% 48% at 76% 78%, rgb(var(--retro-pink) / 0.06), transparent 72%),
-      radial-gradient(ellipse 55% 43% at 19% 96%, rgb(var(--cyan-700) / 0.12), transparent 70%),
-      linear-gradient(132deg, rgb(5 12 24) 0%, rgb(8 15 29) 48%, rgb(4 10 22) 100%);
+      radial-gradient(ellipse 54% 65% at 78% 13%, rgb(var(--primary) / 0.1), transparent 70%),
+      radial-gradient(ellipse 42% 48% at 76% 78%, rgb(var(--retro-pink) / 0.035), transparent 72%),
+      radial-gradient(ellipse 55% 43% at 19% 96%, rgb(var(--cyan-700) / 0.08), transparent 70%),
+      linear-gradient(132deg, rgb(2 7 16) 0%, rgb(5 10 20) 48%, rgb(2 6 15) 100%);
   }
 
   .ssc-arena-smoke canvas {
@@ -226,7 +226,7 @@ body::after {
 
   .ssc-arena-vignette {
     background:
-      linear-gradient(rgb(2 6 23 / 0.16), rgb(2 6 23 / 0.16)),
+      linear-gradient(rgb(2 6 23 / 0.08), rgb(2 6 23 / 0.08)),
       linear-gradient(90deg, rgb(var(--surface-deep) / 0.24), transparent 24%, transparent 76%, rgb(2 6 23 / 0.2)),
       radial-gradient(ellipse at 54% 42%, transparent 32%, rgb(2 6 23 / 0.25) 100%);
   }

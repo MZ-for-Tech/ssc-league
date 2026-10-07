@@ -93,7 +93,7 @@ export default function AdminQuestionsView({
     : view === "add" ? "Add question" : view === "import" ? "Import questions" : "Question Bank";
 
   return (
-    <div className="w-full animate-in fade-in space-y-6 pb-16">
+    <div className="app-page-stack w-full animate-in fade-in pb-16">
       <PageHeader
         title={pageTitle}
         icon={<FileQuestion size={28} />}

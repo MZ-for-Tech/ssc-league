@@ -69,7 +69,7 @@ export function QuestionEditorForm({
               <textarea rows={3} value={explanation} onChange={(event) => onExplanationChange(event.target.value)} className={fieldClass} placeholder="Explain why the correct answer is right…" />
             </label>
           </div>
-          <aside className="h-fit space-y-5 rounded-xl border border-border bg-background/50 p-4 sm:p-5">
+          <aside className="h-fit space-y-5 rounded-xl border border-border bg-background/50 app-panel-padding">
             <label className="block space-y-2">
               <span className="text-xs font-bold uppercase tracking-wider text-muted">Lesson</span>
               <SelectDropdown required value={activeDraftTopicId} onChange={(event) => onTopicChange(event.target.value)} className={fieldClass}>

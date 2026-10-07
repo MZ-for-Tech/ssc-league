@@ -15,7 +15,7 @@ export default function ActivityChart({
   const attemptTotal = activityByDay.reduce((sum, day) => sum + day.count, 0);
 
   return (
-    <section aria-labelledby="activity-heading" className={`${adminPanelClass} p-5 sm:p-6`}>
+    <section aria-labelledby="activity-heading" className={`${adminPanelClass} app-panel-padding`}>
       <div className="mb-5 flex flex-wrap items-end justify-between gap-4 sm:mb-6">
         <div>
           <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-primary">{windowLabel}</p>

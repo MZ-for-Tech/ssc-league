@@ -67,13 +67,13 @@ export default function WelcomeScreen({ name, storageKey = "has_seen_welcome" }:
       {show && (
         <motion.div
           key="welcome-screen"
-          className="fixed inset-0 z-[99999] flex items-center justify-center bg-background/95 backdrop-blur-2xl cursor-wait"
+          className="fixed inset-0 z-[99999] flex items-center justify-center overflow-y-auto bg-background/95 px-4 py-8 backdrop-blur-md sm:backdrop-blur-2xl cursor-wait"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, filter: "blur(20px)" }}
           transition={{ duration: 0.5, ease: "easeInOut" }} // Faster fade in/out
         >
-          <div className="text-center space-y-6 scale-110">
+          <div className="w-full max-w-4xl space-y-5 text-center sm:space-y-6">
 
             {/* Icon Pulse */}
             <motion.div
@@ -82,26 +82,26 @@ export default function WelcomeScreen({ name, storageKey = "has_seen_welcome" }:
               transition={{ duration: 0.3 }}
               className="flex justify-center"
             >
-                <div className="p-5 rounded-full bg-primary/10 border border-primary/20 shadow-glow-primary-soft animate-pulse">
-                  <Terminal size={40} className="text-primary" />
+                <div className="rounded-full border border-primary/20 bg-primary/10 p-4 shadow-glow-primary-soft animate-pulse sm:p-5">
+                  <Terminal size={32} className="text-primary sm:h-10 sm:w-10" />
                 </div>
             </motion.div>
 
             {/* Text */}
             <div className="space-y-3">
-                <p className="text-muted text-xs font-bold tracking-[0.3em] uppercase animate-pulse">
+                <p className="text-muted text-[0.65rem] font-bold tracking-[0.2em] uppercase animate-pulse sm:text-xs sm:tracking-[0.3em]">
                     Identifying Agent...
                 </p>
-                <h1 className="text-5xl md:text-7xl font-black text-foreground tracking-tight drop-shadow-2xl">
+                <h1 className="break-words text-[clamp(2.25rem,10vw,3.5rem)] font-black leading-tight tracking-tight text-foreground drop-shadow-2xl sm:text-5xl md:text-7xl">
                     WELCOME, <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+                    <span className="break-words text-transparent [overflow-wrap:anywhere] bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
                         {decryptedName}
                     </span>
                 </h1>
             </div>
 
             {/* Loading Bar (Synced to 1.5s) */}
-            <div className="w-64 h-1.5 bg-surface rounded-full mx-auto overflow-hidden mt-10 border border-border">
+            <div className="mx-auto mt-8 h-1.5 w-48 overflow-hidden rounded-full border border-border bg-surface sm:mt-10 sm:w-64">
                 <motion.div
                     initial={{ width: "0%" }}
                     animate={{ width: "100%" }}

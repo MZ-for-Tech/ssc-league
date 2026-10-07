@@ -37,7 +37,7 @@ export default function AdminDashboardView({
 
   if (view === "operations") {
     return (
-      <div className="space-y-5 pb-16 text-sm">
+      <div className="app-page-stack min-w-0 max-w-full pb-16 text-sm">
         <PageHeader
           title="League operations"
           icon={<ClipboardCheck size={28} />}
@@ -60,14 +60,14 @@ export default function AdminDashboardView({
   }
 
   return (
-    <div className="space-y-7 pb-16">
+    <div className="app-page-stack pb-16">
       <WelcomeScreen name={(welcomeName || "Agent").toUpperCase()} storageKey="has_seen_admin_welcome" />
 
       <header className="instrument-panel relative isolate overflow-hidden rounded-2xl border border-border bg-surface/70 shadow-xl shadow-black/30">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_82%_0%,rgb(var(--primary)/0.14),transparent_45%)]" />
         <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 -z-10 w-1/3 bg-dot-grid opacity-[0.08]" />
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
-        <div className="relative z-10 flex flex-col gap-6 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
+        <div className="relative z-10 flex flex-col gap-6 app-panel-padding md:flex-row md:items-center md:justify-between">
           <div className="flex min-w-0 items-center gap-4 sm:gap-5">
             <div className="relative h-20 w-20 shrink-0 rounded-full bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600 p-1 shadow-[0_0_30px_rgb(var(--primary-dim)/0.3)] sm:h-24 sm:w-24">
               <Image unoptimized width={96} height={96}

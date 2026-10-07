@@ -40,7 +40,7 @@ export default function DashboardView({
   seasonId,
 }: DashboardViewProps) {
   return (
-    <div className="w-full space-y-6 animate-in fade-in slide-in-from-bottom-4">
+    <div className="app-page-stack w-full animate-in fade-in slide-in-from-bottom-4">
       <WelcomeScreen name={firstName.toUpperCase()} />
 
       <DashboardHero
@@ -58,12 +58,12 @@ export default function DashboardView({
       />
 
       <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-[minmax(0,1.65fr)_minmax(19rem,0.85fr)]">
-        <div className="space-y-5">
+        <div className="app-page-stack">
           <NextObjective topic={nextMission} completedModulesCount={completedModulesCount} totalModules={totalModules} />
           <ModuleFocusChart modules={curriculumModules} />
         </div>
 
-        <div className="space-y-5">
+        <div className="app-page-stack">
           <RecentActivity activity={recentActivity} />
           <RivalsWidget rivals={rivals} myId={student.id} seasonId={seasonId} />
 

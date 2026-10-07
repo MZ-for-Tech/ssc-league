@@ -17,7 +17,7 @@ export default function OperationsCardHeader({
 
   return (
     <header className="mb-4 flex min-h-11 flex-wrap items-start justify-between gap-3">
-      <Heading id={id} className="flex items-center gap-2 text-base font-semibold leading-6 text-foreground">
+      <Heading id={id} className="app-section-title flex items-center gap-2 font-semibold text-foreground">
         <span className="flex h-[18px] w-[18px] shrink-0 items-center justify-center">{icon}</span>
         {title}
       </Heading>

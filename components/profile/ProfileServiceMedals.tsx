@@ -4,7 +4,7 @@ import type { ProfileBadges } from "@/components/profile/profile-types";
 
 export default function ProfileServiceMedals({ badges }: { badges: ProfileBadges }) {
   return (
-    <section className="instrument-panel rounded-2xl border border-border bg-surface/45 p-4 sm:p-5">
+    <section className="instrument-panel rounded-2xl border border-border bg-surface/45 app-panel-padding">
       <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
         <h2 className="console-section-heading"><Award size={15} className="text-amber-300" /> Service medals</h2>
         <div className="rounded-lg border border-border bg-background/40 px-3 py-2 font-mono text-xs font-bold tabular-nums text-foreground">

@@ -74,21 +74,21 @@ export default function AdminUsersView({ seasonId, activeSeasonId, seasons }: { 
       onBack={() => setShowImportView(false)}
     />
   ) : (
-    <div className="space-y-6 animate-in fade-in pb-20">
+    <div className="app-page-stack animate-in fade-in pb-20">
       {/* Header */}
       <PageHeader
         title="Agent Roster"
         icon={<Users size={28} />}
         actions={<div className="flex w-full flex-col gap-3 xl:w-auto xl:items-end">
           <AdminSeasonToolbar seasons={seasons} seasonId={seasonId} />
-          <div className="flex flex-wrap gap-2 sm:gap-3">
+            <div className="flex flex-wrap gap-2 sm:gap-3">
             <div className="relative min-w-0 flex-1 sm:flex-none sm:w-64">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" size={16} />
-              <input type="text" placeholder="Search..." className="w-full rounded-xl border border-border bg-background/70 py-2 pl-10 pr-4 text-sm text-foreground outline-none transition placeholder:text-muted/65 focus:border-primary/60 focus:ring-2 focus:ring-primary/10" value={search} onChange={e => setSearch(e.target.value)} />
+              <input type="text" placeholder="Search..." className="app-touch-target w-full rounded-xl border border-border bg-background/70 py-2 pl-10 pr-4 text-sm text-foreground outline-none transition placeholder:text-muted/65 focus:border-primary/60 focus:ring-2 focus:ring-primary/10" value={search} onChange={e => setSearch(e.target.value)} />
             </div>
             <ExportButton data={users.map(u => ({...u}))} />
-            {!readOnly && <button onClick={() => { setFormState(null); importFlow.resetForOpen(); setShowImportView(true); }} className="inline-flex items-center gap-2 rounded-xl border border-primary/20 bg-background/55 px-4 py-2 text-xs font-bold uppercase tracking-wider text-foreground transition hover:border-primary/50 hover:bg-primary/5"><Upload size={16} /> Import students</button>}
-            {!readOnly && <button onClick={() => setModalMode("admin")} className="inline-flex items-center gap-2 rounded-xl border border-success/25 bg-success/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-success shadow-[0_0_18px_rgb(var(--success)/0.08)] transition hover:border-success/50 hover:bg-success/15"><Shield size={16} /> Admin</button>}
+            {!readOnly && <button onClick={() => { setFormState(null); importFlow.resetForOpen(); setShowImportView(true); }} className="app-touch-target inline-flex items-center gap-1.5 rounded-xl border border-primary/20 bg-background/55 px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-foreground transition hover:border-primary/50 hover:bg-primary/5 sm:gap-2 sm:px-4 sm:text-xs"><Upload size={15} /> Import students</button>}
+            {!readOnly && <button onClick={() => setModalMode("admin")} className="app-touch-target inline-flex items-center gap-1.5 rounded-xl border border-success/25 bg-success/10 px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-success shadow-[0_0_18px_rgb(var(--success)/0.08)] transition hover:border-success/50 hover:bg-success/15 sm:gap-2 sm:px-4 sm:text-xs"><Shield size={15} /> Admin</button>}
           </div>
         </div>}
       />

@@ -20,7 +20,7 @@ export default function ProfileSeasonRecord({
   currentStreak: number;
 }) {
   return (
-    <aside className="instrument-panel rounded-2xl border border-border bg-surface/45 p-4 sm:p-5" aria-label="Season record">
+    <aside className="instrument-panel rounded-2xl border border-border bg-surface/45 app-panel-padding" aria-label="Season record">
       <div className="mb-4 flex items-center justify-between gap-3">
         <h2 className="console-section-heading"><Activity size={15} className="text-primary" /> Season record</h2>
         <span className="font-mono text-xs uppercase tracking-wider text-muted">{seasonId === activeSeasonId ? "Current" : "Archived"}</span>

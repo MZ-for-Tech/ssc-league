@@ -83,7 +83,22 @@ export default function SeasonWeeksOperations({ weeks, readOnly }: { weeks: Seas
       {message && <div role={message.ok ? "status" : "alert"} className={`mb-3 border px-3 py-2  ${message.ok ? "border-emerald-400/20 bg-emerald-400/[.06] text-emerald-200" : "border-rose-400/20 bg-rose-400/[.06] text-rose-200"}`}>{message.text}</div>}
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.05fr)_minmax(300px,.95fr)]">
-        <div className="overflow-x-auto border border-border/70">
+        <div className="space-y-2 md:hidden">
+          {weeks.map((week) => (
+            <article key={`mobile-${week.week_number}`} className="flex items-center justify-between gap-3 border border-border/70 bg-background/30 p-3">
+              <div className="min-w-0">
+                <div className="font-semibold text-foreground">Week {week.week_number} <span className="font-mono text-warning">· {Number(week.boost_multiplier).toLocaleString()}× XP</span></div>
+                <div className="mt-1 break-words font-mono text-xs text-muted">{week.starts_on} – {week.ends_on}</div>
+              </div>
+              <div className="flex shrink-0 gap-1">
+                <button type="button" disabled={readOnly || loading} onClick={() => edit(week)} aria-label={`Edit week ${week.week_number}`} className="console-control inline-flex h-10 w-10 items-center justify-center border border-border bg-background/50 text-muted hover:text-foreground disabled:opacity-40"><Pencil size={15} /></button>
+                <button type="button" disabled={readOnly || loading} onClick={() => remove(week)} aria-label={`Delete week ${week.week_number}`} className="console-control inline-flex h-10 w-10 items-center justify-center border border-border bg-background/50 text-muted hover:border-rose-400/30 hover:text-rose-300 disabled:opacity-40"><Trash2 size={15} /></button>
+              </div>
+            </article>
+          ))}
+          {!weeks.length && <p className="border border-border/70 px-3 py-6 text-center text-sm text-muted">No weeks configured. Add the season calendar to enable protocol awards.</p>}
+        </div>
+        <div className="hidden overflow-x-auto border border-border/70 md:block">
           <table className="w-full min-w-[460px] text-left text-xs">
             <thead className="bg-background/55 font-mono uppercase tracking-wider text-muted"><tr><th className="px-3 py-2.5">Week</th><th className="px-3 py-2.5">Dates</th><th className="px-3 py-2.5">Boost</th><th className="px-3 py-2.5 text-right">Edit</th></tr></thead>
             <tbody className="divide-y divide-border/60">

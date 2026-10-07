@@ -33,7 +33,27 @@ export default function ProtocolStandings({ students, attendance, activity, answ
       />
       {loadError ? <div role="alert" className="border border-rose-400/20 bg-rose-400/5 px-3 py-2 text-rose-200">Standings could not be loaded. Refresh the page to try again.</div> : (
         <>
-        <div className="overflow-x-auto border border-border/70">
+        <div className="space-y-2 md:hidden">
+          {rows.map((row) => (
+            <article key={`mobile-${row.id}`} className="border border-border/70 bg-background/30 p-3">
+              <div className="flex items-start gap-3 border-b border-border/60 pb-2">
+                <span className="font-mono text-lg font-bold text-primary">#{row.overallRank}</span>
+                <div className="min-w-0">
+                  <div className="break-words font-semibold text-foreground">{row.name}</div>
+                  <div className="break-all font-mono text-xs text-muted">{row.studentId} · {row.group}</div>
+                </div>
+              </div>
+              <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
+                <StandingMetric label="XP / rank" value={row.xp.toLocaleString()} rank={row.xpRank} />
+                <StandingMetric label="Activity / rank" value={row.activity.toLocaleString()} rank={row.activityRank} />
+                <StandingMetric label="Attendance / rank" value={row.attendanceRate === null ? "—" : `${(row.attendanceRate * 100).toFixed(1)}%`} rank={row.attendanceRank} />
+                <StandingMetric label="Rank points" value={String(row.rankPoints)} />
+              </div>
+            </article>
+          ))}
+          {!rows.length && <p className="border border-border/70 px-3 py-6 text-center text-sm text-muted">No students are enrolled in this season.</p>}
+        </div>
+        <div className="hidden overflow-x-auto border border-border/70 md:block">
           <table className="w-full min-w-[850px] text-left text-xs">
             <thead className="bg-background/55 font-mono uppercase tracking-wider text-muted"><tr><th className="px-3 py-2.5">#</th><th className="px-3 py-2.5">Student</th><th className="px-3 py-2.5 text-right">XP / rank</th><th className="px-3 py-2.5 text-right">Activity / rank</th><th className="px-3 py-2.5 text-right">Attendance / rank</th><th className="px-3 py-2.5 text-right">Rank points</th></tr></thead>
             <tbody className="divide-y divide-border/60">
@@ -55,4 +75,11 @@ export default function ProtocolStandings({ students, attendance, activity, answ
       )}
     </section>
   );
+}
+
+function StandingMetric({ label, value, rank }: { label: string; value: string; rank?: number }) {
+  return <div className="border border-border/50 bg-background/25 px-2 py-1.5">
+    <div className="text-[10px] uppercase tracking-wide text-muted">{label}</div>
+    <div className="mt-0.5 font-mono font-semibold text-foreground">{value}{rank !== undefined && <span className="text-muted"> / {rank}</span>}</div>
+  </div>;
 }

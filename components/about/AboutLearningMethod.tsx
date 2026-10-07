@@ -9,7 +9,7 @@ const stages = [
 export default function AboutLearningMethod() {
   return (
       <section className="grid gap-6 lg:grid-cols-[1.45fr_.75fr]">
-        <div className="instrument-panel relative overflow-hidden border border-border bg-surface/55 p-5 sm:p-7 lg:p-8">
+        <div className="instrument-panel relative overflow-hidden border border-border bg-surface/55 app-panel-padding lg:p-8">
           <h2 className="mt-4 max-w-xl text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">Build knowledge by putting it to work.</h2>
           <div className="relative mt-8 grid gap-3 sm:grid-cols-3 sm:gap-0">
             <div className="absolute left-[13%] right-[13%] top-5 hidden h-px bg-gradient-to-r from-cyan-300/20 via-cyan-300/75 to-cyan-300/20 sm:block" />

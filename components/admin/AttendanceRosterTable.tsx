@@ -19,7 +19,57 @@ export function AttendanceRosterTable({
   students, filteredStudents, statuses, selectedDate, date, readOnly, savingId, statsForStudent, updateAttendance,
 }: AttendanceRosterTableProps) {
   return (
-    <div className="overflow-x-auto border border-border/70">
+    <div className="space-y-2 md:hidden">
+      {filteredStudents.map((student) => {
+        const rawStatus = statuses[`${student.id}|${selectedDate}`];
+        const status: AttendanceStatus = ATTENDANCE_STATUSES.some((item) => item.value === rawStatus) ? rawStatus as AttendanceCode : null;
+        const stats = statsForStudent(student.id);
+        return (
+          <article key={`mobile-${student.id}`} className="border border-border/70 bg-background/30 p-3">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <div className="break-words font-semibold text-foreground">{student.full_name}</div>
+                <div className="break-all font-mono text-xs text-muted">{student.student_id} · {student.group_id || "—"}</div>
+              </div>
+              <div className="shrink-0 text-right font-mono text-xs text-muted">{student.current_xp ?? 0} XP</div>
+            </div>
+            <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs text-muted">
+              <span>{stats.attendanceRate === null ? "—" : `${stats.attendanceRate}%`} attendance · {stats.streak} streak</span>
+              <StatusPill status={status} />
+            </div>
+            <div className="mt-3 grid grid-cols-3 gap-2 border-t border-border/60 pt-3" aria-label={`Mark attendance for ${student.full_name}`}>
+              {ATTENDANCE_STATUSES.map((item) => (
+                <button
+                  key={item.value}
+                  type="button"
+                  aria-label={`Mark ${student.full_name} ${item.label.toLowerCase()}`}
+                  aria-pressed={status === item.value}
+                  disabled={readOnly || savingId !== null || selectedDate > date}
+                  onClick={() => updateAttendance(student.id, item.value)}
+                  className={`console-control inline-flex min-h-11 items-center justify-center border px-2 text-xs font-bold transition disabled:cursor-not-allowed disabled:opacity-40 ${status === item.value ? item.className : "border-border bg-background/45 text-muted hover:border-primary/30 hover:text-foreground"}`}
+                >{item.label}</button>
+              ))}
+              {status && <button
+                type="button"
+                aria-label={`Clear attendance for ${student.full_name}`}
+                disabled={readOnly || savingId !== null || selectedDate > date}
+                onClick={() => updateAttendance(student.id, null)}
+                className="app-touch-target console-control col-span-3 inline-flex items-center justify-center border border-border bg-background/45 px-2 text-xs text-muted transition hover:border-primary/40 hover:text-foreground disabled:cursor-wait disabled:opacity-50"
+              >Clear attendance</button>}
+            </div>
+          </article>
+        );
+      })}
+      {!filteredStudents.length && <p className="border border-border/70 px-4 py-8 text-center text-sm text-muted">{students.length ? "No students match this search." : "No students in this season yet."}</p>}
+    </div>
+  );
+}
+
+export function DesktopAttendanceRosterTable({
+  students, filteredStudents, statuses, selectedDate, date, readOnly, savingId, statsForStudent, updateAttendance,
+}: AttendanceRosterTableProps) {
+  return (
+    <div className="hidden overflow-x-auto border border-border/70 md:block">
             <table className="w-full min-w-[940px] text-left text-xs">
               <thead className="bg-background/55 font-mono uppercase tracking-wider text-muted">
                 <tr>

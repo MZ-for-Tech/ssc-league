@@ -115,7 +115,21 @@ export default function SeasonRecognitionOperations({ students, records, today, 
           <label className="block text-muted text-xs">Notes<textarea maxLength={300} rows={2} value={notes} onChange={(event) => setNotes(event.target.value)} disabled={readOnly || loading} className="console-control mt-1.5 w-full border border-border bg-background/65 px-3 py-2 text-foreground outline-none focus:border-primary/70 disabled:opacity-50 text-sm" /></label>
           <button type="submit" disabled={readOnly || loadError || loading || !studentId} className="console-control inline-flex min-h-10 w-full items-center justify-center gap-2 bg-primary px-4 py-2.5 font-black uppercase tracking-wider text-background transition hover:bg-primary-dim disabled:opacity-50 text-sm"><Plus size={14} />{loading ? "Saving…" : "Record recognition"}</button>
         </form>
-        <div className="max-h-[430px] overflow-auto border border-border/70">
+        <div className="space-y-2 md:hidden">
+          {records.map((record) => (
+            <article key={`mobile-${record.id}`} className="flex items-start justify-between gap-3 border border-border/70 bg-background/30 p-3">
+              <div className="min-w-0">
+                <div className="font-mono text-xs text-muted">{record.event_date}{record.session_number ? ` · Section #${record.session_number}` : ""}</div>
+                <div className="mt-1 break-words font-semibold text-foreground">{names.get(record.student_id) || "Former student"}</div>
+                <div className="text-xs text-primary">{record.recognition_type === "support" ? "Peer support" : "Extra effort"}</div>
+                {record.notes && <div className="mt-1 break-words text-xs text-muted">{record.notes}</div>}
+              </div>
+              <button type="button" onClick={() => remove(record)} disabled={readOnly || loading} aria-label={`Remove recognition for ${names.get(record.student_id) || "former student"}`} className="console-control inline-flex h-10 w-10 shrink-0 items-center justify-center border border-border bg-background/50 text-muted hover:border-rose-400/30 hover:text-rose-300 disabled:opacity-40"><Trash2 size={15} /></button>
+            </article>
+          ))}
+          {!records.length && <p className="border border-border/70 px-3 py-6 text-center text-sm text-muted">No recognition entries recorded for this season.</p>}
+        </div>
+        <div className="hidden max-h-[430px] overflow-auto border border-border/70 md:block">
           <table className="w-full min-w-[560px] text-left text-xs"><thead className="sticky top-0 bg-background/90 font-mono uppercase tracking-wider text-muted"><tr><th className="px-3 py-2.5">Date / section</th><th className="px-3 py-2.5">Student</th><th className="px-3 py-2.5">Recognition</th><th className="px-3 py-2.5 text-right">Remove</th></tr></thead><tbody className="divide-y divide-border/60">
             {records.map((record) => <tr key={record.id}><td className="whitespace-nowrap px-3 py-2.5 font-mono text-muted">{record.event_date}{record.session_number ? ` · #${record.session_number}` : ""}</td><td className="px-3 py-2.5"><div className="text-sm font-medium text-foreground">{names.get(record.student_id) || "Former student"}</div>{record.notes && <div className="max-w-48 truncate text-xs text-muted" title={record.notes}>{record.notes}</div>}</td><td className="px-3 py-2.5 text-muted">{record.recognition_type === "support" ? "Peer support" : "Extra effort"}</td><td className="px-3 py-2.5 text-right"><button type="button" onClick={() => remove(record)} disabled={readOnly || loading} aria-label="Remove recognition" className="console-control inline-flex h-8 w-8 items-center justify-center border border-border bg-background/50 text-muted hover:border-rose-400/30 hover:text-rose-300 disabled:opacity-40 text-sm"><Trash2 size={13} /></button></td></tr>)}
             {!records.length && <tr><td colSpan={4} className="px-3 py-8 text-center text-muted">No recognition entries recorded for this season.</td></tr>}

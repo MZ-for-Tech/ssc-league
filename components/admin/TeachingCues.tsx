@@ -13,7 +13,7 @@ export default function TeachingCues({
   const accuracyTopics = topics.filter((topic) => topic.attempts > 0);
   const lowestAccuracy = accuracyTopics.sort((a, b) => a.correct / a.attempts - b.correct / b.attempts)[0];
   return (
-    <section aria-labelledby="teaching-cues-heading" className={`${adminPanelClass} p-5 sm:p-6`}>
+    <section aria-labelledby="teaching-cues-heading" className={`${adminPanelClass} app-panel-padding`}>
       <div className="mb-5">
         <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-primary">Based on season data</p>
         <h2 id="teaching-cues-heading" className="mt-1 text-lg font-semibold text-foreground">Worth a look</h2>

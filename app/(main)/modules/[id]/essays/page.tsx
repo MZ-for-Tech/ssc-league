@@ -52,11 +52,11 @@ export default async function LessonEssaysPage({ params }: { params: Promise<{ i
     : { data: [] };
 
   return (
-    <main className="mx-auto w-full max-w-5xl space-y-6 pb-16">
+    <main className="app-page-stack mx-auto w-full max-w-5xl pb-16">
       <Link href={`/modules/${id}`} className="inline-flex items-center gap-2 text-sm font-semibold text-muted transition hover:text-foreground"><ArrowLeft size={16} /> Back to lesson</Link>
-      <header className="rounded-2xl border border-border bg-surface/70 p-6 md:p-8">
+      <header className="rounded-2xl border border-border bg-surface/70 app-panel-padding">
         <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-primary"><FilePenLine size={15} /> Written practice</p>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight text-foreground">{topic.name}</h1>
+        <h1 className="app-page-title mt-3 font-bold tracking-tight text-foreground">{topic.name}</h1>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">Respond in your own words. Responses are saved for later review and receive no automated mark or score.</p>
       </header>
       <EssayResponsesView

@@ -63,7 +63,7 @@ export default function ProfileDashboardView({
   unifiedLog,
 }: ProfileDashboardViewProps) {
   return (
-    <div className="w-full space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20">
+    <div className="app-page-stack w-full animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20">
       <section className="instrument-panel relative isolate overflow-hidden rounded-[1.75rem] border border-cyan-200/15 bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] p-4 shadow-2xl shadow-black/15 sm:p-5">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-dot-grid opacity-[0.08] [mask-image:linear-gradient(90deg,black,transparent)]" />
         <svg aria-hidden="true" viewBox="0 0 480 360" className="pointer-events-none absolute -right-20 -top-28 -z-10 h-[420px] w-[560px] opacity-20">
@@ -90,7 +90,7 @@ export default function ProfileDashboardView({
                 <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted"><CalendarDays size={11} /> {season?.name || "League season"}</span>
                 {impersonateId && <span className="rounded-full border border-warning/20 bg-warning/10 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-warning">Admin preview</span>}
               </div>
-              <h1 className="truncate text-3xl font-black tracking-tight text-foreground sm:text-4xl">{displayName}</h1>
+              <h1 className="app-page-title truncate font-black tracking-tight text-foreground">{displayName}</h1>
               <p className="mt-0.5 text-sm text-muted">{student.full_name}</p>
               <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs text-slate-300/80">
                 <span className="inline-flex items-center gap-1.5"><IdCard size={13} className="text-primary" /> {student.student_id}</span>
@@ -125,7 +125,7 @@ export default function ProfileDashboardView({
       </section>
 
       <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1.6fr)_minmax(18rem,0.8fr)]">
-        <section className="instrument-panel rounded-2xl border border-border bg-surface/45 p-4 sm:p-5">
+        <section className="instrument-panel rounded-2xl border border-border bg-surface/45 app-panel-padding">
           <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
             <h2 className="console-section-heading"><Activity size={15} className="text-primary" /> Season activity</h2>
           </div>

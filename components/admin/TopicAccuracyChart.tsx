@@ -20,7 +20,7 @@ export function TopicAccuracyChart({ topics }: { topics: AdminDashboardViewProps
   const targetY = plotBottom - (70 / 100) * (plotBottom - plotTop);
 
   return (
-    <section aria-labelledby="topic-accuracy-heading" className={`${adminPanelClass} p-5 sm:p-6`}>
+    <section aria-labelledby="topic-accuracy-heading" className={`${adminPanelClass} app-panel-padding`}>
       <div className="mb-5">
         <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-primary">All season</p>
         <h2 id="topic-accuracy-heading" className="mt-1 text-lg font-semibold text-foreground">Answer accuracy</h2>

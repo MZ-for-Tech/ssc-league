@@ -2,10 +2,10 @@ import React from "react";
 
 export default function ModuleBriefingLoading() {
   return (
-    <div className="mx-auto w-full max-w-6xl animate-pulse space-y-6 pb-12" aria-busy="true" aria-label="Loading lesson">
+    <div className="app-page-stack mx-auto w-full max-w-6xl animate-pulse pb-12" aria-busy="true" aria-label="Loading lesson">
       <div className="h-4 w-28 bg-surface-light/30" />
 
-      <header className="instrument-panel flex min-h-[260px] flex-col justify-end gap-4 border border-primary/20 bg-surface/55 px-6 py-7 sm:px-9 sm:py-9">
+      <header className="instrument-panel app-panel-padding flex min-h-[260px] flex-col justify-end gap-4 border border-primary/20 bg-surface/55">
         <div className="h-9 w-3/4 max-w-2xl bg-surface-light/40 sm:h-12" />
         <div className="h-4 w-full max-w-3xl bg-surface-light/25" />
         <div className="h-4 w-2/3 max-w-xl bg-surface-light/20" />
@@ -30,7 +30,7 @@ export default function ModuleBriefingLoading() {
           ))}
         </div>
 
-        <aside className="instrument-panel border border-border bg-surface/45 p-5 sm:p-6">
+        <aside className="instrument-panel border border-border bg-surface/45 app-panel-padding">
           <div className="mb-6 flex items-center justify-between">
             <div className="h-3 w-32 bg-surface-light/30" />
             <div className="h-4 w-4 bg-primary/20" />

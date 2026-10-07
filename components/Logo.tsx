@@ -6,10 +6,10 @@ export default function Logo({ compact = false }: { compact?: boolean }) {
   const gradientId = useId(); 
 
   return (
-    <div className={`flex items-center justify-center py-2 ${compact ? "px-2" : "px-4"} cursor-default group`}>
+    <div className={`flex items-center justify-center py-1 ${compact ? "px-2" : "px-2 sm:px-4"} cursor-default group`}>
       
       {/* 1. THE SYMBOL */}
-      <div className={`relative w-10 h-10 ${compact ? "" : "mr-3"} flex-shrink-0 transition-transform duration-500 group-hover:rotate-180`}>
+      <div className={`app-brand-symbol relative ${compact ? "" : "mr-2 sm:mr-3"} flex-shrink-0 transition-transform duration-500 group-hover:rotate-180`}>
         <div className="absolute inset-0 bg-primary/40 blur-md rounded-full" />
         
         <svg 
@@ -50,14 +50,14 @@ export default function Logo({ compact = false }: { compact?: boolean }) {
       {/* 2. THE WORDMARK */}
       {!compact && <div className="flex flex-col">
         <h1 
-          className="font-['Road_Rage'] text-3xl tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-primary to-slate-200 leading-none mt-1 drop-shadow-logo-wordmark"
+          className="app-brand-title whitespace-nowrap font-['Road_Rage'] tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-primary to-slate-200 leading-none mt-1 drop-shadow-logo-wordmark"
         >
           SSC2
         </h1>
-        <span className="text-xs font-sans font-bold text-primary/80 tracking-[0.3em] uppercase ml-1">
+        <span className="ml-1 whitespace-nowrap font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-primary/80 sm:text-xs">
           League
         </span>
-        <span className="ml-1 mt-1 text-xs font-sans font-semibold leading-none tracking-[0.2em] text-amber-400/80 uppercase">
+        <span className="ml-1 mt-1 whitespace-nowrap font-sans text-[10px] font-semibold leading-none tracking-[0.16em] text-amber-400/80 uppercase sm:text-xs sm:tracking-[0.2em]">
           Season One
         </span>
       </div>}

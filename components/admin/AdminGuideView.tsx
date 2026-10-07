@@ -1,15 +1,16 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowRight, BookOpen } from "lucide-react";
+import GuideContentsDropdown from "@/components/admin/GuideContentsDropdown";
 
 const textLink = "font-medium text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary";
 
 function Chapter({ number, id, title, children }: { number: string; id: string; title: string; children: ReactNode }) {
   return (
-    <section id={id} className="scroll-mt-8 border-b border-border/70 py-8 first:pt-0 last:border-0">
+    <section id={id} className="scroll-mt-24 border-b border-border/70 py-6 first:pt-0 last:border-0 sm:scroll-mt-8 sm:py-8">
       <div className="mb-4 flex items-baseline gap-4">
         <span className="font-mono text-sm font-semibold tabular-nums text-primary">{number}</span>
-        <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">{title}</h2>
+        <h2 className="app-section-title font-bold tracking-tight text-foreground">{title}</h2>
       </div>
       <div className="space-y-4 text-sm leading-7 text-muted sm:text-[15px]">{children}</div>
     </section>
@@ -39,14 +40,15 @@ export default function AdminGuideView({ seasonId, activeSeasonId }: { seasonId:
   return <article id="top" className="mx-auto w-full max-w-4xl pb-16">
     <header className="border-b border-border pb-7">
       <p className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[.16em] text-primary"><BookOpen size={15} /> SSC League · Administrator handbook</p>
-      <h1 className="mt-4 text-3xl font-black tracking-tight text-foreground sm:text-4xl">Using the admin system</h1>
+      <h1 className="app-page-title mt-4 font-black tracking-tight text-foreground">Using the admin system</h1>
       <p className="mt-3 max-w-3xl text-base leading-7 text-muted">A practical reference for preparing a season, managing students and course questions, and running league sessions.</p>
       {readOnly && <p className="mt-5 border-l-2 border-amber-300 px-4 py-2 text-sm leading-6 text-amber-100">The selected season is archived. You can review its records, but you cannot change them. Choose the active season in the season selector to manage current data.</p>}
     </header>
 
     <nav aria-label="Handbook contents" className="border-b border-border/70 py-6">
       <h2 className="mb-3 font-mono text-xs font-semibold uppercase tracking-[.14em] text-muted">Contents</h2>
-      <ol className="grid gap-x-8 gap-y-2 sm:grid-cols-2">
+      <div className="sm:hidden"><GuideContentsDropdown contents={contents.map(([, label, id]) => ({ label, id }))} /></div>
+      <ol className="hidden gap-x-8 gap-y-2 sm:grid sm:grid-cols-2">
         {contents.map(([number, label, id]) => <li key={id} className="flex gap-3 text-sm"><span className="font-mono text-xs text-primary">{number}</span><a href={`#${id}`} className="text-foreground decoration-border underline-offset-4 hover:text-primary hover:underline">{label}</a></li>)}
       </ol>
     </nav>
@@ -96,7 +98,7 @@ export default function AdminGuideView({ seasonId, activeSeasonId }: { seasonId:
         ]} />
         <h3 className="font-semibold text-foreground">Import multiple questions</h3>
         <p>Choose <strong className="text-foreground">Import</strong>. Put one question on each line and separate fields with a vertical bar (<code className="rounded bg-background px-1.5 py-0.5 font-mono text-xs text-foreground">|</code>). The fields must be in this order:</p>
-        <pre className="overflow-x-auto border-l-2 border-primary/50 bg-background/45 px-4 py-3 font-mono text-xs leading-6 text-foreground"><code>Lesson | Question | Option A | Option B | Option C | Option D | Correct choice (1–4) | Points</code></pre>
+        <pre className="whitespace-pre-wrap break-words border-l-2 border-primary/50 bg-background/45 px-4 py-3 font-mono text-xs leading-6 text-foreground sm:whitespace-pre"><code>Lesson | Question | Option A | Option B | Option C | Option D | Correct choice (1–4) | Points</code></pre>
         <p>Lesson names must match the curriculum. Review the wording, marked answer, reasons, and points before adding questions.</p>
         <Link href="/admin/questions" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline">Open the question bank <ArrowRight size={14} /></Link>
       </Chapter>

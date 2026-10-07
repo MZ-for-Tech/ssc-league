@@ -10,7 +10,7 @@ const metrics = [
 
 export default function StudentDashboardPreview() {
   return (
-    <div className="w-full space-y-6 pb-16">
+    <div className="app-page-stack w-full pb-16">
       <div className="flex flex-col gap-4 rounded-xl border border-primary/20 bg-primary/5 p-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">Student view · Preview mode</p>
@@ -21,14 +21,14 @@ export default function StudentDashboardPreview() {
         </Link>
       </div>
 
-      <section className="relative overflow-hidden rounded-2xl border border-border bg-surface/60 p-6 sm:p-8">
+      <section className="relative overflow-hidden rounded-2xl border border-border bg-surface/60 app-panel-padding">
         <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
         <div className="relative z-10 flex flex-col justify-between gap-8 md:flex-row md:items-center">
           <div className="flex items-center gap-5">
             <div className="grid h-20 w-20 shrink-0 place-items-center rounded-full border-4 border-primary/30 bg-primary/10 text-primary sm:h-24 sm:w-24"><Users size={34} /></div>
             <div>
               <p className="mb-2 text-xs font-bold uppercase tracking-widest text-primary">Field operative</p>
-              <h1 className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">Student dashboard</h1>
+              <h1 className="app-page-title font-black tracking-tight text-foreground">Student dashboard</h1>
               <p className="mt-1 text-sm text-muted">Personal rank and stats appear here for enrolled students.</p>
             </div>
           </div>
@@ -42,7 +42,7 @@ export default function StudentDashboardPreview() {
 
       <section className="grid grid-cols-2 gap-4 xl:grid-cols-4" aria-label="Student stats preview">
         {metrics.map(({ label, icon: Icon }) => (
-          <article key={label} className="flex min-h-28 items-start justify-between gap-3 rounded-2xl border border-border bg-surface/50 p-4 sm:p-5">
+          <article key={label} className="flex min-h-28 items-start justify-between gap-3 rounded-2xl border border-border bg-surface/50 app-panel-padding">
             <div><p className="text-sm font-medium text-muted">{label}</p><p className="mt-2 text-2xl font-bold text-muted/70">—</p><p className="mt-1 text-xs text-muted">Student data hidden in preview</p></div>
             <div className="rounded-xl border border-primary/20 bg-primary/10 p-2.5 text-primary"><Icon size={18} /></div>
           </article>

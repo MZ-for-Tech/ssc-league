@@ -105,7 +105,26 @@ export default function SeasonSessionsOperations({ sessions, readOnly, loadError
       {loadError && <div role="alert" className="mb-3 border border-rose-400/20 bg-rose-400/5 px-3 py-2 text-rose-200">Section schedule could not be loaded. Check database access and refresh.</div>}
 
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.1fr)_minmax(300px,.9fr)]">
-        <div className="max-h-[440px] overflow-auto border border-border/70">
+        <div className="space-y-2 md:hidden">
+          {sessions.map((session) => (
+            <article key={`mobile-${session.id}`} className="border border-border/70 bg-background/30 p-3">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="font-mono text-xs text-muted">{session.session_date}{session.session_number ? ` · Section #${session.session_number}` : ""}</div>
+                  <div className="mt-1 break-words font-semibold text-foreground">{session.topic_title}</div>
+                  {session.module_title && <div className="break-words text-xs text-muted">{session.module_title}</div>}
+                  <div className="mt-2 text-xs text-primary">{statusLabels[session.coverage_status]}</div>
+                </div>
+                <div className="flex shrink-0 gap-1">
+                  <button type="button" disabled={readOnly || loading} onClick={() => edit(session)} aria-label={`Edit ${session.topic_title}`} className="console-control inline-flex h-10 w-10 items-center justify-center border border-border bg-background/50 text-muted hover:text-foreground disabled:opacity-40"><Pencil size={15} /></button>
+                  <button type="button" disabled={readOnly || loading} onClick={() => remove(session)} aria-label={`Delete ${session.topic_title}`} className="console-control inline-flex h-10 w-10 items-center justify-center border border-border bg-background/50 text-muted hover:border-rose-400/30 hover:text-rose-300 disabled:opacity-40"><Trash2 size={15} /></button>
+                </div>
+              </div>
+            </article>
+          ))}
+          {!sessions.length && <p className="border border-border/70 px-3 py-6 text-center text-sm text-muted">{loadError ? "No session records are available." : "No section outline yet. Add the season schedule."}</p>}
+        </div>
+        <div className="hidden max-h-[440px] overflow-auto border border-border/70 md:block">
           <table className="w-full min-w-[560px] text-left text-xs">
             <thead className="sticky top-0 bg-background/90 font-mono uppercase tracking-wider text-muted"><tr><th className="px-3 py-2.5">Date</th><th className="px-3 py-2.5">Section</th><th className="px-3 py-2.5">Topic / module</th><th className="px-3 py-2.5">Status</th><th className="px-3 py-2.5 text-right">Edit</th></tr></thead>
             <tbody className="divide-y divide-border/60">

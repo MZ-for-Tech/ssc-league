@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from "react";
 import { Award, CalendarDays, ClipboardCheck, HeartHandshake, MoreHorizontal, SlidersHorizontal, Trophy } from "lucide-react";
+import DropdownSelect from "@/components/ui/DropdownSelect";
 
 const tabs = [
   { id: "rewards", label: "Rewards", icon: Award },
@@ -21,9 +22,17 @@ export default function LeagueOperationsWorkspace({ content }: { content: League
   const currentTab = visibleTabs.find((tab) => tab.id === activeTab) ?? visibleTabs[0];
 
   return (
-    <div className="space-y-5">
-      <nav aria-label="League operations" className="overflow-x-auto border-b border-border">
-        <div className="flex min-w-max gap-1" role="tablist" aria-label="Operations sections">
+    <div className="app-page-stack">
+      <nav aria-label="League operations" className="border-b border-border pb-3 xl:pb-0">
+        <div className="xl:hidden">
+          <DropdownSelect
+            value={currentTab.id}
+            onChange={value => setActiveTab(value as LeagueOperationsTab["id"])}
+            ariaLabel="Choose operations section"
+            options={visibleTabs.map(({ id, label }) => ({ value: id, label }))}
+          />
+        </div>
+        <div className="hidden gap-1 xl:flex" role="tablist" aria-label="Operations sections">
           {visibleTabs.map(({ id, label, icon: Icon }) => (
             <button
               key={id}

@@ -28,11 +28,11 @@ export function StudentImportView({ importFlow, onBack }: StudentImportViewProps
         {formState?.error && <div role="alert" className="flex items-start gap-3 rounded-xl border border-warning/20 bg-warning/5 px-4 py-3 text-sm text-warning"><AlertCircle size={18} className="mt-0.5 shrink-0" /><p className="whitespace-pre-wrap">{formState.error}</p></div>}
 
         <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1.6fr)_minmax(18rem,0.8fr)]">
-          <section className="space-y-5 rounded-2xl border border-border bg-surface/60 p-5 sm:p-7">
+          <section className="space-y-5 rounded-2xl border border-border bg-surface/60 app-panel-padding">
             <div>
               <h2 className="text-lg font-bold text-foreground">Roster data</h2>
             </div>
-            <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 sm:p-5">
+            <div className="rounded-xl border border-primary/20 bg-primary/5 app-panel-padding">
               <h3 className="text-sm font-bold text-foreground">Before you import</h3>
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
                 <div className="rounded-lg border border-border/70 bg-background/50 p-3">
@@ -96,7 +96,7 @@ export function StudentImportView({ importFlow, onBack }: StudentImportViewProps
             </section>}
           </section>
 
-          <aside className="space-y-5 rounded-2xl border border-border bg-surface/60 p-5 sm:p-6 xl:sticky xl:top-8">
+          <aside className="space-y-5 rounded-2xl border border-border bg-surface/60 app-panel-padding xl:sticky xl:top-8">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">Import summary</p>
               <h2 className="mt-2 text-xl font-bold text-foreground">{completedImportCount !== null ? "Import complete" : importAttempted ? "Review import results" : `${parsedImportRows.length} row${parsedImportRows.length === 1 ? "" : "s"} detected`}</h2>

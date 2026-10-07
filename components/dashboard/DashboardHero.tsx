@@ -18,7 +18,7 @@ export default function DashboardHero({ student, currentRank, totalStudents, top
       <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 -z-10 w-1/3 bg-dot-grid opacity-[0.08]" />
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
 
-      <div className="flex flex-col gap-7 p-5 sm:p-7 lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-col gap-7 app-panel-padding lg:flex-row lg:items-center lg:justify-between">
         <div className="flex min-w-0 items-center gap-4 sm:gap-5">
           <div className="relative h-[4.5rem] w-[4.5rem] shrink-0 rounded-full bg-gradient-to-br from-primary via-blue-500 to-indigo-500 p-[3px] shadow-glow-primary-subtle sm:h-20 sm:w-20">
             <Image
@@ -40,7 +40,7 @@ export default function DashboardHero({ student, currentRank, totalStudents, top
               <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-glow-primary-pulse" />
               Student console <span className="text-muted/60">/</span> Season one
             </p>
-            <h1 className="truncate text-2xl font-black tracking-tight text-foreground sm:text-3xl">{displayName}</h1>
+            <h1 className="app-page-title truncate font-black tracking-tight text-foreground">{displayName}</h1>
             <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-muted">
               <span className="rounded border border-primary/20 bg-primary/5 px-2 py-0.5 font-bold tracking-wider text-primary">LEARNER</span>
               <span> ID {student.student_id}</span>

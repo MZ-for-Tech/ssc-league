@@ -14,9 +14,9 @@ export default function DashboardLoading() {
 
 function StudentPreviewSkeleton() {
   return (
-    <div className="w-full space-y-6 pb-16" aria-busy="true" aria-label="Loading student preview">
+    <div className="app-page-stack w-full pb-16" aria-busy="true" aria-label="Loading student preview">
       <div className="h-20 animate-pulse rounded-xl border border-primary/20 bg-primary/5" />
-      <section className="h-56 animate-pulse rounded-2xl border border-border bg-surface/60 p-6 sm:p-8" />
+      <section className="h-56 animate-pulse rounded-2xl border border-border bg-surface/60 app-panel-padding" />
       <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">{[0, 1, 2, 3].map((item) => <SkeletonCard key={item} />)}</div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2"><div className="h-44 animate-pulse rounded-2xl border border-border bg-surface/50" /><div className="h-44 animate-pulse rounded-2xl border border-border bg-surface/50" /></div>
@@ -29,7 +29,7 @@ function StudentPreviewSkeleton() {
 
 function StudentDashboardSkeleton() {
   return (
-    <div className="w-full space-y-6 pb-20" aria-busy="true" aria-label="Loading dashboard">
+    <div className="app-page-stack w-full pb-20" aria-busy="true" aria-label="Loading dashboard">
       {/* DashboardHero: identity and global standing */}
       <section className="relative animate-pulse overflow-hidden rounded-2xl border border-border bg-surface/50 p-6 shadow-2xl sm:p-8">
         <div className="absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
@@ -63,7 +63,7 @@ function StudentDashboardSkeleton() {
       {/* DashboardStats spans the content width above the two-column panels. */}
       <section className="grid animate-pulse grid-cols-2 gap-4 sm:grid-cols-4" aria-label="Loading student stats">
         {[0, 1, 2, 3].map((item) => (
-          <div key={item} className="flex min-h-28 items-start justify-between gap-3 rounded-2xl border border-border bg-surface/50 p-4 sm:p-5">
+          <div key={item} className="flex min-h-28 items-start justify-between gap-3 rounded-2xl border border-border bg-surface/50 app-panel-padding">
             <div className="min-w-0 flex-1 space-y-3">
               <div className="h-3 w-24 max-w-full rounded bg-surface-light/25" />
               <div className="h-7 w-20 max-w-full rounded bg-surface-light/40" />
@@ -76,7 +76,7 @@ function StudentDashboardSkeleton() {
       <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-[minmax(0,1.65fr)_minmax(19rem,0.85fr)]">
         <div className="space-y-5">
           {/* Next lesson with course progress */}
-          <section className="grid animate-pulse gap-6 rounded-2xl border border-primary/20 bg-surface/60 p-5 sm:p-7 md:grid-cols-[minmax(0,1fr)_220px] md:items-center">
+          <section className="grid animate-pulse gap-6 rounded-2xl border border-primary/20 bg-surface/60 app-panel-padding md:grid-cols-[minmax(0,1fr)_220px] md:items-center">
             <div>
               <div className="mb-5 h-3 w-28 rounded bg-primary/25" />
               <div className="mb-3 h-5 w-28 rounded border border-primary/20 bg-primary/10" />
@@ -84,7 +84,7 @@ function StudentDashboardSkeleton() {
               <div className="space-y-2"><div className="h-3 w-full rounded bg-surface-light/20" /><div className="h-3 w-4/5 rounded bg-surface-light/20" /></div>
               <div className="mt-5 h-11 w-36 rounded-lg bg-primary/25" />
             </div>
-            <div className="rounded-xl border border-border bg-background/45 p-4 sm:p-5">
+            <div className="rounded-xl border border-border bg-background/45 app-panel-padding">
               <div className="mb-6 flex justify-between"><div className="h-4 w-28 rounded bg-surface-light/30" /><div className="h-4 w-4 rounded bg-surface-light/20" /></div>
               <div className="mb-3 flex items-end justify-between"><div className="h-8 w-20 rounded bg-surface-light/35" /><div className="h-3 w-10 rounded bg-primary/20" /></div>
               <div className="h-2 rounded-full bg-surface-light/20" />
@@ -93,7 +93,7 @@ function StudentDashboardSkeleton() {
           </section>
 
           {/* Module comparison bar chart */}
-          <section className="animate-pulse rounded-2xl border border-border bg-surface/45 p-5 sm:p-6">
+          <section className="animate-pulse rounded-2xl border border-border bg-surface/45 app-panel-padding">
             <div className="mb-4 flex items-end justify-between gap-4"><div className="space-y-2"><div className="h-3 w-24 rounded bg-primary/20" /><div className="h-5 w-44 rounded bg-surface-light/30" /><div className="h-3 w-48 max-w-full rounded bg-surface-light/15" /></div><div className="h-12 w-24 rounded-xl border border-primary/15 bg-primary/10" /></div>
             <div className="space-y-7 py-3">
               {[0, 1, 2].map((module) => (

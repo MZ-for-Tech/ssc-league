@@ -3,7 +3,7 @@
 import { CalendarDays, Search, Users } from "lucide-react";
 import DropdownSelect from "@/components/ui/DropdownSelect";
 import OperationsCardHeader from "@/components/admin/OperationsCardHeader";
-import { AttendanceRosterTable } from "@/components/admin/AttendanceRosterTable";
+import { AttendanceRosterTable, DesktopAttendanceRosterTable } from "@/components/admin/AttendanceRosterTable";
 import { AttendanceSummaryTable } from "@/components/admin/AttendanceSummaryTable";
 import { type AttendanceRecord, type StudentRow } from "@/components/admin/attendance-types";
 import { useGroupAttendance } from "@/components/admin/useGroupAttendance";
@@ -30,7 +30,7 @@ export default function GroupOperationsClient({ date, dates, students, attendanc
   } = useGroupAttendance({ date, dates, students, attendance });
 
   return (
-    <section className={`${panelClass} p-5 sm:p-6`} aria-labelledby="group-operations-title">
+    <section className={`${panelClass} app-panel-padding`} aria-labelledby="group-operations-title">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_85%_0%,rgb(var(--primary)/0.1),transparent_48%)]" />
       <OperationsCardHeader
         id="group-operations-title"
@@ -77,6 +77,17 @@ export default function GroupOperationsClient({ date, dates, students, attendanc
           {errorMessage && <div role="alert" className="mb-3 border border-rose-400/20 bg-rose-400/5 px-3 py-2 text-rose-200">{errorMessage}</div>}
 
           <AttendanceRosterTable
+            students={students}
+            filteredStudents={filteredStudents}
+            statuses={statuses}
+            selectedDate={selectedDate}
+            date={date}
+            readOnly={readOnly}
+            savingId={savingId}
+            statsForStudent={statsForStudent}
+            updateAttendance={updateAttendance}
+          />
+          <DesktopAttendanceRosterTable
             students={students}
             filteredStudents={filteredStudents}
             statuses={statuses}

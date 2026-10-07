@@ -20,7 +20,7 @@ interface RewardProtocolClientProps {
   loadError: string | null;
 }
 
-const panelClass = "instrument-panel relative isolate overflow-hidden rounded-2xl border border-border bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] shadow-lg shadow-black/20";
+const panelClass = "instrument-panel relative isolate min-w-0 max-w-full rounded-2xl border border-border bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] shadow-lg shadow-black/20";
 const categories: RewardCategory[] = ["attendance", "coursework", "participation"];
 
 export default function RewardProtocolClient({ protocol, students, attendedSessionCounts, attendanceAwards, weeks, today, history, readOnly, loadError }: RewardProtocolClientProps) {
@@ -34,7 +34,7 @@ export default function RewardProtocolClient({ protocol, students, attendedSessi
   } = useRewardProtocol({ protocol, students, attendanceAwards, weeks, today });
 
   return (
-    <section className={`${panelClass} p-5 sm:p-6`} aria-labelledby="reward-protocol-ops-title">
+    <section className={`${panelClass} app-panel-padding`} aria-labelledby="reward-protocol-ops-title">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_85%_0%,rgb(var(--warning)/0.08),transparent_48%)]" />
       <OperationsCardHeader id="reward-protocol-ops-title" title="Reward protocol" icon={<Award className="text-warning" size={18} />} />
 
@@ -51,7 +51,7 @@ export default function RewardProtocolClient({ protocol, students, attendedSessi
           </div>
 
           <div className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,.9fr)]">
-            <div className="space-y-4">
+            <div className="min-w-0 space-y-4">
               <div className="grid gap-3 sm:grid-cols-2">
                 <label className="block text-xs">
                   <span className="mb-1.5 block font-mono font-bold uppercase tracking-wider text-muted">Protocol item</span>
@@ -63,11 +63,11 @@ export default function RewardProtocolClient({ protocol, students, attendedSessi
                 </label>
               </div>
 
-              <div className={`grid grid-cols-2 gap-2 border px-3 py-2.5  ${selectedWeek ? "border-primary/15 bg-primary/[.035]" : "border-amber-400/20 bg-amber-400/[.045]"}`}>
+              <div className={`grid min-w-0 grid-cols-2 gap-2 border px-3 py-2.5  ${selectedWeek ? "border-primary/15 bg-primary/[.035]" : "border-amber-400/20 bg-amber-400/[.045]"}`}>
                 {selectedWeek ? (
                   <>
                     <div><div className="font-mono uppercase tracking-wider text-muted">League week</div><div className="mt-1 font-mono font-bold text-foreground">Week {selectedWeek.week_number}</div></div>
-                    <div className="text-right"><div className="font-mono uppercase tracking-wider text-muted">XP boost</div><div className="mt-1 font-mono font-bold text-warning">{boostMultiplier}× · {reward.xp} → {finalXPPerStudent} XP</div></div>
+                    <div className="min-w-0 break-words text-right"><div className="font-mono uppercase tracking-wider text-muted">XP boost</div><div className="mt-1 break-words font-mono font-bold text-warning">{boostMultiplier}× · {reward.xp} → {finalXPPerStudent} XP</div></div>
                   </>
                 ) : (
                   <div className="col-span-2 text-amber-200">No league week covers this date. Add it in Weeks &amp; XP boosts before issuing rewards.</div>
@@ -101,12 +101,12 @@ export default function RewardProtocolClient({ protocol, students, attendedSessi
               />
             </div>
 
-            <aside className="flex flex-col border border-primary/15 bg-background/30 p-4 sm:p-5" aria-label="Reward preview">
+            <aside className="flex min-w-0 flex-col border border-primary/15 bg-background/30 app-panel-padding" aria-label="Reward preview">
               <div className="flex items-center gap-2 font-mono font-bold uppercase tracking-wider text-primary"><Users size={14} /> Award preview</div>
               <div className="mt-4 flex items-baseline justify-between gap-3"><span className="text-muted">Recipients</span><span className="font-mono font-bold text-foreground">{selectedCount}</span></div>
-              <div className="mt-2 flex items-baseline justify-between gap-3"><span className="text-muted">Base XP × boost</span><span className="font-mono font-bold text-warning">{reward.xp} × {boostMultiplier ?? "—"} = {finalXPPerStudent ?? "—"} XP</span></div>
+              <div className="mt-2 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1"><span className="text-muted">Base XP × boost</span><span className="break-words font-mono font-bold text-warning">{reward.xp} × {boostMultiplier ?? "—"} = {finalXPPerStudent ?? "—"} XP</span></div>
               <div className="my-4 border-t border-border/70" />
-              <div className="flex items-baseline justify-between gap-3"><span className="font-semibold text-foreground">Total XP issued</span><span className="font-mono font-black text-warning">{selectedWeek ? totalXP : "—"}</span></div>
+              <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1"><span className="font-semibold text-foreground">Total XP issued</span><span className="break-words font-mono font-black text-warning">{selectedWeek ? totalXP : "—"}</span></div>
               {feedback && <div role={feedback.type === "error" ? "alert" : "status"} className={`mt-4 border px-3 py-2.5  ${feedback.type === "success" ? "border-emerald-400/20 bg-emerald-400/[.07] text-emerald-200" : "border-rose-400/20 bg-rose-400/[.07] text-rose-200"}`}>{feedback.text}</div>}
 
               <button type="button" disabled={readOnly || submitting || !selectedCount || !selectedWeek || (category !== "attendance" && !eventLabel.trim())} onClick={submitAward} className="console-control mt-auto inline-flex min-h-11 w-full items-center justify-center gap-2 bg-warning px-4 py-3 font-black uppercase tracking-wider text-background shadow-lg shadow-warning/15 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-45 sm:mt-6 text-sm">

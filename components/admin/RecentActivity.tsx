@@ -5,7 +5,7 @@ import type { AdminDashboardViewProps } from "@/components/admin/admin-dashboard
 
 export default function RecentActivity({ items }: { items: AdminDashboardViewProps["recentActivity"] }) {
   return (
-    <section aria-labelledby="recent-activity-heading" className={`${adminPanelClass} p-5 sm:p-6`}>
+    <section aria-labelledby="recent-activity-heading" className={`${adminPanelClass} app-panel-padding`}>
       <div className="mb-5">
         <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-primary">One latest attempt per student</p>
         <h2 id="recent-activity-heading" className="mt-1 text-lg font-semibold text-foreground">Recent student activity</h2>

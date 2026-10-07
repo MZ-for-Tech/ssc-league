@@ -13,7 +13,7 @@ export default function QuizLoading() {
         
         {/* LEFT COL: Main Question Card */}
         <div className="lg:col-span-2 space-y-6">
-            <div className="bg-surface/80 border border-border rounded-2xl p-6 md:p-8 relative overflow-hidden min-h-[34rem] flex flex-col backdrop-blur-sm">
+            <div className="bg-surface/80 border border-border rounded-2xl app-panel-padding relative overflow-hidden min-h-[34rem] flex flex-col backdrop-blur-sm">
                 
                 {/* Progress Bar Line */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-surface-light/30" />

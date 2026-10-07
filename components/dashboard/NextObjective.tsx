@@ -16,7 +16,7 @@ export default function NextObjective({ topic, completedModulesCount, totalModul
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-dot-grid opacity-[0.1]" />
       <div aria-hidden="true" className="pointer-events-none absolute -right-12 -top-24 -z-10 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
 
-      <div className="grid gap-6 p-5 sm:p-7 md:grid-cols-[minmax(0,1fr)_220px] md:items-center">
+      <div className="grid gap-6 app-panel-padding md:grid-cols-[minmax(0,1fr)_220px] md:items-center">
         <div className="min-w-0">
           <p className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-primary">
             <BookOpen size={14} /> Your next step
@@ -28,7 +28,7 @@ export default function NextObjective({ topic, completedModulesCount, totalModul
                 <span className="rounded border border-primary/20 bg-primary/10 px-2 py-1 text-primary">Lesson {String(topic.week_number).padStart(2, "0")}</span>
                 <span>Course sequence</span>
               </div>
-              <h2 className="max-w-2xl text-2xl font-black tracking-tight text-foreground sm:text-3xl">{topic.name}</h2>
+              <h2 className="app-section-title max-w-2xl font-black tracking-tight text-foreground">{topic.name}</h2>
               <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">{topic.description || "Pick up where your course begins and build your skills one lesson at a time."}</p>
               <Link
                 href={`/modules/${topic.id}`}
@@ -39,7 +39,7 @@ export default function NextObjective({ topic, completedModulesCount, totalModul
             </>
           ) : totalModules === 0 ? (
             <>
-              <h2 className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">Your course map is being prepared</h2>
+              <h2 className="app-section-title font-black tracking-tight text-foreground">Your course map is being prepared</h2>
               <p className="mt-2 max-w-xl text-sm leading-6 text-muted">Course lessons will appear here as soon as they are available.</p>
               <Link href="/modules" className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-lg border border-border bg-background/50 px-4 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40 hover:text-primary">
                 Browse modules <ArrowRight size={15} />
@@ -47,7 +47,7 @@ export default function NextObjective({ topic, completedModulesCount, totalModul
             </>
           ) : completedModulesCount >= totalModules ? (
             <>
-              <h2 className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">Course map complete</h2>
+              <h2 className="app-section-title font-black tracking-tight text-foreground">Course map complete</h2>
               <p className="mt-2 max-w-xl text-sm leading-6 text-muted">You have completed every available lesson. Revisit a module to keep practising.</p>
               <Link href="/modules" className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-lg border border-border bg-background/50 px-4 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40 hover:text-primary">
                 Review modules <ArrowRight size={15} />
@@ -55,7 +55,7 @@ export default function NextObjective({ topic, completedModulesCount, totalModul
             </>
           ) : (
             <>
-              <h2 className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">Choose what to practise next</h2>
+              <h2 className="app-section-title font-black tracking-tight text-foreground">Choose what to practise next</h2>
               <p className="mt-2 max-w-xl text-sm leading-6 text-muted">Your course map is ready. Open the modules page to pick a lesson.</p>
               <Link href="/modules" className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-bold text-background transition hover:bg-primary-dim">
                 Browse lessons <ArrowRight size={15} />
@@ -64,7 +64,7 @@ export default function NextObjective({ topic, completedModulesCount, totalModul
           )}
         </div>
 
-        <div className="rounded-xl border border-border/80 bg-background/45 p-4 sm:p-5">
+        <div className="rounded-xl border border-border/80 bg-background/45 app-panel-padding">
           <div className="mb-5 flex items-center justify-between gap-3">
             <div className="flex items-center gap-2 text-xs font-bold text-foreground"><Layers3 size={15} className="text-primary" /> Course progress</div>
             <Code2 size={16} className="text-muted" />

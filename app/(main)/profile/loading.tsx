@@ -1,6 +1,6 @@
 export default function ProfileLoading() {
   return (
-    <div className="w-full animate-pulse space-y-6 pb-20" aria-busy="true" aria-label="Loading profile">
+    <div className="app-page-stack w-full animate-pulse pb-20" aria-busy="true" aria-label="Loading profile">
       <section aria-hidden="true" className="instrument-panel relative isolate overflow-hidden rounded-[1.75rem] border border-cyan-200/15 bg-[linear-gradient(115deg,rgb(var(--surface-hero)),rgb(var(--surface))_58%,rgb(var(--surface-node)))] p-4 shadow-2xl shadow-black/15 sm:p-5">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-dot-grid opacity-[0.08] [mask-image:linear-gradient(90deg,black,transparent)]" />
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
@@ -34,14 +34,14 @@ export default function ProfileLoading() {
       </section>
 
       <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1.6fr)_minmax(18rem,0.8fr)]">
-        <section aria-hidden="true" className="instrument-panel rounded-2xl border border-border bg-surface/45 p-4 sm:p-5">
+        <section aria-hidden="true" className="instrument-panel rounded-2xl border border-border bg-surface/45 app-panel-padding">
           <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
             <div className="h-9 w-44 rounded border-l-2 border-primary/50 bg-background/60" />
             <div className="h-4 w-24 rounded bg-surface-light/20" />
           </div>
           <div className="h-28 rounded-xl border border-border/60 bg-background/35 sm:h-32" />
         </section>
-        <section aria-hidden="true" className="instrument-panel rounded-2xl border border-border bg-surface/45 p-4 sm:p-5">
+        <section aria-hidden="true" className="instrument-panel rounded-2xl border border-border bg-surface/45 app-panel-padding">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div className="h-9 w-40 rounded border-l-2 border-primary/50 bg-background/60" />
             <div className="h-3 w-16 rounded bg-surface-light/20" />
@@ -54,13 +54,13 @@ export default function ProfileLoading() {
       </div>
 
       <div className="grid items-start gap-5 xl:grid-cols-[minmax(17rem,0.75fr)_minmax(0,1.35fr)]">
-        <section aria-hidden="true" className="instrument-panel order-2 rounded-2xl border border-border bg-surface/45 p-4 sm:p-5">
+        <section aria-hidden="true" className="instrument-panel order-2 rounded-2xl border border-border bg-surface/45 app-panel-padding">
           <div className="mb-5 flex items-end justify-between gap-4"><div className="h-9 w-40 rounded border-l-2 border-amber-300/50 bg-background/60" /><div className="h-8 w-16 rounded-lg border border-border bg-background/40" /></div>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {Array.from({ length: 8 }, (_, item) => <div key={item} className="h-[4.5rem] rounded-xl border border-border bg-background/30 p-3"><div className="flex items-center gap-3"><div className="h-9 w-9 rounded-lg bg-surface-light/20" /><div className="min-w-0 flex-1 space-y-2"><div className="h-3 w-28 max-w-full rounded bg-surface-light/30" /><div className="h-3 w-full rounded bg-surface-light/15" /></div></div></div>)}
           </div>
         </section>
-        <section aria-hidden="true" className="instrument-panel order-1 rounded-2xl border border-border bg-surface/45 p-4 sm:p-5">
+        <section aria-hidden="true" className="instrument-panel order-1 rounded-2xl border border-border bg-surface/45 app-panel-padding">
           <div className="mb-5 h-9 w-44 rounded border-l-2 border-primary/50 bg-background/60" />
           <div className="space-y-3">
             {Array.from({ length: 5 }, (_, item) => <div key={item} className="flex items-start gap-3 rounded-xl border border-border/60 bg-background/30 p-3"><div className="h-8 w-8 shrink-0 rounded-lg bg-surface-light/20" /><div className="min-w-0 flex-1 space-y-2"><div className="h-3 w-3/4 rounded bg-surface-light/30" /><div className="h-3 w-2/5 rounded bg-surface-light/15" /></div><div className="h-3 w-12 rounded bg-primary/15" /></div>)}

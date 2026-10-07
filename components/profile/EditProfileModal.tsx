@@ -82,7 +82,7 @@ export default function EditProfileModal({ student }: { student: Student }) {
         <form onSubmit={handleSubmit} className="flex min-h-0 flex-col">
           <input type="hidden" name="id" value={student.id} />
           <input type="hidden" name="group_id" value={student.group_id} />
-          <div className="min-h-0 space-y-6 overflow-y-auto p-5 sm:p-6">
+          <div className="min-h-0 space-y-6 overflow-y-auto app-panel-padding">
             <div className="flex flex-col items-center gap-4 rounded-xl border border-border bg-background/30 p-4 sm:flex-row sm:items-center sm:gap-5">
               <div className="group relative h-20 w-20 shrink-0 overflow-hidden rounded-full border-2 border-primary/35 bg-background shadow-[0_0_28px_rgb(var(--primary)/0.12)]">
                 {isUploading ? (

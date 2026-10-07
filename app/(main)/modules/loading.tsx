@@ -48,13 +48,13 @@ export default function ModulesLoading() {
         </div>
 
         <aside className="min-w-0 space-y-4 lg:sticky lg:top-6">
-          <div className="instrument-panel animate-pulse border border-border bg-surface/50 p-4 sm:p-5">
+          <div className="instrument-panel animate-pulse border border-border bg-surface/50 app-panel-padding">
             <div className="mb-4 flex justify-between"><div className="h-3 w-28 rounded bg-surface-light/30" /><div className="h-2 w-2 rounded-full bg-primary/25" /></div>
             <div className="flex items-end justify-between gap-3"><div className="h-8 w-20 rounded bg-surface-light/35" /><div className="h-3 w-28 rounded bg-surface-light/20" /></div>
             <div className="mt-3 h-1.5 bg-surface-light/25" />
             <div className="mt-4 flex justify-between border-t border-border/70 pt-3"><div className="h-3 w-16 rounded bg-surface-light/20" /><div className="h-4 w-12 rounded bg-warning/20" /></div>
           </div>
-          <div className="instrument-panel animate-pulse relative overflow-hidden border border-amber-200/20 bg-amber-950/20 p-4 sm:p-5">
+          <div className="instrument-panel animate-pulse relative overflow-hidden border border-amber-200/20 bg-amber-950/20 app-panel-padding">
             <div className="pointer-events-none absolute -right-10 -top-16 h-56 w-56 rotate-45 border border-amber-100/[.08]" />
             <div className="relative">
               <div className="ml-auto h-4 w-4 rounded bg-amber-200/25" />
@@ -64,7 +64,7 @@ export default function ModulesLoading() {
               <div className="mt-4 flex items-center justify-between border-t border-amber-100/15 pt-3"><div className="h-3 w-36 rounded bg-amber-100/25" /><div className="h-4 w-4 rounded bg-amber-100/25" /></div>
             </div>
           </div>
-          <div className="instrument-panel animate-pulse border border-border bg-surface/50 p-4 sm:p-5">
+          <div className="instrument-panel animate-pulse border border-border bg-surface/50 app-panel-padding">
             <div className="mb-3 flex justify-between"><div className="h-3 w-28 rounded bg-surface-light/30" /><div className="h-3 w-12 rounded bg-surface-light/20" /></div>
             <div className="space-y-1">{[0, 1, 2, 3].map((item) => <div key={item} className="flex items-center gap-3 border-b border-border/50 px-2 py-2.5 last:border-0"><div className="h-4 w-4 rounded bg-primary/15" /><div className="min-w-0 flex-1 space-y-1.5"><div className="h-3 w-4/5 rounded bg-surface-light/25" /><div className="h-3 w-2/5 rounded bg-surface-light/15" /></div></div>)}</div>
           </div>

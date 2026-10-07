@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Sidebar from "@/components/Sidebar"; 
 import SidebarLogo from "@/components/Logo"; 
 import ImpersonationBanner from "@/components/ImpersonationBanner"; // <--- The missing piece
+import ArenaSmoke from "@/components/ArenaSmoke";
 import { Archive, Menu } from "lucide-react";
 import { LeagueSeasonProvider } from "@/components/LeagueSeasonContext";
 
@@ -27,6 +28,7 @@ export default function MainLayoutShell({ children, isAdmin, isImpersonating, se
        {/* Shared SSC2 training-arena environment */}
        <div className="ssc-arena-backdrop fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
           <div className="ssc-arena-atmosphere absolute inset-0" />
+          <div className="ssc-arena-smoke absolute inset-0"><ArenaSmoke /></div>
           <div className="ssc-arena-grid absolute inset-0" />
           <svg className="ssc-arena-map absolute -right-[22rem] -top-[17rem] h-[min(1120px,115vh)] w-[min(1120px,115vh)]" viewBox="0 0 1000 1000" fill="none" aria-hidden="true">
              <defs>
@@ -66,7 +68,7 @@ export default function MainLayoutShell({ children, isAdmin, isImpersonating, se
        </div>
 
        {/* 2. Mobile Header */}
-       <header className="lg:hidden fixed top-0 left-0 right-0 h-16 px-4 bg-surface/80 backdrop-blur-md border-b border-border z-40 flex items-center justify-between">
+       <header className="app-mobile-header lg:hidden fixed top-0 left-0 right-0 bg-surface/80 backdrop-blur-md border-b border-border z-40 flex items-center justify-between">
           <button 
             onClick={() => {
               setIsCollapsed(false);
@@ -78,7 +80,7 @@ export default function MainLayoutShell({ children, isAdmin, isImpersonating, se
           >
              <Menu size={24} />
           </button>
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-75">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
              <SidebarLogo />
           </div>
           <div className="w-8" />
@@ -96,7 +98,7 @@ export default function MainLayoutShell({ children, isAdmin, isImpersonating, se
 
        {/* 4. Main Content */}
        <main 
-          className={`flex-1 relative z-10 transition-all duration-300 mt-16 lg:mt-0 flex flex-col ${
+          className={`min-w-0 flex-1 relative z-10 transition-all duration-300 mt-16 lg:mt-0 flex flex-col ${
               isCollapsed ? "lg:ml-20" : "lg:ml-64"
           }`}
        >

@@ -19,7 +19,7 @@ export function QuizCompletionView({ id, questionCount, score, isTeacherPreview,
             <div className="instrument-panel border border-primary/40 bg-primary/10 p-4 shadow-glow-primary-subtle"><Trophy className="h-14 w-14 text-primary sm:h-16 sm:w-16" /></div>
         </div>
         <p className="font-mono text-xs font-bold uppercase tracking-[.18em] text-primary">Mission report</p>
-        <h2 className="mt-2 text-3xl font-black text-foreground sm:text-4xl">{isTeacherPreview ? "Practice complete" : "Quiz complete"}</h2>
+        <h2 className="app-page-title mt-2 font-black text-foreground">{isTeacherPreview ? "Practice complete" : "Quiz complete"}</h2>
         <p className="mb-8 mt-2 text-muted">{isTeacherPreview ? "You’ve reached the end of the questions. No answers were saved." : "Your result has been saved."}</p>
         {!isTeacherPreview && <div className="mb-8 grid grid-cols-2 gap-3">
             <div className="instrument-panel border border-border/80 bg-background/40 p-4">

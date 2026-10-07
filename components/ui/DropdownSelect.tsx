@@ -35,7 +35,7 @@ export default function DropdownSelect({ value, options, onChange, leadingIcon, 
           aria-haspopup="menu"
           aria-expanded={open}
           aria-controls={panelId}
-          className="console-control flex min-h-11 w-full items-center gap-2 border border-border bg-background/75 px-3 py-2.5 text-left text-sm font-semibold text-foreground outline-none transition hover:border-primary/45 focus-visible:ring-2 focus-visible:ring-primary/50 disabled:cursor-not-allowed disabled:opacity-50"
+          className="app-touch-target console-control flex w-full items-center gap-2 border border-border bg-background/75 px-3 py-2.5 text-left text-sm font-semibold text-foreground outline-none transition hover:border-primary/45 focus-visible:ring-2 focus-visible:ring-primary/50 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {leadingIcon && <span aria-hidden="true" className="shrink-0 text-muted">{leadingIcon}</span>}
           <span className="min-w-0 flex-1 truncate">{selectedOption?.label || "Select an option"}</span>
@@ -50,7 +50,7 @@ export default function DropdownSelect({ value, options, onChange, leadingIcon, 
           role="menuitemradio"
           aria-checked={value === option.value}
           onClick={() => { onChange(option.value); close(); }}
-          className="console-control flex min-h-10 w-full items-center justify-between gap-3 px-3 py-2 text-left text-sm font-semibold text-muted transition hover:bg-primary/10 hover:text-foreground aria-checked:bg-primary/10 aria-checked:text-primary"
+          className="app-touch-target console-control flex w-full items-center justify-between gap-3 px-3 py-2 text-left text-sm font-semibold text-muted transition hover:bg-primary/10 hover:text-foreground aria-checked:bg-primary/10 aria-checked:text-primary"
         >
           <span className="truncate">{option.label}</span>
           {value === option.value && <Check size={14} className="shrink-0" />}

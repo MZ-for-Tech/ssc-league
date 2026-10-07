@@ -76,15 +76,15 @@ export default async function ModuleDetailsPage({ params }: { params: Promise<{ 
   const essayCount = essays?.length || 0;
   const totalItemCount = mcqCount + essayCount;
   return (
-    <div className="mx-auto w-full max-w-6xl animate-in fade-in slide-in-from-bottom-4 space-y-6">
+    <div className="app-page-stack mx-auto w-full max-w-6xl animate-in fade-in slide-in-from-bottom-4">
       <Link href="/modules" className="group inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[.14em] text-muted transition hover:text-primary">
         <ArrowLeft size={15} className="transition-transform group-hover:-translate-x-1" /> Course map
       </Link>
 
-      <header className="instrument-panel relative isolate overflow-hidden border border-primary/25 bg-[linear-gradient(120deg,rgba(10,28,43,.96),rgba(15,27,45,.88)_56%,rgba(20,32,53,.8))] px-6 py-7 sm:px-9 sm:py-9">
+      <header className="instrument-panel relative isolate overflow-hidden border border-primary/25 bg-[linear-gradient(120deg,rgba(10,28,43,.96),rgba(15,27,45,.88)_56%,rgba(20,32,53,.8))] app-panel-padding">
         <div className="pointer-events-none absolute -right-10 -top-20 -z-10 h-72 w-72 rotate-45 border border-primary/10" />
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(115deg,transparent_35%,rgba(34,211,238,.055)_35.2%,transparent_35.5%,transparent_70%,rgba(34,211,238,.04)_70.2%,transparent_70.5%)]" />
-        <h1 className="max-w-4xl text-3xl font-black tracking-tight text-foreground sm:text-4xl lg:text-5xl">{topic.name}</h1>
+        <h1 className="app-page-title max-w-4xl font-black tracking-tight text-foreground">{topic.name}</h1>
         {topic.description && <p className="mt-4 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">{topic.description}</p>}
         <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 border-t border-primary/15 pt-4 font-mono text-xs uppercase tracking-wider text-muted">
           <span className="inline-flex items-center gap-2"><ClipboardList size={14} className="text-primary" /> {totalItemCount} total · {mcqCount} MCQ · {essayCount} essays</span>
@@ -112,7 +112,7 @@ export default async function ModuleDetailsPage({ params }: { params: Promise<{ 
         </main>
 
         <aside className="min-w-0 space-y-4 lg:sticky lg:top-6" aria-label="Lesson overview">
-          <section className="instrument-panel border border-border bg-surface/55 p-5 sm:p-6">
+          <section className="instrument-panel border border-border bg-surface/55 app-panel-padding">
             <div className="mb-5">
               <h2 className="font-mono text-xs font-bold uppercase tracking-[.15em] text-muted">Lesson overview</h2>
             </div>

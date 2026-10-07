@@ -31,7 +31,7 @@ export default function BroadcastWidget() {
   };
 
   return (
-    <section className="instrument-panel relative isolate flex h-full flex-col overflow-hidden border border-primary/20 bg-[linear-gradient(145deg,rgba(13,31,49,.94),rgba(12,22,40,.94))] p-5 sm:p-6">
+    <section className="instrument-panel relative isolate flex h-full flex-col overflow-hidden border border-primary/20 bg-[linear-gradient(145deg,rgba(13,31,49,.94),rgba(12,22,40,.94))] app-panel-padding">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_85%_0%,rgb(var(--primary)/0.1),transparent_48%)]" />
         <div className="relative z-10">
             <OperationsCardHeader id="broadcast-title" title="Broadcast" headingLevel="h3" icon={<Radio className="text-primary" size={18} />} />

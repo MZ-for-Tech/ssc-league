@@ -7,7 +7,7 @@ export default function CombatManual({ protocol }: { protocol: RewardProtocolDat
     <section className="instrument-panel relative isolate overflow-hidden border border-cyan-200/20 bg-[#09151e] text-white" aria-labelledby="reward-protocol-title">
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_6%_0%,rgb(var(--primary)/.13),transparent_36%),linear-gradient(115deg,transparent_55%,rgba(28,111,126,.08))]" />
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-[.11] [background-image:linear-gradient(rgba(156,211,218,.2)_1px,transparent_1px),linear-gradient(90deg,rgba(156,211,218,.2)_1px,transparent_1px)] [background-size:32px_32px]" />
-      <div className="flex flex-col gap-5 border-b border-white/10 px-5 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-8 sm:py-6">
+      <div className="flex flex-col gap-5 border-b border-white/10 app-panel-padding sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 id="reward-protocol-title" className="text-2xl font-semibold tracking-tight sm:text-3xl">Reward protocol</h2>
         </div>
@@ -18,16 +18,16 @@ export default function CombatManual({ protocol }: { protocol: RewardProtocolDat
       </div>
 
       <div className="grid lg:grid-cols-12">
-        <section className="border-b border-white/10 px-5 py-5 sm:px-8 sm:py-7 lg:col-span-4 lg:border-b-0 lg:border-r lg:border-white/10 lg:px-6" aria-labelledby="quiz-rewards-title">
+        <section className="app-panel-padding border-b border-white/10 lg:col-span-4 lg:border-b-0 lg:border-r lg:border-white/10" aria-labelledby="quiz-rewards-title">
           <PanelHeading icon={<Crosshair size={15} />} title="In-app quizzes" id="quiz-rewards-title" />
           <div className="mt-5 grid grid-cols-2 gap-2">
-            <div className="relative overflow-hidden border border-cyan-200/20 bg-cyan-300/[.07] p-4 sm:p-5">
+            <div className="relative overflow-hidden border border-cyan-200/20 bg-cyan-300/[.07] app-panel-padding">
               <div className="absolute -right-6 -top-7 h-20 w-20 border border-cyan-100/10" />
               <div className="relative font-mono text-5xl font-semibold tracking-[-.08em] text-cyan-200 sm:text-6xl">+2</div>
               <div className="relative mt-2 text-xs text-slate-300">Correct answer</div>
               <div className="relative mt-5 h-0.5 w-2/3 bg-cyan-300 shadow-[0_0_12px_rgb(var(--primary)/.55)]" />
             </div>
-            <div className="border border-white/10 bg-black/20 p-4 sm:p-5">
+            <div className="border border-white/10 bg-black/20 app-panel-padding">
               <div className="font-mono text-5xl font-semibold tracking-[-.08em] text-slate-100 sm:text-6xl">+1</div>
               <div className="mt-2 text-xs text-slate-400">Quiz attempt</div>
               <div className="mt-5 h-0.5 w-1/3 bg-slate-500" />
@@ -36,7 +36,7 @@ export default function CombatManual({ protocol }: { protocol: RewardProtocolDat
           <p className="mt-4 font-mono text-xs uppercase tracking-[.12em] text-slate-500">Points are awarded automatically in the app</p>
         </section>
 
-        <section className="border-b border-white/10 px-5 py-5 sm:px-8 sm:py-7 lg:col-span-4 lg:border-b-0 lg:border-r lg:border-white/10 lg:px-6" aria-labelledby="attendance-rewards-title">
+        <section className="app-panel-padding border-b border-white/10 lg:col-span-4 lg:border-b-0 lg:border-r lg:border-white/10" aria-labelledby="attendance-rewards-title">
           <PanelHeading icon={<CalendarDays size={15} />} title="Attendance track" id="attendance-rewards-title" />
           <ol className="relative mt-5 space-y-0 before:absolute before:bottom-3 before:left-[5px] before:top-3 before:w-px before:bg-gradient-to-b before:from-cyan-300/70 before:to-cyan-300/10">
             {protocol.attendance.rewards.map((reward, index) => (
@@ -52,7 +52,7 @@ export default function CombatManual({ protocol }: { protocol: RewardProtocolDat
           </ol>
         </section>
 
-        <section className="px-5 py-5 sm:px-8 sm:py-7 lg:col-span-4 lg:px-6" aria-labelledby="contribution-rewards-title">
+        <section className="app-panel-padding lg:col-span-4" aria-labelledby="contribution-rewards-title">
           <PanelHeading icon={<Users size={15} />} title="Cohort contribution" id="contribution-rewards-title" />
           <div className="mt-5">
             <RewardList icon={<FileCode2 size={13} />} title="Coursework" rewards={protocol.coursework.rewards} />

@@ -10,7 +10,7 @@ type CourseInformationSidebarProps = {
 export default function CourseInformationSidebar({ completedMissions, totalMissions, totalXP }: CourseInformationSidebarProps) {
   return (
         <aside className="min-w-0 space-y-4 lg:sticky lg:top-6" aria-label="Course information">
-          <section className="instrument-panel border border-border bg-surface/50 p-4 sm:p-5" aria-label="Campaign progress">
+          <section className="instrument-panel border border-border bg-surface/50 app-panel-padding" aria-label="Campaign progress">
             <div className="mb-4 flex items-center justify-between gap-3">
               <h2 className="font-mono text-xs font-bold uppercase tracking-[0.15em] text-muted">Campaign status</h2>
               <span className="h-1.5 w-1.5 rounded-full bg-primary" />
@@ -44,7 +44,7 @@ export default function CourseInformationSidebar({ completedMissions, totalMissi
             </div>
           </a>
 
-          <section className="instrument-panel border border-border bg-surface/50 p-4 sm:p-5" aria-label="Course reference files">
+          <section className="instrument-panel border border-border bg-surface/50 app-panel-padding" aria-label="Course reference files">
             <div className="mb-3 flex items-center justify-between gap-3">
               <h2 className="font-mono text-xs font-bold uppercase tracking-[0.15em] text-muted">Reference files</h2>
               <span className="font-mono text-xs text-muted">{COURSE_MATERIALS.length} files</span>

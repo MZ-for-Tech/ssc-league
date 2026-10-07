@@ -33,16 +33,16 @@ export default function Sidebar({ isOpen = false, onClose, isCollapsed, toggleCo
           // THEME: 'bg-background', 'border-border'
           "fixed top-0 left-0 h-full bg-background border-r border-border z-50 transition-all duration-300 ease-in-out flex flex-col",
           isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
-          isCollapsed ? "w-64 lg:w-20" : "w-64"
+          isCollapsed ? "w-[min(15rem,72vw)] lg:w-20" : "w-[min(15rem,72vw)] lg:w-64"
         )}
       >
         
         {/* 1. Header */}
-        <div className="h-20 flex items-center justify-center relative border-b border-border">
+        <div className="relative flex h-16 items-center justify-center border-b border-border lg:h-20">
             {isCollapsed ? (
                <SidebarLogo compact />
             ) : (
-               <div className="px-6 w-full flex justify-between items-center">
+               <div className="flex w-full items-center justify-between px-3 sm:px-5 lg:px-6">
                   <SidebarLogo />
                   <button onClick={onClose} className="lg:hidden text-muted hover:text-foreground"><X size={20} /></button>
                </div>

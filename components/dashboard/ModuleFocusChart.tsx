@@ -25,7 +25,7 @@ export default function ModuleFocusChart({ modules }: { modules: DashboardCurric
   const chartHeight = Math.max(170, data.length * 64 + 34);
 
   return (
-    <section className="instrument-panel overflow-hidden rounded-2xl border border-border bg-surface/45 p-5 sm:p-6">
+    <section className="instrument-panel overflow-hidden rounded-2xl border border-border bg-surface/45 app-panel-padding">
       <header className="mb-2 flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Your learning, lately</p>

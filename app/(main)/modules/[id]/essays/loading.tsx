@@ -4,7 +4,7 @@ export default function LessonEssaysLoading() {
   return (
     <main className="mx-auto w-full max-w-5xl space-y-6 pb-16" aria-busy="true" aria-label="Loading written practice">
       <div className="h-4 w-32 animate-pulse rounded bg-surface-light/30" />
-      <header className="animate-pulse rounded-2xl border border-border bg-surface/70 p-6 md:p-8">
+      <header className="animate-pulse rounded-2xl border border-border bg-surface/70 app-panel-padding">
         <div className="h-4 w-36 rounded bg-primary/20" />
         <div className="mt-4 h-9 w-2/3 max-w-lg rounded bg-surface-light/40" />
         <div className="mt-3 h-4 w-full max-w-2xl rounded bg-surface-light/25" />

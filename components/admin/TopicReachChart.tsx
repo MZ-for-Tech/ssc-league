@@ -10,7 +10,7 @@ export default function TopicReachChart({
   totalStudents: number;
 }) {
   return (
-    <section aria-labelledby="topic-reach-heading" className={`${adminPanelClass} p-5 sm:p-6`}>
+    <section aria-labelledby="topic-reach-heading" className={`${adminPanelClass} app-panel-padding`}>
       <div className="mb-5">
         <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-primary">All season</p>
         <h2 id="topic-reach-heading" className="mt-1 text-lg font-semibold text-foreground">Module reach</h2>
